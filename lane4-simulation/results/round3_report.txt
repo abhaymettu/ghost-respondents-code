@@ -1,0 +1,323 @@
+
+======================================================================================
+ITEM 1a  the published ranking, reproduced on the sweep's own split (split 0)
+======================================================================================
+Every cell at its shipped calibration split, err_00 = EIV error with the deployable
+reference and the deployable prevalence estimate. pi=0.10 and 0.30, p=1.
+
+  cell                             g  c_pool  kappa   delta  err@.10  err@.30
+  essays/NEU                  -0.601  -0.056  0.869  +0.247  +19.2%  -33.6%
+  gpt-3.5-turbo-0613/AGR      +2.882  +0.409  0.845  +0.358   +5.9%  +26.4% <-FAIL
+  gpt-3.5-turbo-0613/OPE      +0.108  +0.036  0.487  -2.696  -17.2%  -20.5%
+  gpt-3.5-turbo-0613/CON      +0.389  +0.029  0.718  -0.259  +28.5%  +17.8%
+  essays/OPE                  -0.136  -0.044  0.544  -2.132   +0.7%  -16.6%
+  llama-2/AGR                 +1.800  +0.265  0.771  +0.554   +4.3%  +15.8%
+  essays/CON                  +1.172  +0.110  0.909  -0.256   +4.8%  +14.2%
+  essays/AGR                  +1.091  +0.084  0.886  +0.839  +10.2%  +13.9%
+  llama-2/CON                 +1.540  +0.148  0.644  +0.516   -0.7%  +13.9%
+  gpt-4-0613/EXT              +1.973  +0.399  0.801  +0.494   -0.1%  +13.2% <-FAIL
+  gpt-4-0613/CON              +0.938  +0.057  0.861  -0.327   -5.4%   -9.7%
+  gpt-3.5-turbo-0613/EXT      +1.817  +0.291  0.812  +0.570  -12.7%   -8.9%
+  gpt-4-0613/OPE              +1.283  +0.325  0.752  -2.168   -8.3%   -7.9%
+  essays/EXT                  +0.811  +0.138  0.717  +0.452   +0.8%   -7.2%
+  gpt-4-0613/AGR              +2.080  +0.237  1.130  +0.529   -2.9%   +5.9%
+  llama-2/OPE                 +2.395  +0.505  1.273  -1.618   +6.7%   +5.7% <-REF
+  llama-2/EXT                 +0.497  +0.111  0.583  +0.239   +6.8%   -3.6%
+  llama-2/NEU                 +0.706  +0.065  0.794  +0.312   +4.3%   +2.7%
+  gpt-3.5-turbo-0613/NEU      +0.557  +0.094  0.927  +0.421   +0.6%   -2.5%
+  gpt-4-0613/NEU              +1.250  +0.117  0.909  +0.392   +5.6%   +1.9%
+
+  |err@0.30| against each candidate, over all 20 cells (Pearson / Spearman):
+    g            r=-0.201   rho=-0.188
+    |g|          r=-0.006   rho=-0.126
+    c_pool       r=-0.184   rho=-0.286
+    kappa        r=-0.249   rho=-0.334
+    delta        r=-0.112   rho=-0.159
+    |delta|      r=+0.079   rho=+0.051
+    g*kappa      r=-0.243   rho=-0.217
+    g*|delta|    r=-0.243   rho=-0.206
+    (g-1)        r=-0.201   rho=-0.188
+    |g-1|        r=+0.593   rho=+0.400
+
+======================================================================================
+ITEM 1b  the same cells, holding the cell fixed and re-drawing the split
+======================================================================================
+The ranking above is one draw of the calibration split per cell. Re-draw it.
+
+  cell                         split0     mean      sd      min      max   sd_mc sd_split
+  essays/NEU                  -33.6%   -0.9%  15.6%  -33.6%  +26.4%  12.5%    9.4%
+  gpt-3.5-turbo-0613/AGR      +26.4%  +15.3%  15.8%  -11.3%  +37.0%   6.4%   14.4% <-FAIL
+  gpt-3.5-turbo-0613/OPE      -20.5%   -8.8%   8.3%  -23.2%   +3.7%   8.2%    0.7%
+  gpt-3.5-turbo-0613/CON      +17.8%   +7.6%  14.3%  -22.9%  +29.1%  17.9%    0.0%
+  essays/OPE                  -16.6%   -8.8%  10.2%  -21.9%  +11.9%   8.9%    5.1%
+  llama-2/AGR                 +15.8%  +19.7%  14.8%   -5.4%  +44.1%   7.6%   12.7%
+  essays/CON                  +14.2%   +4.0%  23.7%  -26.8%  +52.1%  14.3%   18.8%
+  essays/AGR                  +13.9%   -1.2%  12.1%  -21.4%  +13.9%   9.7%    7.2%
+  llama-2/CON                 +13.9%   +9.2%  15.9%  -19.6%  +32.3%  11.8%   10.8%
+  gpt-4-0613/EXT              +13.2%   +8.6%   6.9%   -6.6%  +19.9%   4.3%    5.4% <-FAIL
+  gpt-4-0613/CON               -9.7%  -10.6%  23.3%  -49.5%  +29.4%  78.1%    0.0%
+  gpt-3.5-turbo-0613/EXT       -8.9%   +3.5%   7.7%   -8.9%  +17.0%   5.3%    5.6%
+  gpt-4-0613/OPE               -7.9%   -3.2%   6.7%  -10.7%   +8.4%   5.4%    3.9%
+  essays/EXT                   -7.2%   -0.4%   8.1%  -13.3%  +13.6%   6.0%    5.6%
+  gpt-4-0613/AGR               +5.9%   +2.4%   9.6%  -13.2%  +24.5%   8.5%    4.4%
+  llama-2/OPE                  +5.7%   -0.4%   4.4%   -7.5%   +5.7%   3.7%    2.4% <-REF
+  llama-2/EXT                  -3.6%   +1.1%   4.0%   -4.3%   +6.3%   5.9%    0.0%
+  llama-2/NEU                  +2.7%  +17.4%  13.7%   -0.3%  +45.1%   9.9%    9.5%
+  gpt-3.5-turbo-0613/NEU       -2.5%  -19.3%  32.2%  -98.6%   +8.0%  12.0%   29.9%
+  gpt-4-0613/NEU               +1.9%   +5.0%  13.9%  -26.0%  +24.9%   9.9%    9.7%
+
+  between-cell sd of the split-averaged error : 9.7%
+  within-cell sd across splits (MC-corrected) : 10.5%
+  variance share that is the cell, not the split: 45.7%
+
+  overlap of the two flagged cells with llama-2/OPE, over the split distribution:
+    gpt-3.5-turbo-0613/AGR     [-11.3%,+37.0%]  vs  llama-2/OPE [-7.5%,+5.7%]  gap in means = +15.7% = 1.49 within-sd
+    gpt-4-0613/EXT             [-6.6%,+19.9%]  vs  llama-2/OPE [-7.5%,+5.7%]  gap in means = +9.0% = 0.85 within-sd
+
+======================================================================================
+ITEM 1d  the prompt's ranking, done against split-AVERAGED quantities
+======================================================================================
+Same four candidates, but both sides averaged over the 12 MC splits, so neither the
+error nor the moment is one draw of the nuisance variable.
+
+    g                            r=+0.026   rho=-0.036
+    |g-1|                        r=+0.413   rho=+0.361
+    c_pool                       r=-0.345   rho=-0.414
+    kappa                        r=+0.130   rho=+0.188
+    |delta|                      r=-0.347   rho=-0.343
+    r_H                          r=-0.640   rho=-0.665
+    1/r_H                        r=+0.650   rho=+0.665
+    amplification |d err/d pi|   r=+0.327   rho=+0.550
+    |dm prevalence bias|         r=+0.594   rho=+0.606
+    amp * |dm bias|              r=+0.595   rho=+0.853
+
+======================================================================================
+ITEM 1c  the 2x2: which of the estimator's two unknowns actually carries the error
+======================================================================================
+PI = hand it the true prevalence.  REF = hand it the injected texts as reference.
+Mean |error| at p=1, averaged over splits, per cell, at pi=0.30.
+
+  cell                         err_00   err_pi  err_ref  err_both
+  essays/EXT                    6.5%    5.0%    5.4%     4.9%
+  essays/NEU                   10.8%    7.4%    7.8%     7.3%
+  essays/AGR                    9.8%    8.5%    9.5%     9.4%
+  essays/CON                   18.8%   12.0%   11.7%    11.6%
+  essays/OPE                   12.1%    9.5%    7.4%     6.9%
+  gpt-4-0613/EXT                9.7%    3.5%    4.0%     3.8% <-FAIL
+  gpt-4-0613/NEU               11.4%    8.5%    7.9%     8.2%
+  gpt-4-0613/AGR                7.4%    6.7%    6.6%     6.4%
+  gpt-4-0613/CON               20.0%   52.9%  543.8%   112.1%
+  gpt-4-0613/OPE                6.5%    6.9%    3.6%     3.6%
+  gpt-3.5-turbo-0613/EXT        7.1%    5.7%    4.9%     4.9%
+  gpt-3.5-turbo-0613/NEU       22.0%   17.4%   14.2%    17.0%
+  gpt-3.5-turbo-0613/AGR       18.0%    5.6%    4.9%     5.4% <-FAIL
+  gpt-3.5-turbo-0613/CON       13.5%   10.4%   10.3%    10.1%
+  gpt-3.5-turbo-0613/OPE        9.8%    5.2%    5.8%     5.4%
+  llama-2/EXT                   3.7%    3.8%    4.1%     4.0%
+  llama-2/NEU                  17.4%    8.4%    7.9%     7.8%
+  llama-2/AGR                  20.6%    5.4%    3.9%     3.8%
+  llama-2/CON                  15.8%    9.4%    8.9%     9.1%
+  llama-2/OPE                   3.6%    3.9%    3.5%     3.5% <-REF
+
+  MEAN over cells              12.2%    9.8%   33.8%   12.3%
+  MEDIAN over cells            11.1%    7.2%    7.0%    6.7%
+  (the mean is carried by one cell: gpt-4-0613/CON, whose deployable error is fine
+   but whose oracle-reference error blows up -- its EIV denominator is near zero, so
+   the RELATIVE error is undefined-ish there, not the correction itself.)
+
+  on the median cell: knowing pi alone removes    35.1% of the error
+                      a matched reference alone     36.8%
+                      both together                 39.8%
+
+  per-cell share of the error that knowing pi removes (1 - err_pi/err_00):
+    essays/EXT                  +23.0%
+    essays/NEU                  +31.2%
+    essays/AGR                  +13.5%
+    essays/CON                  +36.5%
+    essays/OPE                  +21.2%
+    gpt-4-0613/EXT              +63.9% <-FAIL
+    gpt-4-0613/NEU              +25.2%
+    gpt-4-0613/AGR              +10.1%
+    gpt-4-0613/CON             -164.1%
+    gpt-4-0613/OPE               -7.4%
+    gpt-3.5-turbo-0613/EXT      +18.9%
+    gpt-3.5-turbo-0613/NEU      +21.0%
+    gpt-3.5-turbo-0613/AGR      +69.0% <-FAIL
+    gpt-3.5-turbo-0613/CON      +22.8%
+    gpt-3.5-turbo-0613/OPE      +46.7%
+    llama-2/EXT                  -4.3%
+    llama-2/NEU                 +52.1%
+    llama-2/AGR                 +74.0%
+    llama-2/CON                 +40.4%
+    llama-2/OPE                  -7.4% <-REF
+
+======================================================================================
+ITEM 2  the adjusted-count offset over 400 calibration splits per cell
+======================================================================================
+ac_pred is the two-term transfer law evaluated at each split's own (se_cal, sp_cal).
+
+  cell                          pi   split0     mean      sd      p05      p95   def
+  essays/EXT                  0.10       -- (undefined in 400/400 splits: detector at or below chance)
+  essays/EXT                  0.30       -- (undefined in 400/400 splits: detector at or below chance)
+  essays/NEU                  0.10       -- (undefined in 400/400 splits: detector at or below chance)
+  essays/NEU                  0.30       -- (undefined in 400/400 splits: detector at or below chance)
+  essays/AGR                  0.10       -- (undefined in 400/400 splits: detector at or below chance)
+  essays/AGR                  0.30       -- (undefined in 400/400 splits: detector at or below chance)
+  essays/CON                  0.10       -- (undefined in 400/400 splits: detector at or below chance)
+  essays/CON                  0.30       -- (undefined in 400/400 splits: detector at or below chance)
+  essays/OPE                  0.10       -- (undefined in 400/400 splits: detector at or below chance)
+  essays/OPE                  0.30       -- (undefined in 400/400 splits: detector at or below chance)
+  gpt-4-0613/EXT              0.10  +0.0073  +0.0030  0.0246  -0.0339  +0.0432   400
+  gpt-4-0613/EXT              0.30  +0.0363  +0.0077  0.0604  -0.0807  +0.1136   400
+  gpt-4-0613/NEU              0.10  +0.0160  +0.0006  0.0225  -0.0351  +0.0397   400
+  gpt-4-0613/NEU              0.30  +0.0792  +0.0013  0.0587  -0.0870  +0.1059   400
+  gpt-4-0613/AGR              0.10  -0.0244  +0.0032  0.0246  -0.0327  +0.0429   400
+  gpt-4-0613/AGR              0.30  -0.0410  +0.0089  0.0611  -0.0812  +0.1151   400
+  gpt-4-0613/CON              0.10  -0.0286  +0.0029  0.0253  -0.0339  +0.0496   400
+  gpt-4-0613/CON              0.30  -0.0545  +0.0083  0.0634  -0.0814  +0.1157   400
+  gpt-4-0613/OPE              0.10  -0.0000  +0.0015  0.0265  -0.0403  +0.0483   400
+  gpt-4-0613/OPE              0.30  -0.0000  +0.0038  0.0648  -0.0906  +0.1125   400
+  gpt-3.5-turbo-0613/EXT      0.10  +0.0086  +0.0058  0.0535  -0.0781  +0.1061   400
+  gpt-3.5-turbo-0613/EXT      0.30  -0.0190  +0.0199  0.1229  -0.1476  +0.2487   400
+  gpt-3.5-turbo-0613/NEU      0.10  -0.0256  +0.0031  0.0552  -0.0773  +0.1051   400
+  gpt-3.5-turbo-0613/NEU      0.30  -0.0044  +0.0108  0.1184  -0.1572  +0.2442   400
+  gpt-3.5-turbo-0613/AGR      0.10  -0.0860  +0.0050  0.0570  -0.0780  +0.0988   400
+  gpt-3.5-turbo-0613/AGR      0.30  -0.1394  +0.0287  0.1386  -0.1438  +0.2484   400
+  gpt-3.5-turbo-0613/CON      0.10  -0.0576  +0.0025  0.0542  -0.0741  +0.0955   400
+  gpt-3.5-turbo-0613/CON      0.30  -0.0884  +0.0117  0.1253  -0.1475  +0.2442   400
+  gpt-3.5-turbo-0613/OPE      0.10  +0.0127  +0.0012  0.0559  -0.0800  +0.1038   400
+  gpt-3.5-turbo-0613/OPE      0.30  +0.0565  +0.0174  0.1245  -0.1519  +0.2447   400
+  llama-2/EXT                 0.10  +0.0157  +0.0013  0.0113  -0.0158  +0.0219   400
+  llama-2/EXT                 0.30  +0.0442  +0.0020  0.0284  -0.0418  +0.0514   400
+  llama-2/NEU                 0.10  -0.0040  +0.0009  0.0111  -0.0161  +0.0208   400
+  llama-2/NEU                 0.30  +0.0145  +0.0014  0.0273  -0.0408  +0.0493   400
+  llama-2/AGR                 0.10  -0.0080  +0.0007  0.0114  -0.0171  +0.0207   400
+  llama-2/AGR                 0.30  -0.0239  +0.0016  0.0287  -0.0426  +0.0535   400
+  llama-2/CON                 0.10  -0.0119  +0.0004  0.0110  -0.0168  +0.0185   400
+  llama-2/CON                 0.30  -0.0250  +0.0002  0.0280  -0.0424  +0.0473   400
+  llama-2/OPE                 0.10  -0.0072  +0.0005  0.0105  -0.0158  +0.0182   400
+  llama-2/OPE                 0.30  -0.0190  +0.0022  0.0272  -0.0399  +0.0469   400
+
+======================================================================================
+ITEM 2b  does a between-wave change detector survive that spread?
+======================================================================================
+Per split, fit offset(pi) = b0 + b1*pi over pi in [0.1, 0.3].
+Two waves at pi1, pi2 estimated by adjusted count:
+  same calibration split  -> b0 cancels; the change is scaled by (1+b1).
+  re-drawn split          -> the change also picks up b(2)(pi2)-b(1)(pi1).
+
+Same split: the change is multiplied by (1+b1), so the error is RELATIVE, 2*sd(b1).
+Re-drawn:   the change gains an ADDITIVE noise, sd = sqrt(sd(b@pi1)^2 + sd(b@pi2)^2);
+            MDC is 2x that, an absolute floor on any detectable change in pi.
+
+  cell                         b0 mean   sd(b0)   b1 mean   sd(b1) rel err same  MDC redraw   d=0.20 is
+  essays/EXT                 (undefined)
+  essays/NEU                 (undefined)
+  essays/AGR                 (undefined)
+  essays/CON                 (undefined)
+  essays/OPE                 (undefined)
+  gpt-4-0613/EXT               +0.0006   0.0163   +0.0237   0.1986       39.7%      0.1303       3.1 sd
+  gpt-4-0613/NEU               +0.0003   0.0165   +0.0034   0.2025       40.5%      0.1257       3.2 sd
+  gpt-4-0613/AGR               +0.0004   0.0166   +0.0281   0.2030       40.6%      0.1318       3.0 sd
+  gpt-4-0613/CON               +0.0002   0.0177   +0.0269   0.2133       42.7%      0.1366       2.9 sd
+  gpt-4-0613/OPE               +0.0003   0.0166   +0.0119   0.2102       42.0%      0.1400       2.9 sd
+  gpt-3.5-turbo-0613/EXT       -0.0012   0.0439   +0.0702   0.4157       83.1%      0.2680       1.5 sd
+  gpt-3.5-turbo-0613/NEU       -0.0008   0.0448   +0.0386   0.3850       77.0%      0.2612       1.5 sd
+  gpt-3.5-turbo-0613/AGR       -0.0069   0.0475   +0.1186   0.4827       96.5%      0.2996       1.3 sd
+  gpt-3.5-turbo-0613/CON       -0.0021   0.0454   +0.0459   0.4282       85.6%      0.2730       1.5 sd
+  gpt-3.5-turbo-0613/OPE       -0.0069   0.0459   +0.0811   0.4150       83.0%      0.2730       1.5 sd
+  llama-2/EXT                  +0.0010   0.0074   +0.0033   0.0940       18.8%      0.0611       6.5 sd
+  llama-2/NEU                  +0.0007   0.0070   +0.0025   0.0891       17.8%      0.0589       6.8 sd
+  llama-2/AGR                  +0.0002   0.0068   +0.0046   0.0936       18.7%      0.0619       6.5 sd
+  llama-2/CON                  +0.0005   0.0068   -0.0009   0.0928       18.6%      0.0601       6.7 sd
+  llama-2/OPE                  -0.0003   0.0065   +0.0082   0.0904       18.1%      0.0583       6.9 sd
+
+======================================================================================
+ITEM 2c  the law's per-split prediction against the realized Monte Carlo offset
+======================================================================================
+  360 (cell, split, pi) points   corr=+0.9917  OLS slope=1.017 intercept=+0.0006
+  residual: median |r| = 0.0024, max = 0.0387
+
+======================================================================================
+ITEM 3  the distribution-match slope, and the ladder that explains it
+======================================================================================
+dm linearises to a weighted regression of (p_obs-p_h) on (p_m-p_h). Reference
+sampling noise sits in the DENOMINATOR, so the slope attenuates by S/(S+Nm+Nh) and
+the intercept picks up Nh/(S+Nm+Nh). Both are predictions, not fits.
+
+  cell                       |delta|   S@60 sl@8    sl@15   sl@30   sl@60   sl@120 
+  essays/EXT                   0.452  0.090  0.995  0.951  0.625  0.407  0.225
+  essays/NEU                   0.247  0.047  0.603  0.666  0.623  0.379  0.329
+  essays/AGR                   0.839  0.181  1.030  1.025  0.975  0.868  0.646
+  essays/CON                   0.256  0.065  0.483  0.446  0.298  0.303  0.264
+  essays/OPE                   2.132  0.657  1.078  1.064  1.035  1.009  0.960
+  gpt-4-0613/EXT               0.494  0.110  0.967  0.822  0.662  0.485  0.270
+  gpt-4-0613/NEU               0.392  0.049  0.425  0.578  0.448  0.089  0.065
+  gpt-4-0613/AGR               0.529  0.085  1.184  1.042  0.532  0.231  0.107
+  gpt-4-0613/CON               0.327  0.060  0.438  0.472  0.567  0.480  0.340
+  gpt-4-0613/OPE               2.168  0.602  1.051  1.040  1.037  0.995  0.911
+  gpt-3.5-turbo-0613/EXT       0.570  0.123  0.779  0.856  0.733  0.719  0.548
+  gpt-3.5-turbo-0613/NEU       0.421  0.072  0.232  0.114  0.154  0.233  0.141
+  gpt-3.5-turbo-0613/AGR       0.358  0.070  0.676  0.578  0.403  0.338  0.240
+  gpt-3.5-turbo-0613/CON       0.259  0.056  1.058  0.401  0.384  0.216  0.038
+  gpt-3.5-turbo-0613/OPE       2.696  0.786  1.013  1.021  0.999  0.973  0.951
+  llama-2/EXT                  0.239  0.085  0.752  0.637  0.467  0.307  0.235
+  llama-2/NEU                  0.312  0.067  0.323  0.294  0.312  0.320  0.171
+  llama-2/AGR                  0.554  0.087  0.563  0.641  0.390  0.307  0.217
+  llama-2/CON                  0.516  0.120  0.595  0.513  0.514  0.416  0.404
+  llama-2/OPE                  1.618  0.407  1.016  1.066  0.988  0.952  0.827
+
+  slope@60 vs predicted S/(S+Nm+Nh) : r=+0.9322  rho=+0.7880  mean(obs-pred)=-0.110
+  slope@60 vs |delta|               : r=+0.8570
+  slope@60 vs S                     : r=+0.8498
+
+  the ladder, averaged over cells and splits (the causal test):
+    n_bins=   8  occupied=  8.0  slope=0.748 (pred 0.858)  intercept=+0.0465
+    n_bins=  15  occupied= 14.7  slope=0.688 (pred 0.782)  intercept=+0.0507
+    n_bins=  30  occupied= 27.8  slope=0.584 (pred 0.691)  intercept=+0.0595
+    n_bins=  60  occupied= 51.7  slope=0.494 (pred 0.612)  intercept=+0.0664
+    n_bins= 120  occupied= 95.5  slope=0.386 (pred 0.541)  intercept=+0.0741
+
+  per-cell best n_bins on the ladder (|slope-1| minimised):
+    essays/EXT                 best=   8 (slope 0.995)   default 60 -> 0.407
+    essays/NEU                 best=  15 (slope 0.666)   default 60 -> 0.379
+    essays/AGR                 best=  15 (slope 1.025)   default 60 -> 0.868
+    essays/CON                 best=   8 (slope 0.483)   default 60 -> 0.303
+    essays/OPE                 best=  60 (slope 1.009)   default 60 -> 1.009
+    gpt-4-0613/EXT             best=   8 (slope 0.967)   default 60 -> 0.485
+    gpt-4-0613/NEU             best=  15 (slope 0.578)   default 60 -> 0.089
+    gpt-4-0613/AGR             best=  15 (slope 1.042)   default 60 -> 0.231
+    gpt-4-0613/CON             best=  30 (slope 0.567)   default 60 -> 0.480
+    gpt-4-0613/OPE             best=  60 (slope 0.995)   default 60 -> 0.995
+    gpt-3.5-turbo-0613/EXT     best=  15 (slope 0.856)   default 60 -> 0.719
+    gpt-3.5-turbo-0613/NEU     best=  60 (slope 0.233)   default 60 -> 0.233
+    gpt-3.5-turbo-0613/AGR     best=   8 (slope 0.676)   default 60 -> 0.338
+    gpt-3.5-turbo-0613/CON     best=   8 (slope 1.058)   default 60 -> 0.216
+    gpt-3.5-turbo-0613/OPE     best=  30 (slope 0.999)   default 60 -> 0.973
+    llama-2/EXT                best=   8 (slope 0.752)   default 60 -> 0.307
+    llama-2/NEU                best=   8 (slope 0.323)   default 60 -> 0.320
+    llama-2/AGR                best=  15 (slope 0.641)   default 60 -> 0.307
+    llama-2/CON                best=   8 (slope 0.595)   default 60 -> 0.416
+    llama-2/OPE                best=  30 (slope 0.988)   default 60 -> 0.952
+
+  split-to-split stability of the slope (does item 2's split effect move it?):
+    essays/EXT                 slope@60 0.407..0.408   intercept@60 +0.0151..+0.0877
+    essays/NEU                 slope@60 0.345..0.379   intercept@60 +0.1410..+0.2068
+    essays/AGR                 slope@60 0.615..0.868   intercept@60 +0.0118..+0.0449
+    essays/CON                 slope@60 0.303..0.376   intercept@60 +0.0369..+0.0618
+    essays/OPE                 slope@60 1.004..1.009   intercept@60 -0.0081..+0.0044
+    gpt-4-0613/EXT             slope@60 0.462..0.485   intercept@60 +0.0402..+0.0568
+    gpt-4-0613/NEU             slope@60 0.089..0.161   intercept@60 +0.0426..+0.2398
+    gpt-4-0613/AGR             slope@60 0.231..0.449   intercept@60 +0.0839..+0.1249
+    gpt-4-0613/CON             slope@60 0.154..0.480   intercept@60 +0.1383..+0.1980
+    gpt-4-0613/OPE             slope@60 0.876..0.995   intercept@60 -0.0015..+0.0015
+    gpt-3.5-turbo-0613/EXT     slope@60 0.444..0.719   intercept@60 +0.0014..+0.0524
+    gpt-3.5-turbo-0613/NEU     slope@60 0.233..0.487   intercept@60 +0.0045..+0.0948
+    gpt-3.5-turbo-0613/AGR     slope@60 0.317..0.338   intercept@60 -0.0009..+0.0836
+    gpt-3.5-turbo-0613/CON     slope@60 0.216..0.251   intercept@60 +0.1548..+0.1954
+    gpt-3.5-turbo-0613/OPE     slope@60 0.973..1.026   intercept@60 -0.0177..-0.0072
+    llama-2/EXT                slope@60 0.307..0.509   intercept@60 +0.0456..+0.2918
+    llama-2/NEU                slope@60 0.163..0.320   intercept@60 -0.0009..+0.0309
+    llama-2/AGR                slope@60 0.260..0.307   intercept@60 -0.0009..+0.1130
+    llama-2/CON                slope@60 0.416..0.569   intercept@60 -0.0193..+0.1025
+    llama-2/OPE                slope@60 0.837..0.952   intercept@60 -0.0104..+0.0176

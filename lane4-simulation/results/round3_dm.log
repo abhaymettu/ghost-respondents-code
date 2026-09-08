@@ -1,0 +1,25 @@
+Round 3 item 3: dm-slope diagnosis, 20 cells x 2 splits
+pi=(0.02, 0.05, 0.1, 0.2, 0.3) n_bins ladder=(8, 15, 30, 60, 120) n=1000 p=0.0 reps=60
+
+  [ 1/20] essays             EXT slope@60=0.407 (pred 0.561)  slope@8=0.995 (pred 0.873)  (13s)
+  [ 2/20] essays             NEU slope@60=0.379 (pred 0.479)  slope@8=0.603 (pred 0.817)  (30s)
+  [ 3/20] essays             AGR slope@60=0.868 (pred 0.753)  slope@8=1.030 (pred 0.945)  (45s)
+  [ 4/20] essays             CON slope@60=0.303 (pred 0.499)  slope@8=0.483 (pred 0.756)  (62s)
+  [ 5/20] essays             OPE slope@60=1.009 (pred 0.908)  slope@8=1.078 (pred 0.988)  (76s)
+  [ 6/20] gpt-4-0613         EXT slope@60=0.485 (pred 0.588)  slope@8=0.967 (pred 0.885)  (89s)
+  [ 7/20] gpt-4-0613         NEU slope@60=0.089 (pred 0.436)  slope@8=0.425 (pred 0.752)  (104s)
+  [ 8/20] gpt-4-0613         AGR slope@60=0.231 (pred 0.546)  slope@8=1.184 (pred 0.847)  (118s)
+  [ 9/20] gpt-4-0613         CON slope@60=0.480 (pred 0.466)  slope@8=0.438 (pred 0.614)  (135s)
+  [10/20] gpt-4-0613         OPE slope@60=0.995 (pred 0.878)  slope@8=1.051 (pred 0.984)  (150s)
+  [11/20] gpt-3.5-turbo-0613 EXT slope@60=0.719 (pred 0.626)  slope@8=0.779 (pred 0.900)  (169s)
+  [12/20] gpt-3.5-turbo-0613 NEU slope@60=0.233 (pred 0.534)  slope@8=0.232 (pred 0.830)  (183s)
+  [13/20] gpt-3.5-turbo-0613 AGR slope@60=0.338 (pred 0.523)  slope@8=0.676 (pred 0.827)  (196s)
+  [14/20] gpt-3.5-turbo-0613 CON slope@60=0.216 (pred 0.473)  slope@8=1.058 (pred 0.763)  (209s)
+  [15/20] gpt-3.5-turbo-0613 OPE slope@60=0.973 (pred 0.912)  slope@8=1.013 (pred 0.990)  (222s)
+  [16/20] llama-2            EXT slope@60=0.307 (pred 0.551)  slope@8=0.752 (pred 0.855)  (237s)
+  [17/20] llama-2            NEU slope@60=0.320 (pred 0.477)  slope@8=0.323 (pred 0.796)  (252s)
+  [18/20] llama-2            AGR slope@60=0.307 (pred 0.562)  slope@8=0.563 (pred 0.872)  (266s)
+  [19/20] llama-2            CON slope@60=0.416 (pred 0.642)  slope@8=0.595 (pred 0.885)  (279s)
+  [20/20] llama-2            OPE slope@60=0.952 (pred 0.822)  slope@8=1.016 (pred 0.974)  (292s)
+
+-> results/round3_dm.json (292s)

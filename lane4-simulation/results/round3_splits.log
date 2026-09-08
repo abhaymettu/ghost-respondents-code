@@ -1,0 +1,265 @@
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+Round 3 items 1+2: 20 cells x 400 splits (closed form), first 12 with Monte Carlo
+pi=(0.1, 0.3) n=1000 p in (0.0, 1.0) reps=40 rho_T=0.5 k=1 replace=True
+
+  [ 1/20] essays             EXT g=+1.336+-0.325  err_00(pi=.10,p=1) -27.5%..+10.2%  (33s)
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+  [ 2/20] essays             NEU g=+0.939+-0.502  err_00(pi=.10,p=1) -13.0%..+32.0%  (65s)
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+  [ 3/20] essays             AGR g=+1.286+-0.513  err_00(pi=.10,p=1) -25.6%..+10.2%  (97s)
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+  [ 4/20] essays             CON g=+1.904+-1.093  err_00(pi=.10,p=1) -16.1%..+17.8%  (129s)
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/round3_splits.py:135: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+  [ 5/20] essays             OPE g=-0.098+-0.167  err_00(pi=.10,p=1) -16.0%..+8.7%  (161s)
+  [ 6/20] gpt-4-0613         EXT g=+2.538+-0.459  err_00(pi=.10,p=1) -14.6%..+5.2%  (193s)
+  [ 7/20] gpt-4-0613         NEU g=+1.031+-0.632  err_00(pi=.10,p=1) -24.6%..+8.3%  (229s)
+  [ 8/20] gpt-4-0613         AGR g=+1.732+-0.713  err_00(pi=.10,p=1) -14.0%..+17.9%  (264s)
+  [ 9/20] gpt-4-0613         CON g=+0.332+-0.881  err_00(pi=.10,p=1) -35.8%..+79.0%  (303s)
+  [10/20] gpt-4-0613         OPE g=+1.272+-0.253  err_00(pi=.10,p=1) -8.3%..+6.7%  (347s)
+  [11/20] gpt-3.5-turbo-0613 EXT g=+1.652+-0.362  err_00(pi=.10,p=1) -16.0%..+7.7%  (382s)
+  [12/20] gpt-3.5-turbo-0613 NEU g=-0.015+-0.636  err_00(pi=.10,p=1) -39.5%..+16.6%  (423s)
+  [13/20] gpt-3.5-turbo-0613 AGR g=+3.666+-0.882  err_00(pi=.10,p=1) -25.1%..+9.1%  (465s)
+  [14/20] gpt-3.5-turbo-0613 CON g=+0.747+-0.921  err_00(pi=.10,p=1) -23.2%..+37.0%  (500s)
+  [15/20] gpt-3.5-turbo-0613 OPE g=+0.187+-0.174  err_00(pi=.10,p=1) -19.8%..+6.5%  (540s)
+  [16/20] llama-2            EXT g=+0.868+-0.274  err_00(pi=.10,p=1) -7.6%..+6.8%  (574s)
+  [17/20] llama-2            NEU g=+2.027+-0.707  err_00(pi=.10,p=1) -10.9%..+30.4%  (608s)
+  [18/20] llama-2            AGR g=+3.037+-0.837  err_00(pi=.10,p=1) -14.0%..+15.6%  (640s)
+  [19/20] llama-2            CON g=+2.497+-1.984  err_00(pi=.10,p=1) -27.4%..+41.1%  (673s)
+  [20/20] llama-2            OPE g=+2.444+-0.330  err_00(pi=.10,p=1) -4.3%..+6.8%  (705s)
+
+-> results/round3_splits.json (705s)
