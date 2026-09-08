@@ -1,0 +1,304 @@
+{
+  "frozen_at_utc": "2026-09-07",
+  "hc3": {
+    "source": "https://huggingface.co/datasets/Hello-SimpleAI/HC3",
+    "paper": "https://arxiv.org/abs/2301.07597",
+    "license": "cc-by-sa-4.0 (per dataset card; source-dataset-specific stricter licenses override per the card's own caveat)",
+    "counts": {
+      "total_in_all_jsonl": 24322,
+      "per_source_from_all_jsonl": {
+        "reddit_eli5": 17112,
+        "open_qa": 1187,
+        "wiki_csai": 842,
+        "finance": 3933,
+        "medicine": 1248
+      },
+      "per_source_from_individual_files": {
+        "finance": 3933,
+        "medicine": 1248,
+        "open_qa": 1187,
+        "reddit_eli5": 17112,
+        "wiki_csai": 842
+      }
+    }
+  },
+  "essays": {
+    "canonical_source": "https://doi.org/10.21227/dyfp-7f45 (IEEE DataPort, login-gated for download -- see TESTBED-REPORT.md)",
+    "actual_source_used": "https://raw.githubusercontent.com/SenticNet/personality-detection/master/essays.csv",
+    "license": "CC-BY-4.0 (per IEEE DataPort dataset card; the GitHub mirror does not restate a license)",
+    "counts": {
+      "n_essays": 2467,
+      "total_words_whitespace_split": 1608813,
+      "trait_label_counts": {
+        "cEXT": {
+          "y": 1276,
+          "n": 1191
+        },
+        "cNEU": {
+          "y": 1233,
+          "n": 1234
+        },
+        "cAGR": {
+          "y": 1310,
+          "n": 1157
+        },
+        "cCON": {
+          "y": 1253,
+          "n": 1214
+        },
+        "cOPN": {
+          "y": 1271,
+          "n": 1196
+        }
+      }
+    },
+    "known_limitation": "binary median-split Big Five labels only, not continuous BFI scores (blocked on IEEE DataPort login, Abhay's call)"
+  },
+  "detector_calibration": {
+    "meta": {
+      "seed": 20260907,
+      "n_per_source": 250,
+      "hc3_calibrate_n": 1250,
+      "hc3_test_n": 1250,
+      "essays_ood_n": 500
+    },
+    "roberta_base_openai_detector": {
+      "model": "openai-community/roberta-base-openai-detector",
+      "license": "MIT",
+      "note": "trained on GPT-2 outputs, applied zero-shot to ChatGPT/HC3 text -- realistic off-the-shelf transfer scenario",
+      "threshold_P_machine": 0.7536994814872742,
+      "calibrated_in_domain": {
+        "split": "HC3 held-out test",
+        "se": 0.9111111111111111,
+        "sp": 0.9403225806451613,
+        "auc": 0.9706144393241168
+      },
+      "degraded_out_of_domain": {
+        "split": "essays (human-only, no machine counterparts yet)",
+        "se": null,
+        "se_note": "not computable: essays testbed has no LLM-authored text yet (generation gated on burn report)",
+        "sp": 0.926
+      },
+      "oracle": {
+        "se": 1.0,
+        "sp": 1.0,
+        "note": "definitional ceiling, not measured"
+      }
+    },
+    "feature_baseline_logreg": {
+      "features": [
+        "n_words",
+        "n_sentences",
+        "avg_word_len",
+        "avg_sentence_len_words",
+        "type_token_ratio",
+        "punct_per_100_words",
+        "comma_per_100_words"
+      ],
+      "threshold_P_machine": 0.5573917827286518,
+      "calibrated_in_domain": {
+        "split": "HC3 held-out test",
+        "se": 0.8285714285714286,
+        "sp": 0.817741935483871,
+        "auc": 0.8911495135688684
+      },
+      "degraded_out_of_domain": {
+        "split": "essays (human-only, no machine counterparts yet)",
+        "se": null,
+        "se_note": "not computable: essays testbed has no LLM-authored text yet (generation gated on burn report)",
+        "sp": 0.916
+      },
+      "oracle": {
+        "se": 1.0,
+        "sp": 1.0,
+        "note": "definitional ceiling, not measured"
+      }
+    },
+    "norc_pact_reference_range": {
+      "in_domain_se_ballpark": 0.99,
+      "out_of_domain_se_ballpark": "mid-80s (%)",
+      "source": "https://www.norc.org/content/dam/norc-org/pdf2025/AAPOR%20Detecting%20AI-Generated%20Survey%20Responses%20-%20Lilian%20Huang.pdf"
+    }
+  },
+  "fluency_r_f_anchor": {
+    "n_essays_used": 2467,
+    "n_skipped_missing_label": 0,
+    "correlations": {
+      "avg_word_len": {
+        "cEXT": {
+          "r": -0.0785,
+          "p": 0.0001
+        },
+        "cNEU": {
+          "r": -0.0572,
+          "p": 0.00448
+        },
+        "cAGR": {
+          "r": -0.0661,
+          "p": 0.00102
+        },
+        "cCON": {
+          "r": -0.072,
+          "p": 0.00034
+        },
+        "cOPN": {
+          "r": 0.1611,
+          "p": 0.0
+        }
+      },
+      "type_token_ratio": {
+        "cEXT": {
+          "r": -0.0223,
+          "p": 0.26832
+        },
+        "cNEU": {
+          "r": -0.0702,
+          "p": 0.00048
+        },
+        "cAGR": {
+          "r": -0.0283,
+          "p": 0.15979
+        },
+        "cCON": {
+          "r": -0.0471,
+          "p": 0.01936
+        },
+        "cOPN": {
+          "r": 0.0737,
+          "p": 0.00025
+        }
+      },
+      "avg_sentence_len_words": {
+        "cEXT": {
+          "r": 0.0065,
+          "p": 0.74724
+        },
+        "cNEU": {
+          "r": -0.0264,
+          "p": 0.18962
+        },
+        "cAGR": {
+          "r": 0.0007,
+          "p": 0.97087
+        },
+        "cCON": {
+          "r": -0.0435,
+          "p": 0.03091
+        },
+        "cOPN": {
+          "r": 0.0317,
+          "p": 0.11592
+        }
+      },
+      "punct_per_100_words": {
+        "cEXT": {
+          "r": -0.0574,
+          "p": 0.00432
+        },
+        "cNEU": {
+          "r": 0.0279,
+          "p": 0.16605
+        },
+        "cAGR": {
+          "r": -0.014,
+          "p": 0.48764
+        },
+        "cCON": {
+          "r": -0.0236,
+          "p": 0.24064
+        },
+        "cOPN": {
+          "r": 0.0709,
+          "p": 0.00042
+        }
+      },
+      "filler_per_100_words": {
+        "cEXT": {
+          "r": 0.0152,
+          "p": 0.45182
+        },
+        "cNEU": {
+          "r": -0.0006,
+          "p": 0.97739
+        },
+        "cAGR": {
+          "r": -0.0144,
+          "p": 0.47607
+        },
+        "cCON": {
+          "r": -0.0733,
+          "p": 0.00027
+        },
+        "cOPN": {
+          "r": 0.0727,
+          "p": 0.0003
+        }
+      },
+      "composite_fluency": {
+        "cEXT": {
+          "r": -0.017,
+          "p": 0.39862
+        },
+        "cNEU": {
+          "r": -0.0528,
+          "p": 0.00876
+        },
+        "cAGR": {
+          "r": -0.0073,
+          "p": 0.71848
+        },
+        "cCON": {
+          "r": -0.0095,
+          "p": 0.63763
+        },
+        "cOPN": {
+          "r": 0.018,
+          "p": 0.37237
+        }
+      }
+    },
+    "headline_r_F": {
+      "definition": "|point-biserial r| between composite_fluency and the binary trait label with the largest magnitude",
+      "max_abs_trait": "cNEU",
+      "r": -0.0528,
+      "all_composite_r": {
+        "cEXT": -0.017,
+        "cNEU": -0.0528,
+        "cAGR": -0.0073,
+        "cCON": -0.0095,
+        "cOPN": 0.018
+      },
+      "caveat": "lower bound on the true continuous r_F: binary median-split traits attenuate correlation magnitude vs. continuous BFI scores (blocked behind IEEE DataPort login)"
+    }
+  },
+  "fingerprints_sha256": {
+    "data/hc3/all.jsonl": {
+      "sha256": "ee231f82283d754050a4dc58ecf9331afaf5daea7283c6da0b096ed0fb2774cf",
+      "bytes": 73722850
+    },
+    "data/hc3/finance.jsonl": {
+      "sha256": "72e3a439714c4693e115f8ad0b917988688abc07acba8de812198cb13cd5d72e",
+      "bytes": 9889186
+    },
+    "data/hc3/medicine.jsonl": {
+      "sha256": "7141b0f5b3477543e95e24a2b268f46c375b08703a390e9a04ff69f5193caa28",
+      "bytes": 2683640
+    },
+    "data/hc3/open_qa.jsonl": {
+      "sha256": "4d968e1e1473cbdf5978024872768f0c6f27dacf681f35166dc191733dccd664",
+      "bytes": 2910828
+    },
+    "data/hc3/reddit_eli5.jsonl": {
+      "sha256": "448cebaf7fdf27560daf6cc87cc1464be4988cf8110c0ec40c40b21c2c0193db",
+      "bytes": 55448695
+    },
+    "data/hc3/wiki_csai.jsonl": {
+      "sha256": "4f78105c72e7edd3b619b3b44abac1e6f8bdb42211f22e43191d4dae889e1968",
+      "bytes": 2198039
+    },
+    "data/essays/essays.csv": {
+      "sha256": "3e0ec809f1ca98c6ecdd15b688af4006a28931e226537619fc414238c3f7bc7f",
+      "bytes": 8206858
+    }
+  }
+}

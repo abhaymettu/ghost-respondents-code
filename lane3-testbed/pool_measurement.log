@@ -1,0 +1,169 @@
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 19630.72it/s]
+[19:25:18] loading PK
+[19:25:18] embedding 2467 texts (PK full)
+[19:25:25] cross-fitting cEXT on PK (5-fold)
+[19:25:25]   r_H=0.1596 p=1.51e-15 mu_H=0.0396 V_H=0.1013
+[19:25:25] cross-fitting cNEU on PK (5-fold)
+[19:25:25]   r_H=0.1023 p=3.56e-07 mu_H=-0.0036 V_H=0.1008
+[19:25:25] cross-fitting cAGR on PK (5-fold)
+[19:25:25]   r_H=0.1060 p=1.32e-07 mu_H=0.0648 V_H=0.0988
+[19:25:25] cross-fitting cCON on PK (5-fold)
+[19:25:26]   r_H=0.0694 p=5.65e-04 mu_H=0.0196 V_H=0.0879
+[19:25:26] cross-fitting cOPN on PK (5-fold)
+[19:25:26]   r_H=0.2267 p=4.11e-30 mu_H=0.0321 V_H=0.1425
+[19:25:26] wrote /Users/abhay/code/ghost-respondents/lane3-testbed/data/scores/pk_human.json
+[19:25:26] loading Big5
+[19:25:26] embedding 399 texts (Big5)
+[19:25:27] loading personallm gpt-4-0613
+[19:25:27] embedding 320 texts (personallm gpt-4-0613)
+[19:25:28] loading personallm gpt-3.5-turbo-0613
+[19:25:28] embedding 320 texts (personallm gpt-3.5-turbo-0613)
+[19:25:29] loading personallm llama-2
+[19:25:29] embedding 320 texts (personallm llama-2)
+[19:25:30] scoring labeled pool big5_personality_essays
+[19:25:30]   roberta AUC vs PK, n=399
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights: 100%|██████████| 201/201 [00:00<00:00, 5763.73it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: openai-community/roberta-base-openai-detector
+Key                         | Status     |  | 
+----------------------------+------------+--+-
+roberta.pooler.dense.weight | UNEXPECTED |  | 
+roberta.pooler.dense.bias   | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+  roberta scored 798 texts in 91.7s
+[19:27:01]   roberta detector scores for A3 (full pool, n=399)
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights: 100%|██████████| 201/201 [00:00<00:00, 15402.21it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: openai-community/roberta-base-openai-detector
+Key                         | Status     |  | 
+----------------------------+------------+--+-
+roberta.pooler.dense.weight | UNEXPECTED |  | 
+roberta.pooler.dense.bias   | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+  roberta scored 399 texts in 41.2s
+[19:27:43]   wrote /Users/abhay/code/ghost-respondents/lane3-testbed/data/scores/big5_personality_essays.json
+[19:27:43] scoring labeled pool personallm_gpt-4-0613
+[19:27:43]   roberta AUC vs PK, n=320
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights: 100%|██████████| 201/201 [00:00<00:00, 11509.91it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: openai-community/roberta-base-openai-detector
+Key                         | Status     |  | 
+----------------------------+------------+--+-
+roberta.pooler.dense.weight | UNEXPECTED |  | 
+roberta.pooler.dense.bias   | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+  roberta scored 640 texts in 100.0s
+[19:29:23]   roberta detector scores for A3 (full pool, n=320)
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights: 100%|██████████| 201/201 [00:00<00:00, 13792.54it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: openai-community/roberta-base-openai-detector
+Key                         | Status     |  | 
+----------------------------+------------+--+-
+roberta.pooler.dense.weight | UNEXPECTED |  | 
+roberta.pooler.dense.bias   | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+  roberta scored 320 texts in 46.9s
+[19:30:10]   wrote /Users/abhay/code/ghost-respondents/lane3-testbed/data/scores/personallm_gpt-4-0613.json
+[19:30:10] scoring labeled pool personallm_gpt-3.5-turbo-0613
+[19:30:10]   roberta AUC vs PK, n=320
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights: 100%|██████████| 201/201 [00:00<00:00, 10132.02it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: openai-community/roberta-base-openai-detector
+Key                         | Status     |  | 
+----------------------------+------------+--+-
+roberta.pooler.dense.weight | UNEXPECTED |  | 
+roberta.pooler.dense.bias   | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+  roberta scored 640 texts in 93.6s
+[19:31:43]   roberta detector scores for A3 (full pool, n=320)
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights: 100%|██████████| 201/201 [00:00<00:00, 20373.00it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: openai-community/roberta-base-openai-detector
+Key                         | Status     |  | 
+----------------------------+------------+--+-
+roberta.pooler.dense.weight | UNEXPECTED |  | 
+roberta.pooler.dense.bias   | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+  roberta scored 320 texts in 47.6s
+[19:32:31]   wrote /Users/abhay/code/ghost-respondents/lane3-testbed/data/scores/personallm_gpt-3.5-turbo-0613.json
+[19:32:31] scoring labeled pool personallm_llama-2
+[19:32:31]   roberta AUC vs PK, n=320
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights: 100%|██████████| 201/201 [00:00<00:00, 15915.71it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: openai-community/roberta-base-openai-detector
+Key                         | Status     |  | 
+----------------------------+------------+--+-
+roberta.pooler.dense.weight | UNEXPECTED |  | 
+roberta.pooler.dense.bias   | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+  roberta scored 640 texts in 90.8s
+[19:34:02]   roberta detector scores for A3 (full pool, n=320)
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights: 100%|██████████| 201/201 [00:00<00:00, 10294.47it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: openai-community/roberta-base-openai-detector
+Key                         | Status     |  | 
+----------------------------+------------+--+-
+roberta.pooler.dense.weight | UNEXPECTED |  | 
+roberta.pooler.dense.bias   | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+  roberta scored 320 texts in 43.0s
+[19:34:45]   wrote /Users/abhay/code/ghost-respondents/lane3-testbed/data/scores/personallm_llama-2.json
+[19:34:45] loading unlabeled pool argugpt
+[19:34:46] embedding 500 texts (argugpt)
+[19:34:48]   roberta AUC vs PK, n=500
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights: 100%|██████████| 201/201 [00:00<00:00, 11214.12it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: openai-community/roberta-base-openai-detector
+Key                         | Status     |  | 
+----------------------------+------------+--+-
+roberta.pooler.dense.weight | UNEXPECTED |  | 
+roberta.pooler.dense.bias   | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+  roberta scored 1000 texts in 130.7s
+[19:36:59]   wrote /Users/abhay/code/ghost-respondents/lane3-testbed/data/scores/argugpt.json
+[19:36:59] loading unlabeled pool ghostbuster_gpt_writing
+[19:37:01] embedding 500 texts (ghostbuster_gpt_writing)
+[19:37:03]   roberta AUC vs PK, n=500
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights: 100%|██████████| 201/201 [00:00<00:00, 4904.48it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: openai-community/roberta-base-openai-detector
+Key                         | Status     |  | 
+----------------------------+------------+--+-
+roberta.pooler.dense.weight | UNEXPECTED |  | 
+roberta.pooler.dense.bias   | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+  roberta scored 1000 texts in 127.8s
+[19:39:11]   wrote /Users/abhay/code/ghost-respondents/lane3-testbed/data/scores/ghostbuster_gpt_writing.json
+[19:39:11] loading unlabeled pool student_llm_essays
+Repo card metadata block was not found. Setting CardData to empty.
+[19:39:13] embedding 500 texts (student_llm_essays)
+[19:39:15]   roberta AUC vs PK, n=500
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights: 100%|██████████| 201/201 [00:00<00:00, 12726.13it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: openai-community/roberta-base-openai-detector
+Key                         | Status     |  | 
+----------------------------+------------+--+-
+roberta.pooler.dense.weight | UNEXPECTED |  | 
+roberta.pooler.dense.bias   | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+  roberta scored 1000 texts in 146.1s
+[19:41:41]   wrote /Users/abhay/code/ghost-respondents/lane3-testbed/data/scores/student_llm_essays.json
+[19:41:41] truncation check: re-cross-fitting PK at 100 and 190 words
+[19:41:41] embedding 2467 texts (PK truncated 100w)
+[19:41:47]   100w: cEXT=0.120, cNEU=0.099, cAGR=0.089, cCON=0.068, cOPN=0.157
+[19:41:47] embedding 2467 texts (PK truncated 190w)
+[19:41:54]   190w: cEXT=0.153, cNEU=0.101, cAGR=0.111, cCON=0.085, cOPN=0.218
+[19:41:54] hash-comparing personallm human_stories vs PK essays.csv
+[19:41:55] wrote /Users/abhay/code/ghost-respondents/lane3-testbed/pool_measurement_raw.json
+DONE

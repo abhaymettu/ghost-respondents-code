@@ -1,0 +1,42 @@
+{
+  "k": 4,
+  "split_rule": "sentence-boundary, near-equal sentence count per chunk",
+  "models_reused": false,
+  "models_note": "pk_full_models were NOT saved by pool_measurement.py; refit here with the identical code path (same SentenceTransformer, same RidgeClassifier(alpha=1.0) full refit on 100% of PK, same embeddings) rather than reused from disk.",
+  "pk_human_between_chunk_cEXT_mean_pairwise_r": 0.20831139869450066,
+  "pk_human_between_chunk_cEXT_n_complete": 2421,
+  "snags": {
+    "pk_human": {
+      "n_skipped": 46,
+      "n_total": 2467
+    },
+    "big5_personality_essays": {
+      "n_skipped": 65,
+      "n_total": 399
+    },
+    "personallm_gpt-4-0613": {
+      "n_skipped": 0,
+      "n_total": 320
+    },
+    "personallm_gpt-3.5-turbo-0613": {
+      "n_skipped": 0,
+      "n_total": 320
+    },
+    "personallm_llama-2": {
+      "n_skipped": 0,
+      "n_total": 320
+    },
+    "argugpt": {
+      "n_skipped": 2,
+      "n_total": 500
+    },
+    "ghostbuster_gpt_writing": {
+      "n_skipped": 0,
+      "n_total": 500
+    },
+    "student_llm_essays": {
+      "n_skipped": 0,
+      "n_total": 500
+    }
+  }
+}

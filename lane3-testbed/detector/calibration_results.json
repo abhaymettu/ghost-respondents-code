@@ -1,0 +1,66 @@
+{
+  "meta": {
+    "seed": 20260907,
+    "n_per_source": 250,
+    "hc3_calibrate_n": 1250,
+    "hc3_test_n": 1250,
+    "essays_ood_n": 500
+  },
+  "roberta_base_openai_detector": {
+    "model": "openai-community/roberta-base-openai-detector",
+    "license": "MIT",
+    "note": "trained on GPT-2 outputs, applied zero-shot to ChatGPT/HC3 text -- realistic off-the-shelf transfer scenario",
+    "threshold_P_machine": 0.7536994814872742,
+    "calibrated_in_domain": {
+      "split": "HC3 held-out test",
+      "se": 0.9111111111111111,
+      "sp": 0.9403225806451613,
+      "auc": 0.9706144393241168
+    },
+    "degraded_out_of_domain": {
+      "split": "essays (human-only, no machine counterparts yet)",
+      "se": null,
+      "se_note": "not computable: essays testbed has no LLM-authored text yet (generation gated on burn report)",
+      "sp": 0.926
+    },
+    "oracle": {
+      "se": 1.0,
+      "sp": 1.0,
+      "note": "definitional ceiling, not measured"
+    }
+  },
+  "feature_baseline_logreg": {
+    "features": [
+      "n_words",
+      "n_sentences",
+      "avg_word_len",
+      "avg_sentence_len_words",
+      "type_token_ratio",
+      "punct_per_100_words",
+      "comma_per_100_words"
+    ],
+    "threshold_P_machine": 0.5573917827286518,
+    "calibrated_in_domain": {
+      "split": "HC3 held-out test",
+      "se": 0.8285714285714286,
+      "sp": 0.817741935483871,
+      "auc": 0.8911495135688684
+    },
+    "degraded_out_of_domain": {
+      "split": "essays (human-only, no machine counterparts yet)",
+      "se": null,
+      "se_note": "not computable: essays testbed has no LLM-authored text yet (generation gated on burn report)",
+      "sp": 0.916
+    },
+    "oracle": {
+      "se": 1.0,
+      "sp": 1.0,
+      "note": "definitional ceiling, not measured"
+    }
+  },
+  "norc_pact_reference_range": {
+    "in_domain_se_ballpark": 0.99,
+    "out_of_domain_se_ballpark": "mid-80s (%)",
+    "source": "https://www.norc.org/content/dam/norc-org/pdf2025/AAPOR%20Detecting%20AI-Generated%20Survey%20Responses%20-%20Lilian%20Huang.pdf"
+  }
+}

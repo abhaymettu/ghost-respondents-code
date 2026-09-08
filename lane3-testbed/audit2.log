@@ -1,0 +1,45 @@
+Repo card metadata block was not found. Setting CardData to empty.
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights: 100%|██████████| 201/201 [00:00<00:00, 7036.07it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: openai-community/roberta-base-openai-detector
+Key                         | Status     |  | 
+----------------------------+------------+--+-
+roberta.pooler.dense.bias   | UNEXPECTED |  | 
+roberta.pooler.dense.weight | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+  roberta scored 798 texts in 90.3s
+big5_personality_essays_machine (benchmark): n_pool=399 n_used=399 AUC=0.4724
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights: 100%|██████████| 201/201 [00:00<00:00, 10856.70it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: openai-community/roberta-base-openai-detector
+Key                         | Status     |  | 
+----------------------------+------------+--+-
+roberta.pooler.dense.bias   | UNEXPECTED |  | 
+roberta.pooler.dense.weight | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+  roberta scored 1000 texts in 132.3s
+argugpt_machine: n_pool=3338 n_used=500 AUC=0.9817
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights: 100%|██████████| 201/201 [00:00<00:00, 19249.15it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: openai-community/roberta-base-openai-detector
+Key                         | Status     |  | 
+----------------------------+------------+--+-
+roberta.pooler.dense.bias   | UNEXPECTED |  | 
+roberta.pooler.dense.weight | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+  roberta scored 1000 texts in 146.6s
+ghostbuster_gpt_writing_machine: n_pool=694 n_used=500 AUC=0.6435
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights: 100%|██████████| 201/201 [00:00<00:00, 9845.21it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: openai-community/roberta-base-openai-detector
+Key                         | Status     |  | 
+----------------------------+------------+--+-
+roberta.pooler.dense.bias   | UNEXPECTED |  | 
+roberta.pooler.dense.weight | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+  roberta scored 1000 texts in 144.5s
+student_llm_machine: n_pool=2078 n_used=500 AUC=0.6010

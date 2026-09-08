@@ -1,0 +1,32 @@
+[
+  {
+    "pool": "pk_human",
+    "trait": "EXT",
+    "n": 2421,
+    "dropped": 46,
+    "corr_chunkmean_whole": 0.5907582617405864,
+    "r_chunk1_label": 0.33797308912139307,
+    "r_whole_label": 0.1645949711060253,
+    "ratio": 2.0533621826373096
+  },
+  {
+    "pool": "pk_human",
+    "trait": "AGR",
+    "n": 2421,
+    "dropped": 46,
+    "corr_chunkmean_whole": 0.5619664986200444,
+    "r_chunk1_label": 0.3251697299145571,
+    "r_whole_label": 0.10805915466477387,
+    "ratio": 3.009182617829223
+  },
+  {
+    "pool": "pk_human",
+    "trait": "OPE",
+    "n": 2421,
+    "dropped": 46,
+    "corr_chunkmean_whole": 0.6765778645455929,
+    "r_chunk1_label": 0.3997309320622979,
+    "r_whole_label": 0.22334363377962888,
+    "ratio": 1.7897574481872571
+  }
+]

@@ -1,0 +1,4 @@
+pilot: cell_id=4fc0b7b770b9c123 reps=500 seed=20260907
+pilot: done in 822.93s
+pilot: wrote /Users/abhay/code/ghost-respondents/lane4-simulation/results/pilot.jsonl
+pilot: wrote /Users/abhay/code/ghost-respondents/lane4-simulation/PILOT.md

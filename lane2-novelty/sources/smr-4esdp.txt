@@ -1,0 +1,1677 @@
+  Generative AI Meets Open-Ended Survey Responses:
+  Research Participant Use of AI and Homogenization
+                      Simone Zhang∗ 1 , Janet Xu2 , and AJ Alvero3
+                      1
+                          New York University (Sociology), simone.zhang@nyu.edu
+                2 Stanford University (Graduate School of Business), jjxu@stanford.edu
+ 3 Cornell University (Information Science; Center for Data Science for Enterprise and Society),
+
+                                          ajalvero@cornell.edu
+
+
+                                          March 15, 2025
+
+
+
+                             Forthcoming Sociological Methods & Research
+
+
+
+                                               Abstract
+            The growing popularity of generative AI tools presents new challenges for data
+        quality in online surveys and experiments. This study examines research participants’
+        use of large language models to answer open-ended survey questions and describes
+        empirical tendencies in human vs LLM-generated text responses. In an original survey
+        of participants recruited from a popular online platform for sourcing social science
+        research subjects, 34% reported using LLMs to help them answer open-ended survey
+        questions. Simulations comparing human-written responses from three pre-ChatGPT
+        studies with LLM-generated text reveal that LLM responses are more homogeneous
+        and positive, particularly when they describe social groups in sensitive questions. These
+        homogenization patterns may mask important underlying social variation in attitudes
+        and beliefs among human subjects, raising concerns about data validity. Our findings
+        shed light on the scope and potential consequences of participants’ LLM use in online
+        research.
+
+
+Acknowledgments: We thank Brandon Barnes, Yeji Lee, Xu-Li Valadez, Samyak Jain, and Echo
+Zhou for excellent research assistance. We are also grateful for research support provided by the
+Behavioral Laboratory at Stanford Graduate School of Business (RRID: SCR023228). We also
+thank the Time-Sharing Experiments of the Social Sciences (TESS) program for access to TESS
+survey data.
+
+  ∗
+      Corresponding author: 383 Lafayette Street, 3rd Floor, New York, NY 10003
+1    Introduction
+
+The rise of web-based, self-administered surveys and online experiments in social science research
+has created valuable new opportunities for researchers but raises concerns about data quality. Issues
+such as participant inattention, disengagement, and dishonesty are often amplified in these formats
+(Alvarez et al., 2019; Ternovski and Orr, 2022; Bell and Gift, 2023). Popular online platforms like
+Amazon Mechanical Turk and Prolific present additional challenges, including automated bots,
+multiple submissions, and cross-contamination between studies (Chmielewski and Kucker, 2020;
+Douglas et al., 2023). Researchers have worked to measure these issues and develop mitigation
+strategies to improve data quality (Berinsky et al., 2014; Cuskley and Sulik, 2024).
+    In this article, we add to this work by examining an emerging challenge in online data collec-
+tion: research participants’ use of generative AI. The release of low-cost, public-facing AI tools
+like ChatGPT has spurred their rapid adoption in professional settings and among the general pub-
+lic. Powered by large language models (LLMs), these commercial AI tools have exhibited strong
+performance on tasks such as producing natural-sounding original text, offering writing assistance,
+and generating ideas. Scholars have already started examining the implications of generative AI
+tools in arenas like education and the workplace (e.g. Smolansky et al., 2023; Dell’Acqua et al.,
+2023; Brynjolfsson et al., 2023).
+    This article extends these lines of inquiry to generative AI’s implications for web-based re-
+search. We examine participants’ use of AI when answering open-ended text questions, a place
+where text-generation tools may prove especially disruptive. Open-ended questions appear widely
+across social science study designs. In surveys and experiments – the focus of the present paper –
+they are used to deliver interventions or experimental treatments, measure outcomes, probe the rea-
+sons or mechanisms behind close-ended choices, and assess the validity of other measures (Ziegler,
+2022; Ferrario and Stantcheva, 2022; Hadler, 2023; Landesvatter and Bauer, 2024). Open-ended
+responses are also a popular object of analysis in the literature on text as data (Roberts et al., 2014;
+Egami et al., 2022) and used in computational social science for training and evaluating machine
+
+
+                                                   1
+learning models. While valuable for researchers, study participants report finding open-ended
+questions burdensome and time-consuming (Fowler et al., 2023). Online study participants, who
+usually receive flat payments as compensation, are incentivized to finish studies quickly to max-
+imize their earnings. Against this backdrop, emerging evidence from crowdsourcing platforms
+suggests that some online research participants are turning to generative AI to answer writing-
+intensive questions (Veselovsky et al., 2023a,b).
+   This article offers a first descriptive portrait of participants’ use of LLMs to answer open-
+ended questions. We fielded a survey on Prolific, a popular online survey platform, to measure
+the self-reported prevalence of LLM use, understand participants’ reasons for using or not using
+LLMs, characterize the prompting strategies participants employ, and describe variations in LLM
+use among subgroups.
+   We then investigate the potential consequences of this emerging practice for the quality, con-
+tent, and variance of survey responses, with the aim of informing researchers’ expectations about
+how participants’ LLM use may shape study results. Extant research suggests participants’ use of
+LLMs may raise several potential issues. Most immediately, when participants generate responses
+to open-text questions, those answers can diverge from what respondents would have written ab-
+sent AI tools. While some scholarship on how well carefully fine-tuned LLMs can predict survey
+answers has suggested LLM-generated responses are sometimes consistent with average human
+responses (Kim and Lee, 2023; Bisbee et al., 2024; Kozlowski et al., 2024; Ashokkumar et al.,
+2024), it is far less clear whether the ways in which research participants use off-the-shelf genera-
+tive AI tools yield responses that align with their actual perspectives, rather than those encoded as
+generic positions in LLMs. Other research suggests that LLMs – whether as text generators or as
+writing assistants – tend to produce or steer people towards answers that are more homogeneous in
+style and content than natural human writing (Padmakumar and He, 2023; Anderson et al., 2024).
+Consequently, LLM-influenced study responses may mask important forms of social variation.
+   We evaluate these possibilities by assessing the extent to which LLM-produced responses align
+with and diverge from human-generated responses. To do so, we draw on open-ended questions
+
+
+                                                    2
+posed in three studies fielded as part of the Time-Sharing Experiments of the Social Sciences
+(TESS) program prior to the public release of ChatGPT. We compare those responses to LLM-
+simulated responses to the same questions. Our simulations are informed by our survey, in which
+we asked online survey takers how they would prompt an AI chatbot to answer each of the three
+questions.
+   We find that 34% of Prolific participants report using LLMs at least some of the time when
+they answer open-ended questions, with 9% reporting using LLMs “most of the time” or “always.”
+We also find that LLM usage varies along demographic dimensions that correlate with cleavages
+in public opinion, which could bias estimates of between-group differences. Specifically, Black,
+male, college-educated, Republican, and participants newer to the Prolific platform are more likely
+to report using LLMs in our survey, though these patterns may change as AI technology diffuses
+more widely. Those who use LLMs most commonly cite needing help expressing their thoughts,
+AI’s speed and writing quality, and researchers providing unclear instructions as reasons for turn-
+ing to LLMs. Their most common prompting strategies include asking AI to generate ideas or
+provide additional information on the topic. Notably, perspective-taking prompts that incorporate
+participants’ pre-existing views or social positions are rare. Meanwhile, those who refrain from
+using LLMs often cite moral reasons related to authenticity, ethical concerns about “cheating,” or
+compliance with rules.
+   Comparing LLM-generated responses with human responses recorded in TESS data, we find
+that LLM-written text has a larger vocabulary but exhibits greater homogeneity across responses.
+The substance and tone of LLM-generated text also depart sharply from human-written answers,
+with LLM-generated answers using more positive language. In sensitive questions about group
+perceptions and stereotypes, human-written responses are more likely to feature dehumanizing
+language than LLM-simulated responses. Overall, our results show that free-text survey responses
+written by humans convey a broader range of views than answers generated by LLMs.
+   Together, our results provide an initial view of the emerging landscape and the consequences
+of study participants’ use of LLMs. We present data on the scope and distribution of this practice
+
+
+                                                3
+among study participants. Drawing on simulated LLM answers, we outline ways AI use could
+affect conclusions drawn from online surveys and experiments, while identifying directions for
+future research to further investigate the consequences of this evolving development. We con-
+clude by identifying implications for research practice and connecting the study’s results to related
+literatures on silicon sampling, AI evaluation, and the societal impacts of AI.
+
+
+
+2    Generative AI and Human Subjects Surveys and Experiments
+
+As generative AI use spreads among the general public, scholars and observers have raised ques-
+tions about the implications of these tools for how people write and express themselves across
+many domains of social life, from peer review to medicine to the arts (Epstein et al., 2023; Liang
+et al., 2024; Tai-Seale et al., 2024). Recent studies of crowd-working platforms that social scientists
+often rely on to recruit research participants suggest that the consequences of LLMs extend to how
+participants engage with online studies. For instance, two studies of participants on Amazon Me-
+chanical Turk (MTurk) and Prolific found that substantial shares – between 33-46% depending on
+how one infers LLM usage – relied on an LLM to complete a text summarization task (Veselovsky
+et al., 2023a,b). In a survey of crowdworkers fielded in December 2023, 13% of Prolific, 15% of
+Clickworker, 73% of MTurk participants reported ever using an AI chatbot to complete a crowd-
+sourcing task (Christoforou et al., 2024). This article builds on this prior work measuring AI use in
+crowd-working tasks broadly, focusing specifically on the implications of AI use in social science
+surveys and experiments where it can influence the measurement of human subjects’ subjective
+beliefs, attitudes, experiences, and behaviors.
+    Research participants’ use of AI shares similarities with past challenges researchers have faced
+in online studies, but also presents unique considerations. LLM usage resembles previously ex-
+amined issues such as bots in online surveys (Chmielewski and Kucker, 2020) and respondents’
+information search behaviors during studies (Clifford and Jerit, 2016; Gummer and Kunz, 2022;
+Graham, 2023). Like these earlier challenges, LLM use consists of an external influence on study
+
+
+
+                                                  4
+participation that can undermine the authenticity of participants’ responses and compromise the
+validity of research findings. Researchers have developed various solutions for these past issues,
+such as attention checks and response time analysis (Berinsky et al., 2014; Kennedy et al., 2020),
+which may inform strategies for addressing LLM use. However, LLMs are also distinct in impor-
+tant ways. Unlike bots, which are typically deployed to game survey systems, LLMs can be used
+by real human participants as assistive tools and raise novel questions about the authenticity and
+validity of responses. Further, while information search traditionally involves participants actively
+looking up external content to inform their answers, LLMs can generate answers with less active
+effort on the part of participants.
+   In this article, we investigate the consequences of subjects’ LLM use by focusing on the case of
+open-ended text questions, writing-intensive components of studies for which participants might
+be most likely to turn to LLMs. When open-ended text responses are used for measurement –
+whether to capture outcomes or mechanisms, or to probe other answers further – participants’
+use of LLMs raises important questions about how they might shape the natural responses that
+participants would give (Davidson, 2024).
+   In the ideal, LLMs could offer benefits that are aligned with researchers’ objectives of obtaining
+valid, unbiased results. AI writing assistance could make it easier and faster to write out fleshed-
+out responses or help participants more precisely express their true underlying beliefs or attitudes.
+Research on the implications of LLM use in other domains, for instance, suggests that LLMs may
+be especially beneficial for study participants with weaker writing skills (Noy and Zhang, 2023;
+Mollick, 2023; Brynjolfsson et al., 2023). To the extent that LLMs lower burdens on participant
+time and effort without compromising measurement validity, LLM use among participants may
+generate other ancillary benefits, like minimizing respondent fatigue, item non-response, and sur-
+vey attrition (Peytchev, 2009; Zuell et al., 2015).
+   But emerging evidence on the values and perspectives embedded in LLMs raises the possibility
+that participants’ interactions with them could distort answers and compromise data quality. If par-
+ticipants directly copy LLM-generated responses or craft answers informed by LLM suggestions
+
+
+                                                  5
+(Jakesch et al., 2023), how might that influence answers gathered in response to open-ended survey
+questions? A rapidly growing body of research has aimed to characterize LLM tendencies when
+prompted to respond to attitudinal and behavioral questions ordinarily posed to humans. While
+much of this work was developed to address other concerns, such as probing the social biases or
+point of view that LLMs encode (Santurkar et al., 2023; Motoki et al., 2024) or evaluating how
+well LLMs can simulate human attitudes and actions in “silicon samples” (Boelaert et al., 2024;
+Bail, 2024), it offers important clues as to how study participants’ exposure to LLM assistance
+could impact their answers in surveys and experiments.
+   A key lesson from this prior work is that LLM-provided answers to survey questions can be
+highly sensitive to how LLMs are prompted (Wright et al., 2024). Users may prompt LLMs,
+for instance, to offer a generic position on a question, such as “What is a reason to support or
+oppose gun control?” Studies on the default positions that publicly available, commercial LLMs
+tend to generate find that they most closely reflect the positions of particular subpopulations, such
+as people in the US and some countries in Europe and South America (Durmus et al., 2023) and
+more left-leaning individuals (Santurkar et al., 2023; Hartmann et al., 2023; Martin, 2023; Rozado,
+2023; Motoki et al., 2024). This suggests that, when prompted in this manner, LLM-assisted
+answers may steer some respondents away from their true positions and toward the generic views
+of LLMs.
+   Users may also prompt LLMs in more tailored ways, such as by signaling their own stances
+on an issue or providing additional detail on their backgrounds, such as “I’m a progressive woman
+from the Midwest. What is a reason to support gun control?” This latter approach approximates
+a common strategy that researchers employ to study how accurately LLMs can predict human re-
+sponses. In such studies, researchers typically supply LLMs with background information about
+a hypothetical respondent to assemble a persona that is then used to simulate responses. Some
+studies suggest that LLMs can reasonably match average human opinions and positions in specific
+contexts (Argyle et al., 2023; Kozlowski et al., 2024; Kim and Lee, 2023; Bisbee et al., 2024;
+Ashokkumar et al., 2024). Closest to our setting, Argyle et al. (2023) show that when prompted
+
+
+                                                 6
+with sociodemographic profiles of hypothetical respondents, LLMs produce similar words to de-
+scribe Republicans and Democrats as do real respondents matching those demographics. Other
+studies meanwhile suggest that LLMs can exhibit tendencies toward misportraying or caricaturing
+the positions of members of distinct social groups (Wang et al., 2024; Cheng et al., 2023; Durmus
+et al., 2023; Neumann et al., 2024) 1 Overall, however, this literature suggests that such persona-
+based prompting may lead to AI-informed answers that are closer to participants’ true answers
+than would more generic prompting strategies.
+    Yet, despite the significance of prompting strategies, we know little about how study partici-
+pants engage with AI when answering open-ended questions. In this study, we address this gap by
+directly asking study participants who use AI to draft sample prompts they would use to help them
+answer survey questions. While researchers use sophisticated methods to simulate answers, in-
+cluding careful prompt engineering and fine-tuning to mimic human responses (Ollion et al., 2023;
+Jensen et al., 2022), most participants are unlikely to engage with AI in such tailored or detailed
+ways. For many, drafting such prompts may be more burdensome than simply answering the ques-
+tion directly. By examining the types of responses that participant-written prompts produce, this
+study reveals what participants are exposed to when relying on AI, shedding light on the direction
+in which AI interactions may influence participant answers.
+    Beyond congruence between the average or typical responses of LLMs and humans, additional
+research highlights the possibility that LLMs may suppress natural human variation, homogenizing
+or standardizing respondents’ answers in both content and style. LLMs embed the perspectives
+present in their training data, as well as the commitments and concerns of their developers (Bender
+et al., 2021; Alvero and Peña, 2023). Despite efforts by LLM developers to “democratize” design
+decisions and incorporate diverse text in their training corpora, LLMs commonly learn and reflect
+dominant cultural styles and perspectives, such as those held by demographic majorities or groups
+over-represented in cultural production (Cao et al., 2023; Naous et al., 2024; Tao et al., 2024;
+Gillespie, 2024). It is also the case that many LLMs, including the most popular platforms where
+  1 We focus here on methodological challenges to using LLMs to simulate opinions, but see Agnew et al. (2024) and
+
+Wang et al. (2024) for ethical arguments.
+
+
+                                                        7
+users can interface with them via chatbot, are not scientific but rather commercial products: having
+a product that can give consistent, reliable results may be better for some business and industrial
+scientific applications. However, it can present a hazard for surveys and experiments where LLM-
+induced homogenization can lead to misleading or incorrect conclusions.
+   A variety of studies have highlighted the potential of LLMs to homogenize people’s positions
+and written self-expressions. LLMs tend to predict that opinions and attitudes within social groups
+are more uniform than they are in reality (Santurkar et al., 2023; Park et al., 2024; Wang et al., 2024;
+Bisbee et al., 2024). They also tend to produce writing with particular styles and word choices.
+Wright et al. (2024), for example, show that LLM open responses to political questions often
+repeat similar linguistic tropes, even across prompting strategies, models, and political stances.
+Another study comparing human-written and LLM-generated college admissions essays also finds
+that the writing styles of LLMs exhibit much less variation than the writing styles of humans within
+different social groups (Alvero et al., 2024). Liang et al. (2024) similarly show that academic peer
+reviews with linguistic markers consistent with being AI-generated tend to be more homogeneous
+and formulaic. Experimental research on the effects of LLM-based writing assistants further offers
+evidence that LLMs steer human authors toward writing opinion essays and stories that are less
+diverse (Padmakumar and He, 2023; Doshi and Hauser, 2024). Thus, we might expect that LLM
+use among research participants – whether to generate answers directly or to inform human-written
+answers – could lead to data that obscures social variation.
+   In sum, while the growing body of research on LLMs provides important insights into the capa-
+bilities and limitations of these tools, there remains a significant gap in understanding how their use
+by research participants might influence the quality and validity of textual data collected in online
+surveys and experiments. Our study addresses this gap by providing the first empirical portrait of
+LLM use among online study participants, examining its prevalence, participants’ motivations for
+using LLMs, and their prompting strategies when seeking AI assistance. Furthermore, we extend
+prior research by simulating LLM-generated responses based on the prompting strategies reported
+by actual online research participants, rather than using researcher-designed prompts. By com-
+
+
+                                                   8
+paring these simulated responses to human answers from pre-ChatGPT surveys, we offer novel
+insights into how participants’ LLM use may impact the content, style, and variance of responses
+to online studies.
+
+
+
+3     Overview of Analytic Approach and Data
+
+Our analysis proceeds in two parts. Part I provides a descriptive portrait of AI use among online
+study participants, drawing on results from an original survey of individuals active on Prolific,
+a popular online platform for recruiting study subjects. Part II compares the characteristics of
+human vs. LLM-generated open-ended survey responses. Specifically, we examine responses from
+three TESS survey questions fielded before the public release of ChatGPT against LLM-generated
+answers produced using prompts crafted by participants in our Prolific survey. In what follows, we
+describe our primary data sources. We further detail our methods and measures in Analysis Parts I
+and II.
+
+
+3.1       Survey on AI Use
+
+We conducted an original survey to investigate how online survey participants engage with LLMs
+when answering open-ended questions. Since the target population for this survey is individuals
+who have experience taking online surveys and are likely to do so in the future, we recruited
+directly from Prolific, a popular digital platform for sourcing survey and experiment participants.
+As online non-probability-based samples continue to be used widely across the social sciences
+due to their cost-effectiveness and ease of access (Coppock and McClellan, 2019; Weinberg et al.,
+2014), the behavior of online participants – who may also have the strongest motivation for using
+AI to help them work more efficiently – is especially important to understand.
+    To maximize coverage and variation across key sociodemographic characteristics, we used
+Prolific’s “representative sample” recruitment option, which sets quotas based on ethnicity, gen-
+der, age, and political affiliation to achieve a sample composition that mirrors that of the U.S.
+
+
+                                                9
+population on these dimensions. While quota sampling approaches remain fundamentally differ-
+ent from probability-based sampling, they are often the best available strategy for online studies
+and are thus widely used (Yang and Banamah, 2014). We recruited 799 participants to our study;
+our final analytic sample excludes two participants who did not give consent, two participants who
+did not pass an attention check embedded halfway through the survey, and one participant who
+was flagged as a bot by a CAPTCHA test.
+   Table 1 shows the characteristics of the sample. Compared to the U.S. population, the sample
+has a smaller share of Hispanic/Latino individuals, is more college-educated, and is slightly older.
+Almost two-thirds of the participants joined Prolific within the past year, and the vast majority
+earn most of their income from sources other than the platform. However, more than 80 percent
+of participants reported taking at least three other surveys in the 24-hour period before taking our
+survey, suggesting that most are regular survey-takers.
+
+
+
+
+                                                10
+                    Table 1: Prolific Sample Descriptive Statistics (N = 794)
+
+                                                                 % or Mean (Std. Dev)
+         Race (categories not mutually exclusive)
+           White                                                          70.5
+           Hispanic/Latino                                                11.6
+           Black/African-American                                         16.4
+           Asian/Asian-American                                            8.4
+           Other                                                           5.8
+         Gender
+           Female                                                         50.0
+           Male                                                           47.7
+           Non-binary or other                                             2.3
+         Age                                                           45.2 (16.3)
+         Educational Attainment
+           Less than BA                                                   44.2
+           BA or higher                                                   55.8
+         Political Party Affiliation
+           Democrat                                                       33.1
+           Independent                                                    37.3
+           Republican                                                     28.6
+           Other                                                           1.0
+         Time on Prolific
+           Less than 6 months                                             54.7
+           6 months - a year                                               9.2
+           More than a year                                               36.1
+         Share of income from Prolific
+           Less than half                                                 83.4
+           More than half                                                 16.6
+         Num. surveys taken in previous 24 hrs
+           Fewer than 3                                                   17.0
+           3-6                                                            42.8
+           7 or more                                                      40.2
+         Source: Subjects recruited on Prolific in summer 2024
+
+
+   Our main outcome of interest was the frequency with which participants used LLMs (“AI as-
+sistants or chatbots”) for help with answering open-ended survey questions. To minimize social
+desirability bias, we framed the survey as a study about online workers’ use of and expertise with
+“new AI technologies.” Given that some survey respondents might still feel pressure to misrep-
+resent their LLM usage out of reputational concerns, we emphasized that their answers wouldn’t
+
+                                               11
+influence their compensation or eligibility for future studies. We also assuaged these concerns by
+not collecting Prolific IDs on the survey and reassuring respondents that their personal identifiers
+would not be shared with others.
+   Additionally, we asked respondents to identify reasons for using (or not using) AI and probed
+how they would prompt or talk to AI assistants or chatbots to receive help with writing. To do this,
+we showed participants the exact questions seen by TESS participants in the three focal studies.
+These respondent-generated prompts provide insight into how survey participants actually engage
+with LLMs to generate free-text responses, and we use them to simulate the LLM responses in our
+study.
+
+
+3.2      Data on Human-Generated Survey Responses
+
+For a source of human-crafted answers to open-ended survey questions, we use survey experi-
+ment data from three studies conducted via the Time-sharing Experiments for the Social Sciences
+(TESS) program, which allows researchers to field studies on NORC’s nationally representative,
+probability-based AmeriSpeak panel. All three studies were fielded prior to the public release of
+ChatGPT on November 30, 2022. The data for these studies is publicly available through TESS’s
+Open Science Framework repository. Table 2 summarizes the questions we used and their sample
+sizes. We chose these three surveys because they were among the last waves of TESS studies
+administered before ChatGPT’s public release, featured open-ended questions that were reason-
+ably easy to isolate and replicate, and addressed topics of theoretical interest to the measurement
+of polarization and homogenization in public opinion data. Two of the studies – Jardina et al.
+(2021) (JSD for short) and Graham (2021) – explicitly ask about attitudes toward well-defined
+social groups and are especially germane to debates about measuring group stereotypes and sen-
+sitive topics. The third study, Groenendyk et al. (2025), focuses on a more abstract topic, which
+may be more deliberative and cognitively demanding for study participants. Collectively, the three
+questions in these studies capture some of the common purposes for open-ended survey questions
+in the social sciences.
+
+
+                                                12
+     We simplified some study designs to facilitate cleaner comparisons between simulated LLM
+responses and human-written responses. For Graham, we examine responses from those randomly
+assigned to write about political parties (as opposed to their favorite activity). For Groenendyk, we
+limited the sample to those who were not exposed to randomly assigned definitions of “politics”
+earlier in the study.
+
+Table 2: TESS Questions. Sample size is for the open-ended question examined and excludes
+missing/invalid values in the TESS replication data.
+
+    Study & Principal Investigator(s)   Question                                   Sample   Field Period
+                                                                                   Size
+
+    “The Influence of the Terms We      In the text box below, briefly describe    1,928    05/25/2020-
+    Use on Measures of Racial Atti-     what comes to mind when you think of                03/23/2021
+    tudes” Ashley Jardina and LaFleur   [randomized: blacks | African Ameri-
+    Stephens-Dougan                     cans] in American society today.
+
+    “Conditional Commitment?     Par-   What makes you similar to [own party:      1,930    08/31/2019-
+    tisan Identity and Support for      Democrats | Republicans]?          What             01/21/2020
+    Democracy in the United States”     makes you different from [other party:
+    Matthew Graham                      Democrats | Republicans]?
+
+    “What Motivates Interest in Poli-   What is it about politics that makes you   346      04/13/2021-
+    tics?” Eric Groenendyk              [uninterested | interested]?                        07/01/2021
+
+
+
+
+4      Analysis Part I: Portrait of LLM Use Among Research Par-
+
+       ticipants
+
+In Analysis Part I, we summarize findings from our survey of Prolific study participants on their
+use of AI when participating in studies.
+
+
+
+
+                                                        13
+4.1   Patterns in AI Use
+
+Figure 1 shows the frequency of LLM usage among survey respondents. About two-thirds of
+respondents state that they have never used LLMs to help them answer open-ended survey ques-
+tions. About one-quarter of participants report that they “sometimes” use AI assistants or chatbots
+for help with writing. Less than 10% of the sample reports using LLMs very frequently (“most of
+the time” or “always”) when answering questions that require writing. Overall, the results suggest
+that a share of online survey participants are now relying on generative AI for help with writing
+responses to open-ended questions, but LLMs have not reached widespread adoption.
+
+                          Figure 1: LLM Usage among all respondents
+
+
+
+
+   As shown in Figure 2, OpenAI’s ChatGPT is by far the most popular model among respondents
+who report using LLMs for writing assistance at least some of the time. Over 90% of AI users rely
+on ChatGPT for writing assistance. About 30% of AI users in the sample work with Google Gemini
+and about 22% use Microsoft Copilot, but the vast majority (>80%) of Gemini and Copilot users
+also report using ChatGPT. Most AI users only rely on one model, though a small minority (about
+
+                                                14
+4%) reported 4-5 different LLMs when asked to select all the AI tools they use.
+
+Figure 2: Most common LLMs used by respondents who reported using AI “sometimes,” “most
+of the time,” or “always” to complete open-ended writing questions. Respondents were asked to
+select all options that applied.
+
+
+
+
+   Are certain subpopulations of survey participants more likely to use LLMs than others? Sub-
+group differences in LLM usage have important consequences for both within-group inferences
+and between-group inferences. For example, if members of a social group are more likely to use
+LLMs than the rest of the population, their survey responses may be more similar to each other,
+creating the false impression that individuals of this group are a homogenous bloc. Moreover,
+members of groups with higher LLM usage may hold views that diverge from the rest of the pop-
+ulation’s in reality, but produce LLM-generated survey responses that misleadingly bear greater
+resemblance to the population average. This effectively suppresses the group’s opinion, which
+would bias population-level mean and variance estimates. Table 3 shows how the subset of LLM
+users differs from those who say that they never use AI assistants or chatbots for help with an-
+swering open-ended questions. In this first snapshot of LLM usage, we find that Black, male,
+
+                                               15
+college-educated, and Republican respondents are more likely to use LLMs for help with open-
+ended questions. Those newer to the platform – people who started working on Prolific in the past
+6 months – are also more likely to use LLMs for writing assistance than participants who have
+been taking surveys for at least a year.
+
+
+                           Table 3: Sample Characteristics by AI Usage
+
+                                              Uses AI (N = 272)      Never uses AI (N = 522)
+                                             % or Mean (Std. Dev)        % or Mean (Std. Dev)
+ Race (categories not mutually exclusive)
+   White                                               59.9                      76.1
+   Hispanic/Latino                                     11.4                      11.7
+   Black/African-American                              26.8                      10.9
+   Asian/Asian-American                                 6.6                       9.4
+   Other                                                5.9                       5.7
+ Gender
+   Female                                              43.8                      53.3
+   Male                                                55.5                      43.7
+   Non-binary or other                                 <1.0                       3.1
+ Age                                                44.3 (16.0)               45.8 (16.4)
+ Educational Attainment
+   Less than BA                                        36.0                      48.5
+   BA or higher                                        64.0                      51.5
+ Political Party Affiliation
+   Democrat                                            28.3                      35.6
+   Independent                                         32.4                      39.8
+   Republican                                          37.5                      23.9
+   Other                                                1.8                       0.6
+ Time on Prolific
+   Less than 6 months                                  64.0                      49.8
+   6 months - a year                                    8.8                       9.4
+   More than a year                                    27.2                      40.8
+ Share of income from Prolific
+   Less than half                                      84.2                      83.0
+   More than half                                      15.8                      17.0
+ Num. surveys taken in previous 24 hrs
+   Fewer than 3                                        17.3                      16.9
+   3-6                                                 38.2                      45.2
+   7 or more                                           44.5                      37.9
+ Source:Subjects recruited on Prolific during summer 2024
+
+
+                                               16
+4.2    Reasons For and Against Using AI
+
+We asked respondents who said that they “sometimes”, “most of the time”, or “always” use LLMs
+to indicate all the situations that might lead them to turn to AI for help. The multiple-choice an-
+swer options included reasons related to perceptions of AI capabilities (e.g., AI would be faster,
+AI would give higher quality answers), needs related to the act of writing itself (e.g., express-
+ing thoughts, elaborating longer answers, coming up with ideas for what to say, translation), and
+survey design shortcomings (e.g., unclear instructions, fatigue from answering too many writing
+questions). Conversely, respondents who reported “never” using LLMs were asked, “Why have
+you not used an AI assistant or chatbot to help you with survey questions that involve writing?”
+This question was originally posed as an open-ended question. After reading a randomly drawn
+sample of 100 responses per question, we inductively developed a coding scheme to manually
+categorize the respondents’ answers. When a respondent’s answer contained multiple reasons, the
+authors and research assistants labeled it with all the codes that applied.
+   Figure 3 displays the prevalence of self-reported reasons for using AI assistants, among re-
+spondents who use them at least sometimes. The most common reason – selected by 58% of AI
+users – is needing help expressing one’s thoughts. Notably, while most respondents note that they
+turn to AI for help with articulating their opinions, they are much less likely to say that they turn
+to AI because they have no opinion on the matter or because they need to write a longer answer. In
+other words, respondents are more likely to say that they are using LLMs for help with verbalizing
+their ideas rather than using LLMs to generate new ones.
+   Some respondents also turn to AI when they think that generative AI might have stronger
+writing capabilities than they do personally. About 45% of AI users report using LLMs when they
+think that AI will be faster at writing an answer than they will be, and 38% say that they use AI
+when they think LLMs will generate a higher-quality answer than they would on their own. Finally,
+we find that some participants are turning to AI to compensate for shortcomings or fatigue caused
+by sub-optimal survey designs. Around 42% of AI users say that they use AI assistants or chatbots
+
+
+
+                                                 17
+when they encounter “unclear instructions”, and 17% say they use AI writing assistance when they
+think the study includes too many questions that require writing.
+
+Figure 3: Reasons for Using AI among respondents who reported using AI “sometimes,” “most
+of the time,” or “always” to complete open-ended writing questions. Respondents were asked to
+select all options that applied.
+
+
+
+
+   By contrast, Table 4 shows common reasons given by respondents who never use AI for avoid-
+ing it, along with descriptions, examples, and the percentage of respondents citing each reason
+(95% confidence intervals shown in parentheses). Most respondents’ answers could be mapped
+onto a single reason category, but about a quarter of responses expressed more than one type of
+reason.
+
+
+
+
+                                                18
+                                    Table 4: Reasons Against AI Use
+
+     Reason                 Description                            Example                 Prevalence (95% CI)
+  Inauthentic/    Using AI would lead to               “It is not authentically my           35.4% (31.3%
+  Invalid         inauthentic, invalid, or fake        opinions or thoughts. Using an           -39.5%)
+                  answers that do not reflect what     AI may change the tone and
+                  respondent really thinks or          language I might normally use”
+                  believes
+  Unethical/      Using AI would be unethical,         “I would still consider it a form     24.1% (20.5%
+  Immoral         immoral, or dishonorable in          of cheating and, therefore,              -27.8%)
+                  some way (i.e., cheating)            believe it is unethical to use
+                                                       something that substitutes your
+                                                       own mind”
+  Unnecessary     Respondent does not see a need       “Because I dont need to”            23.4% (19.7% -27%)
+                  for AI
+  Against Rules   Using AI would violate rules of      “I believe that it is against the     19.9% (16.5%
+                  study participation or lead to       rules to do so in most studies”          -23.3%)
+                  platform sanctions
+  Preference      Respondent prefers to write          “I enjoy writing. If it’s not a       16.7% (13.5%
+                  their own answers instead of         requirement, I prefer to write           -19.9%)
+                  using AI                             my own responses”
+  Unfamiliar      Respondent is unfamiliar with        “Honestly, I do not know how.          10.9% (8.2%
+                  AI; doesn’t know how to use it       It seems intimidating”                   -13.6%)
+                  for completing surveys
+  Ineffective     Respondent does not think AI         “Generative AI often spits out       5% (3.1% -6.8%)
+                  is an effective tool                 nonsense”
+  Note: Reason categories are not mutually exclusive
+
+
+
+   Overall, a mix of reasons emerged from the responses. The most common reason, expressed by
+over a third of the respondents who stated that they never use LLMs to answer open-ended ques-
+tions, is concern about authenticity and validity. Responses in this genre often state that answers
+written with or by AI do not convey a person’s genuine opinions, and evoke authenticity as a moral
+obligation that participants owe to researchers. Two other common reason categories also touch
+on moral boundaries: about 24% of responses note that using AI is unethical or immoral (i.e., it
+is “cheating”) and about 20% of responses mention that AI usage violates rules and platform poli-
+cies. Whereas concerns about authenticity draw attention to how LLMs may produce disingenuous
+answers, reasons mentioning ethics and possible rule violations surrounding AI usage highlight the
+perceived inherent “wrongness” of using these tools.
+   Beyond ethical concerns, other respondents avoided AI because they saw it as unnecessary
+or preferred their own writing process. About 23% of respondents said that they simply did not
+
+
+                                                        19
+need to use AI and about 17% said that they generally preferred writing by themselves. Many
+of the answers in these categories emphasized the respondent’s competence, confidence, and/or
+enjoyment of writing. For these respondents, the ethics and implications of LLMs and their skill
+or familiarity with AI tools were less salient.
+   Finally, a small portion (about 11%) of respondents said that they don’t use AI because they
+don’t know how to, or because they are intimidated by the tools. An even smaller percentage
+(around 5%) reported refraining from using AI assistants because they don’t think the technologies
+are effective, or because they demonstrated sophisticated understanding and distrust of LLMs.
+
+
+4.3    Taxonomy of Prompting Strategies
+
+We elicited sample prompts from respondents by showing them each of the three TESS survey
+questions of interest and asking, “Imagine you were participating in a study in Prolific and you en-
+countered the following question. What would you say to an AI assistant or chatbot if you wanted
+to ask for help with writing a response to this question?” To reconstruct the question from the JSD
+study, we recreated the two different versions of the question that respondents were randomized
+into (i.e. “blacks” or “African Americans”). For questions from the Graham and Groenendyk stud-
+ies, we first asked the relevant prerequisite questions and then tailored each survey question based
+on respondents’ responses to these prerequisite questions (i.e. interested or uninterested in politics;
+respondents’ own party vs other party). The three questions were shown in random order.
+   To maintain external validity, we only use prompts written by respondents who reported using
+AI assistants or chatbots at least sometimes. We developed a coding scheme of common prompt
+types by reading a random sample of 100 prompts per question. After identifying this taxonomy,
+we asked research assistants to classify the remaining cases with our code categories.
+   Table 5 shows the seven prompt strategies we identified, along with descriptions and exam-
+ples, while Figure 4 shows their prevalence across each TESS survey question. In contrast to re-
+spondents’ self-reported reasons for using AI for answering open-ended questions, which focused
+mostly on articulating and expressing one’s own thoughts, the actual prompts rarely included infor-
+
+
+                                                  20
+mation about the respondents’ own opinions or ideas. Instead, the most common prompt strategies
+were either idea generation (for the Groenendyk question) or information seeking (for the JSD
+and Graham questions). Less than 9% of AI users in our sample wrote prompts that included any
+perspective-taking information.
+
+                                  Table 5: Taxonomy of Prompting Strategies
+
+      Strategy                       Description                                       Example
+
+    Idea             Prompts asking for a list of items, topics,   “What are some reasons to be interested in
+    Generation       or ideas related to the subject. Generally    politics?”
+                     open-ended and does not state the
+                     respondent’s own position
+
+    Information      Prompts asking for background                 “How well do African Americans do in
+    Seeking          information or answering a question as if     today’s society?”
+                     it were fact-based
+
+    Writing          Prompts explicitly asking for help in         “If I’m a Republican or Democrat what
+    Assistance       formulating a response                        makes me different from the other? Please
+                                                                   write a few sentences”
+
+    AI Opinion       Prompts asking the AI what position it        “What is your stance on politics?”
+    Solicitation     would take on a question, without asking
+                     it to take a particular perspective
+
+    Not              Respondent said they would answer that        “I will write these myself, this is a personal
+    Applicable       question themselves, or wrote something       question”
+                     irrelevant
+
+    Direct Copy      Respondent directly copied and pasted         “What makes you similar to Republicans?
+                     the original survey question (or a            What makes you different from
+                     substantial portion of it) as the prompt      Democrats?”
+
+    Perspective      Prompts asking AI to adopt a specific         “act like a 45 year old basic white
+    Taking           perspective                                   indifferent human, what do you think of
+                                                                   african americans in american society
+                                                                   today”
+
+    Note: Strategies are not mutually exclusive
+
+
+
+                                                           21
+Figure 4: How often respondents incorporated different prompting strategies across TESS
+questions.
+
+
+
+
+   Figure 4 also shows that participants’ prompt strategies vary substantially across survey ques-
+tions. For example, in the two questions about intergroup attitudes (JSD and Graham), information
+seeking prompts were the most common. These types of prompts asked LLMs to bring in more
+contextual information about the group, or tried to reframe the question as a fact-based one, rather
+than focusing on one’s own attitudes. On the other hand, for the more abstract question on interest
+in politics (Groenendyk), idea generation was a more popular strategy. Respondents were more
+likely to directly copy the JSD and Graham questions on intergroup attitudes than they were to
+copy the Groenendyk question on interest in politics, perhaps because the JSD and Graham ques-
+tions are more sensitive. Although perspective-taking strategies were rare, their prevalence did not
+vary significantly across the three questions.
+
+
+
+
+                                                 22
+5      Analysis Part II: Comparison of Human vs LLM-Generated
+
+       Survey Responses
+
+In Analysis Part II, we compare human and LLM-generated survey responses to the three TESS
+questions along a number of dimensions, detailed in each subsection below.
+    LLM Survey Response Simulation Strategy: We simulate LLM responses using the prompts
+that respondents in our Prolific survey wrote for the three TESS questions.2 We restrict to prompts
+by Prolific respondents who reported using AI assistants or chatbots at least some of the time for
+greater external validity. We manually reviewed all submitted prompts to screen out responses
+that were not valid prompts, such as responses that described in general terms how the respondent
+might prompt an LLM or that directly answered the underlying TESS survey question.
+    We simulated open-text responses using five LLMs: GPT-4o mini, GPT-4o, Gemini 1.5, Claude
+3.5 Sonnet, and Claude 3 Opus. We focus on these models because they were among the most
+popular LLMs among respondents in our Prolific survey and because they provided API access to
+researchers. Our aim in the simulations was to approximate the LLM responses study participants
+might receive when using the public, free versions of ChatGPT, Gemini, and Claude. Accordingly,
+we present results based on the default models and model settings offered in free chat interfaces at
+the time we fielded the Prolific survey – GPT-4o mini (temperature = 0.7), Gemini 1.5 (temperature
+= 1), and Claude 3.5 Sonnet (temperature = 1) – in this paper’s main analyses. To illustrate the
+robustness of our findings, we also present parallel results for GPT-4o mini with other temperature
+settings (0.0 and 1.0), GPT-4o, and Claude 3 Opus in the Online Supplement.
+    Not all LLM responses to Prolific respondent-written prompts were valid open-ended text re-
+sponses. We filtered out any responses in which the LLM refused to answer the question, following
+safety protocols that the companies that developed the LLMs put into place. We also removed LLM
+    2 In preliminary work, we also tested using the original TESS survey questions as prompts. The LLMs often refused
+
+to provide responses when prompted in this manner (e.g. from Claude: “I don’t actually have any personal interest in
+politics. I’m an AI assistant created by Anthropic to be helpful, harmless, and honest. I don’t have personal opinions
+or interests on topics like politics.”)
+
+
+
+                                                         23
+responses that did not address the underlying question, such as responses that provided generic ad-
+vice for giving a thoughtful response without providing any substantive direction. The rate of
+refusals and invalid outputs varied across models: 16% for Claude 3.5 Sonnet, 14% for Gemini
+1.5, and just 1% for GPT-4o mini.
+    We further post-processed responses to remove additional text surrounding an open-ended text
+response, such as when an LLM opens with, ”Certainly! I would be happy to help you with that.”
+When initial LLM responses were not formatted as responses to a survey, we added a follow-up
+prompt that asked the model to revise the original responses to take the form of an answer to an
+open-ended survey question.3
+    Matching LLM-Generated Responses to Human-Generated Responses: To assemble a com-
+parison set of human-generated responses, we match each Prolific respondent-written prompt with
+a corresponding human-generated response from TESS replication packages. We exactly match
+each Prolific respondent with a corresponding TESS respondent along a number of background
+characteristics. As all the questions we examine are broadly on political attitudes and beliefs, we
+chose to match respondents on several sociodemographic factors predictive of individuals’ politi-
+cal views in the U.S. (Manza and Crowley, 2018; Jardina and Piston, 2019; Iyengar et al., 2019):
+race/ethnicity, education (BA or higher, less than a BA), partisanship (Democrat, Republican, or
+Independent), and age (45 and older or not). Since the TESS questions had randomized compo-
+nents (question wording in JSD) and/or components conditioned by earlier questions (interest in
+politics in Groenendyk; own and other political party in Graham), we further restricted candidate
+matches to cases where the Prolific respondent drafting the prompt saw the exact same version
+of the question as did the TESS respondent. Where there were multiple matches available, we
+randomly sampled one.
+    This procedure matches every set of LLM responses generated by a single Prolific respondent-
+drafted prompt with a single human-generated answer from the original TESS survey data. As
+we required exact matches, some Prolific observations had no matches in the TESS data and we
+   3 The LLMs sometimes provided initial responses that were long, bullet-point lists, which we believed survey
+
+respondents would be unlikely to directly use as a response.
+
+
+                                                      24
+pruned those observations from the sample (there were no matches for 8 observations in JSD, 33 in
+Graham, and 42 in Groenendyk).4 At the end, we had matched sets of n = 223 for JSD, n = 195 for
+Graham, and n = 187 for Groenendyk. All analyses that follow are based on these matched sets.
+
+
+5.1     Response length and vocabulary size
+
+We start by comparing the length of responses generated by humans and LLMs, as well as the size
+of their vocabulary (the total number of unique words that responses contain). Table 6 summarizes
+the average lengths and vocabulary sizes of text responses from our primary models (for Claude
+Opus and GPT-4o, see Table S1 in the Online Supplement) and from human respondents. LLM re-
+sponses generally have larger vocabularies and tend to be longer. They also show greater variation
+in length than do human responses.
+    At first glance, this might suggest that LLM responses capture a wider variety of concepts
+and ideas than human responses do. Later analyses, however, more directly compare the amount
+of variation in the content of responses drafted by humans and LLMs, contradicting this initial
+interpretation.
+
+                                    Groenendyk                   Graham                      JSD
+        Model
+                                MW       SD      TV       MW       SD       TV      MW        SD       TV
+
+        Claude 3.5 Sonnet       103.0    43.4    1859    101.4     35.1    1061      99.0     41.2    1522
+
+        Gemini 1.5              123.5    69.6    2131    161.1     95.7    1487     175.8    106.6    2358
+
+        GPT-4o mini             195.4    75.7    2690    215.8    101.1    1802     214.5     78.2    2527
+
+        Human                    9.7     9.0     462      31.7     25.2    1146      16.1     25.4     915
+
+Table 6: Comparison of word count and vocabulary size between human and LLM-generated
+responses. MW: mean # of words; SD: standard deviation # words; TV: total vocabulary.
+   4 All 33 pruned Graham observations were of Independents in our Prolific sample, who were excluded from the
+
+original TESS study. The higher number of pruned observations for Groenendyk reflects the fact that the version of
+the question we fielded had a lower number of observations in the original TESS study, so there was a smaller pool of
+candidates for matching.
+
+
+
+
+                                                         25
+5.2   Most frequent and distinctive words
+
+Beyond counting the number of words, we also examine which words appear more often in re-
+sponses from humans and LLMs. Word frequency tends to follow a highly skewed distribution,
+where a small number of words appear much more often than other words. In English, this is
+especially true for function words like “the” and “of.” We account for this in two ways. First,
+we remove common function words and other similar types of words using a standard list of stop
+words. Second, we use term frequency-inverse document frequency (tf-idf) to identify words that
+are distinctive to a particular set of responses. This method adjusts for how widely a word appears
+across all responses, assigning higher weights to words that are frequent in a single response but
+rare overall, and lower weights to words that are common across many responses. This approach
+allows us to compare distinctive vocabulary usage between human and LLM responses, highlight-
+ing the words that characterize each source’s unique linguistic patterns.
+
+
+
+
+                                                26
+Figure 5: Highest TF-IDF terms in responses by text source. These words all appeared more than
+three times to account for potential outliers.
+
+
+   Figure 5 shows distinct patterns in language use across human respondents and LLM models.
+Human responses tend to contain more emotionally charged and concrete language. All three
+language models, meanwhile, consistently use more neutral, abstract language across all three
+questions. When discussing perceptions of Democrats and Republicans (Graham), LLMs focus on
+broader concepts like “environmental” issues and “liberties.” For the question on political interest
+(Groenendyk), LLM responses center on terms like “influence,” “issues,” and “power,” indicating
+a more analytical approach.
+   The contrast is perhaps clearest in responses to the JSD question on how the respondent per-
+ceives Black people in the US. Human respondents used adjectives like “oppressed”, “discrim-
+inated,” and “hard,” suggesting a focus on concrete experiences and discrimination. LLM re-
+sponses, meanwhile, answered with more abstract nouns and adjectives like “disparities”, “sys-
+
+
+                                                27
+temic,” and “challenges.”
+   Overall, this difference in language use suggests that LLM models may approach sensitive
+topics with more detachment, while humans tend to express stronger opinions using more concrete,
+everyday language. This general pattern also holds for other models, as shown in Figure S1 in the
+Online Supplement.
+
+
+5.3   Response sentiment
+
+We compare the overall sentiment expressed in the language of human- and LLM-generated re-
+sponses using the Valence Aware Dictionary and sEntiment Reasoner (VADER) lexicon, a popular
+dictionary-based method that assigns words as being either positive, negative, or neutral in senti-
+ment (Hutto and Gilbert, 2014). After each word in a response is tallied as either being positive,
+negative, or neutral, VADER generates an overall composite score for each response. For simplic-
+ity, we present the degree of positive and negative sentiment expressed in responses.
+
+
+
+
+Figure 6: Average positive and negative sentiment scores for each set of responses as measured
+using VADER.
+
+
+
+
+                                                28
+   Overall, LLMs used more positive language (lefthand side of Figure 6) and humans used more
+negative language (righthand side of Figure 6). The contrast was particularly pronounced in re-
+sponses to the Groenendyk question about political interest, where LLMs used nearly twice as
+many positive words as humans (around 0.18 - 0.19 for the three LLMs vs. 0.10 for humans). The
+sentiment divergence was also striking in responses to the JSD question on perceptions of Black
+Americans, where humans used more than twice as many negative words per response as LLMs.
+   We also found similar patterns among the models presented in the Online Supplement (see
+Figure S2).
+
+
+5.4   Use of dehumanizing language
+
+Two of the questions we examine focus on perceptions of social groups: Black people in the JSD
+survey and Republicans/Democrats in the Graham study. In this section, we dig more into the
+nature of the language that responses employ to describe other people. We focus, in particular, on
+the use of dehumanizing language, which has been a subject of broad interest to scholars given the
+wide array of social and political concerns that the dehumanization of others raises (Hagan and
+Rymond-Richmond, 2008; Haslam and Loughnan, 2014; van Loon et al., 2024).
+   Following prior work on measuring dehumanizing language (Mendelsohn et al., 2020), we as-
+sess the degree to which the language used to describe social groups reflects moral disgust and
+vermin-related metaphors. To do so, we measure semantic similarity between the responses gen-
+erated from each source (human, GPT, Claude) and the two concepts (moral disgust and vermin)
+using pre-trained GloVe (Global Vectors for Word Representation) word embeddings (Pennington
+et al., 2014). Word embeddings represent words as numeric vectors that capture semantic relation-
+ships, allowing researchers to quantify the similarity between different words or concepts based on
+their usage patterns in existing large text corpora such as Wikipedia (for reviews, see Kozlowski
+et al., 2019; Stoltz and Taylor, 2021; Arseniev-Koehler, 2022).
+   We constructed word embedding vectors to represent each concept, following the approach in
+Mendelsohn et al. (2020). For vermin, we averaged the GloVe word embedding vectors for a list
+
+
+                                                29
+of vermin-related words (e.g. rodent(s), rat(s), cockroaches). For moral disgust, we averaged the
+word embedding vectors for the words in the Moral Foundations Dictionary reflecting the concept
+(Frimer et al., 2019). The Moral Foundations Dictionary provides a lexicon with which to analyze
+text for content related to various moral dimensions, including moral disgust, as elaborated in Haidt
+and Graham (2007).
+   We then represented each human or LLM-generated response in terms of its average word
+embedding. First, we removed stop words, tokenized the text, and calculated term frequencies for
+each response. We then loaded the GloVe embeddings (100-dimensional vectors) and computed
+the weighted average of its constituent word vectors, with weights proportional to term frequencies.
+This process resulted in a single 100-dimensional vector representing each text’s semantic content.
+To quantify the similarity between each response and the concepts (vermin, moral disgust), we
+calculated the cosine similarity between each text’s average embedding and the vector for each
+concept. Cosine similarity in this context provides a measure of semantic closeness, with values
+ranging from -1 (perfectly dissimilar) to 1 (perfectly similar).
+
+
+
+
+Figure 7: Distribution of response cosine similarities to pre-trained GloVe word embedding vectors
+for words related to vermin and moral disgust
+
+
+   Figure 7 illustrates the distribution of response cosine similarities to the moral disgust vector
+
+                                                 30
+(left panel) and the vermin vector (right panel) across the three sources of text.
+   The results reveal a consistent pattern: AI-generated responses from GPT-4o mini, Gemini 1.5,
+and Claude 3.5 Sonnet cluster more tightly around a lower cosine similarity to the vermin and moral
+disgust vectors than do human responses. Whereas human responses reflect a wide range of per-
+spectives and language use, AI responses tend to be more uniform. Particularly noteworthy is that
+a substantial proportion of human responses included more dehumanizing language in their writ-
+ten discussions of Black Americans and Democrats/Republicans than did the LLMs. Consistent
+with the results of the preceding sentiment analysis, these findings indicate that LLM-generated
+answers truncate the range of views of social groups that exist among people, particularly those of
+a more denigrating or negative nature.
+   The Online Supplement shows that this general pattern of results holds for Claude 3 Opus
+and GPT-4o, as well as for other moral dimensions in the Moral Foundations Dictionary such as
+fairness/cheating and authority/subversion.
+
+
+5.5    Response variation/homogeneity
+
+In this section, we more directly examine whether LLM-generated responses are more homoge-
+neous than human-generated ones. We represent each response as a vector of tf-idf scores and then
+measure how similar these vectors are to each other using cosine similarity. We calculate the av-
+erage pairwise cosine similarity between responses from the same source (i.e., humans to humans,
+GPT to GPT) as a proxy for text homogeneity. If the average similarity for responses from a given
+source is high (closer to 1), then responses from that source tend to be more homogeneous in their
+word choices.
+
+
+
+
+                                                 31
+Figure 8: Average within-group pairwise cosine similarity of tf-idf vectors for responses generated
+by humans and LLMs.
+
+
+   As Figure 8 shows, for all three questions, the average pairwise cosine similarity between
+responses generated by the LLMs was higher than for responses generated by humans. In other
+words, LLM-generated responses tend to be more similar to each other than human-generated
+responses are to other human-generated responses. Responses from GPT-4o mini had the highest
+mean cosine similarities.
+   These results held for other models and temperatures that we present in Figure S6 in the Online
+Supplement. Notably, even though we used a broad range of prompts sourced from online survey
+respondents to reflect variation in peoples’ prompting approaches, LLM responses were still more
+homogeneous. This was also the case despite the LLMs generating much longer responses with
+larger vocabularies than did humans. The fact that this problem is more acute for GPT, by far the
+
+                                                32
+most popular tool among our respondents, further underscores this challenge.
+
+
+
+6    Conclusion
+
+Summary of findings: In this paper, we examine how online survey participants use AI tools to
+complete open-ended survey questions and compare how LLM-generated responses differ from
+answers written by humans. Drawing on an original survey of online survey participants, we
+estimate that about 34% of online study participants use LLMs to answer open-ended questions
+at least some of the time and find that OpenAI’s ChatGPT is the model of choice for over 90%
+of all LLM users. We also find that LLM usage varies by race, gender, education, political party
+affiliation, and survey-taking experience, which could compound data quality issues caused by
+systematic sampling error.
+    Most LLM users reported using AI assistants or chatbots for help with expressing what they
+want to say, with few reporting that they use AI because they don’t have any opinions of their
+own on the matter. However, in actual prompts submitted by users, the most common strategies
+involved asking AI for help with generating ideas or seeking additional information on the topic.
+Few prompts explicitly incorporated respondents’ pre-existing views or social positions. This dis-
+crepancy raises questions for future research about how participants view ideas generated by AI
+during co-writing – do they view them as extensions of their own thoughts, or do they see LLM
+suggestions as “new” ideas? Finally, we find that participants who refrain from using AI tools often
+cite moral reasons (e.g. AI compromises authenticity, using AI is unethical and akin to “cheating”,
+using AI violates rules and terms of services).
+    Using TESS survey data collected before the public release of ChatGPT and LLM-generated
+answers simulated using respondent-written prompts from our original survey, we find that LLM-
+generated responses tend to be longer yet exhibit greater similarity to each other than human-
+written responses. Compared to human respondents, LLMs also use more positive language and
+are less likely to employ dehumanizing language when discussing social groups. Overall, our re-
+
+
+
+                                                  33
+sults suggest that even when LLM prompts are customized to specific questions and reflect the
+varied prompting strategies of real users, LLM-generated text reflects a narrower range of perspec-
+tives and language use than human-written text.
+Limitations: This paper has several limitations. One key limitation is that we do not examine actual
+AI-assisted survey answers. Instead, we compare human-generated responses to simulations of
+AI-generated answers. While we tried to increase external validity by generating LLM responses
+using prompts written by real study participants who use AI, participants may still further revise,
+selectively use, or reject AI’s suggested answer. There is likely some slippage between the fully AI-
+generated responses we examine here and the AI-assisted responses survey-takers would actually
+provide. Thus, it may be helpful to interpret our results as reflecting the prospective answers
+that participants using AI are exposed to, which some participants may use directly and others
+may be steered by (Jakesch et al., 2023). Future research should more directly examine how
+study participants engage with AI-generated answers, following the example of other work that
+has studied how people interact with AI writing assistance in other types of writing tasks (Lee
+et al., 2022; Padmakumar and He, 2023; Sharma et al., 2023; Dhillon et al., 2024; Doshi and
+Hauser, 2024).
+   Another limitation of this work is that our comparison of LLM- and human-generated answers
+relies on matching respondents across samples fielded at different moments in time (2019-2021
+for TESS; summer 2024 for our Prolific sample) along a set of important, but limited observable
+characteristics. Accordingly, our human-written answers may be imperfect counterfactuals for
+LLM-generated answers. For example, views of Black Americans as studied in JSD and Republi-
+cans/Democrats in Graham may have evolved over this time period. Nonetheless, such shifts alone
+are unlikely to account for many elements of our results, most notably the substantial divergence
+in the degree of variation between responses generated by LLMs and humans that we document
+consistently across a range of measurement approaches. Future research could further build on
+our results by implementing research designs that could provide tighter control, such as fielding a
+lab-based study in which participants are monitored and randomly assigned to either have access
+
+
+                                                 34
+to AI tools or not when answering survey questions.
+    A further limitation is that our data on AI use and respondent-generated prompts were based
+on self-reports. Since participants knew that they were in a study on AI, social desirability bias
+and demand effects could have influenced our data. Emerging research suggests that people hide
+their AI use to avoid being perceived negatively by others (Slack, 2024), suggesting that our self-
+reported usage measures likely underestimate true AI adoption. Nonetheless, future research could
+couple self-reports with computational approaches looking for linguistic markers of LLM writing
+(e.g. Liang et al., 2024; Veselovsky et al., 2023b), though such strategies may prove less reliable as
+models and user behavior continue to evolve. How self-reporting might bias respondent-reported
+prompts is more unclear. While a true behavioral measure would have been more externally valid,
+it would be far more difficult to obtain and our data on user prompting strategies still offer novel
+insights into user behavior. Future research could incorporate better behavioral data, such as digital
+archives of prompts or lab studies that track prompting behavior in a more fine-grained manner.
+    Our findings are also limited by the particularities of our survey sample. Our survey covers one
+commonly used platform – Prolific – but researchers also recruit online participants through other
+means like targeted advertisements, mailing lists, and other crowd-working platforms. Existing
+research suggests that AI usage among participants on Prolific is actually substantially lower than
+on MTurk (Christoforou et al., 2024), but additional comparative research is needed on AI usage
+across platforms to inform recruitment strategies for studies where AI poses a significant threat to
+validity.
+    Finally, our survey only captures a particular snapshot in time. As AI technologies continue
+to diffuse rapidly (Bick et al., 2024) and companies increasingly build AI into popular websites,
+digital applications, and operating systems, we expect that lowered barriers will lead more survey
+participants to use them for writing assistance. Prevalence among subgroups is also likely to shift.
+For example, we find that college-educated participants are more likely to use AI than those who
+do not have a four-year degree. However, this could be because college-educated knowledge work-
+ers are more exposed to LLMs through work and the education gap will disappear or even reverse
+
+
+                                                 35
+as more people engage with AI tools. Patterns of platform churn also play an important role in
+determining the future prevalence of AI-generated answers. In our survey, participants who joined
+Prolific in the last six months were more likely to use AI tools. If newer participants generally have
+a higher tendency to use LLM tools, then their entrance to the platform would continuously drive
+up average AI usage, especially if longer-term participants are more likely to exit than newer par-
+ticipants. Future research should examine the link between AI adoption and participant selection
+into survey platforms, and further explore how platform participants’ LLM usage compares to that
+of the broader population.
+Contributions: This article offers a portrait of when and why research participants employ AI
+when participating in online surveys and experiments. Our survey complements prior work infer-
+ring the incidence of LLM usage (Veselovsky et al., 2023a,b; Christoforou et al., 2024) by further
+contextualizing such practices in the perspectives and experiences of study participants themselves.
+Following other work aiming to draw lessons from the views of crowd-working platform partici-
+pants (e.g. Kittur et al., 2013; Fowler et al., 2023; Reynolds and Kincaid, 2024), our study sheds
+light on factors that can produce misalignment between researchers’ goals and research subjects’
+study participation strategies. By understanding participants’ motivations and constraints, we iden-
+tify opportunities for researchers, detailed in the following subsection, to improve both research
+data quality and the experiences of online research subjects.
+   AI use among crowdworkers, first identified by Veselovsky et al. (2023a,b), has become an in-
+creasingly salient concern among machine learning researchers and computational social scientists
+who rely on crowdworkers for data annotation. This study, alongside Christoforou et al. (2024),
+is among the first to directly elaborate on the implications of this development for social science
+surveys and experiments. Unlike data annotation tasks, in which participants provide ground truth
+or gold standard examples according to external guidelines – serving more in the role of research
+assistants at scale – surveys and experiments are fundamentally aimed at gathering valid infor-
+mation on human subjects themselves. This article translates challenges that AI usage raises for
+survey and experimental researchers, situating this emerging trend in prior literatures on ensuring
+
+
+                                                 36
+data quality in online samples.
+   An important line of research has explored the positions and perspectives that LLMs tend to
+output when prompted in different ways. To understand how these LLM tendencies might shape
+survey responses, we gathered data on the types of prompts participants report using, showing that
+participants rarely prompt AI in the detailed, tailored manner that researchers do to replicate human
+responses. Instead, they more often draft more generic prompts, which our simulations show
+tend to generate more homogeneous, positive answers to sensitive questions about inter-group
+perceptions than human respondents normally write. In so doing, this study adds to scholarship
+that bridges research on LLM biases and capabilities with their downstream societal consequences
+(e.g. Jakesch et al., 2023; Potter et al., 2024).
+Implications and practical recommendations for online research Our findings on why respon-
+dents use or avoid AI suggest several strategies to discourage or strategically manage LLM use in
+online studies. Many participants cited ethical concerns, a desire for authenticity, and a wish to
+follow the rules or researchers’ preferences as reasons for not using AI. This suggests that explic-
+itly asking respondents to avoid AI, making normative appeals about the importance of authentic
+responses, and fostering participant buy-in could help reduce AI use. Indeed, Veselovsky et al.
+(2023a) found that directly asking participants to refrain from using AI reduced its use, especially
+when combined with measures that added friction, such as preventing copy-pasting. Researchers
+may also consider adding study elements aimed at detecting LLM influence that could be used
+to filter responses, such as instructions that exploit known LLM tendencies or weaknesses. We
+note, however, that researchers should carefully weigh the trade-offs of such an approach as it may
+raise similar issues as traditional attention checks (Berinsky et al., 2014; Muszyński, 2023), such
+as falsely flagging genuine human-written responses as AI-produced, confusing respondents, and
+introducing selection bias.
+   Our results additionally indicate that overly demanding writing tasks or unclear instructions
+can prompt participants to turn to AI. To mitigate this, researchers should continue to follow long-
+standing best practices, such as thoroughly pretesting and streamlining their studies to reduce re-
+
+
+                                                    37
+spondent burden. As respondents may find the act of writing particularly burdensome (Fowler
+et al., 2023), another possibility could be to leverage speech-to-text models to allow respondents
+to answer questions orally. Researchers should exercise caution, however, as such models may
+fabricate information or introduce sociodemographically disparate transcription errors (Koenecke
+et al., 2020, 2024).
+   We further emphasize that not all AI use is necessarily detrimental: the most commonly cited
+reason for AI use–help with expressing oneself– suggests that AI could be beneficial in some con-
+texts. Researchers may consider establishing guidelines for LLM use where it aligns with their
+research goals. They may, for instance, encourage respondents to first outline their thoughts in
+their own words prior to turning to AI to refine their answers, an approach that could help better
+anchor responses in participants’ authentic perspectives. Researchers could also track how AI in-
+forms responses by providing space for participants to enter their initial answers and AI-assisted
+answers. They could even build AI writing assistance directly into survey and experimental instru-
+ments, enabling a more detailed look at how AI shapes responses to their questions. Future studies
+should assess which models of AI writing assistance best further researchers’ goals (Lee et al.,
+2024). More broadly, future research should evaluate the effectiveness of the various interventions
+identified here and clarify the conditions under which they are most productive.
+   In drawing implications from our findings, we additionally stress that only 9% of respondents
+indicated that they use LLMs “most of the time” or “always” when answering open-ended ques-
+tions; the remaining 25% only indicated that they use LLMs “sometimes.” While AI use may in-
+crease over time, at the time of writing, we caution against interpreting our findings as undermining
+all open-ended text data collected in recent studies. Our results suggest that both the proportion of
+and degree to which responses are AI-influenced will vary substantially across studies. Our survey
+results suggest that AI use may be more extensive in writing-intensive questions on topics that are
+challenging to discuss or where respondents have limited knowledge or weaker opinions.
+   To gain a better sense of how AI usage could influence a study, we recommend that researchers
+proactively test their open-ended questions by simulating responses using commonly employed AI
+
+
+                                                 38
+models, following the approach we took in this paper. Researchers could examine how often AI
+tools refuse to answer their questions and explore what tendencies LLM-generated answers exhibit
+in their research setting. With this knowledge, researchers can refine their question phrasing,
+anticipate the direction of potential biases introduced by AI assistance, or fine-tune models to detect
+AI-generated or AI-influenced responses to their specific questions. Additionally, researchers can
+use this information to conduct sensitivity analyses that evaluate how much AI-induced bias would
+be required to overturn their findings. We suggest that implementing such measures could become
+standard practice amidst the growing take-up of AI assistance, helping producers and evaluators
+of research alike more precisely assess whether and how AI use affects the validity of specific
+research findings.
+   Efforts to align AI systems with human values and train them to avoid producing biased or
+harmful content are crucial for managing AI risks and ensuring societal benefit (Kirk et al., 2021;
+Ouyang et al., 2022; Kirk et al., 2024). However, these safeguards can have complex consequences
+when research participants use AI tools to formulate responses, especially to sensitive questions.
+If LLMs are trained to avoid generating content that could be seen as offensive, they may steer
+participants’ writing toward more sanitized and less authentic expressions of their opinions and
+experiences (Jakesch et al., 2023). This issue may be particularly acute for questions related to
+inter-group attitudes and perceptions, which are of significant interest to social scientists. When
+LLMs generate responses to such questions, they often lean toward generating more positive and
+flattering depictions of social groups, potentially muting ambivalent or negative perspectives. LLM
+answers indeed stood in sharp contrast to human responses, which featured a wide range of opin-
+ions, including highly derogatory ones. Researchers should consider these AI-induced influences
+when designing studies and interpreting their results.
+   Our results on the increasing use of AI among online study participants and how it may in-
+fluence research findings further point to the growing need for research designs to incorporate
+additional validation steps or triangulation between different research methods and data sources.
+Indeed, traditional qualitative methods like interviews and ethnography may be more critical than
+
+
+                                                  39
+ever for generating accurate knowledge and understanding of patterns in human beliefs, attitudes,
+and experiences (Grigoropoulou and Small, 2022; Small, 2024).
+Implications for work on AI evaluation and societal implications of AI: Our finding that a sub-
+stantial share of online study participants use generative AI tools to respond to open-ended survey
+questions introduces an additional concern for scholars evaluating how well AI is able to predict
+or mimic human perspectives: the risk of contamination. If AI-influenced responses are used to
+evaluate AI’s ability to replicate human thoughts and judgments, it creates a feedback loop that can
+undermine the validity of assessments (Veselovsky et al., 2023b). We might mistakenly conclude
+that AI systems are better at reproducing human views than they really are. This issue also extends
+to computational social science research that relies on human-labeled data for supervised learning
+tasks. If a significant portion of the data used to train these models comes from crowdworking
+platform participants who used AI to generate or assist with their responses, it becomes increas-
+ingly difficult to establish a true human baseline or “ground truth” against which to evaluate model
+performance.
+   Furthermore, over the long term, there is a risk of a self-reinforcing cycle, where survey data
+and results containing AI-influenced content are used to train models, which in turn power AI
+tools that influence the responses of future study participants (Shumailov et al., 2024). Over
+time, this could lead to a further homogenization of perspectives and a narrowing of the range
+of ideas reflected in research data. Even beyond the problems this would pose for social sci-
+ence, these findings also point to everyday implications for the ways that LLMs may standardize
+our understandings of the social world (Evans and Foster, 2024; Foster, 2023). To mitigate these
+risks, researchers, practitioners, and crowdsourcing platforms should prioritize the development of
+methods and standards for detecting, monitoring, and managing AI-influenced writing products.
+Cross-disciplinary collaboration will be critical for understanding, addressing, and managing these
+emerging challenges.
+
+
+
+
+                                                40
+References
+
+Agnew, William, A. Stevie Bergman, Jennifer Chien, Mark Dı́az, Seliem El-Sayed, Jaylen
+  Pittman, Shakir Mohamed, and Kevin R. McKee. 2024. “The illusion of artificial inclusion.”
+  In Proceedings of the CHI Conference on Human Factors in Computing Systems, pp. 1–12.
+  arXiv:2401.08572 [cs].
+
+Alvarez, R. Michael, Lonna Rae Atkeson, Ines Levin, and Yimeng Li. 2019. “Paying Attention to
+  Inattentive Survey Respondents.” Political Analysis 27(2):145–162.
+
+Alvero, AJ and Courtney Peña. 2023. “AI Sentience and Socioculture.” Journal of Social Com-
+  puting 4(3):205–220.
+
+Alvero, A. J., Jinsook Lee, Alejandra Regla-Vargas, René Kizilcec, Thorsten Joachims, and An-
+  thony Lising Antonio. 2024. “Large Language Models, Social Demography, and Hegemony:
+  Comparing Authorship in Human and Synthetic Text.”
+
+Anderson, Barrett R, Jash Hemant Shah, and Max Kreminski. 2024. “Homogenization Effects of
+  Large Language Models on Human Creative Ideation.” In Proceedings of the 16th Conference
+  on Creativity & Cognition, C&amp;C ’24, pp. 413–425, New York, NY, USA. Association for
+  Computing Machinery.
+
+Argyle, Lisa P., Ethan C. Busby, Nancy Fulda, Joshua R. Gubler, Christopher Rytting, and David
+  Wingate. 2023. “Out of One, Many: Using Language Models to Simulate Human Samples.”
+  Political Analysis 31(3):337–351.
+
+Arseniev-Koehler, Alina. 2022.    “Theoretical Foundations and Limits of Word Embeddings:
+  What Types of Meaning can They Capture?”              Sociological Methods & Research p.
+  00491241221140142.
+
+Ashokkumar, Ashwini, Luke Hewitt, Isaias Ghezae, and Robb Willer. 2024. “Predicting Results
+  of Social Science Experiments Using Large Language Models.” .
+
+                                              41
+Bail, Christopher A. 2024. “Can Generative AI improve social science?”       Proceedings of the
+  National Academy of Sciences 121(21):e2314021121.
+
+Bell, Andrew M. and Thomas Gift. 2023. “Fraud in Online Surveys: Evidence from a Nonproba-
+  bility, Subpopulation Sample.” Journal of Experimental Political Science 10(1):148–153.
+
+Bender, Emily M., Timnit Gebru, Angelina McMillan-Major, and Shmargaret Shmitchell. 2021.
+  “On the Dangers of Stochastic Parrots: Can Language Models Be Too Big?” In Proceedings of
+  the 2021 ACM Conference on Fairness, Accountability, and Transparency, pp. 610–623, Virtual
+  Event Canada. ACM.
+
+Berinsky, Adam J., Michele F. Margolis, and Michael W. Sances. 2014. “Separating the Shirkers
+  from the Workers? Making Sure Respondents Pay Attention on Self-Administered Surveys.”
+  American Journal of Political Science 58(3):739–753.
+
+Bick, Alexander, Adam Blandin, and David J. Deming. 2024. “The Rapid Adoption of Generative
+  AI.”
+
+Bisbee, James, Joshua D. Clinton, Cassy Dorff, Brenton Kenkel, and Jennifer M. Larson. 2024.
+  “Synthetic Replacements for Human Survey Data? The Perils of Large Language Models.”
+  Political Analysis pp. 1–16.
+
+Boelaert, Julien, Samuel Coavoux, Etienne Ollion, Ivaylo D. Petev, and Patrick Präg. 2024. “Ma-
+  chine Bias. Generative Large Language Models Have a View of Their Own.”
+
+Brynjolfsson, Erik, Danielle Li, and Lindsey Raymond. 2023.          “Generative AI at Work.”
+  arXiv:2304.11771 [econ, q-fin].
+
+Cao, Yong, Li Zhou, Seolhwa Lee, Laura Cabello, Min Chen, and Daniel Hershcovich. 2023.
+  “Assessing Cross-Cultural Alignment between ChatGPT and Human Societies: An Empirical
+  Study.” arXiv:2303.17466 [cs].
+
+
+
+
+                                              42
+Cheng, Myra, Tiziano Piccardi, and Diyi Yang. 2023. “CoMPosT: Characterizing and Evaluating
+  Caricature in LLM Simulations.” arXiv:2310.11501 [cs].
+
+Chmielewski, Michael and Sarah C. Kucker. 2020. “An MTurk Crisis? Shifts in Data Quality and
+  the Impact on Study Results.” Social Psychological and Personality Science 11(4):464–473.
+
+Christoforou, Evgenia, Gianluca Demartini, and Jahna Otterbacher. 2024. “Generative AI in
+  Crowdwork for Web and Social Media Research: A Survey of Workers at Three Platforms.”
+  Proceedings of the International AAAI Conference on Web and Social Media 18:2097–2103.
+
+Clifford, Scott and Jennifer Jerit. 2016. “Cheating on Political Knowledge Questions in Online
+  Surveys: An Assessment of the Problem and Solutions.” Public Opinion Quarterly 80(4):858–
+  887.
+
+Coppock, Alexander and Oliver A. McClellan. 2019. “Validating the demographic, political, psy-
+  chological, and experimental results obtained from a new source of online survey respondents.”
+  Research & Politics 6(1):2053168018822174.
+
+Cuskley, Christine and Justin Sulik. 2024. “The Burden for High-Quality Online Data Collection
+  Lies With Researchers, Not Recruitment Platforms.” Perspectives on Psychological Science
+  19(6):891–899. Publisher: SAGE Publications Inc.
+
+Davidson, Thomas. 2024. “Start Generating: Harnessing Generative Artificial Intelligence for
+  Sociological Research.” Socius 10:23780231241259651.
+
+Dell’Acqua, Fabrizio, Edward McFowland III, Ethan R. Mollick, Hila Lifshitz-Assaf, Katherine
+  Kellogg, Saran Rajendran, Lisa Krayer, François Candelon, and Karim R. Lakhani. 2023. “Nav-
+  igating the Jagged Technological Frontier: Field Experimental Evidence of the Effects of AI on
+  Knowledge Worker Productivity and Quality.”
+
+Dhillon, Paramveer S., Somayeh Molaei, Jiaqi Li, Maximilian Golub, Shaochun Zheng, and Li-
+  onel Peter Robert. 2024. “Shaping Human-AI Collaboration: Varied Scaffolding Levels in Co-
+
+
+                                              43
+  writing with Language Models.” In Proceedings of the CHI Conference on Human Factors
+  in Computing Systems, CHI ’24, pp. 1–18, New York, NY, USA. Association for Computing
+  Machinery.
+
+Doshi, Anil R. and Oliver P. Hauser. 2024. “Generative AI enhances individual creativity but
+  reduces the collective diversity of novel content.” Science Advances 10(28):eadn5290.
+
+Douglas, Benjamin D., Patrick J. Ewell, and Markus Brauer. 2023. “Data quality in online
+  human-subjects research: Comparisons between MTurk, Prolific, CloudResearch, Qualtrics, and
+  SONA.” PLOS ONE 18(3):e0279720.
+
+Durmus, Esin, Karina Nyugen, Thomas I. Liao, Nicholas Schiefer, Amanda Askell, Anton Bakhtin,
+  Carol Chen, Zac Hatfield-Dodds, Danny Hernandez, Nicholas Joseph, Liane Lovitt, Sam Mc-
+  Candlish, Orowa Sikder, Alex Tamkin, Janel Thamkul, Jared Kaplan, Jack Clark, and Deep
+  Ganguli. 2023. “Towards Measuring the Representation of Subjective Global Opinions in Lan-
+  guage Models.” arXiv:2306.16388 [cs].
+
+Egami, Naoki, Christian J. Fong, Justin Grimmer, Margaret E. Roberts, and Brandon M. Stewart.
+  2022. “How to make causal inferences using texts.” Science Advances 8(42):eabg2652.
+
+Epstein, Ziv, Aaron Hertzmann, the Investigators of Human Creativity, Memo Akten, Hany Farid,
+  Jessica Fjeld, Morgan R. Frank, Matthew Groh, Laura Herman, Neil Leach, Robert Mahari,
+  Alex “Sandy” Pentland, Olga Russakovsky, Hope Schroeder, and Amy Smith. 2023. “Art and
+  the science of generative AI.” Science 380(6650):1110–1111.
+
+Evans, James A. and Jacob G. Foster. 2024. “Algorithmic Abduction: Robots for Alien Reading.”
+  Critical Inquiry 50(3):375–401.
+
+Ferrario, Beatrice and Stefanie Stantcheva. 2022. “Eliciting People’s First-Order Concerns: Text
+  Analysis of Open-Ended Survey Questions.” AEA Papers and Proceedings 112:163–169.
+
+
+
+
+                                              44
+Foster, Jacob G. 2023. “From Thin to Thick: Toward a Politics of Human-Compatible AI.” Public
+  Culture 35(3 (101)):417–430.
+
+Fowler, Craig, Jian Jiao, and Margaret Pitts. 2023. “Frustration and ennui among Amazon MTurk
+  workers.” Behavior Research Methods 55(6):3009–3025.
+
+Frimer, Jeremy, R Boghrati, J Haidt, J Graham, and M Dehgani. 2019. “Moral Foundations Dic-
+  tionary 2.0.”
+
+Gillespie, Tarleton. 2024. “Generative AI and the politics of visibility.” Big Data & Society
+  11(2):20539517241252131.
+
+Graham, Matthew H. 2021. “Does Partisan Identity Reduce Support for Electoral Fairness?”
+
+Graham, Matthew H. 2023. “Detecting and Deterring Information Search in Online Surveys.”
+  American Journal of Political Science p. EarlyView.
+
+Grigoropoulou, Nikolitsa and Mario L. Small. 2022. “The data revolution in social science needs
+  qualitative research.” Nature Human Behaviour 6(7):904–906.
+
+Groenendyk, Eric, Yanna Krupnikov, John Barry Ryan, and Elizabeth C. Connors. 2025. “Se-
+  lecting Out of “Politics”: The Self-Fulfilling Role of Conflict Expectation.” American Political
+  Science Review 119(1):40–55.
+
+Gummer, Tobias and Tanja Kunz. 2022. “Relying on External Information Sources When Answer-
+  ing Knowledge Questions in Web Surveys.” Sociological Methods & Research 51(2):816–836.
+
+Hadler, Patricia. 2023. “The Effects of Open-Ended Probes on Closed Survey Questions in Web
+  Surveys.” Sociological Methods & Research .
+
+Hagan, John and Wenona Rymond-Richmond. 2008. “The Collective Dynamics of Racial Dehu-
+  manization and Genocidal Victimization in Darfur.” American Sociological Review 73(6):875–
+  902.
+
+
+                                               45
+Haidt, Jonathan and Jesse Graham. 2007. “When Morality Opposes Justice: Conservatives Have
+  Moral Intuitions that Liberals may not Recognize.” Social Justice Research 20(1):98–116.
+
+Hartmann, Jochen, Jasper Schwenzow, and Maximilian Witte. 2023. “The political ideology of
+  conversational AI: Converging evidence on ChatGPT’s pro-environmental, left-libertarian ori-
+  entation.” arXiv:2301.01768.
+
+Haslam, Nick and Steve Loughnan. 2014. “Dehumanization and Infrahumanization.” Annual
+  Review of Psychology 65(1):399–423.
+
+Hutto, C. and Eric Gilbert. 2014. “VADER: A Parsimonious Rule-Based Model for Sentiment
+  Analysis of Social Media Text.” Proceedings of the International AAAI Conference on Web and
+  Social Media 8(1):216–225.
+
+Iyengar, Shanto, Yphtach Lelkes, Matthew Levendusky, Neil Malhotra, and Sean J. Westwood.
+  2019. “The Origins and Consequences of Affective Polarization in the United States.” Annual
+  Review of Political Science 22(Volume 22, 2019):129–146.
+
+Jakesch, Maurice, Advait Bhat, Daniel Buschek, Lior Zalmanson, and Mor Naaman. 2023. “Co-
+  Writing with Opinionated Language Models Affects Users’ Views.” In Proceedings of the 2023
+  CHI Conference on Human Factors in Computing Systems, CHI ’23, pp. 1–15, New York, NY,
+  USA. Association for Computing Machinery.
+
+Jardina, Ashley and Spencer Piston. 2019. “Racial Prejudice, Racial Identity, and Attitudes in
+  Political Decision Making.” In Oxford Research Encyclopedia of Politics.
+
+Jardina, Ashley, Spencer Piston, and LaFleur Stephens-Dougan. 2021. “The influence of the terms
+  we use on measures of racial attitudes.”
+
+Jensen, Jeffrey L., Daniel Karell, Cole Tanigawa-Lau, Nizar Habash, Mai Oudah, and Dhia Fairus
+  Shofia Fani. 2022. “Language Models in Sociological Research: An Application to Classifying
+  Large Administrative Data and Measuring Religiosity.” Sociological Methodology 52(1):30–52.
+
+
+                                              46
+Kennedy, Ryan, Scott Clifford, Tyler Burleigh, Philip D. Waggoner, Ryan Jewell, and Nicholas
+  J. G. Winter. 2020. “The shape of and solutions to the MTurk quality crisis.” Political Science
+  Research and Methods 8(4):614–629.
+
+Kim, Junsol and Byungkyu Lee. 2023. “AI-Augmented Surveys: Leveraging Large Language
+  Models for Opinion Prediction in Nationally Representative Surveys.” arXiv:2305.09620 [cs].
+
+Kirk, Hannah Rose, Yennie Jun, Filippo Volpin, Haider Iqbal, Elias Benussi, Frederic Dreyer,
+  Aleksandar Shtedritski, and Yuki Asano. 2021. “Bias Out-of-the-Box: An Empirical Analysis
+  of Intersectional Occupational Biases in Popular Generative Language Models.” In Advances in
+  Neural Information Processing Systems, volume 34, pp. 2611–2624. Curran Associates, Inc.
+
+Kirk, Hannah Rose, Bertie Vidgen, Paul Röttger, and Scott A. Hale. 2024. “The benefits, risks
+  and bounds of personalizing the alignment of large language models to individuals.” Nature
+  Machine Intelligence 6(4):383–392.
+
+Kittur, Aniket, Jeffrey V. Nickerson, Michael Bernstein, Elizabeth Gerber, Aaron Shaw, John Zim-
+  merman, Matt Lease, and John Horton. 2013. “The future of crowd work.” In Proceedings of the
+  2013 conference on Computer supported cooperative work, pp. 1301–1318, San Antonio Texas
+  USA. ACM.
+
+Koenecke, Allison, Anna Seo Gyeong Choi, Katelyn X. Mei, Hilke Schellmann, and Mona Sloane.
+  2024. “Careless Whisper: Speech-to-Text Hallucination Harms.” In The 2024 ACM Conference
+  on Fairness, Accountability, and Transparency, pp. 1672–1681, Rio de Janeiro Brazil. ACM.
+
+Koenecke, Allison, Andrew Nam, Emily Lake, Joe Nudell, Minnie Quartey, Zion Mengesha, Con-
+  nor Toups, John R. Rickford, Dan Jurafsky, and Sharad Goel. 2020. “Racial disparities in au-
+  tomated speech recognition.” Proceedings of the National Academy of Sciences 117(14):7684–
+  7689. Publisher: Proceedings of the National Academy of Sciences.
+
+Kozlowski, Austin C., Hyunku Kwon, and James A. Evans. 2024. “In Silico Sociology: Forecast-
+  ing COVID-19 Polarization with Large Language Models.” arXiv:2407.11190 [cs].
+
+                                               47
+Kozlowski, Austin C., Matt Taddy, and James A. Evans. 2019. “The Geometry of Culture: An-
+  alyzing the Meanings of Class through Word Embeddings.” American Sociological Review
+  84(5):905–949.
+
+Landesvatter, Camille and Paul C. Bauer. 2024. “How Valid Are Trust Survey Measures? New In-
+  sights From Open-Ended Probing Data and Supervised Machine Learning.” Sociological Meth-
+  ods & Research p. 00491241241234871.
+
+Lee, Mina, Katy Ilonka Gero, John Joon Young Chung, Simon Buckingham Shum, Vipul Raheja,
+  Hua Shen, Subhashini Venugopalan, Thiemo Wambsganss, David Zhou, Emad A. Alghamdi, Tal
+  August, Avinash Bhat, Madiha Zahrah Choksi, Senjuti Dutta, Jin L.C. Guo, Md Naimul Hoque,
+  Yewon Kim, Simon Knight, Seyed Parsa Neshaei, Antonette Shibani, Disha Shrivastava, Lila
+  Shroff, Agnia Sergeyuk, Jessi Stark, Sarah Sterman, Sitong Wang, Antoine Bosselut, Daniel
+  Buschek, Joseph Chee Chang, Sherol Chen, Max Kreminski, Joonsuk Park, Roy Pea, Eugenia
+  Ha Rim Rho, Zejiang Shen, and Pao Siangliulue. 2024. “A Design Space for Intelligent and
+  Interactive Writing Assistants.” In Proceedings of the 2024 CHI Conference on Human Factors
+  in Computing Systems, CHI ’24, pp. 1–35, New York, NY, USA. Association for Computing
+  Machinery.
+
+Lee, Mina, Percy Liang, and Qian Yang. 2022. “CoAuthor: Designing a Human-AI Collaborative
+  Writing Dataset for Exploring Language Model Capabilities.” In CHI Conference on Human
+  Factors in Computing Systems, pp. 1–19. arXiv:2201.06796 [cs].
+
+Liang, Weixin, Zachary Izzo, Yaohui Zhang, Haley Lepp, Hancheng Cao, Xuandong Zhao,
+  Lingjiao Chen, Haotian Ye, Sheng Liu, Zhi Huang, Daniel A. McFarland, and James Y. Zou.
+  2024. “Monitoring AI-Modified Content at Scale: A Case Study on the Impact of ChatGPT on
+  AI Conference Peer Reviews.” arXiv:2403.07183 [cs].
+
+Manza, Jeff and Ned Crowley. 2018. “Class Divisions and Political Attitudes in the 21st Century.”
+  In Handbook of Attitudes, Volume 2: Applications. Routledge.
+
+
+                                               48
+Martin, John Levi. 2023. “The Ethico-Political Universe of ChatGPT.” Journal of Social Comput-
+  ing 4(1):1–11.
+
+Mendelsohn, Julia, Yulia Tsvetkov, and Dan Jurafsky. 2020. “A Framework for the Computational
+  Linguistic Analysis of Dehumanization.” Frontiers in Artificial Intelligence 3.
+
+Mollick, Ethan. 2023. “Everyone is above average.”
+
+Motoki, Fabio, Valdemar Pinho Neto, and Victor Rodrigues. 2024. “More human than human:
+  measuring ChatGPT political bias.” Public Choice 198(1):3–23.
+
+Muszyński, Marek. 2023. “Attention checks and how to use them: Review and practical recom-
+  mendations.” Ask: Research and Methods 32(1):3–38.
+
+Naous, Tarek, Michael J. Ryan, Alan Ritter, and Wei Xu. 2024. “Having Beer after Prayer? Mea-
+  suring Cultural Bias in Large Language Models.” arXiv:2305.14456 [cs].
+
+Neumann, Terrence, Sooyong Lee, Maria De-Arteaga, Sina Fazelpour, and Matthew Lease. 2024.
+  “Diverse, but Divisive: LLMs Can Exaggerate Gender Differences in Opinion Related to Harms
+  of Misinformation.” arXiv:2401.16558 [cs].
+
+Noy, Shakked and Whitney Zhang. 2023. “Experimental Evidence on the Productivity Effects of
+  Generative Artificial Intelligence.”
+
+Ollion, Etienne, Rubing Shen, Ana Macanovic, and Arnault Chatelain. 2023. “ChatGPT for Text
+  Annotation? Mind the Hype!”
+
+Ouyang, Long, Jeff Wu, Xu Jiang, Diogo Almeida, Carroll L. Wainwright, Pamela Mishkin, Chong
+  Zhang, Sandhini Agarwal, Katarina Slama, Alex Ray, John Schulman, Jacob Hilton, Fraser
+  Kelton, Luke Miller, Maddie Simens, Amanda Askell, Peter Welinder, Paul Christiano, Jan
+  Leike, and Ryan Lowe. 2022. “Training language models to follow instructions with human
+  feedback.” arXiv:2203.02155 [cs].
+
+
+
+                                               49
+Padmakumar, Vishakh and He He. 2023. “Does Writing with Language Models Reduce Content
+  Diversity?” arXiv:2309.05196 [cs].
+
+Park, Peter S., Philipp Schoenegger, and Chongyang Zhu. 2024. “Diminished diversity-of-thought
+  in a standard large language model.” Behavior Research Methods 56(6):5754–5770.
+
+Pennington, Jeffrey, Richard Socher, and Christopher Manning. 2014. “Glove: Global Vectors for
+  Word Representation.” In Proceedings of the 2014 Conference on Empirical Methods in Natural
+  Language Processing (EMNLP), pp. 1532–1543, Doha, Qatar. Association for Computational
+  Linguistics.
+
+Peytchev, Andy. 2009. “Survey Breakoff.” Public Opinion Quarterly 73(1):74–97.
+
+Potter, Yujin, Shiyang Lai, Junsol Kim, James Evans, and Dawn Song. 2024. “Hidden Persuaders:
+  LLMs’ Political Leaning and Their Influence on Voters.” arXiv:2410.24190.
+
+Reynolds, Jeremy and Reilly Kincaid. 2024. “It depends: Platform dependence, schedule control,
+  and satisfaction among gig workers on Amazon’s Mechanical Turk platform.” Sociological
+  Forum eprint: https://onlinelibrary.wiley.com/doi/pdf/10.1111/socf.13029.
+
+Roberts, Margaret E., Brandon M. Stewart, Dustin Tingley, Christopher Lucas, Jetson Leder-Luis,
+  Shana Kushner Gadarian, Bethany Albertson, and David G. Rand. 2014. “Structural Topic
+  Models for Open-Ended Survey Responses.” American Journal of Political Science 58(4):1064–
+  1082.
+
+Rozado, David. 2023. “The Political Biases of ChatGPT.” Social Sciences 12(3):148.
+
+Santurkar, Shibani, Esin Durmus, Faisal Ladhak, Cinoo Lee, Percy Liang, and Tatsunori
+  Hashimoto. 2023. “Whose Opinions Do Language Models Reflect?” In Proceedings of the
+  40th International Conference on Machine Learning, pp. 29971–30004. PMLR. ISSN: 2640-
+  3498.
+
+
+
+
+                                              50
+Sharma, Ashish, Inna W. Lin, Adam S. Miner, David C. Atkins, and Tim Althoff. 2023. “Hu-
+  man–AI collaboration enables more empathic conversations in text-based peer-to-peer mental
+  health support.” Nature Machine Intelligence 5(1):46–57.
+
+Shumailov, Ilia, Zakhar Shumaylov, Yiren Zhao, Nicolas Papernot, Ross Anderson, and Yarin Gal.
+  2024. “AI models collapse when trained on recursively generated data.” Nature 631(8022):755–
+  759.
+
+Slack. 2024. “The Fall 2024 Workforce Index Shows Executives and Employees Investing in AI,
+  but Uncertainty Holding Back Adoption.” Slack.
+
+Small, Mario L. 2024. “The value of qualitative data in understanding failure in prediction.” Pro-
+  ceedings of the National Academy of Sciences 121(28):e2409327121.
+
+Smolansky, Adele, Andrew Cram, Corina Raduescu, Sandris Zeivots, Elaine Huber, and Rene F.
+  Kizilcec. 2023. “Educator and Student Perspectives on the Impact of Generative AI on Assess-
+  ments in Higher Education.” In Proceedings of the Tenth ACM Conference on Learning @ Scale,
+  L@S ’23, pp. 378–382, New York, NY, USA. Association for Computing Machinery.
+
+Stoltz, Dustin S. and Marshall A. Taylor. 2021. “Cultural cartography with word embeddings.”
+  Poetics 88:101567.
+
+Tai-Seale, Ming, Sally L. Baxter, Florin Vaida, Amanda Walker, Amy M. Sitapati, Chad Osborne,
+  Joseph Diaz, Nimit Desai, Sophie Webb, Gregory Polston, Teresa Helsten, Erin Gross, Jessica
+  Thackaberry, Ammar Mandvi, Dustin Lillie, Steve Li, Geneen Gin, Suraj Achar, Heather Hof-
+  flich, Christopher Sharp, Marlene Millen, and Christopher A. Longhurst. 2024. “AI-Generated
+  Draft Replies Integrated Into Health Records and Physicians’ Electronic Communication.”
+  JAMA Network Open 7(4):e246565.
+
+Tao, Yan, Olga Viberg, Ryan S. Baker, and Rene F. Kizilcec. 2024. “Cultural Bias and Cultural
+  Alignment of Large Language Models.” arXiv:2311.14096 [cs].
+
+
+                                               51
+Ternovski, John and Lilla Orr. 2022. “A Note on Increases in Inattentive Online Survey-Takers
+  Since 2020.” Journal of Quantitative Description: Digital Media 2.
+
+van Loon, Austin, Amir Goldberg, and Sameer B. Srivastava. 2024. “Imagined otherness fuels
+  blatant dehumanization of outgroups.” Communications Psychology 2(1):1–14.
+
+Veselovsky, Veniamin, Manoel Horta Ribeiro, Philip Cozzolino, Andrew Gordon, David Roth-
+  schild, and Robert West. 2023a. “Prevalence and prevention of large language model use in
+  crowd work.” arXiv:2310.15683 [cs].
+
+Veselovsky, Veniamin, Manoel Horta Ribeiro, and Robert West. 2023b. “Artificial Artificial Ar-
+  tificial Intelligence: Crowd Workers Widely Use Large Language Models for Text Production
+  Tasks.” arXiv:2306.07899 [cs].
+
+Wang, Angelina, Jamie Morgenstern, and John P. Dickerson. 2024. “Large language models cannot
+  replace human participants because they cannot portray identity groups.” arXiv:2402.01908 [cs].
+
+Weinberg, Jill, Jeremy Freese, and David McElhattan. 2014. “Comparing Data Characteristics
+  and Results of an Online Factorial Survey between a Population-Based and a Crowdsource-
+  Recruited Sample.” Sociological Science 1:292–310.
+
+Wright, Dustin, Arnav Arora, Nadav Borenstein, Srishti Yadav, Serge Belongie, and Isabelle Au-
+  genstein. 2024. “Revealing Fine-Grained Values and Opinions in Large Language Models.”
+  arXiv:2406.19238.
+
+Yang, Keming and Ahmad Banamah. 2014. “Quota Sampling as an Alternative to Probability
+  Sampling? An Experimental Study.” Sociological Research Online 19(1):56–66.
+
+Ziegler, Jeffrey. 2022. “A Text-As-Data Approach for Using Open-Ended Responses as Manipu-
+  lation Checks.” Political Analysis 30(2):289–297.
+
+Zuell, Cornelia, Natalja Menold, and Sabine Körber. 2015. “The Influence of the Answer Box Size
+
+
+
+                                               52
+on Item Nonresponse to Open-Ended Questions in a Web Survey.” Social Science Computer
+Review 33(1):115–122.
+
+
+
+
+                                        53
+

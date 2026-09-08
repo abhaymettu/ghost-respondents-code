@@ -1,0 +1,151 @@
+{
+  "n_essays_used": 2467,
+  "n_skipped_missing_label": 0,
+  "correlations": {
+    "avg_word_len": {
+      "cEXT": {
+        "r": -0.0785,
+        "p": 0.0001
+      },
+      "cNEU": {
+        "r": -0.0572,
+        "p": 0.00448
+      },
+      "cAGR": {
+        "r": -0.0661,
+        "p": 0.00102
+      },
+      "cCON": {
+        "r": -0.072,
+        "p": 0.00034
+      },
+      "cOPN": {
+        "r": 0.1611,
+        "p": 0.0
+      }
+    },
+    "type_token_ratio": {
+      "cEXT": {
+        "r": -0.0223,
+        "p": 0.26832
+      },
+      "cNEU": {
+        "r": -0.0702,
+        "p": 0.00048
+      },
+      "cAGR": {
+        "r": -0.0283,
+        "p": 0.15979
+      },
+      "cCON": {
+        "r": -0.0471,
+        "p": 0.01936
+      },
+      "cOPN": {
+        "r": 0.0737,
+        "p": 0.00025
+      }
+    },
+    "avg_sentence_len_words": {
+      "cEXT": {
+        "r": 0.0065,
+        "p": 0.74724
+      },
+      "cNEU": {
+        "r": -0.0264,
+        "p": 0.18962
+      },
+      "cAGR": {
+        "r": 0.0007,
+        "p": 0.97087
+      },
+      "cCON": {
+        "r": -0.0435,
+        "p": 0.03091
+      },
+      "cOPN": {
+        "r": 0.0317,
+        "p": 0.11592
+      }
+    },
+    "punct_per_100_words": {
+      "cEXT": {
+        "r": -0.0574,
+        "p": 0.00432
+      },
+      "cNEU": {
+        "r": 0.0279,
+        "p": 0.16605
+      },
+      "cAGR": {
+        "r": -0.014,
+        "p": 0.48764
+      },
+      "cCON": {
+        "r": -0.0236,
+        "p": 0.24064
+      },
+      "cOPN": {
+        "r": 0.0709,
+        "p": 0.00042
+      }
+    },
+    "filler_per_100_words": {
+      "cEXT": {
+        "r": 0.0152,
+        "p": 0.45182
+      },
+      "cNEU": {
+        "r": -0.0006,
+        "p": 0.97739
+      },
+      "cAGR": {
+        "r": -0.0144,
+        "p": 0.47607
+      },
+      "cCON": {
+        "r": -0.0733,
+        "p": 0.00027
+      },
+      "cOPN": {
+        "r": 0.0727,
+        "p": 0.0003
+      }
+    },
+    "composite_fluency": {
+      "cEXT": {
+        "r": -0.017,
+        "p": 0.39862
+      },
+      "cNEU": {
+        "r": -0.0528,
+        "p": 0.00876
+      },
+      "cAGR": {
+        "r": -0.0073,
+        "p": 0.71848
+      },
+      "cCON": {
+        "r": -0.0095,
+        "p": 0.63763
+      },
+      "cOPN": {
+        "r": 0.018,
+        "p": 0.37237
+      }
+    }
+  },
+  "headline_r_F": {
+    "definition": "|point-biserial r| between composite_fluency and the binary trait label with the largest magnitude",
+    "max_abs_trait": "cNEU",
+    "r": -0.0528,
+    "all_composite_r": {
+      "cEXT": -0.017,
+      "cNEU": -0.0528,
+      "cAGR": -0.0073,
+      "cCON": -0.0095,
+      "cOPN": 0.018
+    },
+    "caveat": "lower bound on the true continuous r_F: binary median-split traits attenuate correlation magnitude vs. continuous BFI scores (blocked behind IEEE DataPort login)"
+  }
+}

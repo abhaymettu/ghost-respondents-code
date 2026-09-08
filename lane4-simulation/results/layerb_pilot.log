@@ -1,0 +1,85 @@
+lane 3: human pk_human n=2467 bal=0.5172 | machine personallm_gpt-4-0613 n=320 bal=0.5000
+[PASS] references disjoint from injection pools  -- machine 160/160, human 1234/1233
+
+detector: thr=0.9992 at target sp=0.99 | calibration half sp=0.9895 se=0.2812 | survey side sp=0.9814 se=0.2938 | denominator se-(1-sp)=0.2707
+
+human base: n=1234 q1=0.5170 r_H=0.182842 (lane 3 full-pool r_H=0.159629) rho_H_true=0.091421
+
+c_pool: reweighted=0.475973 raw Cor(x,L)=0.476088 (lane 3 whole-pool chat_r=0.442576)
+
+p             c     kappa     delta         g       Den       Att rho_obs_pred
+0.00   -0.00000   0.86375   0.53616  -0.00000   1.01225   0.89454    0.081780
+0.50    0.23799   0.86375   0.53616   1.20968   1.01225   1.01477    0.092771
+1.00    0.47597   0.86375   0.53616   2.41936   1.01225   1.13501    0.103763
+whole-pool (no held-out split) comparison: r_H=0.159629 c_pool=0.442002 -> contrast 0.020012 vs split-half 0.021984
+[PASS] (E7) closed form == direct mixture correlation, all arms  -- max |rho_pred - rho_direct| = 1.39e-17
+[PASS] (E67) c(p) = p * c_pool exactly  -- max dev = 1.11e-16
+[PASS] (E67) kappa, delta invariant in p  -- kappa=0.863748 delta=0.536157 at every p
+[PASS] g by (E66) covariance ratio == g by label-mean-difference ratio  -- cov form 2.41936 vs label-mean form 2.41936 (lane 3 reports 2.51572)
+[PASS] without-replacement capacity holds at every arm  -- worst cell: demand 51.7 of 80
+
+running 400 replicates x 3 arms at n=1000, pi=0.1 ...
+  25/400  (1.2s)
+  50/400  (2.2s)
+  75/400  (3.2s)
+  100/400  (4.1s)
+  125/400  (5.0s)
+  150/400  (6.2s)
+  175/400  (7.2s)
+  200/400  (8.1s)
+  225/400  (9.0s)
+  250/400  (9.9s)
+  275/400  (10.7s)
+  300/400  (11.7s)
+  325/400  (12.5s)
+  350/400  (13.4s)
+  375/400  (14.3s)
+  400/400  (15.2s)
+
+p     quantity     predicted     MC mean        MCSE        z
+0.00  c            -0.000000   -0.000951    0.004984    -0.19
+0.00  kappa         0.863748    0.871015    0.003548     2.05
+0.00  delta         0.536157    0.536683    0.003377     0.16
+0.00  rho_obs_pred    0.081780    0.079335    0.001604    -1.52
+0.00  Att           0.894539    0.867803    0.017543    -1.52
+0.50  c             0.237986    0.232471    0.004487    -1.23
+0.50  kappa         0.863748    0.865439    0.003302     0.51
+0.50  delta         0.536157    0.535509    0.003406    -0.19
+0.50  rho_obs_pred    0.092771    0.089750    0.001563    -1.93
+0.50  Att           1.014773    0.981722    0.017099    -1.93
+1.00  c             0.475973    0.475075    0.002226    -0.40
+1.00  kappa         0.863748    0.869886    0.003289     1.87
+1.00  delta         0.536157    0.535818    0.003314    -0.10
+1.00  rho_obs_pred    0.103763    0.104058    0.001467     0.20
+1.00  Att           1.135007    1.138229    0.016045     0.20
+[PASS] every realized moment within 4 MCSE of its closed form  -- 3 arms x 5 quantities over 400 replicates
+
+matched-vs-random contrast: predicted 0.021984, observed 0.024723 +/- 0.002176 (MCSE)
+  per-replicate SD of the contrast 0.04353 -> z at ONE replicate = 0.51; z over 400 replicates = 11.36; reps for z>=2.8 at n=1000: 31
+[PASS] contrast resolvable at this (n, reps)  -- z = 11.36 over 400 reps; a SINGLE replicate gives z = 0.51, so the contrast is a design-level claim, not a per-survey one
+[PASS] observed contrast agrees with (E7)  -- |obs - pred| = 0.002739 = 1.26 MCSE
+
+p     estimator             target        mean        bias
+0.00  pi (dist-match)     0.100000    0.070945   -0.029055
+0.00  pi (adj. count)     0.100000    0.131504   +0.031504
+0.00  rho_H (c known)     0.091421    0.085278   -0.006143
+0.00  rho_H (pi oracle)    0.091421    0.087919   -0.003502
+0.00  rho_H (c=0 assumed)    0.091421    0.085278   -0.006143
+0.50  pi (dist-match)     0.100000    0.069470   -0.030530
+0.50  pi (adj. count)     0.100000    0.133942   +0.033942
+0.50  rho_H (c known)     0.091421    0.088613   -0.002807
+0.50  rho_H (pi oracle)    0.091421    0.088165   -0.003255
+0.50  rho_H (c=0 assumed)    0.091421    0.096435   +0.005014
+1.00  pi (dist-match)     0.100000    0.070980   -0.029020
+1.00  pi (adj. count)     0.100000    0.133370   +0.033370
+1.00  rho_H (c known)     0.091421    0.095167   +0.003746
+1.00  rho_H (pi oracle)    0.091421    0.091789   +0.000368
+1.00  rho_H (c=0 assumed)    0.091421    0.112001   +0.020580
+[FAIL] label-free prevalence unbiased for pi=0.10 (tol 0.01) at every arm  -- distribution match vs a disjoint held-out machine reference: mean pi_hat 0.0709+-0.0020, 0.0695+-0.0019, 0.0710+-0.0019 -- bias -0.0295 = -15.2 MCSE
+[PASS] (E67) prevalence estimate invariant in p  -- pi_hat reads only x, whose marginal law (E67) says is p-free: spread 0.0015 vs MCSE 0.0020
+[PASS] EIV correction recovers rho_H within 25% at every arm  -- target rho_H = rho_T * r_H = 0.091421
+[PASS] adjusted-count prevalence branch scored  -- held-out operating point: thr=0.9992 sp=0.9895 se=0.2812 (build's own in-sample threshold, not used here: threshold 0.9996 at target sp=0.99; realized sp=0.9895, se=0.2375)
+[FAIL] adjusted-count prevalence unbiased for pi=0.10 (tol 0.01) at every arm  -- mean pi_hat_ac 0.1315+-0.0009, 0.1339+-0.0010, 0.1334+-0.0009 -- bias +0.0329; calibration transfer predicts +0.0315 of it (se term +0.0046 from se 0.2812->0.2938, fpr term +0.0269 from sp 0.9895->0.9814, denominator 0.2707)
+
+12/14 checks passed in 15.2s -> results/layerb_pilot.json
+FAILED: label-free prevalence unbiased for pi=0.10 (tol 0.01) at every arm, adjusted-count prevalence unbiased for pi=0.10 (tol 0.01) at every arm

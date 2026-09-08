@@ -1,0 +1,22 @@
+{
+  "personallm_gpt4": {
+    "n_pool": 320,
+    "n_used": 320,
+    "auc": 0.8358837890625
+  },
+  "personallm_gpt35": {
+    "n_pool": 320,
+    "n_used": 320,
+    "auc": 0.77748046875
+  },
+  "personallm_llama2": {
+    "n_pool": 320,
+    "n_used": 320,
+    "auc": 0.9452294921875
+  },
+  "personallm_combined": {
+    "n_pool": 960,
+    "n_used": 500,
+    "auc": 0.8590039999999999
+  }
+}

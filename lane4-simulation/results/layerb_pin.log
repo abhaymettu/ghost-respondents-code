@@ -1,0 +1,91 @@
+/Users/abhay/code/ghost-respondents/lane4-simulation/sweep_pin.py:110: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/sweep_pin.py:110: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/sweep_pin.py:110: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+Layer B (pi, n) expansion: 6 cells x 5 pi x 3 n
+pi=(0.02, 0.05, 0.1, 0.2, 0.3) n=(500, 1000, 2500) p in (0.0, 0.5, 1.0) reps=400 rho_T=0.5 k=1 replace=True
+
+  big5_personality_essays        EXT pi=0.02 Att(1)=0.994 dm_bias=+0.0226 ac_bias=+nan (57s total)
+/Users/abhay/code/ghost-respondents/lane4-simulation/sweep_pin.py:110: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/sweep_pin.py:110: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/sweep_pin.py:110: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+  big5_personality_essays        EXT pi=0.05 Att(1)=0.995 dm_bias=+0.0074 ac_bias=+nan (113s total)
+/Users/abhay/code/ghost-respondents/lane4-simulation/sweep_pin.py:110: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/sweep_pin.py:110: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/sweep_pin.py:110: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+  big5_personality_essays        EXT pi=0.10 Att(1)=0.999 dm_bias=-0.0181 ac_bias=+nan (170s total)
+/Users/abhay/code/ghost-respondents/lane4-simulation/sweep_pin.py:110: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/sweep_pin.py:110: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/sweep_pin.py:110: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+  big5_personality_essays        EXT pi=0.20 Att(1)=1.007 dm_bias=-0.0704 ac_bias=+nan (230s total)
+/Users/abhay/code/ghost-respondents/lane4-simulation/sweep_pin.py:110: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/sweep_pin.py:110: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+/Users/abhay/code/ghost-respondents/lane4-simulation/sweep_pin.py:110: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+  big5_personality_essays        EXT pi=0.30 Att(1)=1.014 dm_bias=-0.1234 ac_bias=+nan (287s total)
+/Users/abhay/code/ghost-respondents/lane4-simulation/sweep_pin.py:110: RuntimeWarning: Mean of empty slice
+  m = lambda p, k: float(np.nanmean(A[p][k]))
+  personallm_gpt-4-0613          EXT pi=0.02 Att(1)=1.047 dm_bias=+0.1961 ac_bias=+0.0022 (362s total)
+  personallm_gpt-4-0613          EXT pi=0.05 Att(1)=1.073 dm_bias=+0.1755 ac_bias=+0.0042 (420s total)
+  personallm_gpt-4-0613          EXT pi=0.10 Att(1)=1.137 dm_bias=+0.1411 ac_bias=+0.0080 (477s total)
+  personallm_gpt-4-0613          EXT pi=0.20 Att(1)=1.299 dm_bias=+0.0751 ac_bias=+0.0172 (534s total)
+  personallm_gpt-4-0613          EXT pi=0.30 Att(1)=1.425 dm_bias=+0.0097 ac_bias=+0.0250 (590s total)
+  personallm_gpt-3.5-turbo-0613  EXT pi=0.02 Att(1)=0.998 dm_bias=+0.1217 ac_bias=+0.0531 (669s total)
+  personallm_gpt-3.5-turbo-0613  EXT pi=0.05 Att(1)=1.018 dm_bias=+0.1053 ac_bias=+0.0497 (726s total)
+  personallm_gpt-3.5-turbo-0613  EXT pi=0.10 Att(1)=1.043 dm_bias=+0.0719 ac_bias=+0.0513 (780s total)
+  personallm_gpt-3.5-turbo-0613  EXT pi=0.20 Att(1)=1.087 dm_bias=+0.0094 ac_bias=+0.0495 (833s total)
+  personallm_gpt-3.5-turbo-0613  EXT pi=0.30 Att(1)=1.164 dm_bias=-0.0513 ac_bias=+0.0482 (886s total)
+  personallm_llama-2             EXT pi=0.02 Att(1)=0.980 dm_bias=+0.1688 ac_bias=-0.0037 (956s total)
+  personallm_llama-2             EXT pi=0.05 Att(1)=1.014 dm_bias=+0.1492 ac_bias=+0.0024 (1013s total)
+  personallm_llama-2             EXT pi=0.10 Att(1)=1.013 dm_bias=+0.1091 ac_bias=+0.0126 (1071s total)
+  personallm_llama-2             EXT pi=0.20 Att(1)=1.027 dm_bias=+0.0426 ac_bias=+0.0337 (1128s total)
+  personallm_llama-2             EXT pi=0.30 Att(1)=1.062 dm_bias=-0.0225 ac_bias=+0.0532 (1183s total)
+  personallm_gpt-3.5-turbo-0613  AGR pi=0.02 Att(1)=1.070 dm_bias=-0.0167 ac_bias=-0.0187 (1255s total)
+  personallm_gpt-3.5-turbo-0613  AGR pi=0.05 Att(1)=1.128 dm_bias=-0.0407 ac_bias=-0.0415 (1310s total)
+  personallm_gpt-3.5-turbo-0613  AGR pi=0.10 Att(1)=1.253 dm_bias=-0.0842 ac_bias=-0.0672 (1367s total)
+  personallm_gpt-3.5-turbo-0613  AGR pi=0.20 Att(1)=1.468 dm_bias=-0.1533 ac_bias=-0.1104 (1425s total)
+  personallm_gpt-3.5-turbo-0613  AGR pi=0.30 Att(1)=1.706 dm_bias=-0.2094 ac_bias=-0.1509 (1480s total)
+  personallm_llama-2             OPE pi=0.02 Att(1)=1.009 dm_bias=-0.0100 ac_bias=+0.0029 (1557s total)
+  personallm_llama-2             OPE pi=0.05 Att(1)=1.010 dm_bias=-0.0136 ac_bias=-0.0028 (1617s total)
+  personallm_llama-2             OPE pi=0.10 Att(1)=1.031 dm_bias=-0.0137 ac_bias=-0.0133 (1676s total)
+  personallm_llama-2             OPE pi=0.20 Att(1)=1.102 dm_bias=-0.0197 ac_bias=-0.0339 (1741s total)
+  personallm_llama-2             OPE pi=0.30 Att(1)=1.199 dm_bias=-0.0294 ac_bias=-0.0547 (1814s total)
+
+-> results/layerb_pin.json (1839s)
+
+
+=== identities survive the whole (pi, n) box ===
+[PASS] (E7) predicted rho_obs within 4 MCSE of the realized mean, every (cell, pi, n, p)  -- max |z| = 2.88 over 270 arm-points
+[PASS] observed matched-vs-random contrast agrees with (E7) across pi and n  -- max 2.01 MCSE
+
+=== what n does and does not change ===
+[FAIL] Att and the EIV error are n-invariant (bias is a population property)  -- max spread across n = 0.1198 at eiv_err personallm_gpt-3.5-turbo-0613/AGR pi=0.2
+[PASS] MCSE(rho_obs) scales as 1/sqrt(n): the n=500 / n=2500 ratio is sqrt(5) = 2.24  -- observed 2.03-2.49 over 30 (cell, pi) pairs
+
+=== the amplification threshold in pi ===
+[FAIL] Att(p=1) is monotone increasing in pi wherever g > 0  -- 6 of 6 cells cross Att=1 inside pi<=0.30
+
+=== estimators as a function of pi ===
+[FAIL] distribution-match prevalence unbiased within 0.01 across the (pi, n) box  -- |bias| spans 0.0037-0.2280; 83 of 90 points outside 0.01
+[FAIL] the two-term transfer law predicts the adjusted-count bias at every pi  -- max residual 0.0233 over 75 defined points (corr 0.9963)
+[FAIL] adjusted-count prevalence unbiased within 0.01 across the (pi, n) box  -- |bias| spans 0.0016-0.1565; 55 of 75 defined points outside 0.01
+[FAIL] EIV correction recovers rho_H within 25% across the (pi, n) box  -- max |err| 42.0%; 11 of 270 cell-pi-n-arms outside 25%
+
+=== with vs without replacement at the design point ===
+[PASS] drawing machine texts with replacement reproduces the without-replacement Att  -- max |dAtt(p=1)| = 0.0051 over 6 cells
+
+4/10 checks passed
+FAILED: Att and the EIV error are n-invariant (bias is a population property), Att(p=1) is monotone increasing in pi wherever g > 0, distribution-match prevalence unbiased within 0.01 across the (pi, n) box, the two-term transfer law predicts the adjusted-count bias at every pi, adjusted-count prevalence unbiased within 0.01 across the (pi, n) box, EIV correction recovers rho_H within 25% across the (pi, n) box

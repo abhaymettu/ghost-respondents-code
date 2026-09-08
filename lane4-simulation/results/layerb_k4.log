@@ -1,0 +1,35 @@
+Layer B multi-item arms: k_chunks=4, 6 cells
+cell: n=1000 pi=0.1 p in (0.0, 0.5, 1.0) reps=400 rho_T=0.5 k=4
+
+  [1/6] big5_personality_essays        EXT r_H=+0.1451 r_H(ch1)=+0.3155 rbar=0.2098 rel_true=0.0211 ratio=10.0x rho_T_naive(p=1)=0.1569 (8s, 8s total)
+  [2/6] personallm_gpt-4-0613          EXT r_H=+0.1721 r_H(ch1)=+0.3509 rbar=0.1849 rel_true=0.0296 ratio=6.2x rho_T_naive(p=1)=0.2048 (8s, 17s total)
+  [3/6] personallm_gpt-3.5-turbo-0613  EXT r_H=+0.1636 r_H(ch1)=+0.3449 rbar=0.2032 rel_true=0.0268 ratio=7.6x rho_T_naive(p=1)=0.1676 (8s, 25s total)
+  [4/6] personallm_llama-2             EXT r_H=+0.1392 r_H(ch1)=+0.3141 rbar=0.2034 rel_true=0.0194 ratio=10.5x rho_T_naive(p=1)=0.1559 (8s, 33s total)
+  [5/6] personallm_gpt-3.5-turbo-0613  AGR r_H=+0.1182 r_H(ch1)=+0.3273 rbar=0.1652 rel_true=0.0140 ratio=11.8x rho_T_naive(p=1)=0.1557 (8s, 41s total)
+  [6/6] personallm_llama-2             OPE r_H=+0.1873 r_H(ch1)=+0.3712 rbar=0.2816 rel_true=0.0351 ratio=8.0x rho_T_naive(p=1)=0.1424 (8s, 50s total)
+
+-> results/layerb_k4.json (50s)
+
+
+=== the dependency is real: chunks load and reproduce lane 1 ===
+[PASS] pk_human EXT between-chunk r reproduces lane 1's 0.2083 exactly  -- full pool n=2421: 0.2083 vs lane 1 0.2083; the six split halves give 0.1849-0.2816
+[PASS] every cell built at k=4 with no unchunkable text in any draw  -- dropped 46 human / 65 machine texts up front
+[PASS] rbar is stable across coupling arms (chunks are a property of the text, not p)  -- max |rbar(1) - rbar(0)| = 0.0022
+
+=== the oracle control: the correction itself is not broken ===
+[PASS] on a CLEAN sample (pi=0), dividing rho_H by the true sqrt(rel_H) = |r_H| returns rho_T within 4 MCSE  -- max |z| = 1.71 over 6 cells (max |err| = 3.7%, bootstrap finite-sample)
+
+=== lane 3 defect: chunk scores are not cross-fitted ===
+[FAIL] a quarter-text chunk is no MORE valid against the label than the whole text  -- r(chunk1, label) / r(whole, label) spans 1.98x to 2.77x; whole-text scores are 5-fold cross-fitted, chunk scores come from ridge models REFIT on all texts (POOL-MEASUREMENTS.md 'a refit, not a reload') and applied to chunks of their own training texts -- in-sample
+
+=== weak-H2: does between-chunk consistency identify rel_H? ===
+[FAIL] between-chunk r equals the true rel_H (r_H^2) within a factor of 2  -- ratio rbar / r_H^2 spans 6.2x to 11.8x (chunk-1 indicator: 1.5x to 2.1x)
+[FAIL] chunk-disattenuated rho_T recovers rho_T=0.5 within 25% on a clean sample (naive rbar)  -- err spans -70.1% to -59.9%
+[FAIL] chunk-disattenuated rho_T recovers rho_T=0.5 within 25% on a clean sample (Spearman-Brown)  -- err spans -81.7% to -75.0%
+[FAIL] the same correction on the indicator it is valid for (chunk 1) recovers rho_T  -- err spans -30.3% to -17.4%
+
+=== contamination on top of the multi-item route ===
+[PASS] coupling moves the multi-item rho_T error, so k=4 does not immunize against pi  -- p=0 -> p=1 shift spans +3.5% to +9.2%
+
+5/10 checks passed
+FAILED: a quarter-text chunk is no MORE valid against the label than the whole text, between-chunk r equals the true rel_H (r_H^2) within a factor of 2, chunk-disattenuated rho_T recovers rho_T=0.5 within 25% on a clean sample (naive rbar), chunk-disattenuated rho_T recovers rho_T=0.5 within 25% on a clean sample (Spearman-Brown), the same correction on the indicator it is valid for (chunk 1) recovers rho_T

@@ -1,0 +1,13 @@
+scoring 2467 PK-human texts with roberta detector
+Loading weights:   0%|          | 0/201 [00:00<?, ?it/s]Loading weights: 100%|██████████| 201/201 [00:00<00:00, 11307.83it/s]
+[transformers] [1mRobertaForSequenceClassification LOAD REPORT[0m from: openai-community/roberta-base-openai-detector
+Key                         | Status     |  | 
+----------------------------+------------+--+-
+roberta.pooler.dense.bias   | UNEXPECTED |  | 
+roberta.pooler.dense.weight | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+  roberta scored 2467 texts in 207.9s
+done in 210.7s, n=2467
+wrote /Users/abhay/code/ghost-respondents/lane3-testbed/data/scores/pk_human.json

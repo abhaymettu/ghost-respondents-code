@@ -1,0 +1,22 @@
+{
+  "big5_personality_essays_machine (benchmark)": {
+    "n_pool": 399,
+    "n_used": 399,
+    "auc": 0.47243735906181494
+  },
+  "argugpt_machine": {
+    "n_pool": 3338,
+    "n_used": 500,
+    "auc": 0.981686
+  },
+  "ghostbuster_gpt_writing_machine": {
+    "n_pool": 694,
+    "n_used": 500,
+    "auc": 0.643512
+  },
+  "student_llm_machine": {
+    "n_pool": 2078,
+    "n_used": 500,
+    "auc": 0.6009720000000001
+  }
+}

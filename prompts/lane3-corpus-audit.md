@@ -1,0 +1,13 @@
+GHOST PROJECT - LANE 3 - CORPUS-FIRST AUDITS (USER-APPROVED 6:06pm)
+
+Abhay approved the corpus-first design. The 15k-generation batch is SHELVED pending your audit verdicts. No API keys, no cost, no generation tonight - audits only.
+
+CONTEXT: the design replaces fresh LLM generation with existing corpora. Human base = Pennebaker-King (in your testbed). Machine conditioned pool (c-partial/c-high) = Big5PersonalityEssays (arXiv 2407.17586, Floroiu 2024, author GitHub: stnflri). Machine unconditioned pool (c=0) = essay-genre LLM corpora: ArguGPT (SJTU-CL/ArguGPT), polsci/ghostbuster-essay-cleaned, knarasi1/student_and_llm_essays, M4's essay domain if present.
+
+AUDIT 1 - Big5PersonalityEssays. Find and download the actual dataset (GitHub stnflri, the paper, any HF mirror). Record: row count (need ~700+ usable essays), generator model(s), per-essay label format (per-dimension continuous / band / binary), whether an unconditioned baseline arm exists, license, essay length distribution vs Pennebaker-King. If the dataset is unreachable, tiny (<700), or unlicensed, that is fallback A (generate 600-essay conditioned cells, 1,200-2,400 gens) - say so explicitly.
+
+AUDIT 2 - genre-confound check on the c=0 candidates. Download what is public. For each candidate machine pool, run your day-2 detector machinery on PK-human vs machine-pool pairs and report separability (AUC at your calibrated operating points). KEY comparison: separability of PK-vs-Big5PersonalityEssays(machine) is the same-genre benchmark; if a c=0 candidate is dramatically MORE separable than that benchmark, it carries a genre confound (detector keys on genre, not authorship) - that is fallback B (generate ~750-1,500 genre-matched c=0 essays). Rank the c=0 candidates by separability distance from the benchmark.
+
+AUDIT 3 - trait recoverability (sets the realized coupling). Fit a simple trait-prediction model (embeddings + ridge per FFM dimension) on PK human essays using whatever trait info the local mirror has (binary labels only - say exactly what you used). Apply to the Big5PersonalityEssays machine essays, correlate predicted traits against the dataset's labels per dimension. Report per-dimension r as the realized coupling c-hat for the conditioned arms.
+
+DELIVERABLE: lane3-testbed/CORPUS-AUDIT.md with: per-audit findings, the c=0 candidate ranking, c-hat numbers, and a final VERDICT section: GO-ZERO (corpus-first works, 0 generations), FALLBACK-A (conditioned cells need generation: state count), FALLBACK-B (c=0 needs generation: state count), or FALLBACK-AB (state both counts). Residual generation count must be an explicit number. End with AUDIT-DONE.

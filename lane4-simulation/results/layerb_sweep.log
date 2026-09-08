@@ -1,0 +1,47 @@
+Layer B sweep: 20 cells = 4 pools x 5 traits
+cell: n=1000 pi=0.1 p in (0.0, 0.5, 1.0) reps=400 rho_T=0.5 k_chunks=1
+
+  [ 1/20] big5_personality_essays       EXT r_H=+0.1441 c=+0.1381 kappa=0.717 delta=+0.452 g=+0.811 Att(0)=0.905->Att(1)=0.986 (15s, 15s total)
+  [ 2/20] big5_personality_essays       NEU r_H=+0.0871 c=-0.0562 kappa=0.869 delta=+0.247 g=-0.601 Att(0)=0.903->Att(1)=0.843 (16s, 31s total)
+  [ 3/20] big5_personality_essays       AGR r_H=+0.0725 c=+0.0840 kappa=0.886 delta=+0.839 g=+1.091 Att(0)=0.877->Att(1)=0.984 (16s, 47s total)
+  [ 4/20] big5_personality_essays       CON r_H=+0.0893 c=+0.1097 kappa=0.909 delta=-0.256 g=+1.172 Att(0)=0.901->Att(1)=1.019 (15s, 62s total)
+  [ 5/20] big5_personality_essays       OPE r_H=+0.2368 c=-0.0438 kappa=0.544 delta=-2.132 g=-0.136 Att(0)=0.771->Att(1)=0.759 (17s, 79s total)
+  [ 6/20] personallm_gpt-4-0613         EXT r_H=+0.1811 c=+0.3992 kappa=0.801 delta=+0.494 g=+1.973 Att(0)=0.899->Att(1)=1.096 (15s, 94s total)
+  [ 7/20] personallm_gpt-4-0613         NEU r_H=+0.0893 c=+0.1171 kappa=0.909 delta=+0.392 g=+1.250 Att(0)=0.898->Att(1)=1.023 (16s, 109s total)
+  [ 8/20] personallm_gpt-4-0613         AGR r_H=+0.1214 c=+0.2375 kappa=1.130 delta=+0.529 g=+2.080 Att(0)=0.883->Att(1)=1.087 (16s, 125s total)
+  [ 9/20] personallm_gpt-4-0613         CON r_H=+0.0565 c=+0.0570 kappa=0.861 delta=-0.327 g=+0.938 Att(0)=0.902->Att(1)=0.996 (17s, 141s total)
+  [10/20] personallm_gpt-4-0613         OPE r_H=+0.2196 c=+0.3248 kappa=0.752 delta=-2.168 g=+1.283 Att(0)=0.761->Att(1)=0.870 (16s, 157s total)
+  [11/20] personallm_gpt-3.5-turbo-0613 EXT r_H=+0.1442 c=+0.2907 kappa=0.812 delta=+0.570 g=+1.817 Att(0)=0.895->Att(1)=1.076 (16s, 173s total)
+  [12/20] personallm_gpt-3.5-turbo-0613 NEU r_H=+0.1628 c=+0.0942 kappa=0.927 delta=+0.421 g=+0.557 Att(0)=0.896->Att(1)=0.952 (14s, 188s total)
+  [13/20] personallm_gpt-3.5-turbo-0613 AGR r_H=+0.1303 c=+0.4086 kappa=0.845 delta=+0.358 g=+2.882 Att(0)=0.902->Att(1)=1.191 (16s, 204s total)
+  [14/20] personallm_gpt-3.5-turbo-0613 CON r_H=+0.0631 c=+0.0289 kappa=0.718 delta=-0.259 g=+0.389 Att(0)=0.910->Att(1)=0.949 (16s, 220s total)
+  [15/20] personallm_gpt-3.5-turbo-0613 OPE r_H=+0.2337 c=+0.0360 kappa=0.487 delta=-2.696 g=+0.108 Att(0)=0.711->Att(1)=0.719 (15s, 236s total)
+  [16/20] personallm_llama-2            EXT r_H=+0.1707 c=+0.1111 kappa=0.583 delta=+0.239 g=+0.497 Att(0)=0.917->Att(1)=0.968 (14s, 250s total)
+  [17/20] personallm_llama-2            NEU r_H=+0.0823 c=+0.0652 kappa=0.794 delta=+0.312 g=+0.706 Att(0)=0.905->Att(1)=0.976 (14s, 264s total)
+  [18/20] personallm_llama-2            AGR r_H=+0.1294 c=+0.2653 kappa=0.771 delta=+0.554 g=+1.800 Att(0)=0.898->Att(1)=1.078 (14s, 278s total)
+  [19/20] personallm_llama-2            CON r_H=+0.0769 c=+0.1476 kappa=0.644 delta=+0.516 g=+1.540 Att(0)=0.905->Att(1)=1.060 (14s, 292s total)
+  [20/20] personallm_llama-2            OPE r_H=+0.2377 c=+0.5048 kappa=1.273 delta=-1.618 g=+2.395 Att(0)=0.801->Att(1)=1.014 (14s, 306s total)
+
+-> results/layerb_sweep.json (306s)
+
+
+=== identities (exact, closed form) ===
+[PASS] (E7) closed form == direct mixture correlation, every cell and arm  -- max |rho_pred - rho_direct| = 2.78e-17 over 20 cells
+[PASS] (E67) c(p) = p * c_pool exactly, every cell  -- max dev = 5.76e-16
+[PASS] (E67) kappa and delta invariant in p, every cell  -- max dev kappa 2.66e-15 delta 4.44e-16
+[PASS] g by (E66) covariance ratio == g by label-mean-difference ratio, every cell  -- worst big5_personality_essays/OPE: cov -0.1364 vs label-mean -0.1364 (0.0%)
+[PASS] held-out references disjoint from injection pools, every cell  -- 20 cells
+[PASS] without-replacement capacity holds, every cell and arm  -- worst cell: demand 53.1 of 80
+
+=== Monte Carlo recovers the closed form ===
+[PASS] every realized moment within 4 MCSE of its closed form, every cell  -- 20 cells x 3 arms x 5 quantities = 300 z-scores, max |z| = 3.17 at personallm_gpt-4-0613/OPE
+[PASS] observed matched-vs-random contrast agrees with (E7), every cell  -- max |obs - pred| = 2.19 MCSE at big5_personality_essays/CON
+
+=== estimators ===
+[FAIL] label-free prevalence unbiased for pi=0.10 (tol 0.01) in every cell  -- 16 of 20 cells biased beyond 0.01; bias range -0.0891 to +0.2195, mean +0.0256
+[FAIL] EIV correction recovers rho_H within 25%, every cell and arm  -- 1 of 60 cell-arms outside 25%; worst big5_personality_essays/NEU +38%
+[PASS] adjusted-count prevalence branch scored (lane 3 FIXES-DONE landed)  -- pi_hat_ac in [0.0189, 0.4022] vs pi=0.10; detector se@sp=0.99 ranges 0.000-0.637
+[FAIL] adjusted-count prevalence unbiased for pi=0.10 (tol 0.01) in every cell  -- 13 of 20 cells outside 0.01; range -0.0811 to +0.3022
+
+9/12 checks passed
+FAILED: label-free prevalence unbiased for pi=0.10 (tol 0.01) in every cell, EIV correction recovers rho_H within 25%, every cell and arm, adjusted-count prevalence unbiased for pi=0.10 (tol 0.01) in every cell

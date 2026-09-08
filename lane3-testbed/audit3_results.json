@@ -1,0 +1,45 @@
+{
+  "method": "sentence-transformers all-MiniLM-L6-v2 embeddings (384-d) -> RidgeClassifier(alpha=1.0) per FFM dim, target = PK binary median-split label (y/n), trained on 75% PK / held out 25% for sanity AUC, refit on 100% PK for Big5 application; c-hat = point-biserial r between predicted decision_function score and Big5's own stated binary (0/1) label per dimension.",
+  "results": {
+    "cEXT": {
+      "pk_heldout_auc": 0.6392536869395213,
+      "chat_r": 0.24095178068701478,
+      "chat_p": 1.1168772238715189e-06,
+      "n_pk_train": 1850,
+      "n_pk_heldout": 617,
+      "n_big5": 399
+    },
+    "cNEU": {
+      "pk_heldout_auc": 0.5510770200693497,
+      "chat_r": 0.10606621684873657,
+      "chat_p": 0.03417491401709383,
+      "n_pk_train": 1850,
+      "n_pk_heldout": 617,
+      "n_big5": 399
+    },
+    "cAGR": {
+      "pk_heldout_auc": 0.5724852693602693,
+      "chat_r": 0.14156028072287233,
+      "chat_p": 0.00461028472470689,
+      "n_pk_train": 1850,
+      "n_pk_heldout": 617,
+      "n_big5": 399
+    },
+    "cCON": {
+      "pk_heldout_auc": 0.5279186215312112,
+      "chat_r": 0.12309206240952365,
+      "chat_p": 0.013877786396118587,
+      "n_pk_train": 1850,
+      "n_pk_heldout": 617,
+      "n_big5": 399
+    },
+    "cOPN": {
+      "pk_heldout_auc": 0.6288538380651946,
+      "chat_r": -0.02949800315182176,
+      "chat_p": 0.5568670033543287,
+      "n_pk_train": 1850,
+      "n_pk_heldout": 617,
+      "n_big5": 399
+    }
+  }
+}

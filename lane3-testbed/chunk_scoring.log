@@ -1,0 +1,36 @@
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 1835.55it/s]
+[20:10:36] loading PK, refitting full-refit trait models
+[20:10:37] embedding 2467 texts (PK full)
+[20:10:45] exported 5 fitted RidgeClassifiers + sentence-transformer reference to /Users/abhay/code/ghost-respondents/lane3-testbed/data/models
+[20:10:45] chunking PK-human texts
+[20:10:45] embedding 9684 texts (PK chunks (k=4, n_texts_chunked=2421))
+[20:11:08]   updated /Users/abhay/code/ghost-respondents/lane3-testbed/data/scores/pk_human.json (+4 chunk columns, 46/2467 texts skipped)
+[20:11:08] PK-human between-chunk cEXT mean pairwise r = 0.2083 (n_complete=2421)
+[20:11:08] re-loading labeled pools (same loaders/sampling as pool_measurement.py)
+[20:11:08] chunking labeled pool big5_personality_essays (n=399)
+[20:11:08] embedding 1336 texts (big5_personality_essays chunks (k=4, n_texts_chunked=334))
+[20:11:10]   updated /Users/abhay/code/ghost-respondents/lane3-testbed/data/scores/big5_personality_essays.json (+4 chunk columns, 65/399 texts skipped)
+[20:11:10] chunking labeled pool personallm_gpt-4-0613 (n=320)
+[20:11:10] embedding 1280 texts (personallm_gpt-4-0613 chunks (k=4, n_texts_chunked=320))
+[20:11:14]   updated /Users/abhay/code/ghost-respondents/lane3-testbed/data/scores/personallm_gpt-4-0613.json (+4 chunk columns, 0/320 texts skipped)
+[20:11:14] chunking labeled pool personallm_gpt-3.5-turbo-0613 (n=320)
+[20:11:14] embedding 1280 texts (personallm_gpt-3.5-turbo-0613 chunks (k=4, n_texts_chunked=320))
+[20:11:17]   updated /Users/abhay/code/ghost-respondents/lane3-testbed/data/scores/personallm_gpt-3.5-turbo-0613.json (+4 chunk columns, 0/320 texts skipped)
+[20:11:17] chunking labeled pool personallm_llama-2 (n=320)
+[20:11:17] embedding 1280 texts (personallm_llama-2 chunks (k=4, n_texts_chunked=320))
+[20:11:20]   updated /Users/abhay/code/ghost-respondents/lane3-testbed/data/scores/personallm_llama-2.json (+4 chunk columns, 0/320 texts skipped)
+[20:11:20] re-loading + re-sampling unlabeled pool argugpt
+[20:11:22] chunking unlabeled pool argugpt (n=500)
+[20:11:22] embedding 1992 texts (argugpt chunks (k=4, n_texts_chunked=498))
+[20:11:26]   updated /Users/abhay/code/ghost-respondents/lane3-testbed/data/scores/argugpt.json (+4 chunk columns, 2/500 texts skipped)
+[20:11:26] re-loading + re-sampling unlabeled pool ghostbuster_gpt_writing
+[20:11:27] chunking unlabeled pool ghostbuster_gpt_writing (n=500)
+[20:11:28] embedding 2000 texts (ghostbuster_gpt_writing chunks (k=4, n_texts_chunked=500))
+[20:11:32]   updated /Users/abhay/code/ghost-respondents/lane3-testbed/data/scores/ghostbuster_gpt_writing.json (+4 chunk columns, 0/500 texts skipped)
+[20:11:32] re-loading + re-sampling unlabeled pool student_llm_essays
+Repo card metadata block was not found. Setting CardData to empty.
+[20:11:34] chunking unlabeled pool student_llm_essays (n=500)
+[20:11:34] embedding 2000 texts (student_llm_essays chunks (k=4, n_texts_chunked=500))
+[20:11:39]   updated /Users/abhay/code/ghost-respondents/lane3-testbed/data/scores/student_llm_essays.json (+4 chunk columns, 0/500 texts skipped)
+[20:11:39] wrote chunk_scoring_summary.json
+DONE
