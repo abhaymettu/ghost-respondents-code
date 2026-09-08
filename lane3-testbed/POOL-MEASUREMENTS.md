@@ -237,8 +237,17 @@ chunks, computed on every PK text that could be split into 4 chunks (n=2,421 of 
 
 This is the human within-text consistency baseline design-pivot-memo.md Q14 asks for —
 any machine-pool chunk-level H2 result should be read against this number, not against 0
-or 1, since even human-written chunks of the same essay do not correlate perfectly on a
-cross-fitted trait score.
+or 1. **Correction (see CHUNK-REFIT.md):** the r=0.2083 figure above was computed from the
+in-sample chunk scores described at ~line 222-230 (models refit on 100% of PK-human, then
+applied to chunks of their own training texts) — it is **not** a cross-fitted trait score,
+contrary to what this line originally claimed. Lane 4's `LAYERB-SWEEP2.md` Part III FAIL 1
+caught this contradiction. `chunk_scoring_oof.py` re-derives every pool's chunk scores
+out-of-fold (same 5-fold scheme as the whole-text `cross_fitted_scores`), stored as
+`chunk_{1..4}_oof` alongside the original `chunk_{1..4}` in each `data/scores/*.json` file.
+The OOF PK-human between-chunk r for cEXT is **0.2068** (n=2,421) — nearly identical to the
+in-sample 0.2083, i.e. the leakage barely affects *this particular* number, though it does
+affect chunk-vs-label validity ratios substantially (see CHUNK-REFIT.md for the full
+before/after table and the weak-H2 verdict on OOF scores).
 
 **Per-pool chunking snags** (from `chunk_scoring_summary.json`, texts skipped for having
 fewer than 4 sentences, out of pool size):
