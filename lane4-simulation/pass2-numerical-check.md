@@ -382,3 +382,230 @@ transcribed from the derivations rather than imported from `population.py`, and 
 receipt that the two agree.
 
 PASS2-DONE
+---
+
+## 10. Addendum, 2026-09-09: flag P2-3 closed by the between-mean arms
+
+Pass 2 above returned PASS with one substantive flag, **P2-3**: all 372 cells of the frozen
+grid hold `delta = 0` and `d_theta = 0`, so the between-mean half of the theory was certified
+as algebra and never simulated. Q5 was decided on 2026-09-09 (run the arms). This section
+reports the arms and re-runs the pass-2 checks on them. **The original verdict above is
+unchanged and was not rewritten**: `results/grid/` was not reopened, and nothing in sections 1
+to 9 depends on anything below.
+
+**Result: P2-3 closes, and P2-4 closes with it.** Every closed form that P2-3 listed as
+unsimulated now has a live instance and passes at the same bar. Two of them are not merely
+consistent with the data but required by it: the H2 inflation threshold and Prop. 7's sign
+flip both change side exactly where the closed form says they should.
+
+### 10.1 What was run
+
+| | |
+|---|---|
+| runner | `run_arms.py` (new), 10 workers, `nice -n 10`, log `nonignorable-run.log` |
+| output | `results/grid-nonignorable/` (`grid.jsonl`, `cells/`, `moments.json`) |
+| conventions | `reps = 500`, `master_seed = 20260907`, same `run_cell`, same `dgp.py` as the frozen grid |
+| frozen grid | untouched; its fingerprint `080e38c51239da1a` is unchanged by the new arm builders, and no arm cell shares a `cell_id` with it |
+| n_bins era | **post-patch (`n_bins = 8`)**. No check below touches `_distribution_match_pi`, but the arm rows' `labelfree` columns are therefore NOT comparable with the frozen grid's, which were produced at 60. |
+
+Three arms, 20 cells, all at `n = 1000`, `kappa = 0.5`, `rel_H = 0.7`, `rho_T = 0.5`,
+`r_F = 0.3`, `k = 4`:
+
+| arm | cells | design |
+|---|---|---|
+| `nonignorable` (`grid.py:123-143`, as already coded) | 9 | `delta = 0.3`, `d_theta` in {0, 0.5, 1.0} x `pi` in {0.10, 0.20, 0.30}, `c = 0`, detector `none` |
+| `delta` (new) | 8 | `d_theta = 0`, `delta` in {1.0, 1.5} at `pi` in {0.10, 0.30}, plus one variation each on `c = 0.9`, `rho_v = 0.5`, and detector `degraded` |
+| `flip` (new) | 3 | `d_theta = 1.0`, `pi = 0.30`, `delta` in {2.5, 3.0} at `c = 0`, and `delta = 3.0` at `c = 0.4` |
+
+The `delta` arm is built to straddle boundaries rather than to sample a region: a coverage
+patch is only worth its core-hours if a wrong closed form would show. At `kappa = 0.5`,
+`c = 0`, `rho_v = 0`, (E28a)'s inflation threshold is
+`delta* = sqrt(kappa rel_H / ((1-pi)(1-rel_H)))` = 1.139 at `pi = 0.10` and 1.291 at
+`pi = 0.30`, so `delta` in {1.0, 1.5} puts one cell on each side at each prevalence. The
+`flip` arm straddles (E22)'s condition `delta d_theta > sqrt(rel_H)/pi = 2.789`, and its third
+cell straddles (E23)'s `c_flip' = 0.209`. A 3-SD mean gap is a verification setting, not a
+claim about any real survey: it is the cheapest place to put Prop. 7 at risk.
+
+### 10.2 Method
+
+Unchanged from sections 1.2 and 1.3: same transcribed closed forms, same
+`z = (empirical - target)/mcse`, same finite-sample Pearson term, and the **same bar
+`z* = 4.081`**, kept verbatim rather than recomputed for the smaller family so the arms are
+held to the bar the frozen grid was held to (recomputing it for the new comparisons alone
+would only loosen it).
+
+One instrument is added. The grid summarizes estimator output, so pass 2 could only reach
+closed forms that some estimator's plim equals; four of the equations P2-3 lists are not of
+that kind. `arm_moments.py` re-simulates every arm cell from the same
+`rep_rng(master_seed, cell, rep)` streams and measures the raw moments directly:
+`E[x]`, `Var(x)`, `Cov(x, w)`, `Var(w)`, the item covariance matrix and the authorship mean-gap
+vector. Sample means, variances and covariances are unbiased, so these carry no finite-sample
+correction. Control: the correlation this pass computes reproduces the grid run's `fit_naive`
+mean for the same cell to 0.0 -- the same draws, twice.
+
+One statistic was replaced mid-analysis and the replacement is worth recording. (E29)'s
+rank-one structure was first tested through the top singular value of
+`Sigma_obs - (1-pi) Sigma_H - pi Sigma_M`, which flagged 2 of 21 cells. That was the
+instrument, not the theory: the excess was a constant +0.005 whatever the signal
+(Spearman(signal, z) = -0.75, and the two flagged cells were the two smallest signals), which
+is what an upward-biased nonlinear statistic does and not what a wrong closed form does -- a
+wrong closed form's excess would scale with the signal. It was replaced by the authorship
+mean-gap vector `x_bar_H - x_bar_M`, which tests the same claim (loadings `Delta_j` uniform
+across items, at the predicted magnitude) with a linear, unbiased statistic.
+
+### 10.3 The three pass-2 moments on the arms
+
+Same three moments as section 3, same bar. 20 cells x 3 = 60 comparisons:
+
+| moment | closed form | cells | mean tol (4.081 mcse) | mean z (uncorr.) | mean z (corr.) | max abs z | FAIL | verdict |
+|---|---|---|---|---|---|---|---|---|
+| `rho_obs` | (E5), (E7), **(E21) where `d_theta != 0`** | 20 | 5.3e-03 | +0.115 | +0.211 | 2.18 | 0 | **PASS** |
+| `rho_obs,pass` | (E48)-(E51); (E21) at detector `none` | 20 | 5.4e-03 | +0.078 | +0.180 | 2.18 | 0 | **PASS** |
+| `r_obs` | (E24), (E26) | 20 | 2.1e-03 | -0.022 | +0.329 | 3.59 | 0 | **PASS** |
+
+Largest absolute residual anywhere: 2.8e-03 in correlation units against a 5.3e-03 tolerance.
+
+**One method note, against the arms' own evidence.** On the frozen grid the bivariate-normal
+`O(1/n)` Pearson term removed a clear systematic offset (section 3.3). On these arms it does
+not: the mean z moves from +0.057 uncorrected to +0.240 corrected, i.e. slightly away from
+zero. That is the expected behaviour, not a new problem. The correction is the
+bivariate-normal expansion, and `x` in these cells is a two-component mixture with class means
+up to 3 SD apart -- strongly bimodal, where the normal-theory `O(1/n)` term is simply the wrong
+expansion. Both readings are reported, and **no per-cell verdict depends on which is used**:
+0 failures either way, max abs z 3.88 uncorrected and 3.59 corrected, both inside 4.081.
+
+### 10.4 The moments the grid does not record
+
+`arm_moments.py`, 21 cells (the 20 arm cells plus the D1 lever of 10.6), 10 moments each,
+210 comparisons, no finite-sample correction needed:
+
+| moment | equation | cells | mean z | max abs z | FAIL |
+|---|---|---|---|---|---|
+| `E[x]` | (E2) | 21 | +0.131 | 2.25 | 0 |
+| `Var(x)` | (E3) | 21 | +0.195 | 2.16 | 0 |
+| `Cov(x, w)` | (E4), (E19) | 21 | +0.156 | 2.24 | 0 |
+| `Var(w)` | (E20) | 21 | -0.035 | 3.02 | 0 |
+| item covariance | (E25), (E29) | 21 | +0.165 | 3.64 | 0 |
+| item variance | (E3) | 21 | +0.106 | 3.33 | 0 |
+| authorship mean gap, item 1 | (E29) | 21 | +0.328 | 2.28 | 0 |
+| authorship mean gap, item 2 | (E29) | 21 | -0.010 | 2.00 | 0 |
+| authorship mean gap, item 3 | (E29) | 21 | +0.265 | 2.49 | 0 |
+| authorship mean gap, item 4 | (E29) | 21 | -0.201 | 1.72 | 0 |
+
+**Prop. 10's asymmetry, shown directly.** The claim is that the rank-one authorship factor
+`pi(1-pi) Delta Delta^T` enters every item covariance and no `Cov(x_j, w)`. Across the 12
+`d_theta = 0`, `delta > 0` cells, `Cov(x, w)` matches the closed form that carries **no delta
+term at all** (`b N`), with z from -0.47 to +1.71, while the rank-one term those same cells put
+into Sigma runs from 0.012 to 2.70. The mean-gap rows above are the other half: the factor's
+loadings are `Delta_j = Delta` in all four coordinates, on every cell.
+
+### 10.5 The four predictions the arms were built to put at risk
+
+Each was computed from the closed forms and written down before the cells finished.
+
+**B1. H2's inflation condition (E28a), and the reliability paradox.** `r_obs - rel_H` must
+change sign at `delta* = sqrt(kappa rel_H / ((1-pi)(1-rel_H)))` while `Att` keeps falling:
+
+| pi | delta | vs `delta*` | `r_obs - rel_H` closed form | empirical | distance from `rel_H` | `Att` |
+|---|---|---|---|---|---|---|
+| 0.10 | 1.0 | below (1.139) | -0.00769 | **-0.00758** +- 0.00054 | -14.1 mcse | 0.8825 |
+| 0.10 | 1.5 | ABOVE | +0.02234 | **+0.02271** +- 0.00047 | +48.7 mcse | 0.8383 |
+| 0.30 | 1.0 | below (1.291) | -0.03962 | **-0.03974** +- 0.00056 | -70.7 mcse | 0.6799 |
+| 0.30 | 1.5 | ABOVE | +0.02779 | **+0.02728** +- 0.00042 | +64.3 mcse | 0.6087 |
+
+The sign turns over between `delta = 1.0` and `delta = 1.5` at both prevalences, on the side
+the threshold names, tens of MCSE clear of `rel_H` in both directions. In the two ABOVE cells
+the between-item correlation is above human reliability while the validity coefficient is 16%
+and 39% attenuated: **the reliability paradox of day-1 section 5.2's Corollary, simulated.** A
+contaminated scale reads more reliable and less valid in the same sample.
+
+**B2. Prop. 7's sign flip (E22).** The condition is `delta d_theta > sqrt(rel_H)/pi = 2.789`
+at `pi = 0.30`:
+
+| delta | `delta * d_theta` | `rho_obs` closed form | empirical | sign | z |
+|---|---|---|---|---|---|
+| 2.5 | 2.50 (below) | +0.02010 | **+0.02097** +- 0.00144 | positive, as predicted | +0.60 |
+| 3.0 | 3.00 (ABOVE) | -0.01305 | **-0.01257** +- 0.00144 | NEGATIVE, as predicted | +0.34 |
+
+The pooled correlation is negative while both within-class correlations are positive. That is
+the Simpson's structure of day-1 section 4b, produced on demand, on the side of the boundary
+the closed form names and not on the other.
+
+**B3. Coupling protects (E23).** At `delta = 3.0`, `d_theta = 1.0`, `pi = 0.30` the flip
+threshold is `c_flip' = 0.209`, so `c = 0` must flip and `c = 0.4` must not:
+
+| c | `rho_obs` closed form | empirical | sign | z |
+|---|---|---|---|---|
+| 0.0 | -0.01305 | **-0.01257** +- 0.00144 | NEGATIVE | +0.34 |
+| 0.4 | +0.01193 | **+0.01190** +- 0.00142 | positive | -0.02 |
+
+**B4. The between-mean term's magnitude (E19)-(E21).** All nine `nonignorable` cells, `rho_obs`
+against (E21):
+
+| pi | `d_theta = 0` | `d_theta = 0.5` | `d_theta = 1.0` |
+|---|---|---|---|
+| 0.10 | 0.38464 / **0.38574** (z +0.87) | 0.37669 / **0.37543** (z -1.05) | 0.36675 / **0.36505** (z -1.36) |
+| 0.20 | 0.34998 / **0.34941** (z -0.44) | 0.33575 / **0.33549** (z -0.21) | 0.31857 / **0.31758** (z -0.77) |
+| 0.30 | 0.31415 / **0.31441** (z +0.21) | 0.29532 / **0.29382** (z -1.10) | 0.27327 / **0.27600** (z +2.08) |
+
+**These checks are not vacuous.** The A1' targets sit 6.7 to 134 MCSE away from the A1
+(`d_theta = 0`) value the frozen grid would have predicted for the same cell, and the
+delta-carrying `r_obs` targets sit 54 to 1445 MCSE away from their `delta = 0` counterparts. A
+closed form that had the between-mean term wrong could not have hidden inside these tolerances.
+
+### 10.6 Flag P2-4 also closes: the D1 fix is now decided by simulation
+
+P2-4 recorded that the D1 wording fix touches a checkable moment -- the survivor mean gap is
+`delta_pass = delta + r_F lam sqrt(rel_H)` (E47), not `delta` -- but that the frozen grid moves
+by at most 0.20 MCSE between the corrected and uncorrected readings, because `delta = 0` there
+leaves the manufactured term as the whole of it.
+
+At `delta = 3.0` the manufactured term has a lever. One extra cell (pi = 0.30, `n = 5000`,
+detector `degraded`, `c = 0`, 5000 reps, no estimators, so the reps are nearly free):
+
+| reading | `rho_obs,pass` | z |
+|---|---|---|
+| **D1-corrected (E47)** | 0.309120 | **-0.35 PASS** |
+| pre-D1 wording (survivor gap = `delta`) | 0.305170 | **+15.98 REJECTED** |
+
+Empirical `Cor(x, w | pass) = 0.308990 +- 0.000242`; the two readings are 16.3 MCSE apart. The
+D1 fix is confirmed by simulation and its pre-fix wording is rejected at the pass-2 bar.
+
+### 10.7 What is still unverifiable, and why
+
+P2-3's list is now empty. Four items from section 6 remain, none of them a between-mean item:
+
+| equations | why still unverifiable |
+|---|---|
+| (E18) | the A1 sign flip needs `c < 0`; no arm carries a negative coupling, and a negative correlation between machine output and the respondent's trait is not a cell anyone has argued for |
+| (E40)-(E45) with `q_M != 1` | **structurally unreachable in the current DGP**: `dgp.py:126` draws `theta = standard_normal(n) + d_theta * A`, so `Var(theta | M) = Var(theta | H) = 1` by construction and `q_M = 1` always. Reaching it needs a DGP change, not a new cell. (E46)'s option-A/option-B distinction is moot for the same reason, as day-2 section 3.1 already notes |
+| (E54), (E55), (E76) | live at `c = 1`; the grid and the arms top out at `c = 0.9`. Not a P2-3 item -- logged in section 6 and unchanged |
+| (E56)-(E60), Prop. 15 | Layer A's outcome `w = b theta + u` is clean by construction, so `rho_vw = 0` identically (flag BW3). Unchanged |
+
+### 10.8 Updated flag status
+
+| flag | section 7 status | now |
+|---|---|---|
+| P2-1 (`calibrated` = (0.95, 0.99) vs (0.99, 0.99)) | open, low | **unchanged** -- a definitional item for the writeup, untouched by the arms |
+| P2-2 (crossing printed as 0.60, exact 0.6044) | open, low | **unchanged** |
+| **P2-3 (delta = 0, d_theta = 0 everywhere)** | open, medium | **CLOSED.** 20 cells, 60 moment comparisons and 210 direct-moment comparisons, 0 failures at `z* = 4.081`; H2's threshold, Prop. 7's flip, (E23)'s protection and (E29)'s rank-one factor each verified on both sides of their own boundary |
+| **P2-4 (D1 unresolvable on the grid)** | open, low | **CLOSED.** D1-corrected reading passes at z = -0.35, pre-D1 rejected at z = +15.98 (10.6) |
+| P2-5 (systematic offset before correction) | explained | **refined**: on strongly bimodal cells the normal-theory `O(1/n)` term is the wrong expansion and slightly over-corrects; no verdict depends on it (10.3) |
+
+### 10.9 Verdict on the arms
+
+**PASS.** 60 per-cell Monte Carlo comparisons and 210 direct-moment comparisons, **0 failures**
+at the pass-2 bar `z* = 4.081`, max abs z = 3.64. Nothing is BLOCKED.
+
+The sentence pass 2 asked the writeup to narrow can now be widened back: with these arms, Layer
+A reproduces every derived moment the DGP can instantiate, the between-mean half included.
+SPEC 1.4's first verification target is met for all of it except the four structural gaps in
+10.7, of which only `q_M != 1` would need a DGP change to close.
+
+Reproduction: `run_arms.py --out results/grid-nonignorable` then
+`arm_moments.py --out results/grid-nonignorable/moments.json`. As in pass 2, the checking
+scripts are session scratchpad and not committed; the closed forms they test against are
+transcribed from the derivations rather than imported from `population.py`, and `arm_moments.py`
+carries its own transcription in `moments_closed_form` for the same reason.
+
+ARM-DONE (2026-09-09)

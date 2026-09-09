@@ -143,11 +143,60 @@ def nonignorable_arm() -> list[Cell]:
     return cells
 
 
+def delta_arm() -> list[Cell]:
+    """Pass-2 flag P2-3 coverage patch: the mean gap, at ignorable authorship (d_theta = 0).
+
+    The 372-cell grid holds delta = 0, so every equation whose only live term is the
+    between-mean one is certified as algebra and never simulated: (E2), the delta halves of
+    (E3)/(E7)/(E37), H2's inflation condition (E27)/(E28), and Prop. 10's rank-one authorship
+    factor pi(1-pi) Delta Delta^T in (E29), which vanishes identically at delta = 0.
+
+    Cells are chosen to STRADDLE a predicted boundary rather than to sample a region, because
+    a coverage patch is only worth its core-hours if a wrong closed form would show. At
+    kappa = 0.5, rel_H = 0.7, rho_v = 0, c = 0 the (E28a) inflation threshold is
+    delta* = sqrt(kappa rel_H / ((1-pi)(1-rel_H))) = 1.139 at pi = 0.10 and 1.291 at pi = 0.30,
+    so delta in {1.0, 1.5} puts r_obs - rel_H at -0.008 / +0.022 and -0.040 / +0.028: the
+    reliability paradox (validity down, between-item correlation up) is live in the delta = 1.5
+    cells and absent in the delta = 1.0 ones, 13 to 37 MCSE apart.
+
+    Three cells then vary one thing each off (pi=0.30, delta=1.5): c = 0.9 puts delta in Den
+    while N carries the coupling (E7 at general delta, Prop. 12's c_2(delta)); rho_v = 0.5
+    makes both terms of (E28b) live at once; and detector = degraded gives the survivor mean
+    gap delta_pass of (E47) a lever it does not have at delta = 0 (flag P2-4).
+    """
+    K, N = KAPPA_REFERENCE, 1000
+    spec = [(0.10, 1.0, C_ZERO, 0.0, "none"), (0.10, 1.5, C_ZERO, 0.0, "none"),
+            (0.30, 1.0, C_ZERO, 0.0, "none"), (0.30, 1.5, C_ZERO, 0.0, "none"),
+            (0.30, 1.5, C_HIGH, 0.0, "none"), (0.30, 1.5, C_ZERO, 0.5, "none"),
+            (0.10, 1.5, C_ZERO, 0.0, "degraded"), (0.30, 1.5, C_ZERO, 0.0, "degraded")]
+    return [Cell(pi=pi, c=c, n=N, detector=det, kappa=K, rho_v=rv, delta=d, arm="delta")
+            for pi, d, c, rv, det in spec]
+
+
+def flip_arm() -> list[Cell]:
+    """Prop. 7's sign flip (E22), the one mechanism the paper claims and the grid never ran.
+
+    Under A1' the flip needs delta * d_theta > sqrt(rel_H) / pi, which is 2.789 at pi = 0.30,
+    rel_H = 0.7 -- unreachable at the nonignorable arm's delta = 0.3. These three cells bracket
+    it: at d_theta = 1.0, c = 0, (E21) predicts rho_obs = +0.0201 at delta = 2.5 and -0.0131 at
+    delta = 3.0, so the sign changes across the predicted boundary and not before it. The third
+    cell tests the other half of (E23): at delta = 3.0 the flip threshold is c_flip' = 0.209, so
+    c = 0.4 must NOT flip (+0.0119). A 3-SD mean gap is a verification setting, not a claim
+    about any real survey; it is the cheapest place to put the prediction at risk.
+    """
+    K, N = KAPPA_REFERENCE, 1000
+    return [Cell(pi=0.30, c=c, n=N, detector="none", kappa=K, rho_v=0.0, delta=d,
+                 d_theta=1.0, arm="flip")
+            for d, c in ((2.5, C_ZERO), (3.0, C_ZERO), (3.0, C_PARTIAL))]
+
+
 ARM_BUILDERS = {
     "base": base_grid,
     "kappa": kappa_arm,
     "rho_v": rho_v_arm,
     "nonignorable": nonignorable_arm,
+    "delta": delta_arm,
+    "flip": flip_arm,
 }
 
 

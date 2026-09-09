@@ -1,0 +1,86 @@
+arms ('nonignorable', 'delta', 'flip'): 20 cells, 0 done, 20 to run, 10 workers, reps=500, master_seed=20260907, fingerprint 3edfb7559b1636ca
+  nonignorable  pi=0.3 delta=0.3 d_theta=0.5 c=0.0 rho_v=0.0 det=none n=1000 249dcd5ef32c20e8
+  delta         pi=0.1 delta=1.5 d_theta=0.0 c=0.0 rho_v=0.0 det=degraded n=1000 2aa94d4c7ac54ba0
+  delta         pi=0.3 delta=1.5 d_theta=0.0 c=0.0 rho_v=0.5 det=none n=1000 2b21a2b8e0d25ab8
+  delta         pi=0.3 delta=1.5 d_theta=0.0 c=0.9 rho_v=0.0 det=none n=1000 4083dc1762971fda
+  flip          pi=0.3 delta=3.0 d_theta=1.0 c=0.4 rho_v=0.0 det=none n=1000 6e60ab67c6ca5fed
+  nonignorable  pi=0.3 delta=0.3 d_theta=0.0 c=0.0 rho_v=0.0 det=none n=1000 71f3036dd24493ad
+  nonignorable  pi=0.2 delta=0.3 d_theta=0.0 c=0.0 rho_v=0.0 det=none n=1000 72394d4b7ae068ca
+  nonignorable  pi=0.3 delta=0.3 d_theta=1.0 c=0.0 rho_v=0.0 det=none n=1000 7e2b791873e12b94
+  delta         pi=0.3 delta=1.5 d_theta=0.0 c=0.0 rho_v=0.0 det=none n=1000 8019f366e611605f
+  nonignorable  pi=0.1 delta=0.3 d_theta=0.5 c=0.0 rho_v=0.0 det=none n=1000 89bb522d76209eec
+  flip          pi=0.3 delta=3.0 d_theta=1.0 c=0.0 rho_v=0.0 det=none n=1000 91385670ada5de79
+  nonignorable  pi=0.1 delta=0.3 d_theta=1.0 c=0.0 rho_v=0.0 det=none n=1000 95651b62dfc69056
+  nonignorable  pi=0.2 delta=0.3 d_theta=0.5 c=0.0 rho_v=0.0 det=none n=1000 b6dfe2bfdcd5d880
+  nonignorable  pi=0.1 delta=0.3 d_theta=0.0 c=0.0 rho_v=0.0 det=none n=1000 c168d198e4205492
+  delta         pi=0.1 delta=1.0 d_theta=0.0 c=0.0 rho_v=0.0 det=none n=1000 c2e261bd906a22e8
+  delta         pi=0.1 delta=1.5 d_theta=0.0 c=0.0 rho_v=0.0 det=none n=1000 d30274c9bded28a9
+  flip          pi=0.3 delta=2.5 d_theta=1.0 c=0.0 rho_v=0.0 det=none n=1000 d38f1ee331d9df97
+  delta         pi=0.3 delta=1.5 d_theta=0.0 c=0.0 rho_v=0.0 det=degraded n=1000 e2941b528132d63d
+  nonignorable  pi=0.2 delta=0.3 d_theta=1.0 c=0.0 rho_v=0.0 det=none n=1000 eb266207c008ef14
+  delta         pi=0.3 delta=1.0 d_theta=0.0 c=0.0 rho_v=0.0 det=none n=1000 f85511047e638090
+  [ 1/20] nonignorable  pi=0.3 delta=0.3 d_theta=0.5 c=0.0 det=none  cor_xw=+0.29382
+  [ 2/20] delta         pi=0.1 delta=1.5 d_theta=0.0 c=0.0 det=degraded  cor_xw=+0.35032
+  [ 3/20] delta         pi=0.3 delta=1.5 d_theta=0.0 c=0.0 det=none  cor_xw=+0.25395
+  [ 4/20] delta         pi=0.3 delta=1.5 d_theta=0.0 c=0.9 det=none  cor_xw=+0.33910
+  [ 5/20] flip          pi=0.3 delta=3.0 d_theta=1.0 c=0.4 det=none  cor_xw=+0.01190
+  [ 6/20] nonignorable  pi=0.3 delta=0.3 d_theta=0.0 c=0.0 det=none  cor_xw=+0.31441
+  [ 7/20] nonignorable  pi=0.2 delta=0.3 d_theta=0.0 c=0.0 det=none  cor_xw=+0.34941
+  [ 8/20] nonignorable  pi=0.3 delta=0.3 d_theta=1.0 c=0.0 det=none  cor_xw=+0.27600
+  [ 9/20] delta         pi=0.3 delta=1.5 d_theta=0.0 c=0.0 det=none  cor_xw=+0.25430
+  [10/20] nonignorable  pi=0.1 delta=0.3 d_theta=0.5 c=0.0 det=none  cor_xw=+0.37543
+  [11/20] flip          pi=0.3 delta=3.0 d_theta=1.0 c=0.0 det=none  cor_xw=-0.01257
+  [12/20] nonignorable  pi=0.1 delta=0.3 d_theta=1.0 c=0.0 det=none  cor_xw=+0.36505
+  [13/20] nonignorable  pi=0.2 delta=0.3 d_theta=0.5 c=0.0 det=none  cor_xw=+0.33549
+  [14/20] nonignorable  pi=0.1 delta=0.3 d_theta=0.0 c=0.0 det=none  cor_xw=+0.38574
+  [15/20] delta         pi=0.1 delta=1.0 d_theta=0.0 c=0.0 det=none  cor_xw=+0.37045
+  [16/20] delta         pi=0.1 delta=1.5 d_theta=0.0 c=0.0 det=none  cor_xw=+0.35240
+  [17/20] flip          pi=0.3 delta=2.5 d_theta=1.0 c=0.0 det=none  cor_xw=+0.02097
+  [18/20] delta         pi=0.3 delta=1.5 d_theta=0.0 c=0.0 det=degraded  cor_xw=+0.25604
+  [19/20] nonignorable  pi=0.2 delta=0.3 d_theta=1.0 c=0.0 det=none  cor_xw=+0.31758
+  [20/20] delta         pi=0.3 delta=1.0 d_theta=0.0 c=0.0 det=none  cor_xw=+0.28400
+D1 lever: d1lever n=5000 delta=3.0 reps=5000
+-> /Users/abhay/code/ghost-respondents/lane4-simulation/results/grid-nonignorable/moments.json
+  [ 1/20] nonignorable  pi=0.3 delta=0.3 d_theta=0.5 c=0.0 det=none  cor_xw=+0.29382
+  [ 2/20] delta         pi=0.1 delta=1.5 d_theta=0.0 c=0.0 det=degraded  cor_xw=+0.35032
+  [ 3/20] delta         pi=0.3 delta=1.5 d_theta=0.0 c=0.0 det=none  cor_xw=+0.25395
+  [ 4/20] delta         pi=0.3 delta=1.5 d_theta=0.0 c=0.9 det=none  cor_xw=+0.33910
+  [ 5/20] flip          pi=0.3 delta=3.0 d_theta=1.0 c=0.4 det=none  cor_xw=+0.01190
+  [ 6/20] nonignorable  pi=0.3 delta=0.3 d_theta=0.0 c=0.0 det=none  cor_xw=+0.31441
+  [ 7/20] nonignorable  pi=0.2 delta=0.3 d_theta=0.0 c=0.0 det=none  cor_xw=+0.34941
+  [ 8/20] nonignorable  pi=0.3 delta=0.3 d_theta=1.0 c=0.0 det=none  cor_xw=+0.27600
+  [ 9/20] delta         pi=0.3 delta=1.5 d_theta=0.0 c=0.0 det=none  cor_xw=+0.25430
+  [10/20] nonignorable  pi=0.1 delta=0.3 d_theta=0.5 c=0.0 det=none  cor_xw=+0.37543
+  [11/20] flip          pi=0.3 delta=3.0 d_theta=1.0 c=0.0 det=none  cor_xw=-0.01257
+  [12/20] nonignorable  pi=0.1 delta=0.3 d_theta=1.0 c=0.0 det=none  cor_xw=+0.36505
+  [13/20] nonignorable  pi=0.2 delta=0.3 d_theta=0.5 c=0.0 det=none  cor_xw=+0.33549
+  [14/20] nonignorable  pi=0.1 delta=0.3 d_theta=0.0 c=0.0 det=none  cor_xw=+0.38574
+  [15/20] delta         pi=0.1 delta=1.0 d_theta=0.0 c=0.0 det=none  cor_xw=+0.37045
+  [16/20] delta         pi=0.1 delta=1.5 d_theta=0.0 c=0.0 det=none  cor_xw=+0.35240
+  [17/20] flip          pi=0.3 delta=2.5 d_theta=1.0 c=0.0 det=none  cor_xw=+0.02097
+  [18/20] delta         pi=0.3 delta=1.5 d_theta=0.0 c=0.0 det=degraded  cor_xw=+0.25604
+  [19/20] nonignorable  pi=0.2 delta=0.3 d_theta=1.0 c=0.0 det=none  cor_xw=+0.31758
+  [20/20] delta         pi=0.3 delta=1.0 d_theta=0.0 c=0.0 det=none  cor_xw=+0.28400
+D1 lever: d1lever n=5000 delta=3.0 reps=5000
+-> /Users/abhay/code/ghost-respondents/lane4-simulation/results/grid-nonignorable/moments.json
+arms: 1/20 cell_id=6e60ab67c6ca5fed (499.1s, 500s elapsed)
+arms: 2/20 cell_id=4083dc1762971fda (900.4s, 901s elapsed)
+arms: 3/20 cell_id=8019f366e611605f (927.2s, 928s elapsed)
+arms: 4/20 cell_id=91385670ada5de79 (582.9s, 1083s elapsed)
+arms: 5/20 cell_id=7e2b791873e12b94 (1461.9s, 1462s elapsed)
+arms: 6/20 cell_id=2aa94d4c7ac54ba0 (1480.7s, 1481s elapsed)
+arms: 7/20 cell_id=249dcd5ef32c20e8 (1515.4s, 1516s elapsed)
+arms: 8/20 cell_id=71f3036dd24493ad (1572.6s, 1573s elapsed)
+arms: 9/20 cell_id=2b21a2b8e0d25ab8 (1803.0s, 1804s elapsed)
+arms: 10/20 cell_id=72394d4b7ae068ca (1851.3s, 1852s elapsed)
+arms: 11/20 cell_id=89bb522d76209eec (1978.1s, 1979s elapsed)
+arms: 12/20 cell_id=d38f1ee331d9df97 (631.6s, 2148s elapsed)
+arms: 13/20 cell_id=e2941b528132d63d (944.4s, 2518s elapsed)
+arms: 14/20 cell_id=b6dfe2bfdcd5d880 (1777.6s, 2705s elapsed)
+arms: 15/20 cell_id=95651b62dfc69056 (1939.9s, 2841s elapsed)
+arms: 16/20 cell_id=d30274c9bded28a9 (1384.7s, 2866s elapsed)
+arms: 17/20 cell_id=f85511047e638090 (1044.1s, 2896s elapsed)
+arms: 18/20 cell_id=c168d198e4205492 (1833.2s, 2916s elapsed)
+arms: 19/20 cell_id=c2e261bd906a22e8 (1648.8s, 3111s elapsed)
+arms: 20/20 cell_id=eb266207c008ef14 (1355.9s, 3159s elapsed)
+arms: COMPLETE 20/20 in 3159s
