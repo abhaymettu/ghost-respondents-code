@@ -43,7 +43,7 @@ Human ChatGPT Comparison Corpus (https://huggingface.co/datasets/Hello-SimpleAI/
 
 ### 2.2 Pennebaker-King essays
 
-Stream-of-consciousness essays dataset (Pennebaker and King 1999): 2,479 essays with Big Five (BFI) trait scores, about 1.9M words. Accessible via IEEE DataPort mirror (https://doi.org/10.21227/dyfp-7f45) and widely mirrored as essays.csv. Role: the construct-linked human base. Real human text tied to real trait scores, which is what HC3 lacks.
+Stream-of-consciousness essays dataset (Pennebaker and King 1999): 2,467 essays, about 1.61M words, with binary median-split Big Five labels derived from BFI trait scores (the IEEE DataPort mirror carries no continuous scores; see lane3-testbed/TESTBED-REPORT.md). Accessible via IEEE DataPort mirror (https://doi.org/10.21227/dyfp-7f45) and widely mirrored as essays.csv. Role: the construct-linked human base. Real human text tied to real trait scores, which is what HC3 lacks.
 
 ### 2.3 LLM counterpart generation
 
@@ -56,7 +56,7 @@ Generate with two model families (one frontier proprietary, one open-weight) so 
 
 ### 2.4 Detector calibration
 
-Calibrate a detector (a published open-weights AI-text classifier plus a simple feature baseline) on HC3 pairs, then re-calibrate on the essays testbed. Record operating points; the honest range from the NORC PACT work is roughly 99% in-domain down to mid-80s out of domain (https://www.norc.org/content/dam/norc-org/pdf2025/AAPOR%20Detecting%20AI-Generated%20Survey%20Responses%20-%20Lilian%20Huang.pdf). The simulation grid runs detectors at calibrated, degraded, and oracle quality.
+Calibrate a detector (a published open-weights AI-text classifier plus a simple feature baseline) on HC3 pairs, then re-calibrate on the essays testbed. Record operating points. For external reference, NORC PACT (Huang et al., AAPOR 2025) reports general-population precision 0.989, recall 0.999, accuracy 0.990, and technical-domain accuracy in the upper-80s to mid-90s; it does not publish an out-of-domain sensitivity figure (https://www.norc.org/content/dam/norc-org/pdf2025/AAPOR%20Detecting%20AI-Generated%20Survey%20Responses%20-%20Lilian%20Huang.pdf). The simulation grid runs detectors at calibrated, degraded, and oracle quality.
 
 ## 3. Correction estimator options
 
@@ -84,7 +84,7 @@ theta ~ N(0,1); human indicators from a factor model with k items; machine indic
 
 ### 4.2 Layer B: semi-synthetic on real text
 
-Base sample: essays dataset human responses with BFI traits. Inject machine counterparts at grid values of pi. Validity target: text-predicted trait score against a held-out trait or an outcome simulated with known dependence on the trait. This layer supplies ecological validity: real words, real trait distributions, real detector behavior.
+Base sample: essays dataset human responses with BFI traits. Inject machine counterparts at grid values of pi. Validity target: text-predicted trait score against a held-out trait or an outcome simulated with known dependence on the trait. This layer supplies ecological validity: real words, real trait distributions, real detector behavior. Injection is via random/matched assignment of already-scored text to respondent labels (see lane4-simulation/INJECT.md section 1), not generation-time disclosure variation; ecological claims are restricted to scored-text marginals unless a separate disclosure-varied-generation experiment is run.
 
 ### 4.3 Grid
 
