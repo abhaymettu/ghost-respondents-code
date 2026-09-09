@@ -536,7 +536,9 @@ def test_lane3_real_files() -> None:
 
 
 def test_lane3_chunks() -> None:
-    """chunk_1..chunk_k are per-text DICTS of all five traits, with nulls for short texts."""
+    """chunk_j_oof (default) and chunk_j are per-text DICTS of all five traits, nulls for
+    short texts. The default routing is OOF (pools.SCORE_VERSIONS); the in-sample columns are
+    reachable only behind allow_insample, and both are checked here."""
     if not LANE3_MEASUREMENTS.exists():
         print(f"  SKIP: no lane 3 measurements at {LANE3_MEASUREMENTS}")
         return
@@ -546,24 +548,37 @@ def test_lane3_chunks() -> None:
     for name, expect_unchunked in (("personallm_gpt-4-0613", 0), ("big5_personality_essays", 65)):
         with lane3_scores_path(name, raw).open() as fh:
             blob = json.load(fh)
-        k = blob["chunk_meta"]["k"]
-        pool = lane3_pool(name, "OPE", raw)
+        k = blob["chunk_meta_oof"]["k"]
+        pool = lane3_pool(name, "OPE", raw)              # default score_version="oof"
         lens = np.array([len(t.chunk_scores) for t in pool.texts])
         n_empty = int(np.sum(lens == 0))
         check(f"{name}: chunk widths are k={k} or 0, never partial",
               set(np.unique(lens).tolist()) <= {0, k}, f"widths {sorted(set(lens.tolist()))}")
-        check(f"{name}: unchunked count matches lane 3's chunk_meta",
-              n_empty == expect_unchunked == blob["chunk_meta"]["n_texts_too_short_to_chunk"],
-              f"loader {n_empty}, chunk_meta {blob['chunk_meta']['n_texts_too_short_to_chunk']}, "
-              f"expected {expect_unchunked}")
+        check(f"{name}: unchunked count matches lane 3's chunk_meta_oof",
+              n_empty == expect_unchunked == blob["chunk_meta_oof"]["n_texts_too_short_to_chunk"],
+              f"loader {n_empty}, chunk_meta_oof "
+              f"{blob['chunk_meta_oof']['n_texts_too_short_to_chunk']}, expected {expect_unchunked}")
         check(f"{name}: n_unchunked is reported on the pool, not silently swallowed",
               pool.metrics["n_unchunked"] == n_empty and pool.metrics["k_chunks_available"] == k,
               f"n_unchunked={pool.metrics['n_unchunked']} k={pool.metrics['k_chunks_available']}")
         # The values must come from the requested trait's key in each chunk dict, in order.
         i = int(np.flatnonzero(lens == k)[0])
-        want = tuple(float(blob[f"chunk_{j}"][i]["cOPN"]) for j in range(1, k + 1))
-        check(f"{name}: chunk values are the requested trait, in chunk order",
+        want = tuple(float(blob[f"chunk_{j}_oof"][i]["cOPN"]) for j in range(1, k + 1))
+        check(f"{name}: chunk values are the requested trait, OOF column, in chunk order",
               pool.texts[i].chunk_scores == want, f"text {pool.texts[i].text_id}: {want}")
+        # The leaky columns are a different set of numbers and are reachable only on request.
+        insample = lane3_pool(name, "OPE", raw, score_version="insample", allow_insample=True)
+        want_in = tuple(float(blob[f"chunk_{j}"][i]["cOPN"]) for j in range(1, k + 1))
+        check(f"{name}: score_version='insample' reads the historical columns instead",
+              insample.texts[i].chunk_scores == want_in
+              and insample.metrics["score_version"] == "insample",
+              f"insample {want_in}")
+        refused = False
+        try:
+            lane3_pool(name, "OPE", raw, score_version="insample")
+        except PoolContractError:
+            refused = True
+        check(f"{name}: insample REFUSED without allow_insample (pass-3 finding B3)", refused)
 
     # A pool with any unchunkable text must NOT be silently usable at k > 1:
     # build._chunks_or_none returns None, and build_injected_sample raises on it.

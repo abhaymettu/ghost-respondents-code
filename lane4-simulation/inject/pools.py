@@ -625,29 +625,62 @@ def lane3_scores_path(
     return path
 
 
-def _lane3_chunks(blob: dict[str, Any], tkey: str, n: int) -> tuple[list[tuple[float, ...]], int]:
-    """Per-text chunk scores for ONE trait out of lane 3's `chunk_1..chunk_k` columns.
+SCORE_VERSIONS = ("oof", "insample")
+"""Which lane-3 scoring columns a Pool reads.
 
-    Each `chunk_j` is a list aligned to `ids` whose entries are either null (the text had
+"oof"      chunk_1_oof..chunk_k_oof. On pk_human each chunk is scored by the fold model that
+           excluded its parent text, so the chunk score carries no information about its own
+           text's label. This is the confirmatory version and the default.
+"insample" chunk_1..chunk_k, the historical columns. On pk_human the chunk scorer saw the
+           parent text, so any chunk-consuming quantity (rel_hat, the k>1 loading, every
+           rho_T-scale number) is inflated by leakage. Kept only to reproduce runs made
+           before 2026-09-09; a confirmatory run must not use it.
+
+Whole-text scores are NOT switched by this flag, because no leaky whole-text column exists:
+pk_human ships `cross_fitted_scores` (5-fold OOF) and the machine pools ship `trait_scores`
+from a full-PK refit whose training set never contained their texts. `lane3_pool` records
+which column it read in `Pool.metrics["whole_text_scoring"]` so the provenance is explicit
+rather than assumed.
+"""
+
+
+def _chunk_meta(blob: dict[str, Any], suffix: str) -> dict[str, Any]:
+    """The chunk_meta block for this scoring version, falling back to the unsuffixed one."""
+    return blob.get(f"chunk_meta{suffix}") or blob.get("chunk_meta") or {}
+
+
+def _lane3_chunks(
+    blob: dict[str, Any], tkey: str, n: int, score_version: str = "oof"
+) -> tuple[list[tuple[float, ...]], int]:
+    """Per-text chunk scores for ONE trait out of lane 3's chunk columns.
+
+    Each column is a list aligned to `ids` whose entries are either null (the text had
     too few sentences to split into k non-trivial chunks -- lane 3 skips rather than pads)
     or a dict of that chunk's five trait scores. A text is chunked only if EVERY chunk is
     present; otherwise it gets an empty tuple, which is what `build._chunks_or_none` reads
     to refuse a k > 1 run rather than silently short a row.
+
+    `score_version` selects `chunk_j_oof` ("oof") or `chunk_j` ("insample"); see
+    SCORE_VERSIONS. Lane 3's pass-3 review finding B3 is that reading the in-sample columns
+    makes every chunk-consuming quantity non-confirmatory.
     """
-    meta = blob.get("chunk_meta") or {}
-    k = int(meta.get("k", 0)) or sum(1 for j in range(1, 65) if f"chunk_{j}" in blob)
+    if score_version not in SCORE_VERSIONS:
+        raise PoolContractError(f"score_version must be one of {SCORE_VERSIONS}, got {score_version!r}")
+    suffix = "_oof" if score_version == "oof" else ""
+    meta = _chunk_meta(blob, suffix)
+    k = int(meta.get("k", 0)) or sum(1 for j in range(1, 65) if f"chunk_{j}{suffix}" in blob)
     if k <= 1:
         return [() for _ in range(n)], 0
     cols = []
     for j in range(1, k + 1):
-        col = blob.get(f"chunk_{j}")
+        col = blob.get(f"chunk_{j}{suffix}")
         if col is None:
             raise PoolContractError(
-                f"chunk_meta says k={k} but chunk_{j} is missing; have "
-                f"{sorted(c for c in blob if c.startswith('chunk_'))}"
+                f"chunk_meta says k={k} but chunk_{j}{suffix} is missing (score_version="
+                f"{score_version!r}); have {sorted(c for c in blob if c.startswith('chunk_'))}"
             )
         if len(col) != n:
-            raise PoolContractError(f"chunk_{j} has {len(col)} entries, ids has {n}")
+            raise PoolContractError(f"chunk_{j}{suffix} has {len(col)} entries, ids has {n}")
         cols.append(col)
     out: list[tuple[float, ...]] = []
     n_missing = 0
@@ -672,6 +705,8 @@ def lane3_pool(
     raw: dict[str, Any] | None = None,
     root: Path | None = None,
     chunks: bool = True,
+    score_version: str = "oof",
+    allow_insample: bool = False,
 ) -> Pool:
     """Build a Pool from lane 3's per-text score file. `name` is a key of `score_files`.
 
@@ -679,7 +714,19 @@ def lane3_pool(
     `scores_path` in pool_measurements.json, so this reads `score_files[name]` and slices
     the requested trait out. It does not go through `_read_rows` / `pool_from_rows`, which
     parse the row-shaped files the pre-lane-3 contract assumed.
+
+    `score_version` defaults to "oof" (SCORE_VERSIONS). Passing "insample" additionally
+    requires `allow_insample=True`: the leaky columns are reachable only by a caller that
+    says in writing it is reproducing a pre-2026-09-09 run, never by a default or a typo.
     """
+    if score_version not in SCORE_VERSIONS:
+        raise PoolContractError(f"score_version must be one of {SCORE_VERSIONS}, got {score_version!r}")
+    if score_version == "insample" and not allow_insample:
+        raise PoolContractError(
+            "score_version='insample' reads lane 3's leaky chunk columns (pass-3 review finding "
+            "B3: on pk_human the chunk scorer saw the parent text). A confirmatory run must use "
+            "'oof'. Pass allow_insample=True only to reproduce a run made before 2026-09-09."
+        )
     raw = load_lane3() if raw is None else raw
     path = lane3_scores_path(name, raw, root)
     with path.open() as fh:
@@ -721,7 +768,7 @@ def lane3_pool(
         )
     n = len(scores)
     chunk_rows, n_unchunked = (
-        _lane3_chunks(blob, tkey, n) if chunks else ([() for _ in range(n)], 0)
+        _lane3_chunks(blob, tkey, n, score_version) if chunks else ([() for _ in range(n)], 0)
     )
     texts = [
         PoolText(
@@ -743,8 +790,16 @@ def lane3_pool(
             metrics[key] = v.get("r", v.get("value")) if isinstance(v, dict) else v
     metrics["lane3_trait_key"] = tkey
     metrics["n_unchunked"] = n_unchunked
-    metrics["k_chunks_available"] = int((blob.get("chunk_meta") or {}).get("k", 0))
+    suffix = "_oof" if score_version == "oof" else ""
+    metrics["k_chunks_available"] = int(_chunk_meta(blob, suffix).get("k", 0))
     metrics["has_detector"] = det is not None
+    # Provenance, so a downstream manifest never has to guess which scoring it consumed.
+    metrics["score_version"] = score_version
+    metrics["chunk_scoring"] = _chunk_meta(blob, suffix).get(
+        "scoring_rule", "chunk_meta carries no scoring_rule (pre-refit file)")
+    metrics["whole_text_scoring"] = (
+        "pk_human cross_fitted_scores: 5-fold OOF" if scores_key == "cross_fitted_scores"
+        else "trait_scores: full-PK refit; this pool's texts were never in the training set")
     return Pool(
         name=name, trait=trait, texts=texts, kind=kind,
         generator=None if kind == "human" else name,
