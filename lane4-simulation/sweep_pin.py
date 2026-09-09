@@ -25,7 +25,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from estimators import _adjusted_count_pi, _distribution_match_pi, _pearson
 from inject.build import build_injected_sample, layer_b_moments
-from inject.pools import lane3_pool, load_lane3, reference_detector, split_reference
+from inject.pools import calibration_split, lane3_pool, load_lane3, reference_detector, split_id
 from layerb_pilot import eiv_correct, mcse
 from sweep_k4 import CELLS  # the same six cells, so the two rounds are directly comparable
 
@@ -54,9 +54,9 @@ def cell_setup(pool_name: str, trait: str, raw: dict, cell_seed: int) -> dict:
     """Everything that depends on the (pool, trait) but not on (pi, n): one split, reused."""
     H_all = lane3_pool("pk_human", trait, raw)
     M_all = lane3_pool(pool_name, trait, raw)
-    rng0 = np.random.default_rng(cell_seed)
-    M_inj, M_ref = split_reference(M_all, rng0, frac=0.5)
-    H_base, H_ref = split_reference(H_all, rng0, frac=0.5)
+    # Frozen calibration split (SPEC-FIXES-ROUND3.md fix 1): keyed on pool identity, not cell_seed.
+    M_inj, M_ref = calibration_split(M_all, frac=0.5)
+    H_base, H_ref = calibration_split(H_all, frac=0.5)
 
     mu_h, sd_h = float(H_base.scores.mean()), float(H_base.scores.std(ddof=0))
     q1 = H_base.balance
@@ -69,6 +69,7 @@ def cell_setup(pool_name: str, trait: str, raw: dict, cell_seed: int) -> dict:
     thr = float(np.quantile(det_Href, SP_TARGET))
     return {
         "H_base": H_base, "M_inj": M_inj, "q1": q1, "r_H": r_H,
+        "split_id": split_id(M_ref, H_ref),
         "Mref_std": (M_ref.scores - mu_h) / sd_h,
         "Href_std": (H_ref.scores - mu_h) / sd_h,
         "thr": thr,

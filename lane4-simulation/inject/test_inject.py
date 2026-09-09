@@ -27,11 +27,14 @@ from .assign import (
 from . import build as build_mod
 from .build import build_injected_sample, detector_flags, exact_mixture_law, layer_b_moments
 from .pools import (
+    CALIBRATION_SEED,
     LANE3_MEASUREMENTS,
     LANE3_TRAITS,
     Pool,
     PoolContractError,
     PoolText,
+    calibration_split,
+    calibration_stream,
     chunk_text,
     lane3_labeled_pools,
     lane3_pool,
@@ -41,6 +44,7 @@ from .pools import (
     load_measurements,
     normalize_measurements,
     personallm_label,
+    split_id,
     split_reference,
     synthetic_pool,
     transfer_reference,
@@ -207,6 +211,67 @@ def test_reference_splits() -> None:
     except ValueError:
         bad = True
     check("transfer reference REFUSES the pool being injected from", bad)
+
+
+# ------------------------------ (g2) the frozen calibration split (SPEC-FIXES-ROUND3.md fix 1)
+def test_frozen_calibration_split() -> None:
+    """LAYERB-ROUND3.md 1.2/2.3: the calibration split must be the same texts at every wave.
+
+    The sweeps drew it from `default_rng(base + 1000 * cell_index)`, which makes the split a
+    function of a cell's POSITION in a loop. These checks pin it to the pool's identity
+    instead, and the third one shows the old pattern really did move -- so the fix is not
+    checking something that was already true.
+    """
+    rng = np.random.default_rng(4242)
+    M = synthetic_pool(rng, 300, c_pool=0.5, name="mach_a", balance=0.5)
+    M2 = synthetic_pool(rng, 300, c_pool=0.5, name="mach_b", balance=0.5)
+    H = synthetic_pool(rng, 400, c_pool=0.3, name="pk_human", balance=0.4, kind="human")
+
+    inj_a, ref_a = calibration_split(M)
+    inj_b, ref_b = calibration_split(M)
+    check("calibration split is deterministic across calls",
+          ref_a.text_ids == ref_b.text_ids
+          and [t.text_id for t in inj_a.texts] == [t.text_id for t in inj_b.texts],
+          f"{len(ref_a.text_ids)} held out of {len(M)}")
+
+    # wave 2: unrelated draws in between, and the human pool visited in a different order
+    np.random.default_rng(99).permutation(1000)
+    _, ref_h_alone = calibration_split(H)
+    calibration_split(M2)
+    _, ref_h_after_m2 = calibration_split(H)
+    _, ref_a2 = calibration_split(M)
+    check("the split ignores caller RNG state, cell ordering, and which pools preceded it",
+          ref_h_alone.text_ids == ref_h_after_m2.text_ids and ref_a2.text_ids == ref_a.text_ids)
+
+    rng_old = np.random.default_rng(20260907)          # the sweep's cell 0
+    split_reference(M, rng_old)
+    _, old_h0 = split_reference(H, rng_old)            # human split rides the machine split
+    _, old_h1 = split_reference(H, np.random.default_rng(20260907 + 1000))   # cell 1
+    check("the old per-cell pattern really did move the reference (fix is not vacuous)",
+          old_h0.text_ids != old_h1.text_ids,
+          f"{len(set(old_h0.text_ids) ^ set(old_h1.text_ids))} ids differ between cells")
+
+    _, ref_shift = calibration_split(M, seed=CALIBRATION_SEED + 1)
+    check("the master seed is live: changing it re-draws the split",
+          ref_shift.text_ids != ref_a.text_ids)
+    check("the stream is a function of the pool name and the seed alone",
+          calibration_stream(M).integers(0, 2 ** 32, 8).tolist()
+          == calibration_stream(M.subset(np.arange(0, len(M), 2), name="mach_a"))
+          .integers(0, 2 ** 32, 8).tolist())
+
+    check("held-out reference stays disjoint from the injection pool",
+          not ({t.text_id for t in inj_a.texts} & set(ref_a.text_ids))
+          and len(ref_a.scores) == len(M) - len(inj_a))
+
+    _, ref_h = calibration_split(H)
+    check("split_id is equal iff the held-out ids are equal",
+          split_id(ref_a, ref_h) == split_id(ref_a2, ref_h_after_m2)
+          and split_id(ref_a, ref_h) != split_id(ref_shift, ref_h)
+          and split_id(ref_a, ref_h) != split_id(ref_h, ref_a),
+          split_id(ref_a, ref_h))
+    check("split_id is a content hash, not an ordering hash",
+          split_id(dc_replace(ref_a, text_ids=tuple(reversed(ref_a.text_ids))))
+          == split_id(ref_a))
 
 
 # ---------------------------------------------- (h) Sample contract, exact n and pi counts
@@ -589,6 +654,7 @@ def main() -> int:
         test_replacement_and_capacity,
         test_chunk_text,
         test_reference_splits,
+        test_frozen_calibration_split,
         test_sample_contract,
         test_loader_contract,
         test_e7_layer_b,

@@ -28,11 +28,12 @@ from inject.assign import capacity_report, pool_coupling, raw_pool_coupling, rea
 from inject.build import build_injected_sample, layer_b_moments
 from inject.pools import (
     LANE3_TRAITS,
+    calibration_split,
     lane3_labeled_pools,
     lane3_pool,
     load_lane3,
     reference_detector,
-    split_reference,
+    split_id,
 )
 from layerb_pilot import eiv_correct, mcse  # the pilot's estimator chain, not a re-write
 
@@ -86,9 +87,9 @@ def run_cell(pool_name: str, trait: str, raw: dict, cell_seed: int) -> dict:
     M_all = lane3_pool(pool_name, trait, raw)
     l3 = raw["labeled_pools"][pool_name]["trait_stats"][M_all.metrics["lane3_trait_key"]]
 
-    rng0 = np.random.default_rng(cell_seed)
-    M_inj, M_ref = split_reference(M_all, rng0, frac=0.5)
-    H_base, H_ref = split_reference(H_all, rng0, frac=0.5)
+    # Frozen calibration split (SPEC-FIXES-ROUND3.md fix 1): keyed on pool identity, not cell_seed.
+    M_inj, M_ref = calibration_split(M_all, frac=0.5)
+    H_base, H_ref = calibration_split(H_all, frac=0.5)
     disjoint = (not (set(t.text_id for t in M_inj.texts) & set(M_ref.text_ids))
                 and not (set(t.text_id for t in H_base.texts) & set(H_ref.text_ids)))
 
@@ -181,6 +182,7 @@ def run_cell(pool_name: str, trait: str, raw: dict, cell_seed: int) -> dict:
 
     out = {
         "pool": pool_name, "trait": trait, "seed": cell_seed,
+        "split_id": split_id(M_ref, H_ref),
         "n_human_base": len(H_base), "n_machine_inj": len(M_inj), "q1": q1,
         "disjoint": disjoint,
         "r_H": r_H, "r_H_lane3_fullpool": float(l3["r_H"]), "rho_H_true": rho_H_true,

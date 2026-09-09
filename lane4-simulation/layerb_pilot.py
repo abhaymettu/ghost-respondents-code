@@ -26,7 +26,7 @@ from estimators import (  # SPEC 3.2 code, not a re-write
 )
 from inject.assign import capacity_report, pool_coupling, raw_pool_coupling, realized_coupling
 from inject.build import build_injected_sample, layer_b_moments
-from inject.pools import lane3_pool, load_lane3, reference_detector, split_reference
+from inject.pools import calibration_split, lane3_pool, load_lane3, reference_detector, split_id
 
 TRAIT = "EXT"
 POOL = "personallm_gpt-4-0613"
@@ -101,9 +101,9 @@ def main() -> int:
     # Disjoint held-out references. SPEC 3.2 generates its reference on demand; with no
     # generation budget the reference is a held-out split, and it must be disjoint from the
     # injected texts AND from the respondent base or the estimator reads its own input back.
-    rng0 = np.random.default_rng(SEED)
-    M_inj, M_ref = split_reference(M_all, rng0, frac=0.5)
-    H_base, H_ref = split_reference(H_all, rng0, frac=0.5)
+    # Frozen calibration split (SPEC-FIXES-ROUND3.md fix 1): keyed on pool identity, not cell_seed.
+    M_inj, M_ref = calibration_split(M_all, frac=0.5)
+    H_base, H_ref = calibration_split(H_all, frac=0.5)
     check("references disjoint from injection pools",
           not (set(t.text_id for t in M_inj.texts) & set(M_ref.text_ids))
           and not (set(t.text_id for t in H_base.texts) & set(H_ref.text_ids)),
@@ -313,7 +313,8 @@ def main() -> int:
 
     out = {
         "cell": {"trait": TRAIT, "pool": POOL, "n": N, "pi": PI, "rho_T": RHO_T,
-                 "k_chunks": K_CHUNKS, "reps": REPS, "arms": list(ARMS), "seed": SEED},
+                 "k_chunks": K_CHUNKS, "reps": REPS, "arms": list(ARMS), "seed": SEED,
+                 "split_id": split_id(M_ref, H_ref)},
         "base": {"human_n": len(H_base), "machine_n": len(M_inj), "q1": q1, "r_H": r_H,
                  "rho_H_true": rho_H_true, "c_pool": c_pool,
                  "c_pool_raw": raw_pool_coupling(M_inj)},

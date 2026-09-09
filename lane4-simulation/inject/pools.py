@@ -12,6 +12,7 @@ trait and `score` is the measured trait score of the text.
 from __future__ import annotations
 
 import csv
+import hashlib
 import json
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -442,6 +443,64 @@ def split_reference(
         text_ids=tuple(pool.texts[i].text_id for i in ref_idx),
     )
     return inject, reference
+
+
+# ------------------------------------------------------------------ frozen calibration split
+# LAYERB-ROUND3.md 1.2: 54% of the variance in the per-cell EIV error is the calibration split
+# draw, not the cell. 2.3: with the split re-drawn between waves the between-wave change
+# detector picks up an additive noise floor of 0.06-0.27 and dies for weak-detector pools;
+# with it frozen the same change carries an 18-40% relative error and the sign is never at
+# risk. The operational rule is therefore: draw the split once, reuse it at every wave.
+#
+# The mechanism is the seed, not the arithmetic. A per-cell `default_rng(cell_seed)` with
+# `cell_seed = base + 1000 * cell_index` (what the sweeps used) makes the split a function of
+# a cell's POSITION in a loop: insert a pool and every later cell's reference moves, and two
+# scripts with different bases give the same cell different references. Keying the stream on
+# the pool's identity instead makes the split a function of the pool alone, so it is stable
+# across waves, across cell orderings, and across scripts.
+CALIBRATION_SEED = 20260908
+"""Frozen master seed for the wave-invariant calibration split. Changing it re-draws every
+reference in the pipeline and breaks comparability with every recorded `split_id`."""
+
+
+def calibration_stream(pool: Pool, seed: int = CALIBRATION_SEED) -> np.random.Generator:
+    """The RNG for `pool`'s calibration split: a function of (seed, pool.name) and nothing else.
+
+    Not the cell index, not the wave, not the rep. Two waves months apart, or two scripts with
+    unrelated seed bases, land on the identical held-out halves.
+    """
+    key = int.from_bytes(hashlib.blake2s(pool.name.encode("utf-8"), digest_size=8).digest(), "big")
+    return np.random.default_rng([int(seed), key])
+
+
+def calibration_split(
+    pool: Pool, frac: float = 0.5, stratify: bool = True, seed: int = CALIBRATION_SEED
+) -> tuple[Pool, Reference]:
+    """`split_reference` on the frozen stream: the same pool always yields the same reference.
+
+    Use this everywhere a calibration/reference split feeds an estimate. `split_reference` with
+    a caller-supplied rng remains the right call only when varying the split IS the experiment
+    (round3_splits.py), which is why that path is left alone.
+    """
+    return split_reference(pool, calibration_stream(pool, seed), frac=frac, stratify=stratify)
+
+
+def split_id(*refs: Reference) -> str:
+    """Content hash of the held-out ids: the split's identity, recoverable from the output.
+
+    Derived from what was actually held out rather than from the seed, so a run recorded under
+    a different seed scheme is still comparable -- equal ids mean the same texts, whatever
+    produced them.
+    """
+    h = hashlib.blake2s(digest_size=8)
+    for ref in refs:
+        h.update(ref.name.encode("utf-8"))
+        h.update(b"\x00")
+        for tid in sorted(ref.text_ids):
+            h.update(tid.encode("utf-8"))
+            h.update(b"\x00")
+        h.update(b"\x01")
+    return h.hexdigest()
 
 
 def reference_detector(pool: Pool, ref: Reference) -> np.ndarray:

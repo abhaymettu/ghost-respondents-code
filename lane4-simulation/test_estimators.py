@@ -5,13 +5,15 @@ Run: .venv/bin/python test_estimators.py
 
 from __future__ import annotations
 
+import inspect
 import sys
 import time
 
 import numpy as np
 
 from dgp import Cell, Sample, simulate
-from estimators import Fit, fit_delete, fit_em, fit_labelfree, fit_naive, fit_simex
+from estimators import (Fit, _distribution_match_pi, fit_delete, fit_em, fit_labelfree,
+                        fit_naive, fit_simex)
 
 RESULTS: list[tuple[str, bool, str]] = []
 
@@ -220,6 +222,54 @@ check(
 )
 
 # --------------------------------------------------------------------------------------
+# 6. distribution_match bin count: the prevalence response is attenuated by fine binning.
+#    LAYERB-ROUND3.md 3.4 measured this on the 20 lane-3 cells and put the usable range at
+#    8-15; SPEC-FIXES-ROUND3.md picks 8. The checks below pass n_bins explicitly, so they
+#    hold both before and after staged/estimators-n_bins.patch changes the shipped default.
+# --------------------------------------------------------------------------------------
+
+print("\n=== distribution_match bin count ===")
+_ref_rng = np.random.default_rng(7)
+_H_ref = _ref_rng.normal(0.0, 1.0, 160)          # ~160 held-out texts a side, as in lane 3
+_M_ref = _ref_rng.normal(0.8, 1.05, 160)
+_PIS = (0.02, 0.05, 0.10, 0.20, 0.30)
+_LADDER = (8, 15, 30, 60, 120)
+
+
+def dm_slope(n_bins: int, reps: int = 30, n: int = 1000) -> tuple[float, float]:
+    """OLS slope/intercept of mean pi_hat on true pi. Slope 1 = a change of pi is seen in full."""
+    means = []
+    for pi in _PIS:
+        k = int(round(n * pi))
+        draws = []
+        for rep in range(reps):
+            g = np.random.default_rng([99, rep])
+            x = np.concatenate([g.normal(0.0, 1.0, n - k), g.normal(0.8, 1.05, k)])
+            draws.append(_distribution_match_pi(x, _M_ref, _H_ref, n_bins=n_bins))
+        means.append(float(np.mean(draws)))
+    A = np.vstack([np.array(_PIS), np.ones(len(_PIS))]).T
+    slope, intercept = np.linalg.lstsq(A, np.array(means), rcond=None)[0]
+    return float(slope), float(intercept)
+
+
+_slopes = {b: dm_slope(b) for b in _LADDER}
+check(
+    "n_bins=8 tracks a change in prevalence better than the shipped n_bins=60",
+    _slopes[8][0] > _slopes[60][0] and abs(_slopes[8][0] - 1) < abs(_slopes[60][0] - 1),
+    f"slope {_slopes[8][0]:+.3f} at 8 vs {_slopes[60][0]:+.3f} at 60",
+)
+check(
+    "attenuation is monotone in the bin count over the 3.4 ladder",
+    all(_slopes[a][0] > _slopes[b][0] for a, b in zip(_LADDER, _LADDER[1:])),
+    " > ".join(f"{b}:{_slopes[b][0]:+.3f}" for b in _LADDER),
+)
+_shipped = inspect.signature(_distribution_match_pi).parameters["n_bins"].default
+check(
+    "the shipped n_bins default is a value SPEC-FIXES-ROUND3.md accounts for",
+    _shipped in (60, 8),
+    "60 = pre-patch (staged, grid was live); 8 = patch applied" if _shipped in (60, 8)
+    else f"unrecognized default {_shipped}",
+)
 
 n_fail = sum(1 for _, ok, _ in RESULTS if not ok)
 print(f"\n{len(RESULTS) - n_fail}/{len(RESULTS)} checks passed")
