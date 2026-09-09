@@ -326,8 +326,11 @@ def _hellinger(p: np.ndarray, q: np.ndarray) -> float:
     return float(np.sqrt(np.sum((np.sqrt(p) - np.sqrt(q)) ** 2)) / np.sqrt(2.0))
 
 
+# n_bins=8 per SPEC-FIXES-ROUND3.md fix 2: over all 40 cell x split rows behind LAYERB-ROUND3.md
+# 3.4, 8 is closest to slope 1 in 21 of them (15 in 11) and lifts the mean pi response slope
+# from 0.494 at 60 to 0.748. It buys slope, not level: MAE is flat (~0.064) across the ladder.
 def _distribution_match_pi(obs: np.ndarray, machine_ref: np.ndarray, human_ref: np.ndarray,
-                            n_bins: int = 60, n_grid: int = 501) -> float:
+                            n_bins: int = 8, n_grid: int = 501) -> float:
     lo = min(obs.min(), machine_ref.min(), human_ref.min())
     hi = max(obs.max(), machine_ref.max(), human_ref.max())
     if not np.isfinite(lo) or not np.isfinite(hi) or hi <= lo:
