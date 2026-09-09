@@ -1,0 +1,25 @@
+{
+  "n": 2421,
+  "baselines": {
+    "cEXT": {
+      "r_H_document_pooled": 0.16779319935563553,
+      "r_H_lexical_tfidf": 0.15930694317528807
+    },
+    "cNEU": {
+      "r_H_document_pooled": 0.22754957408891055,
+      "r_H_lexical_tfidf": 0.1488364845214028
+    },
+    "cAGR": {
+      "r_H_document_pooled": 0.13647988122210702,
+      "r_H_lexical_tfidf": 0.08527793151931856
+    },
+    "cCON": {
+      "r_H_document_pooled": 0.1436185456453041,
+      "r_H_lexical_tfidf": 0.12259155611819415
+    },
+    "cOPN": {
+      "r_H_document_pooled": 0.31108967337075544,
+      "r_H_lexical_tfidf": 0.24247807207175753
+    }
+  }
+}

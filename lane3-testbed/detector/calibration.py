@@ -59,29 +59,40 @@ OUT_PATH = Path(__file__).resolve().parent / "calibration_results.json"
 
 
 def sample_hc3_pairs(n_per_source: int, seed: int):
+    """Corrected 2026-09-09 (pass-3 review T5/M3): each pair now carries a question_id
+    (source, index-within-source), so the human/machine answers to one HC3 question are
+    always assignable to the same calibrate/test side. Return value/order unchanged
+    (question_id is an added key) so existing consumers (pass3_nlp_checks.py) still match."""
     rng = random.Random(seed)
-    pairs = []  # (text, label) label 1=human, 0=machine ; kept alongside source
+    pairs = []  # (text, label) label 1=human, 0=machine ; kept alongside source + question_id
     for source in SOURCES:
         recs = list(load_source(source))
         rng.shuffle(recs)
         take = [r for r in recs if r.get("human_answers") and r.get("chatgpt_answers")][:n_per_source]
-        for r in take:
+        for i, r in enumerate(take):
             human_text = r["human_answers"][0].strip()
             machine_text = r["chatgpt_answers"][0].strip()
             if not human_text or not machine_text:
                 continue
-            pairs.append({"text": human_text, "label": 1, "source": source})
-            pairs.append({"text": machine_text, "label": 0, "source": source})
+            qid = (source, i)
+            pairs.append({"text": human_text, "label": 1, "source": source, "question_id": qid})
+            pairs.append({"text": machine_text, "label": 0, "source": source, "question_id": qid})
     rng.shuffle(pairs)
     return pairs
 
 
 def split_calibrate_test(items, frac_calibrate=0.5, seed=RNG_SEED):
+    """Corrected 2026-09-09 (pass-3 review T5/M3): split by question_id, not by flattened
+    row, so a question's human and machine answers never straddle calibrate/test. Previously
+    622/1250 questions straddled the split (see PASS3-FIXES.md T5)."""
     rng = random.Random(seed + 1)
-    items = items[:]
-    rng.shuffle(items)
-    k = int(len(items) * frac_calibrate)
-    return items[:k], items[k:]
+    question_ids = sorted({item["question_id"] for item in items})
+    rng.shuffle(question_ids)
+    k = int(len(question_ids) * frac_calibrate)
+    calibrate_qids = set(question_ids[:k])
+    calibrate = [item for item in items if item["question_id"] in calibrate_qids]
+    test = [item for item in items if item["question_id"] not in calibrate_qids]
+    return calibrate, test
 
 
 def run_roberta_scores(texts, batch_size=BATCH_SIZE):
@@ -125,6 +136,33 @@ def se_sp_at_threshold(y_true_machine, scores_machine, threshold):
     return (float(se) if se is not None else None, float(sp) if sp is not None else None)
 
 
+def question_cluster_bootstrap_ci(test_items, scores, threshold, n_boot=2000, seed=RNG_SEED + 2):
+    """Pass-3 review T5/M3: se/sp CI by resampling whole HC3 questions (both the human and
+    machine answer move together), not individual rows -- a naive per-row CI understates
+    uncertainty because each question contributes a correlated pair."""
+    rng = random.Random(seed)
+    qids = sorted({it["question_id"] for it in test_items})
+    q_to_rows = {q: [] for q in qids}
+    for i, it in enumerate(test_items):
+        q_to_rows[it["question_id"]].append(i)
+    scores = np.array(scores)
+    y = np.array([1 - it["label"] for it in test_items])  # 1 = machine
+    se_boot, sp_boot = [], []
+    for _ in range(n_boot):
+        sampled_q = [rng.choice(qids) for _ in range(len(qids))]
+        rows = np.concatenate([q_to_rows[q] for q in sampled_q])
+        se, sp = se_sp_at_threshold(y[rows], scores[rows], threshold)
+        if se is not None:
+            se_boot.append(se)
+        if sp is not None:
+            sp_boot.append(sp)
+    return {
+        "se_ci95": [float(np.percentile(se_boot, 2.5)), float(np.percentile(se_boot, 97.5))],
+        "sp_ci95": [float(np.percentile(sp_boot, 2.5)), float(np.percentile(sp_boot, 97.5))],
+        "n_boot": n_boot,
+    }
+
+
 def main():
     print("Sampling HC3 pairs...", file=sys.stderr)
     pairs = sample_hc3_pairs(N_PER_SOURCE, RNG_SEED)
@@ -145,6 +183,8 @@ def main():
     test_se, test_sp = se_sp_at_threshold(test_labels_machine, test_scores, threshold)
     fpr, tpr, _ = roc_curve(test_labels_machine, test_scores)
     roberta_auc = float(auc(fpr, tpr))
+    print("Question-clustered bootstrap CI (roberta)...", file=sys.stderr)
+    roberta_ci = question_cluster_bootstrap_ci(test, test_scores, threshold)
 
     # --- Detector 2: simple feature baseline (logistic regression) ---
     print("Fitting feature-baseline logistic regression...", file=sys.stderr)
@@ -161,6 +201,7 @@ def main():
     feat_test_se, feat_test_sp = se_sp_at_threshold(y_test, test_probs, feat_threshold)
     fpr_f, tpr_f, _ = roc_curve(y_test, test_probs)
     feat_auc = float(auc(fpr_f, tpr_f))
+    feat_ci = question_cluster_bootstrap_ci(test, test_probs, feat_threshold)
 
     # --- Out-of-domain degraded check: essays (human-only) ---
     print(f"Sampling {ESSAYS_SAMPLE_N} essays for out-of-domain sp check...", file=sys.stderr)
@@ -187,6 +228,12 @@ def main():
             "hc3_calibrate_n": len(calibrate),
             "hc3_test_n": len(test),
             "essays_ood_n": len(essay_texts),
+            "split_note": "corrected 2026-09-09 (pass-3 review T5/M3): split is grouped by "
+                          "HC3 question, not flattened answer row -- every test question's "
+                          "human and machine answers are on the test side only, zero straddle "
+                          "by construction (previously 622/1250 questions straddled). "
+                          "'new-question' is therefore the only regime measured below; there "
+                          "is no more same-question-different-answer case to distinguish.",
         },
         "roberta_base_openai_detector": {
             "model": MODEL_NAME,
@@ -194,10 +241,11 @@ def main():
             "note": "trained on GPT-2 outputs, applied zero-shot to ChatGPT/HC3 text -- realistic off-the-shelf transfer scenario",
             "threshold_P_machine": float(threshold),
             "calibrated_in_domain": {
-                "split": "HC3 held-out test",
+                "split": "HC3 held-out test (question-grouped, new-question)",
                 "se": test_se,
                 "sp": test_sp,
                 "auc": roberta_auc,
+                "question_cluster_bootstrap_ci": roberta_ci,
             },
             "degraded_out_of_domain": {
                 "split": "essays (human-only, no machine counterparts yet)",
@@ -214,10 +262,11 @@ def main():
             ],
             "threshold_P_machine": float(feat_threshold),
             "calibrated_in_domain": {
-                "split": "HC3 held-out test",
+                "split": "HC3 held-out test (question-grouped, new-question)",
                 "se": feat_test_se,
                 "sp": feat_test_sp,
                 "auc": feat_auc,
+                "question_cluster_bootstrap_ci": feat_ci,
             },
             "degraded_out_of_domain": {
                 "split": "essays (human-only, no machine counterparts yet)",
@@ -228,8 +277,18 @@ def main():
             "oracle": {"se": 1.0, "sp": 1.0, "note": "definitional ceiling, not measured"},
         },
         "norc_pact_reference_range": {
-            "in_domain_se_ballpark": 0.99,
-            "out_of_domain_se_ballpark": "mid-80s (%)",
+            # Corrected 2026-09-09 (pass-3 review T7b): the prior "out_of_domain_se_ballpark:
+            # mid-80s" was a misattribution. Huang et al., AAPOR 2025 slide 7 reports
+            # general-population precision 0.989/recall 0.999/accuracy 0.990, and
+            # technical-domain accuracy upper-80s-to-mid-90s, precision up to 85.7%,
+            # recall up to 100% -- it does not report an out-of-domain sensitivity figure.
+            "general_population_precision": 0.989,
+            "general_population_recall": 0.999,
+            "general_population_accuracy": 0.990,
+            "technical_domain_accuracy_range": "upper-80s to mid-90s (%)",
+            "technical_domain_precision_max": 0.857,
+            "technical_domain_recall_max": 1.0,
+            "note": "no out-of-domain sensitivity figure is published in this source; do not compare our out-of-domain se/sp to a 'mid-80s' NORC number",
             "source": "https://www.norc.org/content/dam/norc-org/pdf2025/AAPOR%20Detecting%20AI-Generated%20Survey%20Responses%20-%20Lilian%20Huang.pdf",
         },
     }

@@ -9,24 +9,79 @@ Two detectors, both calibrated on HC3 pairs (`detector/calibration.py`, results 
 1. **Published open-weights classifier**: `openai-community/roberta-base-openai-detector` (MIT license, downloaded from Hugging Face, not gated). It was trained to detect GPT-2 output, not ChatGPT — used zero-shot here, no fine-tuning, which is the realistic "off-the-shelf detector, threshold picked by calibration only" scenario the SPEC describes.
 2. **Simple feature baseline**: logistic regression over 7 stylometric features (word count, sentence count, avg word length, avg sentence length, type-token ratio, punctuation rate, comma rate — `detector/features.py`).
 
-Calibration procedure: stratified sample of 250 questions per HC3 source (5 sources × 250 × 2 texts = 2,500 texts), split 50/50 into a calibrate set (pick threshold via Youden's J, maximizing se + sp − 1) and a held-out test set (report se/sp there). Same procedure, same split, for both detectors.
+Calibration procedure: stratified sample of 250 questions per HC3 source (5 sources × 250 × 2 texts = 2,500 texts), split into a calibrate set (pick threshold via Youden's J, maximizing se + sp − 1) and a held-out test set (report se/sp there). Same procedure, same split, for both detectors.
 
-### Operating points
+**Corrected 2026-09-09 (pass-3 review T5/M3):** the split was previously by flattened answer row, not by HC3 question — 622/1250 questions had their human and machine answer land on opposite sides of the calibrate/test split, so the "held-out test" was not fully new-question. `sample_hc3_pairs`/`split_calibrate_test` (`detector/calibration.py`) now carry each pair's `question_id` through and split by question, so a question's human and machine answers are always on the same side. All numbers below are recomputed under the corrected split; the threshold moved (0.7537 → 0.7907 for roberta) because it's now chosen on a differently-composed calibrate set.
+
+### Operating points (question-grouped split, new-question held-out)
 
 | detector | split | se | sp | AUC |
 |---|---|---|---|---|
-| roberta-base-openai-detector | HC3 held-out test (**calibrated**, in-domain) | 0.911 | 0.940 | 0.971 |
-| roberta-base-openai-detector | essays, human-only (**degraded**, out-of-domain) | n/a — see below | 0.926 | — |
+| roberta-base-openai-detector | HC3 held-out test (**calibrated**, in-domain, new-question) | 0.9136 | 0.9360 | 0.9748 |
+| roberta-base-openai-detector | essays, human-only (**degraded**, out-of-domain) | n/a — see below | 0.9300 | — |
 | roberta-base-openai-detector | **oracle** | 1.0 | 1.0 | — (definitional) |
-| feature-baseline logreg | HC3 held-out test (**calibrated**, in-domain) | 0.829 | 0.818 | 0.891 |
-| feature-baseline logreg | essays, human-only (**degraded**, out-of-domain) | n/a — see below | 0.916 | — |
+| feature-baseline logreg | HC3 held-out test (**calibrated**, in-domain, new-question) | 0.8304 | 0.7968 | 0.8730 |
+| feature-baseline logreg | essays, human-only (**degraded**, out-of-domain) | n/a — see below | 0.9140 | — |
 | feature-baseline logreg | **oracle** | 1.0 | 1.0 | — (definitional) |
+
+**Question-clustered uncertainty (pass-3 review T5/M3):** a naive per-row CI understates
+uncertainty because each HC3 question contributes a correlated human/machine pair. 95% CIs
+from a 2,000-resample question-cluster bootstrap (`detector/calibration.py`,
+`question_cluster_bootstrap_ci`, resamples whole questions with replacement):
+
+- roberta: se 95% CI **[0.890, 0.936]**, sp 95% CI **[0.917, 0.954]**
+- feature baseline: se 95% CI **[0.802, 0.861]**, sp 95% CI **[0.763, 0.827]**
+
+(Point estimates above are unaffected by clustering; the CI widens relative to a naive
+per-row binomial CI. Exact bounds are in `detector/calibration_results.json` under
+`question_cluster_bootstrap_ci` for each detector — regenerate via `python3
+detector/calibration.py`.)
 
 **The degraded/out-of-domain se cells are not computable yet.** The essays testbed has no LLM-authored counterparts — that generation batch hasn't run. So the only out-of-domain quantity available today is specificity: apply the HC3-calibrated threshold to 500 sampled essays (all genuinely human) and measure the false-positive rate. Sensitivity out-of-domain (does the detector still catch machine essays once they exist?) needs the counterpart batch. Once that batch runs, re-run `detector/calibration.py`'s essays block on the machine-authored essays to fill in `se` there.
 
+**Essay-domain calibration vs. external transfer, kept separate (pass-3 review T7c):** the
+"essays, human-only (degraded)" row above is essay-domain **specificity only**, measured on
+real PK essays at the HC3-picked threshold — a genuine essay-domain data point, not an
+external-domain claim. It is a different thing from the fixed-HC3-threshold **sensitivity**
+transfer numbers on the machine pools reported below (§ Comparison to NORC PACT) — those
+describe transfer to specific synthetic/generated corpora, not a general external-domain
+deployment claim. Do not average or compare these two kinds of number as if they measured
+the same quantity.
+
 ### Comparison to NORC PACT
 
-NORC PACT's honest range is roughly 99% in-domain down to mid-80s out-of-domain (se, presumably against a detector purpose-tuned for survey/ChatGPT text). Our in-domain se (91.1% roberta, 82.9% feature baseline) sits below their 99% figure — expected, since our detector was never fine-tuned on ChatGPT or HC3 at all (it's a GPT-2 detector applied zero-shot); NORC's in-domain number likely reflects a detector actually trained for the task. The out-of-domain sp we can measure (92.6% roberta, 91.6% feature baseline) is not directly comparable to NORC's out-of-domain se figure — different quantity (specificity on human text vs. sensitivity on machine text) — but it's a useful independent finding for the deletion-selection story: on real personal-essay text, the false-positive rate isn't dramatically worse than on HC3's Reddit/QA-style human text, at least for these two detectors.
+**Corrected 2026-09-09 (pass-3 review T7b):** the prior "NORC PACT's honest range is roughly
+99% in-domain down to mid-80s out-of-domain (se)" was a misattribution. Huang et al. (AAPOR
+2025, PACT slide 7) reports **general-population precision 0.989 / recall 0.999 / accuracy
+0.990**, and **technical-domain accuracy in the upper-80s to mid-90s, precision up to 85.7%,
+recall up to 100%** — it does not publish an out-of-domain sensitivity figure of ~85%, and
+precision/recall/accuracy are not directly interchangeable with our se/sp. `detector/calibration.py`'s `norc_pact_reference_range` block now records the correctly-attributed figures.
+
+Our in-domain se (91.4% roberta, 83.0% feature baseline) is below NORC's general-population
+recall (99.9%) — expected, since our detector was never fine-tuned on ChatGPT or HC3 at all
+(it's a GPT-2 detector applied zero-shot); NORC's figure reflects a detector purpose-built and
+tuned for the task. The out-of-domain sp we can measure (93.0% roberta, 91.4% feature
+baseline) is not directly comparable to any NORC figure above — different quantity, different
+domain, different detector — but it's a useful independent finding for the deletion-selection
+story: on real personal-essay text, the false-positive rate isn't dramatically worse than on
+HC3's Reddit/QA-style human text, at least for these two detectors.
+
+**Fixed-HC3-threshold transfer to scored corpora (pass-3 review T7d), roberta detector,
+threshold=0.790723 (post-fix):**
+
+| corpus | n | fixed-threshold rate |
+|---|---:|---:|
+| PK humans | 2,467 | specificity 0.9501 |
+| Big5PersonalityEssays (GPT-4-turbo synthetic) | 399 | sensitivity 0.0075 |
+| PersonaLLM GPT-4 | 320 | sensitivity 0.4969 |
+| PersonaLLM GPT-3.5 | 320 | sensitivity 0.3313 |
+| PersonaLLM Llama-2 | 320 | sensitivity 0.8094 |
+
+These are descriptive full-pool transfer checks against these specific scored corpora, not
+new independent test sets and not a general out-of-domain deployment guarantee. The large
+spread across generators (0.75% to 81%) is itself the finding: there is no single "the
+essay-domain sensitivity is X%" number — it depends heavily on which generator produced the
+text.
 
 ## 2. r_F empirical anchor (lane 1 Q6)
 

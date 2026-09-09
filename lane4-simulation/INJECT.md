@@ -29,6 +29,16 @@ text goes to which respondent**, and that alone moves `c` from 0 to `c_pool` alo
 line, holding `kappa` and `delta` fixed. That is (E67), and section 3 below proves it to
 machine precision.
 
+**Naming correction (pass-3 review, 2026-09-09):** the `p` arms in this design are
+**random/matched text assignment** to an existing, fixed pool of already-generated texts — not
+the `GEN-CONFIG.md` c=0/partial/high prompt-disclosure interventions (which vary what
+information a generation prompt discloses about the respondent, at generation time). Varying
+`p` only rematches which pre-existing text a respondent-label receives; it never touches how
+any text was produced. Any ecological claim from this module is restricted to the **scored
+text marginals** it actually manipulates (`kappa`, `delta`, `g`, detector distribution) — it
+does not establish anything about how a real respondent would behave if asked to outsource a
+survey answer to an LLM, since no respondent-conditioned generation happens here at all.
+
 ## 2. The reweighting hook (the substantive fix to Prop. 16, and the answer to Q12)
 
 The memo's Prop. 16 draws the random branch **uniformly from the balanced pool**. As written
@@ -222,6 +232,16 @@ machine-written text, injected at a realized `(g, kappa, delta)`, attenuates a
 survey-outcome correlation by the predicted amount. It does not establish that any real
 survey outcome behaves this way**, because no real outcome was involved. The realism Layer B
 buys is in the contaminating text, not in the outcome.
+
+**7a-ii. Respondent-level outsourcing validity is not established (pass-3 review,
+2026-09-09).** The `p`-arms are random/matched *assignment* of pre-existing texts to
+respondent labels (§1 naming correction above), not empirical disclosure-varied generation. To
+claim that this design says anything about how a real respondent's answer would differ under
+more or less LLM disclosure, a *separate* experiment is needed: independently generated texts
+per respondent with disclosure genuinely varied at generation time, then assigned (not
+rematched from a fixed pool). Without that, treat every `(kappa, delta, g)` result here as a
+property of the fixed scored-text pool under different matching schemes, not as evidence about
+respondent behavior.
 
 ### 7b. `delta`'s sign is defined inconsistently across the two binding documents
 

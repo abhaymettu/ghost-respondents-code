@@ -246,7 +246,10 @@ denominator of the adjusted count:
 | gpt-3.5-turbo-0613 | 0.10 - 0.12 | 0.118 - 0.139 |
 | big5 essays | **0.000** | undefined, 400/400 splits |
 
-The essays pool is human-written, so a detector thresholded at sp = 0.99 flags none of it,
+The essays pool is GPT-4-turbo synthetic text (corrected 2026-09-09, pass-3 review — the pool
+was previously mischaracterized as human; see `LAYERB-SWEEP.md`'s correction note and
+`lane3-testbed/CORPUS-AUDIT.md`), so a detector thresholded at sp = 0.99 flags none of it —
+a detector failure on synthetic text, not a human negative control —
 `denom = se - (1-sp) <= 0`, and `_adjusted_count_pi`'s shipped guard refuses in every single
 split. That is the guard working as designed, and it matches the `ac_bias=nan` column that
 `layerb_pin.json` reports for `big5/EXT`.
@@ -329,8 +332,8 @@ Over all 20 cells (split 0, p = 0, 60 reps, five prevalences):
 ```
 
 All four OPE cells sit at 0.952 to 1.009 at the default 60 bins. All sixteen non-OPE cells sit
-at 0.089 to 0.868. The pool is irrelevant -- `essays/OPE`, whose "machine" texts are human-written
-and whose `g` is -0.136, has slope 1.009. **What makes `llama-2/OPE` special is that it is an
+at 0.089 to 0.868. The pool is irrelevant -- `essays/OPE`, whose texts are GPT-4-turbo synthetic (not
+human-written, see correction above), and whose `g` is -0.136, has slope 1.009. **What makes `llama-2/OPE` special is that it is an
 OPE cell, and OPE is the trait where the two score distributions barely overlap:** |delta| runs
 1.62 to 2.70 for OPE against 0.24 to 0.84 for everything else.
 

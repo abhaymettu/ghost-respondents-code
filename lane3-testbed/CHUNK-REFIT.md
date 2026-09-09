@@ -40,25 +40,34 @@ same PK text (whole) during training.
 
 ## PK-human: before (in-sample) vs after (OOF)
 
-| trait | rbar in-sample | rbar OOF | mean-chunk-vs-whole IS | OOF | chunk1-vs-whole IS | OOF | r_H(whole) | r_H(chunk1) IS | OOF | validity ratio IS | OOF |
-|---|---|---|---|---|---|---|---|---|---|---|---|
-| cEXT | 0.2083 | 0.2068 | 0.5908 | 0.6424 | 0.7572 | 0.8307 | 0.1596 | 0.3380 | 0.1207 | **2.12x** | **0.76x** |
-| cNEU | 0.2291 | 0.2131 | 0.5970 | 0.6716 | 0.7398 | 0.8402 | 0.1023 | 0.3327 | 0.0884 | **3.25x** | **0.86x** |
-| cAGR | 0.1622 | 0.1759 | 0.5620 | 0.6351 | 0.7371 | 0.8384 | 0.1060 | 0.3252 | 0.0914 | **3.07x** | **0.86x** |
-| cCON | 0.2139 | 0.2005 | 0.5682 | 0.6398 | 0.7404 | 0.8355 | 0.0694 | 0.3073 | 0.0633 | **4.43x** | **0.91x** |
-| cOPN | 0.2940 | 0.2780 | 0.6766 | 0.7123 | 0.8098 | 0.8704 | 0.2267 | 0.3997 | 0.2062 | **1.76x** | **0.91x** |
+**Correction (pass-3 review m1, 2026-09-09):** the table below now uses `r_H(whole)`
+recomputed on the same n=2,421 complete-chunk subset as everything else in this file, not
+the full n=2,467 pool value. The two differ (e.g. cEXT: 0.1646 on n=2,421 vs. 0.1596 on the
+full n=2,467 pool) because the complete-chunk subset excludes essays too short to split into
+4 sentence-bounded chunks, which are not a random subsample. The validity-ratio numbers below
+are the corrected, sample-consistent ones; they differ slightly from the previously reported
+values, which mixed the two n's in numerator and denominator.
 
-(n=2,421 complete-chunk texts throughout; `chunk_scoring_oof_results.json` has the full
-numbers. "validity ratio" = r(chunk 1, label) / r(whole-text, label), the exact quantity
-lane 4 flagged at 1.98–2.77x on their six-cell subset.)
+| trait | rbar in-sample | rbar OOF | mean-chunk-vs-whole IS | OOF | chunk1-vs-whole IS | OOF | r_H(whole, n=2421) | r_H(chunk1) IS | OOF | validity ratio IS | OOF |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| cEXT | 0.2083 | 0.2068 | 0.5908 | 0.6424 | 0.7572 | 0.8307 | 0.1646 | 0.3380 | 0.1207 | **2.05x** | **0.73x** |
+| cNEU | 0.2291 | 0.2131 | 0.5970 | 0.6716 | 0.7398 | 0.8402 | 0.1045 | 0.3327 | 0.0884 | **3.18x** | **0.85x** |
+| cAGR | 0.1622 | 0.1759 | 0.5620 | 0.6351 | 0.7371 | 0.8384 | 0.1081 | 0.3252 | 0.0914 | **3.01x** | **0.85x** |
+| cCON | 0.2139 | 0.2005 | 0.5682 | 0.6398 | 0.7404 | 0.8355 | 0.0710 | 0.3073 | 0.0633 | **4.33x** | **0.89x** |
+| cOPN | 0.2940 | 0.2780 | 0.6766 | 0.7123 | 0.8098 | 0.8704 | 0.2233 | 0.3997 | 0.2062 | **1.79x** | **0.92x** |
+
+(n=2,421 complete-chunk texts throughout, including the denominator `r_H(whole)`.
+`chunk_scoring_oof_results.json` has the full numbers. "validity ratio" = r(chunk 1, label) /
+r(whole-text, label), the exact quantity lane 4 flagged at 1.98–2.77x on their six-cell
+subset.)
 
 The in-sample "mean-chunk-vs-whole" row reproduces lane 4's cited numbers exactly —
 0.5908/0.5620/0.6766 for EXT/AGR/OPN(their "OPE") — confirming this refit used the
 identical procedure lane 4 diagnosed.
 
-**Validity ratio: fixed.** In-sample, a quarter of a text looked 1.76–4.43x *more* valid
+**Validity ratio: fixed.** In-sample, a quarter of a text looked 1.79–4.33x *more* valid
 against the label than the whole text — impossible, and exactly lane 4's FAIL 1 complaint.
-OOF, chunk 1 is now uniformly *less* valid than the whole text (ratio 0.76–0.91x), which is
+OOF, chunk 1 is now uniformly *less* valid than the whole text (ratio 0.73–0.92x), which is
 what a quarter of a text scored honestly should look like: less signal than the whole.
 
 **rbar and mean-chunk-vs-whole: not much changed, in different directions.** Between-chunk
@@ -94,21 +103,30 @@ PK-human rbar-vs-rel_true pattern.
 
 ## Weak-H2 verdict on OOF scores: still fails, by about the same margin
 
+**Corrected 2026-09-09 (pass-3 review m1):** this table previously used the full n=2,467
+`r_H(whole)` (mismatched against the n=2,421 `rbar` figures) and its prose claimed "at most
+~7%, cAGR/cOPN move up" — the direction for cOPN was wrong (it moves *down*) and the
+magnitude understated (cAGR actually moves +8.43%). Recomputed with `r_H(whole)` on the same
+n=2,421 subset throughout:
+
 Lane 4's FAIL 2 is `rbar / rel_true(=r_H²)` running 6.2–11.8x on their six cells (`rbar`
 vastly overstating the reliability `rel_H` that the weak-H2 disattenuation correction
 needs). Recomputing that same ratio on PK-human across all 5 traits, OOF vs. in-sample:
 
-| trait | r_H(whole) | rel_true = r_H² | rbar/rel_true IS | rbar/rel_true OOF |
-|---|---|---|---|---|
-| cEXT | 0.1596 | 0.0255 | 8.18x | 8.11x |
-| cNEU | 0.1023 | 0.0105 | 21.89x | 20.37x |
-| cAGR | 0.1060 | 0.0112 | 14.44x | 15.66x |
-| cCON | 0.0694 | 0.0048 | 44.46x | 41.67x |
-| cOPN | 0.2267 | 0.0514 | 5.72x | 5.41x |
+| trait | r_H(whole, n=2421) | rel_true = r_H² | rbar/rel_true IS | rbar/rel_true OOF | % change |
+|---|---|---|---|---|---|
+| cEXT | 0.1646 | 0.0271 | 7.69x | 7.63x | -0.8% |
+| cNEU | 0.1045 | 0.0109 | 20.98x | 19.51x | -7.0% |
+| cAGR | 0.1081 | 0.0117 | 13.88x | 15.05x | **+8.4%** |
+| cCON | 0.0710 | 0.0050 | 42.43x | 39.77x | -6.3% |
+| cOPN | 0.2233 | 0.0499 | 5.90x | 5.58x | **-5.4%** |
 
-Fixing the leakage moves this ratio by at most ~7% (cCON: 44.46x→41.67x) in any trait, and
-in two traits it goes slightly *up* (cAGR, cOPN) rather than down. The non-PK pools above
-show the same near-invariance (0.04–0.57x movement, no consistent direction).
+Fixing the leakage moves this ratio by at most ~8.4% (cAGR, upward) in any trait; cOPN moves
+*down* by 5.4%, not up as previously (wrongly) stated. Only cAGR moves up; the other four
+traits move down, three by more than the previously claimed "~7%" ceiling covered only three
+of the five. The non-PK pools above show the same near-invariance (0.04–0.57x movement, no
+consistent direction) and are unaffected by this correction (their `r_H` figures were never
+mixed-n).
 
 **Verdict: weak-H2 still fails on OOF scores, by essentially the same margin lane 4
 reported.** Lane 4's own FAIL 1 write-up predicted this: "This inflates every chunk-based

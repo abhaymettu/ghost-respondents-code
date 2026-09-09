@@ -4,24 +4,36 @@
     "n_per_source": 250,
     "hc3_calibrate_n": 1250,
     "hc3_test_n": 1250,
-    "essays_ood_n": 500
+    "essays_ood_n": 500,
+    "split_note": "corrected 2026-09-09 (pass-3 review T5/M3): split is grouped by HC3 question, not flattened answer row -- every test question's human and machine answers are on the test side only, zero straddle by construction (previously 622/1250 questions straddled). 'new-question' is therefore the only regime measured below; there is no more same-question-different-answer case to distinguish."
   },
   "roberta_base_openai_detector": {
     "model": "openai-community/roberta-base-openai-detector",
     "license": "MIT",
     "note": "trained on GPT-2 outputs, applied zero-shot to ChatGPT/HC3 text -- realistic off-the-shelf transfer scenario",
-    "threshold_P_machine": 0.7536994814872742,
+    "threshold_P_machine": 0.790723443031311,
     "calibrated_in_domain": {
-      "split": "HC3 held-out test",
-      "se": 0.9111111111111111,
-      "sp": 0.9403225806451613,
-      "auc": 0.9706144393241168
+      "split": "HC3 held-out test (question-grouped, new-question)",
+      "se": 0.9136,
+      "sp": 0.936,
+      "auc": 0.97478528,
+      "question_cluster_bootstrap_ci": {
+        "se_ci95": [
+          0.8896,
+          0.936
+        ],
+        "sp_ci95": [
+          0.9168,
+          0.9536
+        ],
+        "n_boot": 2000
+      }
     },
     "degraded_out_of_domain": {
       "split": "essays (human-only, no machine counterparts yet)",
       "se": null,
       "se_note": "not computable: essays testbed has no LLM-authored text yet (generation gated on burn report)",
-      "sp": 0.926
+      "sp": 0.9299999999999999
     },
     "oracle": {
       "se": 1.0,
@@ -39,18 +51,29 @@
       "punct_per_100_words",
       "comma_per_100_words"
     ],
-    "threshold_P_machine": 0.5573917827286518,
+    "threshold_P_machine": 0.5438378290682315,
     "calibrated_in_domain": {
-      "split": "HC3 held-out test",
-      "se": 0.8285714285714286,
-      "sp": 0.817741935483871,
-      "auc": 0.8911495135688684
+      "split": "HC3 held-out test (question-grouped, new-question)",
+      "se": 0.8304,
+      "sp": 0.7968,
+      "auc": 0.8729548799999999,
+      "question_cluster_bootstrap_ci": {
+        "se_ci95": [
+          0.8016,
+          0.8608
+        ],
+        "sp_ci95": [
+          0.7632,
+          0.8272399999999999
+        ],
+        "n_boot": 2000
+      }
     },
     "degraded_out_of_domain": {
       "split": "essays (human-only, no machine counterparts yet)",
       "se": null,
       "se_note": "not computable: essays testbed has no LLM-authored text yet (generation gated on burn report)",
-      "sp": 0.916
+      "sp": 0.914
     },
     "oracle": {
       "se": 1.0,
@@ -59,8 +82,13 @@
     }
   },
   "norc_pact_reference_range": {
-    "in_domain_se_ballpark": 0.99,
-    "out_of_domain_se_ballpark": "mid-80s (%)",
+    "general_population_precision": 0.989,
+    "general_population_recall": 0.999,
+    "general_population_accuracy": 0.99,
+    "technical_domain_accuracy_range": "upper-80s to mid-90s (%)",
+    "technical_domain_precision_max": 0.857,
+    "technical_domain_recall_max": 1.0,
+    "note": "no out-of-domain sensitivity figure is published in this source; do not compare our out-of-domain se/sp to a 'mid-80s' NORC number",
     "source": "https://www.norc.org/content/dam/norc-org/pdf2025/AAPOR%20Detecting%20AI-Generated%20Survey%20Responses%20-%20Lilian%20Huang.pdf"
   }
 }

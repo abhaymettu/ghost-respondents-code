@@ -1,10 +1,19 @@
 # Weak-H2 mechanism diagnosis: why `rbar/rel_true` still fails OOF
 
 Response to the follow-on brief after `CHUNK-REFIT.md` (commit `5cab003`): fixing chunk-score
-leakage moved `rbar/rel_true` by at most 7% (44.46x→41.67x, cCON) and left it at **5.41x–41.67x**
-on PK-human — essentially the same failure `LAYERB-SWEEP2.md` reported at 6.2x–11.8x on its
-six-cell subset. This is a mechanism investigation, not a re-measurement: it identifies *why*,
-with computed evidence, not restated numbers.
+leakage changed `rbar/rel_true` per trait by amounts and directions that vary by trait (not a
+uniform "at most 7%" — see `PASS3-FIXES.md` m1 for the corrected per-trait deltas) and left it at
+**5.41x–41.67x** on PK-human — essentially the same failure `LAYERB-SWEEP2.md` reported at
+6.2x–11.8x on its six-cell subset. This is a mechanism investigation, not a re-measurement: it
+identifies *why*, with computed evidence, not restated numbers.
+
+**Revision note (pass-3 review, 2026-09-09):** an adversarial NLP review found this file's
+original §2.4 partial-correlation table did not reproduce — recomputing it correctly gives real,
+nonzero reductions (4–10%), not the claimed 0.0%. §2.4, §2.5, §2.7 and the Verdict below have
+been rewritten to the corrected numbers and a narrower claim. See `PASS3-FIXES.md` T1 for the
+full withdrawal list. The over-claims withdrawn: "0.0% removed" / "100.0% survives" (every
+trait), ">93% of rbar survives... in every trait", "quantitative confirmation", "not recoverable
+on this testbed at any n or pi", and the "orthogonal to the very construct" framing.
 
 All new numbers below computed directly from `data/scores/pk_human.json`'s `chunk_{1..4}_oof`,
 `cross_fitted_scores`, and `labels` (n=2,467; n=2,421 for chunk-pair statistics, same as
@@ -114,51 +123,57 @@ for the pipeline generally — cOPN's known sign anomaly in `POOL-MEASUREMENTS.m
 this same phenomenon), but chunking does not amplify it. Ruled out as the driver of the
 in-sample→OOF-persistent rbar inflation specifically.
 
-### 2.4 Trait signal (label) as the driver of rbar — ruled out, decisively
+### 2.4 Trait signal (label) as the driver of rbar — corrected 2026-09-09 (pass-3 review)
 
-The core test: if two chunks of a text correlate *because* they both carry the (weak) trait
-signal, partialling the trait label out of the chunk-pair correlation should shrink it toward
-the residual measurement-noise correlation (near zero, since independent chunks under CTT
-should only share the true-score component). Partial correlation of each chunk pair controlling
-for the binary trait label, averaged over all 6 pairs, all 5 traits (OOF scores):
+**The table originally here was wrong.** The residualization used a constant/misdecoded control
+and produced 0.0% reduction in every trait; recomputing with `analysis/pass3_nlp_checks.py`
+(closed-form partial correlation, cross-checked against direct residualization to 1e-12) gives
+real, nonzero reductions. Complete-case n=2,421 (same subset as §1.1), numeric 0/1 label,
+verified label variance > 0 and row alignment before computing:
 
-| trait | raw rbar | partial rbar (control: label) | % of raw surviving |
+| trait | raw rbar | partial rbar (control: label) | relative reduction |
 |---|---|---|---|
-| cEXT | 0.2068 | 0.2068 | **100.0%** |
-| cNEU | 0.2131 | 0.2131 | **100.0%** |
-| cAGR | 0.1759 | 0.1759 | **100.0%** |
-| cCON | 0.2005 | 0.2005 | **100.0%** |
-| cOPN | 0.2780 | 0.2780 | **100.0%** |
+| cEXT | 0.20678 | 0.19819 | **4.15%** |
+| cNEU | 0.21310 | 0.20544 | **3.59%** |
+| cAGR | 0.17586 | 0.17098 | **2.77%** |
+| cCON | 0.20053 | 0.19743 | **1.54%** |
+| cOPN | 0.27800 | 0.25128 | **9.61%** |
 
-Controlling for the trait label removes **0.0%** of rbar, in every trait, to 4 decimal places.
-The between-chunk correlation is, empirically, orthogonal to the very construct it is being
-used to estimate the reliability of. This is the single strongest piece of evidence in this
-report: `rbar` cannot be a valid proxy for `rel_H` if it carries zero measurable relationship
-to the label whose reliability `rel_H` is supposed to describe.
+Controlling for the trait label removes a small but real and consistently positive share of
+rbar in every trait (1.5%–9.6%, largest for cOPN). This rules out the "0.0%, fully orthogonal"
+reading, but the corrected numbers still show that **most (90–98%) of rbar survives label
+control** — the label explains only a minority of between-chunk agreement. That the surviving
+majority is unexplained is real evidence that something beyond the trait drives rbar; it is not
+evidence that the trait contributes *nothing*, and it does not establish that the remainder is
+"orthogonal to the construct" — a binary median-split label leaves real within-band variation in
+the continuous trait that no linear control on the binary label can remove (see caveat below).
 
 (Caveat stated plainly: the label is a *binary median split*, not the continuous trait — see
-`GEN-CONFIG.md`'s c-high blocker for the same underlying data limitation. A continuous label
-might absorb a nonzero share of rbar that the binary split cannot. This is not testable on this
-corpus — the continuous BFI scores are behind IEEE DataPort's login gate, unfetched. Flagging
-as an open uncertainty, not closing it.)
+`GEN-CONFIG.md`'s c-high blocker for the same underlying data limitation. Even a perfect binary
+control cannot remove all shared continuous-trait signal, so the reductions above are a lower
+bound on how much of rbar the true continuous trait would explain, not an upper bound. This is
+not testable on this corpus — the continuous BFI scores are behind IEEE DataPort's login gate,
+unfetched. Flagging as an open uncertainty, not closing it.)
 
-### 2.5 Essay length as the driver of rbar — mostly ruled out
+### 2.5 Essay length as the driver of rbar — corrected 2026-09-09 (pass-3 review)
 
 Word count is an obvious candidate nuisance shared by all chunks of the same essay (verbosity
 correlates with itself across any split of the same document). Controlling for length alone,
-and length + label together, same 6-pair/5-trait average:
+and length + label together (recomputed with the corrected label-partial method above), same
+6-pair/5-trait average, n=2,421:
 
-| trait | raw rbar | partial (control: length) | partial (control: length + label) |
-|---|---|---|---|
-| cEXT | 0.2068 | 0.1938 | 0.1938 |
-| cNEU | 0.2131 | 0.2048 | 0.2048 |
-| cAGR | 0.1759 | 0.1754 | 0.1754 |
-| cCON | 0.2005 | 0.1974 | 0.1974 |
-| cOPN | 0.2780 | 0.2740 | 0.2740 |
+| trait | raw rbar | partial (control: length) | partial (control: length + label) | % of raw surviving (length+label) |
+|---|---|---|---|---|
+| cEXT | 0.20678 | 0.19381 | 0.18503 | 89.5% |
+| cNEU | 0.21310 | 0.20481 | 0.19765 | 92.8% |
+| cAGR | 0.17586 | 0.17540 | 0.17050 | 97.0% |
+| cCON | 0.20053 | 0.19736 | 0.19406 | 96.8% |
+| cOPN | 0.27800 | 0.27401 | 0.24784 | 89.2% |
 
-Length explains 1–6% of rbar (cEXT largest at 6.3%, cAGR smallest at 0.3%), and adding the
-label on top of length changes nothing further (matches §2.4). **>93% of rbar survives
-controlling for the two most obvious candidate nuisances (label, length) in every trait.**
+Length alone explains little (0.3%–6.3% of rbar), and length + label together leaves
+**89.2%–97.0%** of raw rbar standing (not ">93% in every trait" — cEXT and cOPN both drop below
+93%). Most residual chunk-pair agreement remains unexplained by either of the two most obvious
+candidate nuisances.
 
 ### 2.6 Anchor/off-manifold mechanism — inapplicable to this number, and contradicted by the pattern
 
@@ -171,23 +186,29 @@ human text. This mechanism is not the explanation for PK-human's own number (it 
 real, additional effect for machine pools specifically — out of scope to isolate here since the
 non-PK numbers were not decomposed the way PK-human's were in this pass).
 
-### 2.7 What remains, by elimination
+### 2.7 What remains — narrowed 2026-09-09 (pass-3 review)
 
-Ruled out: split dependence (2.1), score compression (2.2), chunking-amplified cross-trait
-leakage (2.3), trait-label-mediated signal (2.4, 100% survives), essay length (2.5, >93%
-survives on top of length). Not applicable / doesn't fit the pattern: machine-reference
-off-manifold (2.6). What is left, unfalsified, and consistent with every test above (global to
-the whole document per §1.2, present and *worse* in pure human text per §2.6, essentially
-unrelated to label or length per §2.4/2.5): **a document-level stylistic/topical consistency
-factor** — word choice, register, syntax, and topic that all four chunks of one essay share
-simply because they are four pieces of the same essay written in one sitting by one person on
-one prompt — picked up by the shared `all-MiniLM-L6-v2` embedding space that all five ridge
-models are built on, and correlated across chunks for reasons that have nothing to do with any
-of the five Big-Five traits. This is exactly `LAYERB-SWEEP2.md` FAIL 2's stated hypothesis
-("Chunks of one text share topic, length, register and author idiom, none of which is the
-trait"); this pass adds the quantitative confirmation (100% survival controlling for label,
->93% surviving length on top of that) and rules out the four alternative mechanisms that could
-have explained the same symptom.
+Ruled out by construction or direct measurement: split dependence (2.1), score compression
+(2.2), chunking-amplified cross-trait leakage (2.3). Partially explained but mostly unresolved:
+trait-label-mediated signal (2.4, corrected — label explains 1.5%–9.6% of rbar, not 0%) and
+essay length (2.5, corrected — length+label together explain 3.0%–10.8%, leaving 89.2%–97.0%
+of rbar standing). Not applicable / doesn't fit the pattern: machine-reference off-manifold
+(2.6).
+
+What survives, stated at the strength the evidence supports: **most between-chunk agreement is
+not explained by the (binary) trait label or essay length**, and it is global to the document
+rather than adjacency-decaying (§1.2). A document-level stylistic/topical consistency factor —
+word choice, register, syntax, topic shared by all four chunks of one essay — is the leading
+candidate mechanism, consistent with `LAYERB-SWEEP2.md` FAIL 2's hypothesis. But this pass does
+**not** establish that mechanism by elimination the way the original draft claimed: (a) a
+binary median-split label cannot fully remove continuous-trait signal even if the trait *is* the
+true driver, so the residual majority is also consistent with "the binary label is too coarse a
+control," not only "the true driver is non-trait"; (b) no positive test of the stylistic/topical
+hypothesis was run this pass (e.g. residualizing on an embedding-derived style/topic factor) —
+it remains the leading candidate on elimination-plus-plausibility grounds, not a demonstrated
+cause. Topic, syntax, register, and word choice can themselves be legitimate personality
+indicators; declaring them "not the trait" is an assumption this pass has not tested, not a
+finding it established.
 
 ## 3. WHAT WOULD FIX IT
 
@@ -233,33 +254,35 @@ psychometric definition of a parallel form. **PK-essays does not have this** —
 person. This fix requires a different or additional corpus; not available within this testbed.
 Rank: correct in principle, out of reach here.
 
-### Verdict
+### Verdict — narrowed 2026-09-09 (pass-3 review)
 
-**Weak-H2, as specified (a label-free, within-document chunk-correlation estimate of `rel_H`),
-is not recoverable on this testbed at any n or pi.** The failure is not a leakage bug (fixed in
-`CHUNK-REFIT.md`, moved the ratio by ≤7%), not a split artifact (§2.1, ruled out by
-construction), not score compression (§2.2, ruled out), not amplified cross-trait bleed (§2.3,
-ruled out), and not explained by the trait signal itself (§2.4) or by essay length (§2.5) — it
-is explained by the chunking scheme producing items that are not valid parallel forms of the
-trait construct, a structural property of splitting one document into four pieces, present
-*more* strongly in the pure-human reference corpus than in any machine pool (§2.6). Proof
-sketch: if rbar's shared variance were the trait's true-score variance (weak-H2's load-bearing
-assumption), removing the trait label from the chunk-pair correlation would remove that
-variance; it removes 0.0% of it in all 5 traits (§2.4), which falsifies the assumption directly
-rather than just showing the resulting ratio is large.
+**The original verdict overclaimed and is withdrawn as stated.** "Not recoverable on this
+testbed at any n or pi", "structural property... not by any fixable measurement error", and
+"falsifies the assumption directly" all rested on the 0.0%-removed result, which does not
+reproduce (§2.4). What the corrected evidence actually supports:
 
-**For the paper's H2 claim:** this confirms and sharpens `LAYERB-SWEEP2.md`'s existing verdict
-("between-chunk consistency does not identify `rel_H` on this corpus... not usable as
-specified") — the OOF re-derivation removes the one open objection to that verdict (that it was
-measured on leaky scores), and the mechanism work here removes four more plausible objections
-(split draw, compression, cross-trait bleed, and "maybe it just needs the OOF fix"). What
-remains standing is that weak-H2's own assumption — that within-document chunk correlation
-approximates trait reliability — is false on this corpus, by construction of what a chunk is,
-not by any fixable measurement error. The paper should report H2 as **not established via the
-label-free multi-item route**, with the single-item route (`r_H`, which does hold up per the
-oracle check) as the only validated path, contingent on having gold labels for calibration —
-which is itself the paper's honest finding about what weak-H2 requires and does not deliver on
-real (unlabeled) survey data.
+**Weak-H2, as measured by this specific scoring/correction setup on this corpus, fails**: the
+OOF-corrected `rbar/rel_true` ratio is 5.41x–41.67x, far from the ~1x weak-H2 needs, and this is
+not attributable to a leakage bug (fixed in `CHUNK-REFIT.md`), a split artifact (§2.1, ruled out
+by construction), score compression (§2.2, ruled out), amplified cross-trait bleed (§2.3, ruled
+out), or straightforwardly to the trait label or essay length, which together explain only
+3–11% of rbar (§2.4–2.5, corrected). That leaves most of the between-chunk agreement
+unattributed to a tested cause — consistent with, but not proof of, a document-level
+style/topic factor (§2.7).
+
+This is **a narrower result than originally claimed**: it establishes that the current
+scoring/correction setup does not recover `rel_H` from chunk correlations on this corpus, at
+this n. It does **not** establish that no scoring setup, corpus, or `pi` could ever make
+weak-H2 work, and it does **not** establish that the residual chunk agreement is "orthogonal to
+the construct" — a binary median-split label is too coarse a control to rule that out (§2.4
+caveat), and the leading style/topic hypothesis (§2.7) has not been positively tested here.
+
+**For the paper's H2 claim:** report weak-H2 as **not established via the label-free
+multi-item route on this testbed**, under this scoring/correction pipeline — a scoring- and
+corpus-conditional failure, not a proof of structural impossibility. The single-item route
+(`r_H`) remains the validated path (oracle-checked at 1.71 MCSE), contingent on gold labels for
+calibration, which real survey data does not have — that gap is the honest finding, independent
+of how strongly the multi-item route's failure is characterized.
 
 ## Provenance
 

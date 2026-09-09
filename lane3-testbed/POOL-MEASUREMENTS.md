@@ -13,10 +13,13 @@ Raw numbers: `pool_measurement_raw.json`. Per-text scores: `data/scores/*.json` 
 - **c-hat** (`chat_r` in the raw JSON) — pool-own-label recoverability: PK-trained
   *full-refit* trait model (all 2467 PK texts, no held-out fold) scored against each
   labeled pool's own texts, correlated against that pool's own trait label.
-- **g** — `chat_r / r_H`, the ratio of pool-label recoverability to PK-baseline
-  recoverability. g≈1 means the PK-trained model recovers the trait in this pool about as
-  well as it recovers it in PK itself; g≫1 or g<0 means the model is picking up something
-  systematically different in the pool (see cOPN below).
+- **g** — `chat_r * sqrt(kappa) / r_H`, the covariance-ratio form `Cov(x_M, theta) /
+  Cov(x_H, theta)` (corrected 2026-09-09, pass-3 review T7a — `pool_measurement.py:245`
+  previously computed the stale `chat_r / r_H` ratio, now fixed to match this definition
+  and the value already stored as `g` in `pool_measurements.json`; the stale ratio is kept
+  as `g_old_ratio_form` for both). g≈1 means the PK-trained model recovers the trait in this
+  pool about as well as it recovers it in PK itself; g≫1 or g<0 means the model is picking up
+  something systematically different in the pool (see cOPN below).
 - **kappa** — `s2_M / V_H`, ratio of the machine pool's trait-score variance to PK's
   cross-fitted trait-score variance.
 - **delta** — `(mu_M − mu_H) / sqrt(V_H)`, the pool's mean trait score minus PK's mean,
@@ -26,6 +29,82 @@ Raw numbers: `pool_measurement_raw.json`. Per-text scores: `data/scores/*.json` 
 - **A3** — within-pool correlation between the roberta detector's raw machine-probability
   score and the pool's own trait label. Tests whether the detector is silently sensitive to
   the trait itself (would confound trait effects with detectability).
+
+## Disclosure: the embedding truncates most PK essays (pass-3 review T3/M1, 2026-09-09)
+
+`all-MiniLM-L6-v2`'s `sentence_bert_config.json` sets `max_seq_length: 256` tokens. Measured
+directly against the actual PK inputs (`analysis/pass3_nlp_checks.py`, `tokenization` block):
+
+- **2,433 / 2,467 PK essays (98.62%) exceed 256 tokens.**
+- Median input length: **759 tokens** (including special tokens).
+- The encoder retains **32.15%** of total content tokens across the corpus (at most 254
+  content tokens kept per essay).
+
+The "full-length" `r_H`/`chat_r` scores reported throughout this file and `CHUNK-REFIT.md` are
+therefore predominantly a **prefix score**, not a true full-document score. This does not by
+itself explain the chunk-vs-whole comparisons in `CHUNK-REFIT.md` (a chunk can expose later
+content the whole-text prefix embedding never sees at all), but it means "whole text cannot
+outperform a chunk" is not something this baseline's construction guarantees.
+
+**Comparator baselines (`analysis/t3_baselines.py`, n=2,421 complete-chunk PK subset, same
+5-fold split), same-fold cross-fit against the prefix-ridge `r_H(whole, n=2421)`:**
+
+| trait | prefix-ridge (existing baseline) | document-pooled (4-chunk mean embedding) | lexical TF-IDF + ridge |
+|---|---|---|---|
+| cEXT | 0.1646 | 0.1678 | 0.1593 |
+| cNEU | 0.1045 | **0.2275** | 0.1488 |
+| cAGR | 0.1081 | 0.1365 | 0.0853 |
+| cCON | 0.0710 | 0.1436 | 0.1226 |
+| cOPN | 0.2233 | **0.3111** | 0.2425 |
+
+The document-pooled baseline (mean of the 4 chunk embeddings, seeing the whole document
+rather than a 256-token prefix) beats prefix-ridge in all 5 traits — by 2-121% relative,
+largest for cNEU and cCON. This confirms M1's prediction: prefix truncation was suppressing
+recoverable signal, not just adding noise. The lexical TF-IDF baseline is mixed against
+prefix-ridge (better on cNEU/cCON/cOPN, worse on cAGR, similar on cEXT) and worse than
+document-pooling in every trait. **Construct-validity conclusions elsewhere in this file and
+`CHUNK-REFIT.md` that are stated in terms of "the trait model" or "r_H" refer specifically to
+the prefix-ridge instrument** unless a table explicitly cites one of the two comparators
+above; they should not be read as a ceiling on what text-based scoring can recover for these
+traits.
+
+## Disclosure: nested-evaluation asymmetry, quantified (pass-3 review T4/M2, 2026-09-09)
+
+Human whole-text scores come from a single held-out-fold model (each PK text scored by the
+fold model that excluded it). Machine-pool whole-text scores come from a **100%-refit** model
+(`pk_full_models`, trained on all of PK, never held out for machine pools since they aren't
+PK training data). This is a genuine scoring-protocol asymmetry between the two authorships,
+separate from the OOF-leakage question `CHUNK-REFIT.md` already fixed.
+
+**Quantified** (`analysis/t4_scoring_asymmetry.py`): rescored all 4 labeled machine pools with
+a **5-fold-ensemble mean** (`decision_function` averaged across the 5 PK fold models,
+structurally the closest machine-side analogue to "a model that hasn't seen 100% of PK") and
+compared `kappa`/`delta` against the existing 100%-refit values, all 5 traits × 4 pools (20
+cells):
+
+- **`kappa` (variance ratio) drops 9.0%–15.4%** under the ensemble protocol vs. the 100%-refit
+  protocol, consistently in every cell (never increases). The 100%-refit model's decision
+  scores have systematically higher variance than a fold-ensemble's, independent of which
+  pool's text is being scored.
+- **`delta` (mean gap) moves by −0.069 to +0.064** (absolute, in PK-SD units) — small relative
+  to the delta magnitudes reported elsewhere in this file (most |delta| > 0.2), no consistent
+  direction across pools/traits.
+
+**Interpretation:** the scoring-protocol asymmetry explains a real, consistent ~9–15% share of
+the kappa gap between machine pools and (implicitly) PK-human's own within-protocol variance,
+and is not a large driver of delta. Every kappa value in the "Labeled pools" tables below
+should be read as **~9-15% inflated relative to what a protocol-matched comparison would
+show**, not as a pure machine-vs-human text effect. Full per-pool/per-trait numbers:
+`analysis/t4_scoring_asymmetry_results.json`. Unlabeled pools (argugpt, ghostbuster,
+student_llm) were not rerun this pass — same asymmetry applies to their kappa/delta by
+construction (same `pk_full_models` scoring), magnitude not separately measured; scope their
+kappa comparisons with the same caveat.
+
+Beyond kappa/delta, the broader nested-evaluation point from M2 stands regardless of this
+quantification: PK's own scoring models are fit on the same corpus later split for Layer B
+reference/injection, so this is **a finite, pre-scored corpus under one fixed scoring
+protocol**, not an independently trained scorer evaluated against held-out external
+calibration/survey sets. Treat every result in this file as scoped to that setup.
 
 ## Labeled pools
 

@@ -242,7 +242,12 @@ def main():
             stats[trait]["chat_r"] = chat[trait]["chat_r"]
             stats[trait]["chat_p"] = chat[trait]["chat_p"]
             stats[trait]["r_H"] = r_H[trait]["r"]
-            stats[trait]["g"] = (chat[trait]["chat_r"] / r_H[trait]["r"]) if (chat[trait]["chat_r"] is not None and r_H[trait]["r"]) else None
+            # g = Cov(x_M, theta) / Cov(x_H, theta), the covariance-ratio form (pass-3 review T7a /
+            # PASS3-FIXES.md: this was chat_r/r_H, which drifted from the corrected form already
+            # used in pool_measurements.json's "g" column, "g_old_ratio_form" is that stale ratio).
+            kappa = stats[trait]["kappa"]
+            stats[trait]["g_old_ratio_form"] = (chat[trait]["chat_r"] / r_H[trait]["r"]) if (chat[trait]["chat_r"] is not None and r_H[trait]["r"]) else None
+            stats[trait]["g"] = (chat[trait]["chat_r"] * (kappa ** 0.5) / r_H[trait]["r"]) if (chat[trait]["chat_r"] is not None and r_H[trait]["r"] and kappa is not None and kappa >= 0) else None
 
         # detector AUC vs PK-human, matched sample
         n = min(N_SAMPLE, len(pool["texts"])) if pool_name != "big5_personality_essays" else len(pool["texts"])

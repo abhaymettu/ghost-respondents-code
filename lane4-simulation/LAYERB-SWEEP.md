@@ -40,9 +40,15 @@ Each cell gets its **own** held-out 50/50 splits of both pools, so each has its 
 `big5_personality_essays`, `gpt-4` is `personallm_gpt-4-0613`, `gpt-3.5` is
 `personallm_gpt-3.5-turbo-0613`, `llama-2` is `personallm_llama-2`.
 
-`big5_personality_essays` is a **human** corpus (the Pennebaker-King essays) standing in the
-machine slot. It is kept in the sweep deliberately: it is the negative control for the
-detector route, and section 5 is what it buys.
+**Correction (pass-3 review, 2026-09-09):** `big5_personality_essays` is **not** a human
+corpus. Its source repo and dataset paper (arXiv:2407.17586) document it as GPT-4-turbo
+synthetic text, already flagged as machine in `lane3-testbed/CORPUS-AUDIT.md`. It is correctly
+placed in the machine slot by the loader (`inject/pools.py`). Its AUC ~0.44-0.48 / near-zero
+sensitivity is a **detector failure on synthetic text** — a genuine boundary datum showing this
+detector cannot separate some machine text from human text — not a validated human negative
+control. It is kept in the sweep for that reason: it characterizes the detector's blind spot,
+not a clean human baseline. Section 5's numbers are unchanged by this correction (the code
+already scores it as machine); only the interpretation below was wrong.
 
 ## 1. Realized moments and the attenuation range
 
@@ -194,7 +200,7 @@ per-pool mean absolute bias ranks exactly with it: 0.0091, 0.0153, 0.0359.
 
 ### The defect: a negative denominator returns a number instead of raising
 
-big5-essays is human text. The detector reads it at chance (lane 3's own
+big5-essays is GPT-4-turbo synthetic text (see correction above, not human). The detector reads it at chance (lane 3's own
 `detector_auc_vs_pk` = 0.4724, matching the 0.444-0.479 measured here on the reference
 halves), so at a 0.99-specificity threshold **se = 0.000 exactly in all five traits** and the
 denominator is `0.000 - 0.0105 = -0.0105`, **negative**.
@@ -269,9 +275,10 @@ any one fielded survey.
 
 Everything in `LAYERB-PILOT.md` section 6 applies unchanged to all 20 cells. Additionally:
 
-- **`big5_personality_essays` is human text in the machine slot.** Its coupling, kappa, delta
+- **`big5_personality_essays` is GPT-4-turbo synthetic text, correctly in the machine slot**
+  (see correction at the top of this file — it is not human text). Its coupling, kappa, delta
   and g are real measurements and its rows in sections 1-4 are valid; its rows in section 5
-  are a negative control, not a detector result.
+  show a detector failure on this synthetic corpus, not a human negative control.
 - **Each cell has its own held-out split**, so `r_H` here (0.0565-0.2377) is the split-half
   value, not lane 3's whole-pool value (0.0694-0.2267). Both are in the JSON per cell
   (`r_H` and `r_H_lane3_fullpool`).
