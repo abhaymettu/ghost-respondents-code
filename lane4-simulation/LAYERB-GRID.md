@@ -314,3 +314,97 @@ partly a test of Monte Carlo noise. That is a design decision, not something to 
 re-scoring.
 
 LAYERB-GRID-DONE
+
+---
+
+## 7. Addendum, 2026-09-10: the pi <= 0.20 slice at 500 replications (decision D7)
+
+Section 2's T1 verdict came with a caveat that was doing a lot of work: at SPEC 4.3's 100
+Layer B replications the naive bias was resolvable in only 34% of the applicable cells, so
+"20% of the naive bias" was partly a bar set by Monte Carlo noise. D7 re-ran the `pi <= 0.20`
+slice at 500 replications to settle whether T1 was testing the corrections or testing the
+noise.
+
+**Run.** 280 cells (180 box, 60 generator, 40 trait), 500 reps, same frozen split
+`729645da4c64c3a1`, same `score_version = "oof"`, same estimators, `nice -n 15`, 44629 s on 10
+workers, zero failures. Output in `results/layerb-grid-500rep/`; the 336-cell record in
+`results/layerb-grid/` is untouched.
+
+**The two runs are nested, not independent.** `rep_rng` is keyed on `(cell_id, rep)`, so reps
+0-99 of this run are the same draws as the 100-rep run and reps 100-499 are new. Verified
+rather than assumed: recomputing one cell at 100 reps reproduces all 50 recorded rho_H and
+rho_T fields of its 100-rep row exactly. Every comparison below is therefore within-cell.
+
+### 7.1 The resolvability shift is real but partial
+
+| | 100 reps | 500 reps |
+|---|---|---|
+| median naive MCSE | 0.00309 | 0.00140 (x2.21, theory x2.24) |
+| median `\|naive bias\| / MCSE` | 1.26 | 1.79 |
+| cells with a resolvable naive bias (> 2 MCSE) | 95/280 (34%) | **130/280 (46%)** |
+
+Five times the replications buys 12 percentage points of resolvability, not a majority. That
+is itself an answer: **the remaining 150 cells do not have a hidden bias that noise was
+masking, they have no bias worth removing.** At `pi <= 0.05` with `c <= 0.19` the naive
+validity coefficient on real text is unbiased to within a thousandth, and no correction can
+improve on it.
+
+### 7.2 T1 at 500 replications
+
+| estimator | verbatim (280 cells) | resolvable subset (130 cells) | reduces the bias at all |
+|---|---|---|---|
+| delete | 24 -> **48** /280 (8.6% -> 17.1%) | 14/95 -> **29/130** (14.7% -> 22.3%) | 141 -> 146 /280 |
+| simex | 29 -> **48** /280 (10.4% -> 17.1%) | 19/95 -> **37/130** (20.0% -> **28.5%**) | 146 -> 141 /280 |
+| labelfree | 20 -> **39** /280 (7.1% -> 13.9%) | 12/95 -> **31/130** (12.6% -> 23.8%) | 90 -> 73 /280 |
+| em | 14 -> **9** /280 (5.0% -> 3.2%) | 5/95 -> **1/130** (5.3% -> **0.8%**) | 117 -> 123 /280 |
+
+Per-cell verdict flips confirm the direction is not an artifact of the changing denominator:
+fail->pass outnumbers pass->fail for delete (38 vs 14), simex (33 vs 14) and labelfree (30 vs
+11), and reverses for em (7 vs 12).
+
+**T1 still FAILS, and the failure is now a statement about the estimators rather than about
+the replication count.** The best corrector, simex, meets the 20% bar in 28.5% of the cells
+where there is a bias to meet it on; SPEC 4.4 requires *every* cell with `pi <= 0.20` and
+`c <= partial`. The prevalence structure of section 2 survives and sharpens:
+
+| pi | 0.01 | 0.02 | 0.05 | 0.10 | 0.20 |
+|---|---|---|---|---|---|
+| best-of-three, resolvable cells | 1/5 | 3/10 | 11/25 | 19/41 | **24/49** |
+
+### 7.3 What the extra replications exposed: em
+
+`em` is the one estimator that gets *worse* under better resolution, and it is worth saying
+plainly. On the resolvable subset it falls from 5/95 to **1/130**. This is not a convergence
+artifact: its median failure rate over the 280 cells is 0.006 and its maximum is 0.024, so
+essentially every replication contributed. Its median bias is -0.00090 against naive's
+-0.00019, and **`|em bias|` exceeds `|naive bias|` in 157 of 280 cells (56%)**. At 100 reps em
+looked like a weak corrector; at 500 it is visibly a slightly harmful one on this text. The
+mechanism is not mysterious -- em fits a two-component Gaussian mixture and the chunk-score
+mixture on real essays is not one -- but the grid did not have the resolution to say so before.
+
+### 7.4 The other three thresholds, on the same 280 cells
+
+| threshold | 100 reps | 500 reps | verdict |
+|---|---|---|---|
+| T2 rho_H coverage in band | naive 232/280, delete 244/280 | naive 259/280, delete 269/280 | improves (the coverage estimate is itself better resolved); rho_T still 0/280 |
+| T3 labelfree `\|pi_hat - pi\|` at n = 1000 | median 0.0542, 3/160 pass | median 0.0528, 3/160 pass | **unchanged: prevalence error is bias, not noise** |
+| T4 best corrector beats deletion on RMSE | 47/160 | **38/160** | **worse** |
+
+T3 and T4 are the informative ones. Prevalence error does not move with replication count
+because it was never a variance problem. And T4 moves *against* the corrections: with sharper
+estimates, deletion wins more of the calibrated and degraded cells than it did at 100 reps, not
+fewer.
+
+### 7.5 What D7 settles
+
+- T1's failure in section 2 was **not** an artifact of 100 replications. Five times the
+  replications moves the best corrector from 20.0% to 28.5% of resolvable cells against a
+  threshold that demands 100%.
+- A third of the `pi <= 0.20` box has no naive bias to correct at all, and more replications
+  confirm that rather than dissolve it.
+- Section 2's headline stands unchanged: on real text at the OOF estimand, the naive estimator
+  is hard to beat, and `em` is now positively contraindicated.
+- Section 6's boundary map and every number in sections 1-6 are from the 336-cell 100-rep
+  record and are not superseded; this section adds resolution on `pi <= 0.20` only.
+
+D7-DONE (2026-09-10)
