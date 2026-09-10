@@ -17,7 +17,7 @@ trait signal in a text chunk is weak (`rho_H = 0.068`), so at SPEC's Layer B sam
 sampling noise in a validity coefficient is ~47% of the coefficient itself. Contamination bias
 at `pi <= 0.30` is smaller than that noise in most cells, and every correction that removes
 some of the bias adds more variance than it removes. **The naive estimator has the lowest
-median rho_H RMSE in every detector group, and the lowest cellwise RMSE (ties included) in 262
+median rho_H RMSE in every detector group, and the lowest cellwise RMSE (ties included) in 274
 of the 336 cells.** Layer A's corrections were validated in a regime
 (`rho_H = 0.418`, 500 reps) that the real text does not reach.
 
@@ -227,7 +227,7 @@ Median RMSE tells the story more directly than the win counts:
 | oracle | 0.0315 | 0.0323 | 0.0323 |
 
 **Naive has the lowest median RMSE in every detector column**, and the lowest cellwise RMSE
-(ties included) in 262/336 cells: none 59/72, calibrated 69/96, degraded 87/96, oracle 47/72.
+(ties included) in 274/336 cells: none 71/72, calibrated 69/96, degraded 87/96, oracle 47/72.
 That is a statement about medians and a cell count, not a uniform per-cell ordering. Against
 `rho_H = 0.0676`, an RMSE of
 0.0317 is 47% of the estimand: this box is variance-dominated, deletion throws away sample and
