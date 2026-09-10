@@ -74,27 +74,38 @@ subset, same 5-fold split as the prefix-ridge scorer):
 | cCON | 0.0710 | 0.1436 | 0.1226 |
 | cOPN | 0.2233 | **0.3111** | 0.2425 |
 
-Document-pooling (mean of the 4 chunk embeddings, seeing the whole document) beats
-prefix-ridge in all 5 traits, confirming M1's prediction that truncation was suppressing
-recoverable signal. Prefix-ridge is kept as the stated baseline throughout; construct-validity
-language elsewhere in `POOL-MEASUREMENTS.md`/`CHUNK-REFIT.md` is now scoped to that instrument
-unless a table cites a comparator explicitly.
+Document-pooling (mean of the 4 sentence-count chunk embeddings) beats prefix-ridge in all 5
+traits, consistent with M1's prediction that truncation was suppressing recoverable signal.
+Each of the 4 chunks is still subject to the encoder's 256-token limit on its own; chunking is
+sentence-count-based (`chunk_at_sentence_boundaries`, k=4 near-equal groups), not token-bounded,
+so complete token coverage of the document is not guaranteed and was not separately verified.
+Broader document coverage than the single-prefix baseline should not be reported beyond that.
+Prefix-ridge is kept as the stated baseline throughout; construct-validity language elsewhere in
+`POOL-MEASUREMENTS.md`/`CHUNK-REFIT.md` is now scoped to that instrument unless a table cites a
+comparator explicitly.
 
-## T4 (major M2) — nested-evaluation asymmetry — FIXED (quantified)
+## T4 (major M2) — nested-evaluation asymmetry — FIXED (scoring-protocol sensitivity analysis)
 
-Chose option (a): measured the effect directly rather than only scoping claims.
-`analysis/t4_scoring_asymmetry.py` rescored all 4 labeled machine pools (big5, personallm×3,
-20 trait/pool cells) with a 5-fold-ensemble-mean protocol (matching the human-side "not
-100%-refit" spirit) and compared against the existing 100%-refit `kappa`/`delta`:
+Chose option (a): measured the effect directly rather than only scoping claims. Human scores
+use a single held-out-fold ridge model per point; machine scores in the existing report use a
+100%-refit model. `analysis/t4_scoring_asymmetry.py` rescored all 4 labeled machine pools
+(big5, personallm×3, 20 trait/pool cells) with a 5-fold-ensemble-mean protocol instead and
+compared against the existing 100%-refit `kappa`/`delta`. This is a sensitivity analysis on the
+scoring protocol, not a measured correction for the asymmetry — a 5-model ensemble mean over
+folds is still not identical to the single held-out-fold protocol used on the human side, and
+the script's own docstring notes the asymmetry remains. Numerical conclusions below are
+restricted to these four rerun pools.
 
-- **kappa drops 9.0%–15.4%** under the matched protocol, consistently (every cell).
+- **kappa drops 9.0%–15.4%** under the ensemble protocol relative to the existing full-refit
+  values, consistently (every cell).
 - **delta moves by only −0.069 to +0.064** (absolute, PK-SD units) — small relative to typical
   |delta| > 0.2 elsewhere in the report.
 
-Documented in `POOL-MEASUREMENTS.md`: every kappa value in the Labeled/Unlabeled pools tables
-should be read as ~9–15% inflated relative to a protocol-matched comparison; delta is largely
-unaffected. Unlabeled pools (argugpt, ghostbuster, student_llm) were not rerun — same
-asymmetry applies by construction, magnitude not separately measured, flagged as scoped.
+Documented in `POOL-MEASUREMENTS.md`: for these four pools, that 9.0–15.4% full-refit-to-ensemble
+decrease corresponds to the full-refit kappa being approximately **9.9–18.1% inflated relative
+to the ensemble-protocol kappa**; delta is largely unaffected. Unlabeled pools (argugpt,
+ghostbuster, student_llm) were not rerun — same asymmetry applies by construction, magnitude not
+separately measured, flagged as scoped.
 
 ## T5 (major M3) — HC3 question-grouped split — FIXED
 
