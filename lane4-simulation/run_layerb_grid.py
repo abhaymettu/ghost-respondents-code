@@ -323,17 +323,22 @@ def main() -> None:
     ap.add_argument("--workers", type=int, default=None)
     ap.add_argument("--reps", type=int, default=REPS)
     ap.add_argument("--cells-only", action="store_true", help="print the box and exit")
+    ap.add_argument("--max-pi", type=float, default=None,
+                    help="keep only cells with pi <= this (D7: the pi <= 0.20 slice at 500 reps)")
     args = ap.parse_args()
 
     here = Path(__file__).resolve().parent
     out_dir = (here / args.out).resolve()
     assert out_dir.name not in ("grid", "grid-nonignorable"), "those are frozen records"
     cells = sorted(box(), key=lambda c: c.cell_id)
+    if args.max_pi is not None:
+        cells = [c for c in cells if c.pi <= args.max_pi + 1e-12]
     by_arm: dict[str, int] = {}
     for c in cells:
         by_arm[c.arm] = by_arm.get(c.arm, 0) + 1
     print(f"Layer B grid: {len(cells)} cells {by_arm}, reps={args.reps}, "
-          f"master_seed={MASTER_SEED}, k={K_CHUNKS}", flush=True)
+          f"master_seed={MASTER_SEED}, k={K_CHUNKS}"
+          + (f", max_pi={args.max_pi}" if args.max_pi is not None else ""), flush=True)
     if args.cells_only:
         for c in cells:
             print(f"  {c.arm:10s} {c.pool:24s} {c.trait} pi={c.pi:<5} n={c.n:<5} p={c.p:<4} "

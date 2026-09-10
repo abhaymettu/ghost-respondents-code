@@ -609,3 +609,68 @@ transcribed from the derivations rather than imported from `population.py`, and 
 carries its own transcription in `moments_closed_form` for the same reason.
 
 ARM-DONE (2026-09-09)
+
+---
+
+## 10.10 Addendum, 2026-09-09: M1, the labelfree column re-run at n_bins = 8
+
+Pass-3 methods item M1. The 372-cell Layer A grid in `results/grid/` was run while
+`_distribution_match_pi` shipped `n_bins = 60`; SPEC-FIXES-ROUND3.md fix 2 changed the default
+to 8 after the grid completed, so the frozen grid's `labelfree` column is the only part of it
+that describes a superseded estimator. This re-runs that column and nothing else.
+
+**Method.** `run_labelfree_nbins8.py`, 372 cells x 500 reps, 42950 s on 10 workers, zero
+failures, output in `results/grid-labelfree-nbins8/`. It calls `grid.run_cell` with the
+module-level ESTIMATORS map narrowed to labelfree; `run_cell` builds its per-rep `default_opts`
+-- including labelfree's `machine_ref` / `human_ref` draws and every estimator's seed integer --
+before the estimator loop and always in the same source order, so narrowing the map changes
+which fits execute and not one draw. `estimators.py` was not edited and `results/grid/` was not
+written to.
+
+**Control.** `r_obs_emp` is computed from the simulated `X`, so it is draw-dependent. Across all
+372 paired cells the maximum absolute difference between the frozen row and the re-run is
+**0.000e+00**. The two runs saw the same data; every difference below is the bin count alone.
+
+### What moved
+
+| quantity (median over 372 cells) | n_bins = 60 | n_bins = 8 | cells improved |
+|---|---|---|---|
+| `\|pi_hat - pi\|` | 0.1481 | **0.0681** | 357/372 |
+| `rho_H` bias | +0.0780 | **+0.0243** | 302/372 |
+| `rho_H` RMSE | 0.0911 | **0.0530** | 304/372 |
+| `rho_H` coverage | 0.399 | **0.841** | 370/372 |
+| coverage inside [92, 98] | 0/372 | **59/372** | -- |
+
+The prevalence error halves, the validity bias falls by 69%, and coverage moves from
+catastrophic (median 40%) to poor (median 84%). Fix 2 was chosen on slope, and the slope
+improvement propagates: a labelfree `rho_H` estimate is materially better at 8 bins than at 60
+on every axis the grid records.
+
+### Where it helps, and where it does not
+
+The improvement is monotone in prevalence, and it reverses at the top:
+
+| pi | 0.01 | 0.02 | 0.05 | 0.10 | 0.20 | 0.30 |
+|---|---|---|---|---|---|---|
+| median `\|pi_hat - pi\|`, 60 -> 8 | 0.154 -> 0.055 | 0.155 -> 0.060 | 0.150 -> 0.067 | 0.142 -> 0.074 | 0.132 -> 0.080 | 0.119 -> 0.076 |
+| change | **-64%** | -62% | -55% | -48% | -39% | -37% |
+
+The largest gains are at `pi = 0.01` (e.g. 0.209 -> 0.073 at n = 500, oracle). The largest
+*regressions* are all at `pi = 0.30, kappa = 1.0`, where the error gets worse: 0.218 -> 0.291
+(c = 0.9, oracle), 0.220 -> 0.278 (c = 0, none), 0.215 -> 0.273 (c = 0, degraded). That is the
+non-uniformity SPEC-FIXES-ROUND3.md fix 2 recorded rather than hid -- 8 bins buy slope at the
+cost of intercept, and at high prevalence with an undispersed machine pool the trade goes the
+wrong way. 15 cells of 372 got worse on prevalence error.
+
+### What did not change
+
+**SPEC 4.4's T3 still fails on Layer A at both bin counts**: `|pi_hat - pi| <= 0.02` at
+n = 1000 passes in **0 of 228** cells at n_bins = 60 and **0 of 228** at n_bins = 8. The fix
+moves the median error from 0.148 to 0.068; the threshold is 0.02. Halving a miss that is
+seven times the bar does not clear the bar.
+
+Nothing in sections 1-9 or in the 10.1-10.9 addendum depends on the labelfree column, and none
+of those numbers move: the pass-2 moment checks use `naive`, `delete` and `r_obs_emp` only
+(section 1.2). The frozen grid remains the record for every other estimator.
+
+M1-DONE (2026-09-09)

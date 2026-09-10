@@ -1,0 +1,527 @@
+Layer B grid: 336 cells {'box': 216, 'generator': 72, 'trait': 48}, reps=100, master_seed=20260909, k=4
+  0 already done, 336 to run, 10 workers
+  frozen split_id=729645da4c64c3a1 human base 1208 (dropped 26 unchunkable), machine inj 160
+  detector none        sp_target=1.0 -> sp_cal=1.0000 se_cal=0.0000
+  detector calibrated  sp_target=0.99 -> sp_cal=0.9895 se_cal=0.2875
+  detector degraded    sp_target=0.85 -> sp_cal=0.8500 se_cal=0.7188
+  detector oracle      sp_target=None -> sp_cal=1.0000 se_cal=1.0000
+Process SpawnPoolWorker-8:
+Traceback (most recent call last):
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/pool.py", line 131, in worker
+    put((job, i, result))
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/queues.py", line 399, in put
+    self._writer.send_bytes(obj)
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 200, in send_bytes
+    self._send_bytes(m[offset:offset + size])
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 427, in _send_bytes
+    self._send(header + buf)
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 384, in _send
+    n = write(self._handle, buf)
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [Errno 32] Broken pipe
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/pool.py", line 136, in worker
+    put((job, i, (False, wrapped)))
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/queues.py", line 399, in put
+    self._writer.send_bytes(obj)
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 200, in send_bytes
+    self._send_bytes(m[offset:offset + size])
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 427, in _send_bytes
+    self._send(header + buf)
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 384, in _send
+    n = write(self._handle, buf)
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [Errno 32] Broken pipe
+Process SpawnPoolWorker-9:
+Traceback (most recent call last):
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/pool.py", line 131, in worker
+    put((job, i, result))
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/queues.py", line 399, in put
+    self._writer.send_bytes(obj)
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 200, in send_bytes
+    self._send_bytes(m[offset:offset + size])
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 427, in _send_bytes
+    self._send(header + buf)
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 384, in _send
+    n = write(self._handle, buf)
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [Errno 32] Broken pipe
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/pool.py", line 136, in worker
+    put((job, i, (False, wrapped)))
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/queues.py", line 399, in put
+    self._writer.send_bytes(obj)
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 200, in send_bytes
+    self._send_bytes(m[offset:offset + size])
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 427, in _send_bytes
+    self._send(header + buf)
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 384, in _send
+    n = write(self._handle, buf)
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [Errno 32] Broken pipe
+Process SpawnPoolWorker-10:
+Traceback (most recent call last):
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/pool.py", line 131, in worker
+    put((job, i, result))
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/queues.py", line 399, in put
+    self._writer.send_bytes(obj)
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 200, in send_bytes
+    self._send_bytes(m[offset:offset + size])
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 427, in _send_bytes
+    self._send(header + buf)
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 384, in _send
+    n = write(self._handle, buf)
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [Errno 32] Broken pipe
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/pool.py", line 136, in worker
+    put((job, i, (False, wrapped)))
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/queues.py", line 399, in put
+    self._writer.send_bytes(obj)
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 200, in send_bytes
+    self._send_bytes(m[offset:offset + size])
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 427, in _send_bytes
+    self._send(header + buf)
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 384, in _send
+    n = write(self._handle, buf)
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [Errno 32] Broken pipe
+Process SpawnPoolWorker-5:
+Traceback (most recent call last):
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/pool.py", line 131, in worker
+    put((job, i, result))
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/queues.py", line 399, in put
+    self._writer.send_bytes(obj)
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 200, in send_bytes
+    self._send_bytes(m[offset:offset + size])
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 427, in _send_bytes
+    self._send(header + buf)
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 384, in _send
+    n = write(self._handle, buf)
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [Errno 32] Broken pipe
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/pool.py", line 136, in worker
+    put((job, i, (False, wrapped)))
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/queues.py", line 399, in put
+    self._writer.send_bytes(obj)
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 200, in send_bytes
+    self._send_bytes(m[offset:offset + size])
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 427, in _send_bytes
+    self._send(header + buf)
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 384, in _send
+    n = write(self._handle, buf)
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [Errno 32] Broken pipe
+Process SpawnPoolWorker-4:
+Traceback (most recent call last):
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/pool.py", line 131, in worker
+    put((job, i, result))
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/queues.py", line 399, in put
+    self._writer.send_bytes(obj)
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 200, in send_bytes
+    self._send_bytes(m[offset:offset + size])
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 427, in _send_bytes
+    self._send(header + buf)
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 384, in _send
+    n = write(self._handle, buf)
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [Errno 32] Broken pipe
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/pool.py", line 136, in worker
+    put((job, i, (False, wrapped)))
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/queues.py", line 399, in put
+    self._writer.send_bytes(obj)
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 200, in send_bytes
+    self._send_bytes(m[offset:offset + size])
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 427, in _send_bytes
+    self._send(header + buf)
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 384, in _send
+    n = write(self._handle, buf)
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [Errno 32] Broken pipe
+Process SpawnPoolWorker-6:
+Traceback (most recent call last):
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/pool.py", line 131, in worker
+    put((job, i, result))
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/queues.py", line 399, in put
+    self._writer.send_bytes(obj)
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 200, in send_bytes
+    self._send_bytes(m[offset:offset + size])
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 427, in _send_bytes
+    self._send(header + buf)
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 384, in _send
+    n = write(self._handle, buf)
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [Errno 32] Broken pipe
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/pool.py", line 136, in worker
+    put((job, i, (False, wrapped)))
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/queues.py", line 399, in put
+    self._writer.send_bytes(obj)
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 200, in send_bytes
+    self._send_bytes(m[offset:offset + size])
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 427, in _send_bytes
+    self._send(header + buf)
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 384, in _send
+    n = write(self._handle, buf)
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [Errno 32] Broken pipe
+Process SpawnPoolWorker-7:
+Traceback (most recent call last):
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/pool.py", line 131, in worker
+    put((job, i, result))
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/queues.py", line 399, in put
+    self._writer.send_bytes(obj)
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 200, in send_bytes
+    self._send_bytes(m[offset:offset + size])
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 427, in _send_bytes
+    self._send(header + buf)
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 384, in _send
+    n = write(self._handle, buf)
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [Errno 32] Broken pipe
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/pool.py", line 136, in worker
+    put((job, i, (False, wrapped)))
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/queues.py", line 399, in put
+    self._writer.send_bytes(obj)
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 200, in send_bytes
+    self._send_bytes(m[offset:offset + size])
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 427, in _send_bytes
+    self._send(header + buf)
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 384, in _send
+    n = write(self._handle, buf)
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [Errno 32] Broken pipe
+Process SpawnPoolWorker-1:
+Traceback (most recent call last):
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/pool.py", line 131, in worker
+    put((job, i, result))
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/queues.py", line 399, in put
+    self._writer.send_bytes(obj)
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 200, in send_bytes
+    self._send_bytes(m[offset:offset + size])
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 427, in _send_bytes
+    self._send(header + buf)
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 384, in _send
+    n = write(self._handle, buf)
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [Errno 32] Broken pipe
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/pool.py", line 136, in worker
+    put((job, i, (False, wrapped)))
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/queues.py", line 399, in put
+    self._writer.send_bytes(obj)
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 200, in send_bytes
+    self._send_bytes(m[offset:offset + size])
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 427, in _send_bytes
+    self._send(header + buf)
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 384, in _send
+    n = write(self._handle, buf)
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [Errno 32] Broken pipe
+Process SpawnPoolWorker-2:
+Traceback (most recent call last):
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/pool.py", line 131, in worker
+    put((job, i, result))
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/queues.py", line 399, in put
+    self._writer.send_bytes(obj)
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 200, in send_bytes
+    self._send_bytes(m[offset:offset + size])
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 427, in _send_bytes
+    self._send(header + buf)
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 384, in _send
+    n = write(self._handle, buf)
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [Errno 32] Broken pipe
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/pool.py", line 136, in worker
+    put((job, i, (False, wrapped)))
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/queues.py", line 399, in put
+    self._writer.send_bytes(obj)
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 200, in send_bytes
+    self._send_bytes(m[offset:offset + size])
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 427, in _send_bytes
+    self._send(header + buf)
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 384, in _send
+    n = write(self._handle, buf)
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [Errno 32] Broken pipe
+lbgrid: 1/336 trait      NEU pi=0.3   n=1000  p=0.5  det=degraded    (367.8s, 370s elapsed)
+lbgrid: 2/336 box        EXT pi=0.05  n=1000  p=1.0  det=calibrated  (373.3s, 376s elapsed)
+lbgrid: 3/336 generator  EXT pi=0.01  n=1000  p=0.5  det=degraded    (378.7s, 381s elapsed)
+lbgrid: 4/336 trait      NEU pi=0.1   n=1000  p=0.5  det=degraded    (381.2s, 383s elapsed)
+lbgrid: 5/336 generator  EXT pi=0.05  n=1000  p=0.5  det=none        (385.6s, 388s elapsed)
+lbgrid: 6/336 box        EXT pi=0.05  n=1000  p=0.5  det=degraded    (386.4s, 389s elapsed)
+Process SpawnPoolWorker-3:
+Traceback (most recent call last):
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/pool.py", line 131, in worker
+    put((job, i, result))
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/queues.py", line 399, in put
+    self._writer.send_bytes(obj)
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 200, in send_bytes
+    self._send_bytes(m[offset:offset + size])
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 427, in _send_bytes
+    self._send(header + buf)
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 384, in _send
+    n = write(self._handle, buf)
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [Errno 32] Broken pipe
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/pool.py", line 136, in worker
+    put((job, i, (False, wrapped)))
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/queues.py", line 399, in put
+    self._writer.send_bytes(obj)
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 200, in send_bytes
+    self._send_bytes(m[offset:offset + size])
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 427, in _send_bytes
+    self._send(header + buf)
+  File "/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/connection.py", line 384, in _send
+    n = write(self._handle, buf)
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+BrokenPipeError: [Errno 32] Broken pipe
+/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/resource_tracker.py:279: UserWarning: resource_tracker: There appear to be 6 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '
+lbgrid: 7/336 generator  EXT pi=0.2   n=1000  p=0.0  det=oracle      (392.7s, 395s elapsed)
+lbgrid: 8/336 box        EXT pi=0.1   n=1000  p=0.5  det=degraded    (400.2s, 402s elapsed)
+lbgrid: 9/336 box        EXT pi=0.02  n=2400  p=0.5  det=degraded    (520.6s, 523s elapsed)
+lbgrid: 10/336 box        EXT pi=0.05  n=2400  p=0.5  det=calibrated  (540.2s, 542s elapsed)
+lbgrid: 11/336 box        EXT pi=0.2   n=500   p=0.0  det=none        (236.7s, 639s elapsed)
+lbgrid: 12/336 generator  EXT pi=0.05  n=1000  p=1.0  det=oracle      (316.6s, 687s elapsed)
+lbgrid: 13/336 box        EXT pi=0.01  n=1000  p=0.5  det=calibrated  (298.3s, 693s elapsed)
+lbgrid: 14/336 generator  EXT pi=0.2   n=1000  p=0.5  det=calibrated  (318.6s, 706s elapsed)
+lbgrid: 15/336 generator  EXT pi=0.3   n=1000  p=1.0  det=oracle      (321.1s, 710s elapsed)
+lbgrid: 16/336 box        EXT pi=0.02  n=2400  p=1.0  det=calibrated  (466.3s, 850s elapsed)
+lbgrid: 17/336 box        EXT pi=0.05  n=2400  p=1.0  det=calibrated  (469.4s, 850s elapsed)
+lbgrid: 18/336 generator  EXT pi=0.05  n=1000  p=0.0  det=calibrated  (313.7s, 856s elapsed)
+lbgrid: 19/336 box        EXT pi=0.05  n=2400  p=1.0  det=none        (483.6s, 859s elapsed)
+lbgrid: 20/336 box        EXT pi=0.2   n=500   p=0.0  det=oracle      (242.0s, 881s elapsed)
+lbgrid: 21/336 box        EXT pi=0.2   n=500   p=0.5  det=oracle      (246.5s, 953s elapsed)
+lbgrid: 22/336 box        EXT pi=0.3   n=500   p=0.5  det=oracle      (246.3s, 956s elapsed)
+lbgrid: 23/336 trait      AGR pi=0.05  n=1000  p=0.5  det=calibrated  (306.9s, 1000s elapsed)
+lbgrid: 24/336 box        EXT pi=0.2   n=2400  p=0.5  det=none        (502.9s, 1026s elapsed)
+lbgrid: 25/336 box        EXT pi=0.01  n=500   p=0.0  det=degraded    (229.7s, 1089s elapsed)
+lbgrid: 26/336 box        EXT pi=0.05  n=1000  p=1.0  det=degraded    (308.8s, 1159s elapsed)
+lbgrid: 27/336 trait      AGR pi=0.2   n=1000  p=0.5  det=degraded    (320.9s, 1171s elapsed)
+lbgrid: 28/336 box        EXT pi=0.05  n=2400  p=0.5  det=degraded    (484.9s, 1171s elapsed)
+lbgrid: 29/336 box        EXT pi=0.01  n=1000  p=0.0  det=degraded    (305.6s, 1187s elapsed)
+lbgrid: 30/336 generator  EXT pi=0.1   n=1000  p=0.0  det=degraded    (330.3s, 1283s elapsed)
+lbgrid: 31/336 trait      OPE pi=0.05  n=1000  p=0.5  det=degraded    (363.8s, 1320s elapsed)
+lbgrid: 32/336 box        EXT pi=0.1   n=2400  p=0.0  det=degraded    (486.7s, 1343s elapsed)
+lbgrid: 33/336 trait      OPE pi=0.1   n=1000  p=0.5  det=calibrated  (343.4s, 1369s elapsed)
+lbgrid: 34/336 generator  EXT pi=0.02  n=1000  p=1.0  det=degraded    (303.7s, 1392s elapsed)
+lbgrid: 35/336 box        EXT pi=0.3   n=500   p=0.0  det=none        (232.3s, 1403s elapsed)
+lbgrid: 36/336 box        EXT pi=0.01  n=2400  p=0.0  det=oracle      (470.4s, 1470s elapsed)
+lbgrid: 37/336 box        EXT pi=0.01  n=1000  p=1.0  det=calibrated  (303.7s, 1475s elapsed)
+lbgrid: 38/336 trait      OPE pi=0.01  n=1000  p=0.5  det=degraded    (346.1s, 1533s elapsed)
+lbgrid: 39/336 box        EXT pi=0.05  n=500   p=0.5  det=calibrated  (229.8s, 1599s elapsed)
+lbgrid: 40/336 box        EXT pi=0.3   n=2400  p=0.5  det=degraded    (458.1s, 1617s elapsed)
+lbgrid: 41/336 box        EXT pi=0.02  n=1000  p=0.0  det=none        (298.0s, 1690s elapsed)
+lbgrid: 42/336 box        EXT pi=0.05  n=500   p=0.0  det=degraded    (233.1s, 1708s elapsed)
+lbgrid: 43/336 trait      AGR pi=0.1   n=1000  p=0.5  det=degraded    (322.9s, 1726s elapsed)
+lbgrid: 44/336 box        EXT pi=0.05  n=2400  p=0.0  det=oracle      (467.2s, 1750s elapsed)
+lbgrid: 45/336 box        EXT pi=0.3   n=2400  p=0.0  det=oracle      (449.6s, 1769s elapsed)
+lbgrid: 46/336 generator  EXT pi=0.02  n=1000  p=0.0  det=degraded    (300.8s, 1771s elapsed)
+lbgrid: 47/336 box        EXT pi=0.1   n=500   p=0.0  det=none        (226.7s, 1826s elapsed)
+lbgrid: 48/336 box        EXT pi=0.02  n=2400  p=0.0  det=degraded    (493.6s, 1836s elapsed)
+lbgrid: 49/336 box        EXT pi=0.02  n=500   p=1.0  det=degraded    (226.0s, 1843s elapsed)
+lbgrid: 50/336 generator  EXT pi=0.3   n=1000  p=1.0  det=calibrated  (314.0s, 1847s elapsed)
+lbgrid: 51/336 box        EXT pi=0.01  n=500   p=0.5  det=oracle      (224.9s, 1994s elapsed)
+lbgrid: 52/336 box        EXT pi=0.2   n=1000  p=1.0  det=degraded    (311.1s, 2002s elapsed)
+lbgrid: 53/336 trait      AGR pi=0.1   n=1000  p=0.5  det=calibrated  (306.8s, 2033s elapsed)
+lbgrid: 54/336 box        EXT pi=0.1   n=500   p=1.0  det=none        (227.5s, 2053s elapsed)
+lbgrid: 55/336 generator  EXT pi=0.1   n=1000  p=0.0  det=none        (307.8s, 2079s elapsed)
+lbgrid: 56/336 generator  EXT pi=0.01  n=1000  p=1.0  det=oracle      (306.7s, 2143s elapsed)
+lbgrid: 57/336 box        EXT pi=0.1   n=1000  p=0.0  det=oracle      (309.2s, 2156s elapsed)
+lbgrid: 58/336 box        EXT pi=0.3   n=2400  p=1.0  det=oracle      (452.8s, 2161s elapsed)
+lbgrid: 59/336 generator  EXT pi=0.2   n=1000  p=0.5  det=none        (328.3s, 2171s elapsed)
+lbgrid: 60/336 box        EXT pi=0.05  n=2400  p=0.5  det=oracle      (480.0s, 2230s elapsed)
+lbgrid: 61/336 box        EXT pi=0.02  n=1000  p=1.0  det=degraded    (308.0s, 2302s elapsed)
+lbgrid: 62/336 box        EXT pi=0.05  n=500   p=0.5  det=none        (237.1s, 2316s elapsed)
+lbgrid: 63/336 box        EXT pi=0.2   n=1000  p=0.0  det=oracle      (329.5s, 2331s elapsed)
+lbgrid: 64/336 trait      CON pi=0.3   n=1000  p=0.5  det=calibrated  (347.1s, 2380s elapsed)
+lbgrid: 65/336 trait      CON pi=0.1   n=1000  p=0.5  det=degraded    (308.1s, 2464s elapsed)
+lbgrid: 66/336 generator  EXT pi=0.3   n=1000  p=0.0  det=oracle      (316.8s, 2478s elapsed)
+lbgrid: 67/336 generator  EXT pi=0.2   n=1000  p=0.0  det=calibrated  (342.7s, 2486s elapsed)
+lbgrid: 68/336 box        EXT pi=0.05  n=1000  p=0.5  det=oracle      (335.3s, 2507s elapsed)
+lbgrid: 69/336 generator  EXT pi=0.02  n=1000  p=0.5  det=none        (304.9s, 2535s elapsed)
+lbgrid: 70/336 box        EXT pi=0.01  n=500   p=0.5  det=degraded    (233.3s, 2536s elapsed)
+lbgrid: 71/336 box        EXT pi=0.01  n=2400  p=0.5  det=none        (488.9s, 2542s elapsed)
+lbgrid: 72/336 box        EXT pi=0.3   n=500   p=1.0  det=oracle      (242.7s, 2623s elapsed)
+lbgrid: 73/336 generator  EXT pi=0.05  n=1000  p=1.0  det=none        (332.8s, 2649s elapsed)
+lbgrid: 74/336 trait      CON pi=0.2   n=1000  p=0.5  det=calibrated  (323.0s, 2654s elapsed)
+lbgrid: 75/336 box        EXT pi=0.1   n=500   p=1.0  det=calibrated  (232.4s, 2718s elapsed)
+lbgrid: 76/336 box        EXT pi=0.3   n=500   p=1.0  det=degraded    (255.8s, 2763s elapsed)
+lbgrid: 77/336 box        EXT pi=0.2   n=500   p=0.0  det=calibrated  (248.9s, 2785s elapsed)
+lbgrid: 78/336 box        EXT pi=0.2   n=1000  p=0.0  det=calibrated  (323.8s, 2788s elapsed)
+lbgrid: 79/336 box        EXT pi=0.3   n=500   p=1.0  det=calibrated  (249.6s, 2792s elapsed)
+lbgrid: 80/336 generator  EXT pi=0.01  n=1000  p=1.0  det=degraded    (331.2s, 2809s elapsed)
+lbgrid: 81/336 trait      OPE pi=0.3   n=1000  p=0.5  det=degraded    (231.0s, 2854s elapsed)
+lbgrid: 82/336 box        EXT pi=0.02  n=1000  p=1.0  det=none        (330.5s, 2866s elapsed)
+lbgrid: 83/336 trait      OPE pi=0.2   n=1000  p=0.5  det=calibrated  (265.7s, 2920s elapsed)
+lbgrid: 84/336 box        EXT pi=0.1   n=500   p=0.5  det=oracle      (229.1s, 2947s elapsed)
+lbgrid: 85/336 box        EXT pi=0.05  n=1000  p=0.0  det=calibrated  (302.4s, 2951s elapsed)
+lbgrid: 86/336 box        EXT pi=0.01  n=500   p=1.0  det=degraded    (235.1s, 3027s elapsed)
+lbgrid: 87/336 box        EXT pi=0.3   n=500   p=0.0  det=oracle      (239.9s, 3049s elapsed)
+lbgrid: 88/336 box        EXT pi=0.02  n=1000  p=0.5  det=degraded    (317.5s, 3080s elapsed)
+lbgrid: 89/336 box        EXT pi=0.05  n=500   p=0.5  det=oracle      (227.7s, 3081s elapsed)
+lbgrid: 90/336 trait      AGR pi=0.3   n=1000  p=0.5  det=degraded    (289.6s, 3155s elapsed)
+lbgrid: 91/336 trait      AGR pi=0.2   n=1000  p=0.5  det=calibrated  (318.8s, 3239s elapsed)
+lbgrid: 92/336 box        EXT pi=0.01  n=2400  p=1.0  det=calibrated  (477.0s, 3265s elapsed)
+lbgrid: 93/336 trait      CON pi=0.01  n=1000  p=0.5  det=degraded    (320.4s, 3272s elapsed)
+lbgrid: 94/336 box        EXT pi=0.1   n=500   p=0.0  det=calibrated  (247.2s, 3274s elapsed)
+lbgrid: 95/336 box        EXT pi=0.05  n=500   p=0.5  det=degraded    (237.9s, 3287s elapsed)
+lbgrid: 96/336 box        EXT pi=0.2   n=2400  p=0.0  det=degraded    (513.1s, 3298s elapsed)
+lbgrid: 97/336 box        EXT pi=0.01  n=500   p=0.0  det=none        (236.9s, 3317s elapsed)
+lbgrid: 98/336 generator  EXT pi=0.1   n=1000  p=1.0  det=degraded    (331.4s, 3413s elapsed)
+lbgrid: 99/336 box        EXT pi=0.02  n=2400  p=1.0  det=oracle      (487.2s, 3434s elapsed)
+lbgrid: 100/336 generator  EXT pi=0.01  n=1000  p=0.5  det=calibrated  (298.7s, 3564s elapsed)
+lbgrid: 101/336 trait      NEU pi=0.2   n=1000  p=0.5  det=calibrated  (295.2s, 3567s elapsed)
+lbgrid: 102/336 generator  EXT pi=0.01  n=1000  p=0.5  det=none        (301.7s, 3576s elapsed)
+lbgrid: 103/336 trait      CON pi=0.05  n=1000  p=0.5  det=calibrated  (295.4s, 3593s elapsed)
+lbgrid: 104/336 box        EXT pi=0.05  n=2400  p=1.0  det=oracle      (468.1s, 3623s elapsed)
+lbgrid: 105/336 box        EXT pi=0.3   n=500   p=0.5  det=calibrated  (224.8s, 3638s elapsed)
+lbgrid: 106/336 box        EXT pi=0.1   n=1000  p=0.5  det=calibrated  (323.4s, 3640s elapsed)
+lbgrid: 107/336 box        EXT pi=0.3   n=2400  p=0.5  det=none        (457.7s, 3696s elapsed)
+lbgrid: 108/336 generator  EXT pi=0.3   n=1000  p=0.5  det=none        (311.2s, 3746s elapsed)
+lbgrid: 109/336 box        EXT pi=0.1   n=2400  p=0.5  det=none        (468.0s, 3755s elapsed)
+lbgrid: 110/336 box        EXT pi=0.05  n=500   p=0.0  det=calibrated  (214.2s, 3790s elapsed)
+lbgrid: 111/336 box        EXT pi=0.1   n=500   p=0.0  det=oracle      (227.1s, 3791s elapsed)
+lbgrid: 112/336 box        EXT pi=0.02  n=1000  p=0.0  det=oracle      (288.8s, 3856s elapsed)
+lbgrid: 113/336 box        EXT pi=0.02  n=500   p=0.5  det=degraded    (221.8s, 3918s elapsed)
+lbgrid: 114/336 generator  EXT pi=0.05  n=1000  p=0.5  det=calibrated  (306.8s, 3930s elapsed)
+lbgrid: 115/336 box        EXT pi=0.3   n=1000  p=0.5  det=degraded    (303.5s, 3941s elapsed)
+lbgrid: 116/336 box        EXT pi=0.3   n=1000  p=0.5  det=oracle      (306.4s, 3947s elapsed)
+lbgrid: 117/336 box        EXT pi=0.2   n=500   p=1.0  det=degraded    (227.0s, 3973s elapsed)
+lbgrid: 118/336 box        EXT pi=0.3   n=1000  p=0.0  det=none        (311.6s, 4067s elapsed)
+lbgrid: 119/336 box        EXT pi=0.2   n=2400  p=0.0  det=none        (491.6s, 4085s elapsed)
+lbgrid: 120/336 box        EXT pi=0.01  n=1000  p=1.0  det=none        (314.2s, 4104s elapsed)
+lbgrid: 121/336 trait      NEU pi=0.05  n=1000  p=0.5  det=degraded    (303.1s, 4159s elapsed)
+lbgrid: 122/336 box        EXT pi=0.02  n=500   p=1.0  det=oracle      (219.2s, 4192s elapsed)
+lbgrid: 123/336 generator  EXT pi=0.05  n=1000  p=0.0  det=degraded    (293.2s, 4211s elapsed)
+lbgrid: 124/336 box        EXT pi=0.02  n=1000  p=0.5  det=none        (308.4s, 4255s elapsed)
+lbgrid: 125/336 box        EXT pi=0.1   n=1000  p=0.0  det=degraded    (319.6s, 4261s elapsed)
+lbgrid: 126/336 box        EXT pi=0.1   n=2400  p=1.0  det=degraded    (477.3s, 4268s elapsed)
+lbgrid: 127/336 generator  EXT pi=0.01  n=1000  p=0.5  det=oracle      (303.0s, 4370s elapsed)
+lbgrid: 128/336 box        EXT pi=0.01  n=500   p=1.0  det=oracle      (213.7s, 4373s elapsed)
+lbgrid: 129/336 trait      NEU pi=0.02  n=1000  p=0.5  det=degraded    (305.6s, 4390s elapsed)
+lbgrid: 130/336 box        EXT pi=0.2   n=2400  p=0.5  det=oracle      (480.6s, 4411s elapsed)
+lbgrid: 131/336 trait      OPE pi=0.01  n=1000  p=0.5  det=calibrated  (348.3s, 4452s elapsed)
+lbgrid: 132/336 box        EXT pi=0.1   n=500   p=1.0  det=degraded    (214.5s, 4482s elapsed)
+lbgrid: 133/336 generator  EXT pi=0.1   n=1000  p=1.0  det=calibrated  (314.3s, 4506s elapsed)
+lbgrid: 134/336 box        EXT pi=0.02  n=1000  p=0.5  det=calibrated  (308.4s, 4520s elapsed)
+lbgrid: 135/336 generator  EXT pi=0.3   n=1000  p=0.0  det=degraded    (313.4s, 4574s elapsed)
+lbgrid: 136/336 box        EXT pi=0.02  n=500   p=0.5  det=calibrated  (217.7s, 4590s elapsed)
+lbgrid: 137/336 trait      NEU pi=0.3   n=1000  p=0.5  det=calibrated  (291.7s, 4703s elapsed)
+lbgrid: 138/336 box        EXT pi=0.2   n=2400  p=1.0  det=oracle      (481.9s, 4737s elapsed)
+lbgrid: 139/336 generator  EXT pi=0.1   n=1000  p=1.0  det=none        (311.9s, 4764s elapsed)
+lbgrid: 140/336 generator  EXT pi=0.1   n=1000  p=0.0  det=calibrated  (307.0s, 4813s elapsed)
+lbgrid: 141/336 box        EXT pi=0.1   n=1000  p=0.5  det=oracle      (315.6s, 4835s elapsed)
+lbgrid: 142/336 box        EXT pi=0.3   n=2400  p=0.0  det=calibrated  (455.2s, 4846s elapsed)
+lbgrid: 143/336 box        EXT pi=0.02  n=2400  p=0.0  det=none        (483.9s, 4853s elapsed)
+lbgrid: 144/336 box        EXT pi=0.2   n=2400  p=0.0  det=oracle      (473.6s, 4956s elapsed)
+lbgrid: 145/336 box        EXT pi=0.2   n=1000  p=0.0  det=degraded    (316.2s, 5019s elapsed)
+lbgrid: 146/336 box        EXT pi=0.1   n=500   p=0.5  det=none        (219.2s, 5032s elapsed)
+lbgrid: 147/336 box        EXT pi=0.02  n=1000  p=0.0  det=calibrated  (306.9s, 5044s elapsed)
+lbgrid: 148/336 box        EXT pi=0.2   n=2400  p=1.0  det=calibrated  (463.3s, 5054s elapsed)
+lbgrid: 149/336 box        EXT pi=0.1   n=2400  p=0.5  det=oracle      (494.2s, 5068s elapsed)
+lbgrid: 150/336 box        EXT pi=0.3   n=500   p=1.0  det=none        (239.0s, 5074s elapsed)
+lbgrid: 151/336 box        EXT pi=0.1   n=500   p=0.5  det=calibrated  (228.9s, 5074s elapsed)
+lbgrid: 152/336 generator  EXT pi=0.3   n=1000  p=0.0  det=none        (317.3s, 5081s elapsed)
+lbgrid: 153/336 trait      NEU pi=0.05  n=1000  p=0.5  det=calibrated  (296.2s, 5150s elapsed)
+lbgrid: 154/336 trait      CON pi=0.02  n=1000  p=0.5  det=degraded    (282.4s, 5336s elapsed)
+lbgrid: 155/336 generator  EXT pi=0.02  n=1000  p=0.5  det=degraded    (307.0s, 5381s elapsed)
+lbgrid: 156/336 box        EXT pi=0.3   n=1000  p=0.5  det=calibrated  (301.2s, 5383s elapsed)
+lbgrid: 157/336 box        EXT pi=0.1   n=1000  p=0.5  det=none        (326.8s, 5395s elapsed)
+lbgrid: 158/336 box        EXT pi=0.01  n=2400  p=0.0  det=degraded    (480.2s, 5436s elapsed)
+lbgrid: 159/336 generator  EXT pi=0.02  n=1000  p=0.0  det=none        (302.3s, 5452s elapsed)
+lbgrid: 160/336 box        EXT pi=0.02  n=2400  p=1.0  det=none        (457.7s, 5476s elapsed)
+lbgrid: 161/336 box        EXT pi=0.1   n=2400  p=0.0  det=oracle      (464.2s, 5508s elapsed)
+lbgrid: 162/336 box        EXT pi=0.1   n=2400  p=0.5  det=calibrated  (478.4s, 5511s elapsed)
+lbgrid: 163/336 box        EXT pi=0.3   n=2400  p=1.0  det=degraded    (443.2s, 5518s elapsed)
+lbgrid: 164/336 box        EXT pi=0.02  n=500   p=0.0  det=degraded    (225.5s, 5608s elapsed)
+lbgrid: 165/336 generator  EXT pi=0.2   n=1000  p=1.0  det=oracle      (316.1s, 5652s elapsed)
+lbgrid: 166/336 box        EXT pi=0.05  n=500   p=1.0  det=none        (228.8s, 5681s elapsed)
+lbgrid: 167/336 box        EXT pi=0.05  n=500   p=1.0  det=oracle      (222.8s, 5699s elapsed)
+lbgrid: 168/336 generator  EXT pi=0.2   n=1000  p=0.0  det=degraded    (317.8s, 5713s elapsed)
+lbgrid: 169/336 box        EXT pi=0.01  n=1000  p=0.5  det=oracle      (294.4s, 5731s elapsed)
+lbgrid: 170/336 box        EXT pi=0.3   n=1000  p=1.0  det=calibrated  (311.5s, 5822s elapsed)
+lbgrid: 171/336 box        EXT pi=0.1   n=2400  p=0.0  det=calibrated  (486.5s, 5868s elapsed)
+lbgrid: 172/336 box        EXT pi=0.01  n=1000  p=0.0  det=oracle      (297.5s, 5978s elapsed)
+lbgrid: 173/336 box        EXT pi=0.1   n=2400  p=1.0  det=oracle      (470.3s, 5978s elapsed)
+lbgrid: 174/336 trait      NEU pi=0.1   n=1000  p=0.5  det=calibrated  (293.2s, 5992s elapsed)
+lbgrid: 175/336 box        EXT pi=0.2   n=2400  p=0.5  det=calibrated  (476.4s, 5994s elapsed)
+lbgrid: 176/336 box        EXT pi=0.3   n=1000  p=1.0  det=degraded    (298.5s, 6011s elapsed)
+/Users/abhay/.local/share/uv/python/cpython-3.12.13-macos-aarch64-none/lib/python3.12/multiprocessing/resource_tracker.py:279: UserWarning: resource_tracker: There appear to be 6 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '
