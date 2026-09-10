@@ -620,7 +620,7 @@ to 8 after the grid completed, so the frozen grid's `labelfree` column is the on
 that describes a superseded estimator. This re-runs that column and nothing else.
 
 **Method.** `run_labelfree_nbins8.py`, 372 cells x 500 reps, 42950 s on 10 workers, zero
-failures, output in `results/grid-labelfree-nbins8/`. It calls `grid.run_cell` with the
+failed cell jobs, output in `results/grid-labelfree-nbins8/`. It calls `grid.run_cell` with the
 module-level ESTIMATORS map narrowed to labelfree; `run_cell` builds its per-rep `default_opts`
 -- including labelfree's `machine_ref` / `human_ref` draws and every estimator's seed integer --
 before the estimator loop and always in the same source order, so narrowing the map changes
@@ -630,6 +630,15 @@ written to.
 **Control.** `r_obs_emp` is computed from the simulated `X`, so it is draw-dependent. Across all
 372 paired cells the maximum absolute difference between the frozen row and the re-run is
 **0.000e+00**. The two runs saw the same data; every difference below is the bin count alone.
+
+**Convergence, and what the metrics condition on.** "Zero failures" above means zero failed
+cell jobs, not zero failed fits. Nonconverged labelfree fits rise from **226 of 186,000**
+replications at 60 bins to **5,989 of 186,000** at 8 bins. The failures are concentrated: at 8
+bins, 300 of 372 cells lose no replications and all 72 cells of the `kappa = 1.0` arm lose
+between 12% and **21%** (worst cell: pi = 0.10, c = 0, n = 1000, calibrated), against a worst
+case of 2.2% at 60 bins. Every metric in this addendum is computed over converged fits only,
+so the 60-bin and 8-bin numbers for those 72 cells are taken over different
+successful-replication subsets, and the comparison there is conditional on convergence.
 
 ### What moved
 
@@ -643,12 +652,15 @@ written to.
 
 The prevalence error halves, the validity bias falls by 69%, and coverage moves from
 catastrophic (median 40%) to poor (median 84%). Fix 2 was chosen on slope, and the slope
-improvement propagates: a labelfree `rho_H` estimate is materially better at 8 bins than at 60
-on every axis the grid records.
+improvement propagates to the recorded accuracy and coverage metrics. It is not better on
+every axis: the convergence rate is worse at 8 bins (5,989 vs 226 nonconverged fits), and the
+table's metrics are conditional on the fits that converged.
 
 ### Where it helps, and where it does not
 
-The improvement is monotone in prevalence, and it reverses at the top:
+The aggregate improvement diminishes with prevalence but stays positive at every listed
+prevalence (-37% at pi = 0.30); the reversal below is in individual cells, not in the
+aggregate:
 
 | pi | 0.01 | 0.02 | 0.05 | 0.10 | 0.20 | 0.30 |
 |---|---|---|---|---|---|---|
@@ -660,7 +672,8 @@ The largest gains are at `pi = 0.01` (e.g. 0.209 -> 0.073 at n = 500, oracle). T
 (c = 0.9, oracle), 0.220 -> 0.278 (c = 0, none), 0.215 -> 0.273 (c = 0, degraded). That is the
 non-uniformity SPEC-FIXES-ROUND3.md fix 2 recorded rather than hid -- 8 bins buy slope at the
 cost of intercept, and at high prevalence with an undispersed machine pool the trade goes the
-wrong way. 15 cells of 372 got worse on prevalence error.
+wrong way. 15 individual cells of 372 got worse on prevalence error; no prevalence level got
+worse in aggregate.
 
 ### What did not change
 

@@ -16,16 +16,21 @@ the reason is visible, measured, and the same in every table below. On out-of-fo
 trait signal in a text chunk is weak (`rho_H = 0.068`), so at SPEC's Layer B sample sizes the
 sampling noise in a validity coefficient is ~47% of the coefficient itself. Contamination bias
 at `pi <= 0.30` is smaller than that noise in most cells, and every correction that removes
-some of the bias adds more variance than it removes. **The naive estimator has the lowest RMSE
-almost everywhere in this box.** Layer A's corrections were validated in a regime
+some of the bias adds more variance than it removes. **The naive estimator has the lowest
+median rho_H RMSE in every detector group, and the lowest cellwise RMSE (ties included) in 262
+of the 336 cells.** Layer A's corrections were validated in a regime
 (`rho_H = 0.418`, 500 reps) that the real text does not reach.
 
 ---
 
 ## 1. The box
 
-336 cells. All at `k = 4` chunk items, `rho_T = 0.5`, frozen calibration split
-`729645da4c64c3a1`, machine draws with replacement, `n_bins = 8`.
+336 cells. All at `k = 4` chunk items, `rho_T = 0.5`, machine draws with replacement,
+`n_bins = 8`. Each (pool, trait) pair has its own frozen calibration split, so the saved
+record carries six split IDs: `729645da4c64c3a1` for the 216 core cells (gpt-4, EXT),
+`f0b3f09fe0a4fe9b` for the 72 llama-2 generator cells, and `b345358eedf337b1` (NEU),
+`f5f4db1949e3911c` (AGR), `fa4de8eb4b9f4dc2` (CON), `96726cec98c66706` (OPE) for the 12 cells
+of each trait arm.
 
 | arm | cells | design |
 |---|---|---|
@@ -42,6 +47,9 @@ almost everywhere in this box.** Layer A's corrections were validated in a regim
   success claim is made in have to be present at every (pi, n, detector).
 - The generator arm is reduced on `n` only, because `n` moves sampling variance and not the
   population moments -- checked on the Layer A grid and in LAYERB-SWEEP.md's (pi, n) box.
+  This reduction, and the realization of SPEC 4.3's `c` axis through the assignment coupling
+  `p` above, are design adaptations of SPEC 4.3; the grid is not the exact pre-registered cell
+  set, and section 3 says so.
 - Trait is not a SPEC 4.3 axis; the arm exists because the rest of the box sits at EXT and the
   headline should not hinge on one trait.
 
@@ -81,7 +89,9 @@ number does more to explain this grid than any estimator property.
 
 **The estimand is small.** `x` is chunk 1 of the essay and the truth is
 `rho_H = rho_T * Cor(chunk_1, theta) = 0.5 * 0.1351 = 0.0676` (EXT). At n = 1000 with 100 reps
-a cell resolves a *relative* bias only to about **+-0.048**. SPEC 4.3's 100 reps were set
+the naive MCSE is about 0.0031, i.e. about **+-0.046 relative** to the truth. That is one
+MCSE, not a 95% interval; the corresponding 95% half-width is about +-0.09 relative. SPEC 4.3's
+100 reps were set
 before the OOF refit; they are used verbatim here, and the resulting power is a fact about the
 design that every threshold below inherits.
 
@@ -111,7 +121,9 @@ chunk 1; it is the reason this grid was re-run.) What survives is the weak-H2 fa
 The threshold is a ratio against the naive bias, and at 100 reps the naive bias is not
 resolvable in most of this box: median `|naive bias| / MCSE = 1.05`, and only **95 of 280
 cells (34%)** have `|naive bias| > 2 MCSE`. Where there is no bias to remove, "20% of it" is a
-bar set by Monte Carlo noise. Restricted to the 95 cells where the naive bias is resolvable:
+bar set by Monte Carlo noise. The other 185 of 280 cells (66.1%) are unresolved, which
+means the naive bias sits inside 2 MCSE of zero, not that it is zero. Restricted to the 95
+cells where the naive bias is resolvable:
 
 | estimator | meets the 20% bar | reduces the bias at all |
 |---|---|---|
@@ -130,7 +142,13 @@ enough to be worth removing. Best-of-three corrector, resolvable subset, by pi:
 
 ### T2. "CI coverage back inside [92, 98]"
 
-**FAIL on rho_T (0/336 for every estimator). PARTIAL on rho_H.**
+**FAIL on rho_T (0/336 for naive, delete and em; 1/336 for labelfree; simex not evaluable).
+PARTIAL on rho_H.**
+
+SPEC 4.4's coverage threshold is assessed on rho_H; the rho_T rows are an additional
+diagnosis, not the SPEC test. Naive coverage near nominal on rho_H reflects a bias that is
+small relative to the interval width in most cells, and is not evidence that any correction
+succeeded.
 
 | estimator | rho_H in band | median | rho_T in band | median |
 |---|---|---|---|---|
@@ -148,14 +166,25 @@ On rho_H the median cell is at nominal coverage and the failures are concentrate
 dominates variance: for naive, the worst cells are (p = 1, pi = 0.30) and (p = 1, pi = 0.20),
 61 of 75 failures being under-coverage.
 
-**The rho_T failure is total, and its mechanism is confirmed to three decimals.** Every
-estimator reaches rho_T by dividing rho_H_hat by `sqrt(rel_hat)`, and `rel_hat` is the
-between-chunk correlation, which overstates `rel_H_true` by 11.5x. Predicted mean
-`rho_T_hat = 0.5 / sqrt(11.48) = 0.1476`; observed **0.1446**. Loading bias is +0.329 on a truth
-of 0.135, i.e. `loading_hat` lands on `sqrt(0.2096) = 0.458` as the arithmetic requires. **The
-rho_T scale is not recoverable from chunk pseudo-items on this text**, which is the same
-conclusion as LAYERB-SWEEP2.md Part III and lane 3's WEAK-H2-DIAGNOSIS.md, now measured
-end-to-end through the estimator chain rather than on the score files alone.
+**The rho_T failure is near-total (one labelfree cell, pi = 0.30 / OPE, lands in band), and
+its mechanism is measured end-to-end.** Every estimator reaches rho_T by dividing rho_H_hat by
+`sqrt(rel_hat)`, and `rel_hat` is the between-chunk correlation, which overstates `rel_H_true`
+by 11.5x on the core cells. Predicted from the population moments,
+`rho_T_hat = 0.0676 / sqrt(0.2096) = 0.1476`; the observed mean naive `rho_T_hat` is **0.1447**
+over the 216 core cells (0.1446 over the 54 undetected core cells). The two agree to about 2%,
+not to three decimals. The gap has a stated source: the per-replication estimate is a ratio of
+two noisy quantities, and the contaminated sample's `rel_hat` is not the human
+`rel_between_chunk`. The recorded loading bias shows the second point directly. Naive
+`loading_hat` (= `sqrt(rel_hat)`) averages 0.487 over the core cells (bias +0.352 on a truth
+of 0.135), not `sqrt(0.2096) = 0.458`, and it rises with prevalence from 0.460 at pi = 0.01 to
+0.531 at pi = 0.30 because the machine component adds between-chunk agreement. An earlier
+draft of this section quoted a loading bias of +0.329 and treated 0.135 + 0.329 = 0.464 as
+equal to 0.458; the figure does not reproduce from any single aggregation of the saved table,
+and the identity does not hold. **Within the tested scoring and correction setup, the rho_T
+scale is not recovered from chunk pseudo-items on this text.** That is the conclusion of
+LAYERB-SWEEP2.md Part III and the narrowed claim in lane 3's PASS3-FIXES.md, now measured
+through the estimator chain rather than on the score files alone. It does not establish that
+rho_T is unrecoverable by any method or at any n.
 
 ### T3. "pi-hat error at most 2 points at n = 1000"
 
@@ -197,7 +226,10 @@ Median RMSE tells the story more directly than the win counts:
 | degraded | 0.0317 | 0.0355 | 0.0359 |
 | oracle | 0.0315 | 0.0323 | 0.0323 |
 
-**Naive has the lowest RMSE in every detector column.** Against `rho_H = 0.0676`, an RMSE of
+**Naive has the lowest median RMSE in every detector column**, and the lowest cellwise RMSE
+(ties included) in 262/336 cells: none 59/72, calibrated 69/96, degraded 87/96, oracle 47/72.
+That is a statement about medians and a cell count, not a uniform per-cell ordering. Against
+`rho_H = 0.0676`, an RMSE of
 0.0317 is 47% of the estimand: this box is variance-dominated, deletion throws away sample and
 adds variance, and the corrections add more. The oracle column is the SPEC-anticipated
 concession: deletion beats labelfree in 67/72 cells and em in 72/72, and against simex the
@@ -214,13 +246,16 @@ at this signal level, *doing nothing* beats both.
 | # | SPEC 4.4 threshold | verdict | headline number |
 |---|---|---|---|
 | T1 | corrected bias <= 20% of naive, pi <= 0.20, c <= partial | **FAIL** | best estimator 29/280 (10.4%) verbatim; 19/95 (20.0%) where the naive bias is resolvable |
-| T2 | CI coverage inside [92, 98] | **FAIL (rho_T), PARTIAL (rho_H)** | rho_T 0/336 every estimator; rho_H median 0.950 naive, 261/336 in band |
+| T2 | CI coverage inside [92, 98] | **FAIL (rho_T), PARTIAL (rho_H)** | rho_T 0/336 naive, delete, em; 1/336 labelfree; simex not evaluable. rho_H median 0.950 naive, 261/336 in band |
 | T3 | pi-hat error <= 2 points at n = 1000 | **FAIL** | median 0.055 (labelfree), 0.064 (em) |
 | T4 | correction beats deletion on RMSE, calibrated + degraded | **FAIL** | 10.4% and 42.7% of cells; naive has the lowest median RMSE in all four detector columns |
 
-Nothing was tuned to pass. The thresholds are evaluated exactly as pre-registered, on the cell
-set SPEC defines, with the one applicability reading stated in 1.1 (c <= partial holds
-everywhere, so T1 is evaluated on more cells than a p <= 0.5 reading would have used, not fewer).
+Nothing was tuned to pass. The thresholds are evaluated as pre-registered, on a cell set that
+adapts SPEC 4.3 in two stated ways (section 1): the generator arm is reduced to n = 1000, and
+SPEC's coupling axis `c` is realized through the assignment coupling `p` as `c = p c_pool`,
+which caps the reachable coupling at 0.379. This is not the exact pre-registered cell set.
+The one applicability reading is stated in 1.1 (c <= partial holds everywhere, so T1 is
+evaluated on more cells than a p <= 0.5 reading would have used, not fewer).
 
 ---
 
@@ -274,16 +309,26 @@ parentheses.
 Reading it:
 
 - **The method's limit in this box is the top-right corner of the undetected rows**: p = 1,
-  pi >= 0.20, detector none or calibrated, where the best available estimator still carries 32%
-  to 40% relative bias. That is the reachable boundary; the true high-c corner SPEC imagines is
-  past `c_pool` and cannot be built from these pools (1.1).
+  pi >= 0.20 with detector none, where the best available estimator still carries 34% to 40%
+  relative bias (0.335, 0.398), plus p = 1, pi = 0.30 with the calibrated detector (0.316). At
+  p = 1, pi = 0.20 the calibrated detector's best relative bias is **8.0%** (simex), so that
+  cell is not part of the boundary. That is the reachable boundary; the true high-c corner
+  SPEC imagines is past `c_pool` and cannot be built from these pools (1.1).
 - **The degraded detector is the best-behaved column**, which is counter-intuitive until the se
   column is read: at sp = 0.85 the detector catches 68% of frontier machine text, so deletion
-  actually removes contamination, whereas at sp = 0.99 it catches 28% and mostly removes
-  humans. A detector tuned for a low false-positive rate is the one that fails.
+  actually removes most of the contamination, whereas at sp = 0.99 it catches 28% and leaves
+  most of it in. What it does delete is still mostly machine: at pi = 0.20 the realized rates
+  (se 0.27, sp 0.99) put about 86% of the deleted observations in the machine component. The
+  cost of the calibrated detector is the contamination it misses and the sample it discards,
+  not a flood of removed humans. A detector tuned for a low false-positive rate is the one that
+  fails.
 - **No cell is uniformly won by a correction.** The winning estimator is naive or delete in 34
   of the 72 cells above (naive 17, delete 17, simex 17, em 11, labelfree 10), and no estimator
   wins a majority anywhere.
+- **The partial-identification bounds SPEC asks for are not supplied.** SPEC's boundary
+  deliverable pairs this map with bounds on rho_H from the partial-identification analysis
+  (SPEC "bound estimand" and H5). No bounds were computed in this run; the map above is a
+  point-estimate map only, and that part of the deliverable is incomplete.
 
 ---
 
@@ -296,7 +341,8 @@ Supported by this grid:
 - Detect-and-delete at a realistic in-domain operating point removes 28% of machine text and
   costs more RMSE than it saves (T4, section 5).
 - Prevalence estimation from a weakly separated text score misses by 5-6 points (T3).
-- The rho_T scale cannot be recovered from chunk pseudo-items on this corpus (T2).
+- Within the tested scoring and correction setup, the rho_T scale is not recovered from chunk
+  pseudo-items on this corpus (T2). Whether another setup could recover it is not tested here.
 
 Not supported, and not to be claimed:
 
@@ -305,7 +351,9 @@ Not supported, and not to be claimed:
 - Nothing about `c > 0.379`, which these pools cannot produce.
 - Nothing from `results/layerb-grid-insample-partial/`.
 - No conclusion at 100 reps about any cell whose naive bias is under ~0.006 in absolute value;
-  a third of the box is in that state, and section 2's T1 says which third.
+  185 of the 280 `pi <= 0.20` cells (66.1%) are in that state, and section 2's T1 says which.
+  An unresolved naive bias is a bias that 100 replications cannot separate from zero, not
+  evidence that there is none.
 
 The obvious follow-up, not run here: SPEC 4.3's 100 reps were fixed before the OOF refit shrank
 the estimand by 2.6x. Re-running the `pi <= 0.20` slice at 500 reps would move the resolvable
@@ -325,10 +373,10 @@ Layer B replications the naive bias was resolvable in only 34% of the applicable
 slice at 500 replications to settle whether T1 was testing the corrections or testing the
 noise.
 
-**Run.** 280 cells (180 box, 60 generator, 40 trait), 500 reps, same frozen split
-`729645da4c64c3a1`, same `score_version = "oof"`, same estimators, `nice -n 15`, 44629 s on 10
-workers, zero failures. Output in `results/layerb-grid-500rep/`; the 336-cell record in
-`results/layerb-grid/` is untouched.
+**Run.** 280 cells (180 box, 60 generator, 40 trait), 500 reps, the same six frozen splits as
+section 1 (`729645da4c64c3a1` on the 180 core cells), same `score_version = "oof"`, same
+estimators, `nice -n 15`, 44629 s on 10 workers, zero failed cell jobs. Output in
+`results/layerb-grid-500rep/`; the 336-cell record in `results/layerb-grid/` is untouched.
 
 **The two runs are nested, not independent.** `rep_rng` is keyed on `(cell_id, rep)`, so reps
 0-99 of this run are the same draws as the 100-rep run and reps 100-499 are new. Verified
@@ -344,8 +392,9 @@ rho_T fields of its 100-rep row exactly. Every comparison below is therefore wit
 | cells with a resolvable naive bias (> 2 MCSE) | 95/280 (34%) | **130/280 (46%)** |
 
 Five times the replications buys 12 percentage points of resolvability, not a majority. That
-is itself an answer: **the remaining 150 cells do not have a hidden bias that noise was
-masking, they have no bias worth removing.** At `pi <= 0.05` with `c <= 0.19` the naive
+is itself an answer: **in the remaining 150 cells (53.6%) the naive bias is still inside 2 MCSE
+of zero at 500 reps, i.e. below about 0.003 in absolute value.** That bounds the bias; it does
+not show it is zero. At `pi <= 0.05` with `c <= 0.19` the naive
 validity coefficient on real text is unbiased to within a thousandth, and no correction can
 improve on it.
 
@@ -400,8 +449,9 @@ fewer.
 - T1's failure in section 2 was **not** an artifact of 100 replications. Five times the
   replications moves the best corrector from 20.0% to 28.5% of resolvable cells against a
   threshold that demands 100%.
-- A third of the `pi <= 0.20` box has no naive bias to correct at all, and more replications
-  confirm that rather than dissolve it.
+- 150 of the 280 cells (54%) in the `pi <= 0.20` box have a naive bias that 500 replications
+  cannot separate from zero; more replications shrank that set from 185 to 150 rather than
+  dissolving it.
 - Section 2's headline stands unchanged: on real text at the OOF estimand, the naive estimator
   is hard to beat, and `em` is now positively contraindicated.
 - Section 6's boundary map and every number in sections 1-6 are from the 336-cell 100-rep
