@@ -1,0 +1,104 @@
+{
+ "cell_id": "73e211efc9c92b3a",
+ "cell": {
+  "pi": 0.02,
+  "n": 1000,
+  "p": 0.0,
+  "detector": "calibrated",
+  "pool": "personallm_gpt-4-0613",
+  "trait": "EXT",
+  "arm": "box"
+ },
+ "reps": 100,
+ "truth": {
+  "rho_H": 0.06755632679849685,
+  "rho_T": 0.5,
+  "pi": 0.02,
+  "loading": 0.1351126535969937
+ },
+ "estimators": {
+  "naive": {
+   "rho_H": {
+    "n_reps": 100,
+    "n_converged": 100,
+    "failure_rate": 0.0,
+    "bias": -0.0032689663048063033,
+    "rel_bias": -0.04838875142748345,
+    "rmse": 0.035093968228693255,
+    "mcse": 0.0035117414387554856,
+    "coverage": 0.92,
+    "coverage_se": 0.027129319932501065,
+    "ci_width": 0.12332715949304227
+   },
+   "rho_T": {
+    "n_reps": 100,
+    "n_converged": 100,
+    "failure_rate": 0.0,
+    "bias": -0.36129987903319194,
+    "rel_bias": -0.7225997580663839,
+    "rmse": 0.3690355843093878,
+    "mcse": 0.007554288297954173,
+    "coverage": 0.0,
+    "coverage_se": 0.0,
+    "ci_width": 0.26621884987127836
+   },
+   "n_converged": 100
+  },
+  "robust_grm": {
+   "rho_H": {
+    "n_reps": 100,
+    "n_converged": 100,
+    "failure_rate": 0.0,
+    "bias": -0.004378245086460342,
+    "rel_bias": -0.06480880909229303,
+    "rmse": 0.03448637895833029,
+    "mcse": 0.003437965841523053,
+    "coverage": 0.92,
+    "coverage_se": 0.027129319932501065,
+    "ci_width": 0.12335089449405187
+   },
+   "rho_T": {
+    "n_reps": 100,
+    "n_converged": 100,
+    "failure_rate": 0.0,
+    "bias": -0.36211814145947596,
+    "rel_bias": -0.7242362829189519,
+    "rmse": 0.3696721589897519,
+    "mcse": 0.007472479310865092,
+    "coverage": 0.0,
+    "coverage_se": 0.0,
+    "ci_width": 0.2692600560599777
+   },
+   "n_converged": 100
+  },
+  "robust_t": {
+   "rho_H": {
+    "n_reps": 100,
+    "n_converged": 100,
+    "failure_rate": 0.0,
+    "bias": -0.00496943147486896,
+    "rel_bias": -0.07355982348909372,
+    "rmse": 0.05443945799227904,
+    "mcse": 0.005448528053761235,
+    "coverage": 0.73,
+    "coverage_se": 0.044395945760846225,
+    "ci_width": 0.12314158618984593
+   },
+   "rho_T": {
+    "n_reps": 100,
+    "n_converged": 100,
+    "failure_rate": 0.0,
+    "bias": -0.36407667832054513,
+    "rel_bias": -0.7281533566410903,
+    "rmse": 0.3826023398007956,
+    "mcse": 0.011820510647210895,
+    "coverage": 0.0,
+    "coverage_se": 0.0,
+    "ci_width": 0.26719025472777524
+   },
+   "n_converged": 100
+  }
+ },
+ "wall_seconds": 36.42410492897034,
+ "host": "Abhays-MacBook-Pro"
+}

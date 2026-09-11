@@ -13,7 +13,7 @@ import numpy as np
 
 from dgp import Cell, Sample, simulate
 from estimators import (Fit, _distribution_match_pi, fit_delete, fit_em, fit_labelfree,
-                        fit_naive, fit_simex)
+                        fit_naive, fit_robust_grm, fit_robust_t, fit_simex)
 
 RESULTS: list[tuple[str, bool, str]] = []
 
@@ -92,6 +92,16 @@ check("em returns a finite, attenuated fit at pi=0 (mixture unidentified, docume
       np.isfinite(f_em.rho_H_hat) and f_em.rho_H_hat < cell_clean.rho_H,
       f"got {f_em.rho_H_hat:.4f} vs truth {cell_clean.rho_H:.4f} (bias low, as expected)")
 
+# Robust estimators are less efficient than Pearson (they discard/downweight information even
+# on clean data), so their MC tolerance is wider -- same n, looser bound, per ROBUST-ARM-SPEC.md.
+tol_robust_clean = mc_tol(cell_clean.n, mult=15.0)
+f_robt = fit_robust_t(sample_clean)
+check("robust_t recovers rho_H on clean cell", abs(f_robt.rho_H_hat - cell_clean.rho_H) < tol_robust_clean,
+      f"got {f_robt.rho_H_hat:.4f}")
+f_robg = fit_robust_grm(sample_clean)
+check("robust_grm recovers rho_H on clean cell", abs(f_robg.rho_H_hat - cell_clean.rho_H) < tol_robust_clean,
+      f"got {f_robg.rho_H_hat:.4f}")
+
 # --------------------------------------------------------------------------------------
 # 2. Contaminated cell: naive attenuated per (E7); labelfree with oracle pi recovers rho_H.
 # --------------------------------------------------------------------------------------
@@ -140,6 +150,19 @@ check(
     f"em err={abs(f_em_c.rho_H_hat - cell_c.rho_H):.4f} vs naive err={abs(f_naive_c.rho_H_hat - cell_c.rho_H):.4f}",
 )
 
+# Contamination here is a mean/variance-shifted second Gaussian COMPONENT (c=0: no coupling
+# to theta within either component), not a heavy tail on the human component -- exactly the
+# case ROBUST-ARM-SPEC.md's arm 3 predicts robust methods should NOT fix, because there is no
+# well-separated outlier subset for a bounded-influence rule to downweight. Asserted as a
+# finite, well-formed fit only -- not required to beat or match naive, since the arm's whole
+# point is to test that empirically on the real grid, not assume it in a unit test.
+f_robt_c = fit_robust_t(sample_c)
+check("robust_t returns a finite fit on contaminated cell", np.isfinite(f_robt_c.rho_H_hat),
+      f"got {f_robt_c.rho_H_hat!r}")
+f_robg_c = fit_robust_grm(sample_c)
+check("robust_grm returns a finite fit on contaminated cell", np.isfinite(f_robg_c.rho_H_hat),
+      f"got {f_robg_c.rho_H_hat!r}")
+
 # --------------------------------------------------------------------------------------
 # 3. Deletion-selection (lane 1 Prop. 11): r_F=0 -> no bias; r_F=0.5, sp=0.85 -> attenuated.
 # --------------------------------------------------------------------------------------
@@ -185,6 +208,8 @@ assert_fit_wellformed(
     "labelfree",
 )
 assert_fit_wellformed(fit_em(sample_deg, n_init=3, B_boot=0, rng=np.random.default_rng(34)), "em")
+assert_fit_wellformed(fit_robust_t(sample_deg), "robust_t")
+assert_fit_wellformed(fit_robust_grm(sample_deg), "robust_grm")
 
 # All-machine degenerate cell too (pi effectively forced via a tiny all-machine sample).
 X_allm = np.random.default_rng(35).standard_normal((30, 4))
@@ -200,6 +225,8 @@ sample_allm = Sample(
 )
 assert_fit_wellformed(fit_naive(sample_allm), "naive")
 assert_fit_wellformed(fit_delete(sample_allm), "delete")
+assert_fit_wellformed(fit_robust_t(sample_allm), "robust_t")
+assert_fit_wellformed(fit_robust_grm(sample_allm), "robust_grm")
 
 # --------------------------------------------------------------------------------------
 # 5. CI machinery: on a clean cell, naive CI covers rho_H.

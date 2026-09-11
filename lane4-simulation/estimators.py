@@ -1,11 +1,16 @@
 """Lane 4 correction estimators (SPEC section 3), scored against dgp.py's Sample.
 
-Five estimators, each `fit_<name>(sample: Sample, **opts) -> Fit`:
+Seven estimators, each `fit_<name>(sample: Sample, **opts) -> Fit`:
   fit_naive      - Pearson Cor(x_1, w) on the full contaminated sample.
   fit_delete     - same, on detector survivors (detect-and-delete).
   fit_simex      - MC-SIMEX (Kuechenhoff, Mun & Carroll 2006) on known misclassification.
   fit_labelfree  - SPEC 3.2 label-free prevalence + errors-in-variables (inverts E2/E3/E26).
   fit_em         - SPEC 3.3 two-component full-covariance Gaussian mixture (EM, multi-start).
+  fit_robust_t   - ROBUST-ARM-SPEC.md's multivariate-t arm: Minimum Covariance Determinant
+                   robust covariance in place of Pearson (Zhang et al. 2017, distance-based
+                   downweighting reduction).
+  fit_robust_grm - ROBUST-ARM-SPEC.md's robust-GRM arm: Tukey biweight midcorrelation in
+                   place of Pearson (bounded-influence M-estimation reduction).
 
 All formulas trace to derivations/lane1-zero-coupling.md (E2-E9, E24-E30, E34); see
 CONVENTIONS.md for the Fit contract and scale normalization these estimators invert.
@@ -655,6 +660,134 @@ def fit_em(
 
 
 # --------------------------------------------------------------------------------------
+# 6. Robust-t (Minimum Covariance Determinant): ROBUST-ARM-SPEC.md section 1
+# --------------------------------------------------------------------------------------
+
+
+def _mcd_corr_matrix(M: np.ndarray) -> np.ndarray | None:
+    """Robust correlation matrix of M's columns via Minimum Covariance Determinant.
+
+    None on failure (too few rows, singular robust covariance) rather than raising; callers
+    treat None the same as a non-finite result.
+    """
+    from sklearn.covariance import MinCovDet
+
+    if M.shape[0] < 4 * M.shape[1]:
+        return None
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        cov = MinCovDet(random_state=0).fit(M).covariance_
+    d = np.sqrt(np.diag(cov))
+    if not np.all(np.isfinite(d)) or np.any(d <= 0):
+        return None
+    return cov / np.outer(d, d)
+
+
+def fit_robust_t(sample: Sample, **opts) -> Fit:
+    """Robust rho_H / rel_hat via MinCovDet in place of Pearson (ROBUST-ARM-SPEC.md 1)."""
+    t0 = time.perf_counter()
+    try:
+        n = sample.x.size
+        corr_xw = _mcd_corr_matrix(np.column_stack([sample.x, sample.w]))
+        rho_H_hat = float(corr_xw[0, 1]) if corr_xw is not None else float("nan")
+        corr_X = _mcd_corr_matrix(sample.X)
+        if corr_X is not None:
+            k = sample.X.shape[1]
+            iu = np.triu_indices(k, k=1)
+            rel_hat = float(np.mean(corr_X[iu]))
+        else:
+            rel_hat = float("nan")
+        loading_hat = float(np.sqrt(max(rel_hat, 0.0))) if np.isfinite(rel_hat) else float("nan")
+        rho_T_hat = _rho_T_from_H(rho_H_hat, rel_hat)
+        ci_H = _fisher_ci(rho_H_hat, n)
+        ci_T = _ci_T_from_H(ci_H, rel_hat)
+        converged = bool(np.isfinite(rho_H_hat) and np.isfinite(rel_hat))
+        return Fit(
+            name="robust_t",
+            rho_H_hat=rho_H_hat,
+            rho_T_hat=rho_T_hat,
+            pi_hat=None,
+            rel_hat=rel_hat,
+            ci_H=ci_H,
+            ci_T=ci_T,
+            loading_hat=loading_hat,
+            seconds=time.perf_counter() - t0,
+            converged=converged,
+            note="" if converged else "non-finite MCD result (n too small or singular)",
+        )
+    except Exception as e:
+        return _nan_fit("robust_t", time.perf_counter() - t0, f"robust_t failed: {e!r}")
+
+
+# --------------------------------------------------------------------------------------
+# 7. Robust-GRM (Tukey biweight midcorrelation): ROBUST-ARM-SPEC.md section 1
+# --------------------------------------------------------------------------------------
+
+
+def _biweight_midcorr(x: np.ndarray, y: np.ndarray, c: float = 9.0) -> float:
+    """Tukey biweight midcorrelation (Wilcox robust-statistics; astropy's biweight_midcorrelation).
+
+    Bounded-influence: points beyond c MADs from the median get zero weight, the rest are
+    smoothly downweighted by (1 - u^2)^2. Approximates a robust GRM's discounting of
+    atypical response patterns without fitting an ordinal IRT model (ROBUST-ARM-SPEC.md 1).
+    """
+    x, y = np.asarray(x, dtype=float), np.asarray(y, dtype=float)
+    mx, my = np.median(x), np.median(y)
+    madx, mady = np.median(np.abs(x - mx)), np.median(np.abs(y - my))
+    if madx == 0 or mady == 0:
+        return float("nan")
+    u, v = (x - mx) / (c * madx), (y - my) / (c * mady)
+    wu, wv = np.clip(1.0 - u**2, 0.0, None), np.clip(1.0 - v**2, 0.0, None)
+    mask = (np.abs(u) < 1.0) & (np.abs(v) < 1.0)
+    if mask.sum() < 3:
+        return float("nan")
+    num = np.sum((x[mask] - mx) * wu[mask] ** 2 * (y[mask] - my) * wv[mask] ** 2)
+    den1 = np.sum((x[mask] - mx) ** 2 * wu[mask] ** 4)
+    den2 = np.sum((y[mask] - my) ** 2 * wv[mask] ** 4)
+    if den1 <= 0 or den2 <= 0:
+        return float("nan")
+    return float(np.clip(num / np.sqrt(den1 * den2), -1.0, 1.0))
+
+
+def _biweight_between_item_corr(X: np.ndarray) -> float:
+    k = X.shape[1]
+    if k < 2 or X.shape[0] < 3:
+        return float("nan")
+    vals = [_biweight_midcorr(X[:, i], X[:, j]) for i in range(k) for j in range(i + 1, k)]
+    vals = [v for v in vals if np.isfinite(v)]
+    return float(np.mean(vals)) if vals else float("nan")
+
+
+def fit_robust_grm(sample: Sample, **opts) -> Fit:
+    """Robust rho_H / rel_hat via biweight midcorrelation (ROBUST-ARM-SPEC.md 1)."""
+    t0 = time.perf_counter()
+    try:
+        n = sample.x.size
+        rho_H_hat = _biweight_midcorr(sample.x, sample.w)
+        rel_hat = _biweight_between_item_corr(sample.X)
+        loading_hat = float(np.sqrt(max(rel_hat, 0.0))) if np.isfinite(rel_hat) else float("nan")
+        rho_T_hat = _rho_T_from_H(rho_H_hat, rel_hat)
+        ci_H = _fisher_ci(rho_H_hat, n)
+        ci_T = _ci_T_from_H(ci_H, rel_hat)
+        converged = bool(np.isfinite(rho_H_hat) and np.isfinite(rel_hat))
+        return Fit(
+            name="robust_grm",
+            rho_H_hat=rho_H_hat,
+            rho_T_hat=rho_T_hat,
+            pi_hat=None,
+            rel_hat=rel_hat,
+            ci_H=ci_H,
+            ci_T=ci_T,
+            loading_hat=loading_hat,
+            seconds=time.perf_counter() - t0,
+            converged=converged,
+            note="" if converged else "non-finite biweight result (degenerate/all-tail input)",
+        )
+    except Exception as e:
+        return _nan_fit("robust_grm", time.perf_counter() - t0, f"robust_grm failed: {e!r}")
+
+
+# --------------------------------------------------------------------------------------
 
 ESTIMATORS = {
     "naive": fit_naive,
@@ -662,4 +795,6 @@ ESTIMATORS = {
     "simex": fit_simex,
     "labelfree": fit_labelfree,
     "em": fit_em,
+    "robust_t": fit_robust_t,
+    "robust_grm": fit_robust_grm,
 }
