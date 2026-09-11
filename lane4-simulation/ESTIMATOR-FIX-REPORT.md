@@ -33,8 +33,8 @@ this change and remains comparable across the two grids.
 
 ## 2. simex: B_boot re-run so coverage is testable
 
-**Status: in progress at report time; final numbers below once `results/grid-simex-boot50/
-grid.jsonl` reaches 372/372 lines.** The frozen grid ran with `B_boot=0` (`GRID-CONFIG.md`),
+**Status: done.** `results/grid-simex-boot50/grid.jsonl` reached 372/372 cells; final numbers
+below. The frozen grid ran with `B_boot=0` (`GRID-CONFIG.md`),
 so `fit_simex`'s `ci_H` is `None` in every cell and `simex`'s H4 coverage claim was structurally
 untestable, not merely poor (pass3-methods-review.md B2).
 
@@ -54,7 +54,21 @@ narrow-the-ESTIMATORS-map pattern to any single-column re-run (used for both thi
 `bounds_c` below), with the same faithfulness guarantee (RNG streams for every other estimator
 are untouched).
 
-`[[SIMEX_RESULT_PLACEHOLDER]]`
+**Result: `results/grid-simex-boot50/grid.jsonl` reached 372/372 cells; numbers below are from
+`recompute_b2_tables.py` re-run against the completed grid.**
+
+With `ci_H` now populated (Fisher-z-style bootstrap CI built from the 50 outer resamples),
+`simex`'s H4 coverage claim is testable for the first time: median coverage across all 372
+cells is 0.910, with 75.8% of cells at or above 90% nominal coverage but only **105/372 (0.282)**
+landing inside SPEC 4.4's tight [0.92, 0.98] band -- close to but still below `naive`'s 0.602 and
+well below `delete`'s 0.831. Coverage does not improve with `n` (median 0.911 at n=500, 0.912 at
+n=1000, 0.906 at n=5000; fraction inside the [0.92, 0.98] band falls from 0.319 to 0.303 to
+0.181 as `n` grows), consistent with the CI being driven by SIMEX's own extrapolation bias
+rather than by sampling noise the bootstrap can average away. Median `ci_width` is 0.0995 (max
+0.196). `simex`'s point-estimate statistics (bias, RMSE, the H3 and 20%-of-naive-bias tables
+below) are unaffected by `B_boot` and match the pre-existing pass3-methods-review.md numbers
+exactly -- `B_boot` only ever entered the CI construction, never the point estimate -- which is
+the internal-consistency check that this re-run's numbers are correct.
 
 ---
 
@@ -129,29 +143,35 @@ single-column re-runs above by `cell_id`, then reproduces B2's table shapes. Out
 
 ### H4: cells with rho_H coverage in [0.92, 0.98]
 
-| estimator | pass3-review (n_bins=60, B_boot=0) | this session (n_bins=8, B_boot=`[[BB]]`) |
+| estimator | pass3-review (n_bins=60, B_boot=0) | this session (n_bins=8, B_boot=50) |
 |---|---|---|
 | delete | 309/372 (0.831) | 309/372 (0.831) -- unaffected |
 | naive | 224/372 (0.602) | 224/372 (0.602) -- unaffected |
 | em | 52/372 (0.140) | 52/372 (0.140) -- unaffected |
 | labelfree | 0/372 | 59/372 (0.159) |
-| simex | coverage `null` in all 372 | `[[SIMEX_H4_PLACEHOLDER]]` |
+| simex | coverage `null` in all 372 | 105/372 (0.282) |
 | bounds_c | n/a (did not exist) | reported separately in section 3 (H5 is a bound, not a rho_H point CI, so H4's 0.92-0.98 coverage bar does not apply to it the same way) |
 
 `labelfree` at the shipped `n_bins=8` goes from 0/372 to 59/372 (15.9%) -- a real change,
-still far short of nominal, and **still contradicts H4** as a general claim.
+still far short of nominal, and **still contradicts H4** as a general claim. `simex` with its
+coverage now testable (`B_boot=50`) reaches 105/372 (28.2%) -- better than `em` and `labelfree`,
+still well short of `naive` (60.2%) and `delete` (83.1%), and **still contradicts H4** as a
+general claim.
 
 ### H3: RMSE beats delete, realistic detectors (calibrated / degraded)
 
 | estimator | pass3-review calibrated | pass3-review degraded | this session calibrated | this session degraded |
 |---|---|---|---|---|
-| simex | 22/102 (0.216) | 12/90 (0.133) | `[[SIMEX_H3_PLACEHOLDER]]` | `[[SIMEX_H3_PLACEHOLDER]]` |
+| simex | 22/102 (0.216) | 12/90 (0.133) | 22/102 (0.216) -- unaffected | 12/90 (0.133) -- unaffected |
 | em | 0/102 (0.000) | 10/90 (0.111) | 0/102 (0.000) | 10/90 (0.111) -- unaffected |
 | labelfree | 0/102 (0.000) | 3/90 (0.033) | 0/102 (0.000) | 13/90 (0.144) |
 | bounds_c | n/a | n/a | 44/102 (0.431) | 65/90 (0.722) |
 
 `labelfree` improves at `n_bins=8` (3/90 -> 13/90 at degraded) but **still loses to deletion in
-85.6-100% of realistic-detector cells; H3 as a general claim still fails.** `bounds_c` beats
+85.6-100% of realistic-detector cells; H3 as a general claim still fails.** `simex`'s RMSE is
+unaffected by `B_boot` (it only changes the CI, not the point estimate), so its H3 numbers are
+identical to pass3-methods-review.md's: still loses to deletion in 78.4-86.7% of realistic-
+detector cells. `bounds_c` beats
 deletion's RMSE far more often (43.1%/72.2%) -- expected, since it is a much wider interval
 whose *point summary* (the bound's midpoint) trades bias for width rather than minimizing RMSE
 the way a point estimator does; this comparison is included for completeness, not as evidence
@@ -162,7 +182,7 @@ is playing.
 
 | estimator | pass3-review frac<=0.20 / median / max | this session frac<=0.20 / median / max |
 |---|---|---|
-| simex | 0.386 / 0.336 / 59.2 | `[[SIMEX_BIAS_PLACEHOLDER]]` |
+| simex | 0.386 / 0.336 / 59.2 | 0.386 / 0.336 / 59.2 -- unaffected |
 | delete | 0.343 / 0.426 / 47.4 | 0.343 / 0.426 / 47.4 -- unaffected |
 | em | 0.119 / 1.254 / 50.4 | 0.119 / 1.254 / 50.4 -- unaffected |
 | labelfree | 0.000 / 5.917 / 1821 | 0.095 / 1.916 / 2098.8 |
@@ -190,11 +210,13 @@ misses the 2-point bar in every cell.
 **No.** At `n_bins=8` and with `simex`'s coverage now testable, every SPEC 4.4 threshold that
 pass3-methods-review.md B2 flagged as contradicted remains contradicted:
 
-- H4 (nominal coverage): `labelfree` improves from 0/372 to 59/372 but no estimator reaches a
-  defensible fraction of cells; `delete` (the estimator the paper exists to discredit) is still
-  the only one that regularly hits the [0.92, 0.98] band.
-- H3 (RMSE beats deletion): `labelfree` and `em` still lose to deletion in the overwhelming
-  majority of realistic-detector cells.
+- H4 (nominal coverage): `labelfree` improves from 0/372 to 59/372 and `simex` goes from
+  structurally untestable to 105/372 (0.282), but no estimator reaches a defensible fraction of
+  cells; `delete` (the estimator the paper exists to discredit) is still the only one that
+  regularly hits the [0.92, 0.98] band.
+- H3 (RMSE beats deletion): `simex`, `labelfree`, and `em` still lose to deletion in the
+  overwhelming majority of realistic-detector cells (`simex`'s RMSE is unchanged by `B_boot`,
+  since `B_boot` only affects the CI).
 - The 20%-of-naive-bias bar: no estimator gets close to "every cell"; `labelfree` is
   substantially less bad but still fails the bar entirely.
 - The 2-point pi-hat bar: `labelfree` roughly halves its error but the bar is still missed in
@@ -242,7 +264,7 @@ multiplier on an estimator that was already cheap (`0.0084` s/rep at `B_boot=0`)
 - `recompute_b2_tables.py`: new, merges the frozen grid with the three column re-runs and
   reproduces pass3-methods-review.md B2's table shapes at the shipped configuration.
 - `results/grid-bounds-c/`: new, 372 cells.
-- `results/grid-simex-boot50/`: new, 372 cells (in progress at report time).
+- `results/grid-simex-boot50/`: new, 372 cells, complete.
 - `results/b2-tables-recomputed.json`: new.
 - This file.
 

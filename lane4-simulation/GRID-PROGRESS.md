@@ -42,3 +42,13 @@ No cell raised. (Per-estimator non-convergence within a cell is a RESULT, record
 
 
 **Grid complete.** Pass 2 (numerical check of every closed-form moment against this output) may now run; it must not be started on a partial grid.
+
+## Derived single-column re-run grids
+
+Post-freeze re-runs of a single estimator column across the same 372-cell set (`run_grid_column.py`), used by `ESTIMATOR-FIX-REPORT.md`. Tracked here per grid since they resume/complete independently of the frozen grid above.
+
+| grid | column | cells done / total | run log |
+|---|---|---|---|
+| `results/grid-labelfree-nbins8/` | labelfree @ n_bins=8 | 372/372 | `labelfree-nbins8-run.log` |
+| `results/grid-bounds-c/` | bounds_c (H5) | 372/372 | n/a (~34s, no log kept) |
+| `results/grid-simex-boot50/` | simex @ B_boot=50 | **372/372 -- COMPLETE** | `simex_boot50_run.log` ("col: COMPLETE 372/372 in 36376s") |
