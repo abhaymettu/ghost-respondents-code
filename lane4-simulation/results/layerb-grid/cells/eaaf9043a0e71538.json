@@ -1,0 +1,220 @@
+{
+ "cell_id": "eaaf9043a0e71538",
+ "cell": {
+  "pi": 0.3,
+  "n": 1000,
+  "p": 1.0,
+  "detector": "none",
+  "pool": "personallm_gpt-4-0613",
+  "trait": "EXT",
+  "arm": "box"
+ },
+ "reps": 100,
+ "master_seed": 20260909,
+ "truth": {
+  "rho_H": 0.06755632679849685,
+  "rho_T": 0.5,
+  "pi": 0.3,
+  "loading": 0.1351126535969937
+ },
+ "setup": {
+  "split_id": "729645da4c64c3a1",
+  "n_human_base": 1208,
+  "n_machine_inj": 160,
+  "n_human_dropped_unchunked": 26,
+  "n_machine_dropped_unchunked": 0,
+  "q1": 0.5198675496688742,
+  "r_H_chunk1": 0.1351126535969937,
+  "r_H_by_chunk": [
+   0.1351126535969937,
+   0.13057027307121644,
+   0.13350811361644635,
+   0.0943523616195799
+  ],
+  "rel_H_true": 0.018255429162021216,
+  "rel_between_chunk": 0.20956818663986734,
+  "rel_overstatement": 11.479773210473473,
+  "n_ref_machine": 160,
+  "n_ref_human": 1213
+ },
+ "detector": {
+  "level": "none",
+  "sp_target": 1.0,
+  "thr": null,
+  "sp_cal": 1.0,
+  "se_cal": 0.0,
+  "realized_sp": 1.0,
+  "realized_se": 0.0,
+  "flag_rate": 0.0
+ },
+ "era": {
+  "n_bins_default": 8,
+  "frozen_calibration_split": true,
+  "k_chunks": 4,
+  "replace": true,
+  "score_version": "oof",
+  "chunk_scoring_human": "pk_human: chunk scored by the fold model that excluded its parent text from training (true OOF)",
+  "chunk_scoring_machine": "non-PK pool: chunk scored by mean decision_function across all 5 fold models (none saw this pool's texts; ensemble used only for procedural consistency, not to fix leakage -- this pool was never leaky)",
+  "whole_text_scoring_human": "pk_human cross_fitted_scores: 5-fold OOF",
+  "whole_text_scoring_machine": "trait_scores: full-PK refit; this pool's texts were never in the training set"
+ },
+ "estimators": {
+  "delete": {
+   "rho_H": {
+    "n_reps": 100,
+    "n_converged": 100,
+    "failure_rate": 0.0,
+    "bias": 0.03188550956340344,
+    "rel_bias": 0.47198406240335883,
+    "rmse": 0.04341757832351595,
+    "mcse": 0.0029617091491994994,
+    "coverage": 0.84,
+    "coverage_se": 0.036660605559646724,
+    "ci_width": 0.12265973870120898
+   },
+   "rho_T": {
+    "n_reps": 100,
+    "n_converged": 100,
+    "failure_rate": 0.0,
+    "bias": -0.3134098869571832,
+    "rel_bias": -0.6268197739143664,
+    "rmse": 0.31819951247696254,
+    "mcse": 0.005527865588111332,
+    "coverage": 0.0,
+    "coverage_se": 0.0,
+    "ci_width": 0.2304982651787664
+   },
+   "pi_abs_err": null,
+   "loading_bias": 0.3975857267202995,
+   "n_converged": 100
+  },
+  "em": {
+   "rho_H": {
+    "n_reps": 100,
+    "n_converged": 98,
+    "failure_rate": 0.020000000000000018,
+    "bias": 0.026859752381234725,
+    "rel_bias": 0.3975904797392324,
+    "rmse": 0.05310345826686369,
+    "mcse": 0.004651272946171455,
+    "coverage": 0.826530612244898,
+    "coverage_se": 0.03824968444140503,
+    "ci_width": 0.1572290432377653
+   },
+   "rho_T": {
+    "n_reps": 100,
+    "n_converged": 98,
+    "failure_rate": 0.020000000000000018,
+    "bias": -0.31220492407665434,
+    "rel_bias": -0.6244098481533087,
+    "rmse": 0.3248926941829856,
+    "mcse": 0.00912871763883531,
+    "coverage": 0.08163265306122448,
+    "coverage_se": 0.02765840519097708,
+    "ci_width": 0.3242357015014808
+   },
+   "pi_abs_err": {
+    "value": 0.16816014813863683,
+    "mcse": 0.008167224180158751,
+    "bias": -0.11014067803006351,
+    "n": 98
+   },
+   "loading_bias": 0.36584824931249477,
+   "n_converged": 98
+  },
+  "labelfree": {
+   "rho_H": {
+    "n_reps": 100,
+    "n_converged": 100,
+    "failure_rate": 0.0,
+    "bias": 0.06707085891113806,
+    "rel_bias": 0.9928138797598216,
+    "rmse": 0.0801952244132512,
+    "mcse": 0.004418480363583512,
+    "coverage": 0.68,
+    "coverage_se": 0.0466476151587624,
+    "ci_width": 0.1717463960971306
+   },
+   "rho_T": {
+    "n_reps": 100,
+    "n_converged": 100,
+    "failure_rate": 0.0,
+    "bias": -0.2692298476535946,
+    "rel_bias": -0.5384596953071892,
+    "rmse": 0.27879110805989965,
+    "mcse": 0.007275093158269819,
+    "coverage": 0.07,
+    "coverage_se": 0.02551470164434615,
+    "ci_width": 0.28495489575107696
+   },
+   "pi_abs_err": {
+    "value": 0.07830000000000001,
+    "mcse": 0.005794833993316892,
+    "bias": -0.025699999999999994,
+    "n": 100
+   },
+   "loading_bias": 0.44658664799636366,
+   "n_converged": 100
+  },
+  "naive": {
+   "rho_H": {
+    "n_reps": 100,
+    "n_converged": 100,
+    "failure_rate": 0.0,
+    "bias": 0.03188550956340344,
+    "rel_bias": 0.47198406240335883,
+    "rmse": 0.04341757832351595,
+    "mcse": 0.0029617091491994994,
+    "coverage": 0.84,
+    "coverage_se": 0.036660605559646724,
+    "ci_width": 0.12265973870120898
+   },
+   "rho_T": {
+    "n_reps": 100,
+    "n_converged": 100,
+    "failure_rate": 0.0,
+    "bias": -0.3134098869571832,
+    "rel_bias": -0.6268197739143664,
+    "rmse": 0.31819951247696254,
+    "mcse": 0.005527865588111332,
+    "coverage": 0.0,
+    "coverage_se": 0.0,
+    "ci_width": 0.2304982651787664
+   },
+   "pi_abs_err": null,
+   "loading_bias": 0.3975857267202995,
+   "n_converged": 100
+  },
+  "simex": {
+   "rho_H": {
+    "n_reps": 100,
+    "n_converged": 100,
+    "failure_rate": 0.0,
+    "bias": 0.031885509563403455,
+    "rel_bias": 0.47198406240335905,
+    "rmse": 0.04341757832351596,
+    "mcse": 0.0029617091491995003,
+    "coverage": NaN,
+    "coverage_se": NaN,
+    "ci_width": NaN
+   },
+   "rho_T": {
+    "n_reps": 100,
+    "n_converged": 100,
+    "failure_rate": 0.0,
+    "bias": -0.31340988695718314,
+    "rel_bias": -0.6268197739143663,
+    "rmse": 0.31819951247696254,
+    "mcse": 0.005527865588111334,
+    "coverage": NaN,
+    "coverage_se": NaN,
+    "ci_width": NaN
+   },
+   "pi_abs_err": null,
+   "loading_bias": 0.3975857267202996,
+   "n_converged": 100
+  }
+ },
+ "wall_seconds": 323.07318019866943,
+ "host": "Abhays-MacBook-Pro"
+}
