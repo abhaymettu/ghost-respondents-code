@@ -881,9 +881,9 @@ methods review (`derivations/pass3-methods-review.md`) and NLP review with fixes
 Verification pass (2026-09-10): each entry below was checked against a live source
 (publisher/journal page, arXiv abstract page, or the Hugging Face model page) except where
 noted. Author lists and venues were corrected against that source where the file on record
-disagreed or was incomplete. Three entries could not be checked live (OSF's page is
-JS-rendered and did not return bibliographic content to the fetch tool used here; the SPEC
-and RADAR documents' own reading notes are the only source) and are marked `unverified` — see
+disagreed or was incomplete. Three entries that could not be checked in that pass (OSF's
+page is JS-rendered; the publisher returned 403) were re-verified live on 2026-09-10
+against the NORC AAPOR schedule, ScienceDirect, and the published SAGE/RePEc record — see
 `GAPS-CLOSURE-SPEC.md` item 4 for what "verified" means in this pass and its limits.
 
 - Argyle, L. P., Busby, E. C., Fulda, N., Gubler, J. R., Rytting, C., and Wingate, D. (2023).
@@ -891,15 +891,17 @@ and RADAR documents' own reading notes are the only source) and are marked `unve
   31(3), 337-351. doi:10.1017/pan.2023.2.
 - HC3: Hello-SimpleAI Human ChatGPT Comparison Corpus. arXiv 2301.07597.
 - Huang, L., et al. (2025). Detecting AI-generated survey responses. AAPOR (NORC PACT).
-  `unverified`: author-list check needs the full AAPOR paper, not only the PDF filename
-  SPEC.md cites (which gives the first author as Lilian Huang, consistent with "Huang, L.").
+  Verified live 2026-09-10: NORC's official AAPOR 2025 presentation schedule lists
+  "Detecting AI-Generated Survey Responses: Tool Development and Bias Mitigation",
+  presenter Lilian Huang (NORC). Title, presenter, venue and year confirmed; the
+  schedule publishes the presenter only, so a multi-author list is not asserted.
 - Jiang, H., Zhang, X., Cao, X., Breazeal, C., Roy, D., and Kabbara, J. (2024). PersonaLLM:
   Investigating the ability of large language models to express personality traits. NAACL
   Findings 2024. arXiv:2305.02547.
 - Liang, W., et al. (2023). GPT detectors are biased against non-native English writers.
-  Patterns. doi:10.1016/j.patter.2023.100779. `unverified`: DOI resolves to the correct
-  Elsevier record (S2666389923001307); the publisher page itself returned 403 to the fetch
-  tool used here, so the full author list was not re-confirmed against it in this pass.
+  Patterns, 4(7). doi:10.1016/j.patter.2023.100779. Verified live 2026-09-10: the
+  ScienceDirect record (S2666389923001307) serves this exact title at Patterns 4(7),
+  July 2023; "Liang, W., et al." is consistent with that record.
 - Meta (2026-09-08). Introducing Muse: the world's first personal AI agent built for
   everyone. about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/. Confirmed live.
 - Messing, S. Hidden measurement error in LLM pipelines distorts annotation, evaluation, and
@@ -915,10 +917,11 @@ and RADAR documents' own reading notes are the only source) and are marked `unve
   model with nonignorable missing data. Psychometrika, First View, pp. 1-42.
   doi:10.1017/psy.2026.10121. Confirmed live.
 - Pew Research Center (2026-08-27). No easy fix for bogus respondents in online opt-in polls.
-- Zhang, Xu, and Alvero (2025). Generative AI meets open-ended survey responses. Sociological
-  Methods and Research. `unverified`: OSF preprint page (osf.io/preprints/socarxiv/4esdp_v3)
-  did not return bibliographic content to the fetch tool used here; author list is as
-  recorded in SPEC.md's reading notes, not independently re-confirmed in this pass.
+- Zhang, S., Xu, J., and Alvero, A. J. (2025). Generative AI meets open-ended survey
+  responses: Research participant use of AI and homogenization. Sociological Methods and
+  Research, 54(3), 1197-1242. Verified live 2026-09-10 via the published SAGE record
+  (ideas.repec.org/a/sae/somere/v54y2025i3p1197-1242.html); full author names, subtitle,
+  volume, issue and pages all confirmed there.
 - Zhang, Y., and Tong, L. (2024). Analyzing text data in the framework of structural equation
   modeling. Assessment in Psychology (APS). Author list per `RADAR-DAY7.md`.
 - roberta-base-openai-detector: openai-community, Hugging Face. Confirmed live.
