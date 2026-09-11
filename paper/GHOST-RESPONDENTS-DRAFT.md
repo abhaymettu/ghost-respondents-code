@@ -670,7 +670,7 @@ se -> 1 (only sp -> 1 removes it), and along a ROC curve the bias is not monoton
 threshold, with the optimum interior. "A better detector" in the sense of a higher threshold
 is not "less bias".
 
-### 5.6 Two further regimes: robust estimation, and near-perfect (watermark) detection
+### 5.7 Two further regimes: robust estimation, and near-perfect (watermark) detection
 
 Two follow-on arms test the boundary map's worst corner (`detector = none`, `p = 1`,
 `pi >= 0.20`, section 5.4) from directions outside the original five-estimator, four-detector
