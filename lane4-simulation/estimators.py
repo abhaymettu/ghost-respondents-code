@@ -1,6 +1,6 @@
 """Lane 4 correction estimators (SPEC section 3), scored against dgp.py's Sample.
 
-Seven estimators, each `fit_<name>(sample: Sample, **opts) -> Fit`:
+Eight estimators, each `fit_<name>(sample: Sample, **opts) -> Fit`:
   fit_naive      - Pearson Cor(x_1, w) on the full contaminated sample.
   fit_delete     - same, on detector survivors (detect-and-delete).
   fit_simex      - MC-SIMEX (Kuechenhoff, Mun & Carroll 2006) on known misclassification.
@@ -11,10 +11,13 @@ Seven estimators, each `fit_<name>(sample: Sample, **opts) -> Fit`:
                    downweighting reduction).
   fit_robust_grm - ROBUST-ARM-SPEC.md's robust-GRM arm: Tukey biweight midcorrelation in
                    place of Pearson (bounded-influence M-estimation reduction).
+  fit_bounds_c   - SPEC H5 / pass3-methods-review.md B3: partial-identification bounds on
+                   rho_H from a bound on c, via (E7)/(E36)'s c-affine structure.
 
-All formulas trace to derivations/lane1-zero-coupling.md (E2-E9, E24-E30, E34); see
-CONVENTIONS.md for the Fit contract and scale normalization these estimators invert.
-No estimator raises: every failure is caught and returned as NaNs with converged=False.
+All formulas trace to derivations/lane1-zero-coupling.md (E2-E9, E24-E30, E34) and
+derivations/lane1-partial-coupling.md (E36); see CONVENTIONS.md for the Fit contract and
+scale normalization these estimators invert. No estimator raises: every failure is caught
+and returned as NaNs with converged=False.
 """
 
 from __future__ import annotations
@@ -788,6 +791,69 @@ def fit_robust_grm(sample: Sample, **opts) -> Fit:
 
 
 # --------------------------------------------------------------------------------------
+# 8. H5 partial-identification bounds on rho_H (pass3-methods-review.md B3)
+# --------------------------------------------------------------------------------------
+
+
+def fit_bounds_c(sample: Sample, c_lo: float = 0.0, c_hi: float = 1.0, **opts) -> Fit:
+    """Bound rho_H given a bound [c_lo, c_hi] on the unidentified coupling parameter c.
+
+    rho_obs = rho_H * Att(pi, c) (E7), and Att is affine and strictly increasing in c at
+    fixed pi (E36: Att(pi, c) = Att_0(pi) + c * pi * sqrt(kappa/rel_H) / sqrt(Den(pi))).
+    fit_naive's point estimate IS a direct estimate of rho_obs (Cor(x, w) on the full,
+    undeleted sample -- no detector-dependent filtering), so inverting (E7) at the two
+    endpoints of the c interval brackets rho_H:
+
+        rho_H in [rho_obs_hat / Att(pi, c_hi), rho_obs_hat / Att(pi, c_lo)]   (rho_obs_hat >= 0)
+
+    with the endpoints swapped when rho_obs_hat < 0. pi, rel_H, kappa, delta are read off
+    `sample.cell` as known structural parameters -- this is a bound on c alone, not a joint
+    bound on (pi, c); see CONVENTIONS.md and h5_bounds.py for the same convention on Layer B.
+    Default c_lo/c_hi = [0, 1] is the full structural range (E15/E16's c1/c2 do not shrink
+    it: A1 permits any c in [0, 1]); callers with an external bound on c (e.g. a calibration
+    pool's realized c_pool, as h5_bounds.py uses for Layer B) can pass a narrower interval.
+
+    ci_H / ci_T carry the bound itself, not a sampling-uncertainty interval -- metrics.py's
+    coverage check ("does ci_H contain the truth") is exactly the partial-identification
+    question H5 asks, so no separate machinery is needed to score it.
+    """
+    from population import att
+
+    t0 = time.perf_counter()
+    try:
+        cell = sample.cell
+        rho_obs_hat = _pearson(sample.x, sample.w)
+        if not np.isfinite(rho_obs_hat):
+            return _nan_fit("bounds_c", time.perf_counter() - t0, "non-finite rho_obs_hat")
+        att_lo = att(cell.pi, c_lo, cell.rel_H, cell.kappa, cell.delta)
+        att_hi = att(cell.pi, c_hi, cell.rel_H, cell.kappa, cell.delta)
+        if not (np.isfinite(att_lo) and np.isfinite(att_hi) and att_lo > 0 and att_hi > 0):
+            return _nan_fit("bounds_c", time.perf_counter() - t0, "non-finite or non-positive Att endpoint")
+        endpoints = (rho_obs_hat / att_lo, rho_obs_hat / att_hi)
+        lo, hi = (min(endpoints), max(endpoints))
+        width = hi - lo
+        rho_H_hat = 0.5 * (lo + hi)
+        rel_hat = float(cell.rel_H)
+        rho_T_hat = _rho_T_from_H(rho_H_hat, rel_hat)
+        ci_T = _ci_T_from_H((lo, hi), rel_hat)
+        return Fit(
+            name="bounds_c",
+            rho_H_hat=rho_H_hat,
+            rho_T_hat=rho_T_hat,
+            pi_hat=None,
+            rel_hat=rel_hat,
+            ci_H=(lo, hi),
+            ci_T=ci_T,
+            loading_hat=float(np.sqrt(max(rel_hat, 0.0))),
+            seconds=time.perf_counter() - t0,
+            converged=True,
+            note=f"c_lo={c_lo},c_hi={c_hi},width={width:.6f}",
+        )
+    except Exception as e:
+        return _nan_fit("bounds_c", time.perf_counter() - t0, f"bounds_c failed: {e!r}")
+
+
+# --------------------------------------------------------------------------------------
 
 ESTIMATORS = {
     "naive": fit_naive,
@@ -797,4 +863,5 @@ ESTIMATORS = {
     "em": fit_em,
     "robust_t": fit_robust_t,
     "robust_grm": fit_robust_grm,
+    "bounds_c": fit_bounds_c,
 }

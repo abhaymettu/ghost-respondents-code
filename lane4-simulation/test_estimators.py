@@ -12,8 +12,10 @@ import time
 import numpy as np
 
 from dgp import Cell, Sample, simulate
-from estimators import (Fit, _distribution_match_pi, fit_delete, fit_em, fit_labelfree,
-                        fit_naive, fit_robust_grm, fit_robust_t, fit_simex)
+from estimators import (Fit, _distribution_match_pi, _pearson, fit_bounds_c, fit_delete,
+                        fit_em, fit_labelfree, fit_naive, fit_robust_grm, fit_robust_t,
+                        fit_simex)
+from population import population_moments
 
 RESULTS: list[tuple[str, bool, str]] = []
 
@@ -296,6 +298,81 @@ check(
     _shipped in (60, 8),
     "60 = pre-patch (staged, grid was live); 8 = patch applied" if _shipped in (60, 8)
     else f"unrecognized default {_shipped}",
+)
+
+# --------------------------------------------------------------------------------------
+# 7. bounds_c (H5 / pass3-methods-review.md B3): partial-identification bounds on rho_H
+#    from a bound on c, via (E7)/(E36)'s c-affine structure. att_manual below re-derives
+#    (E36) independently of population.att so this is not "test calls the function it
+#    checks" -- both Att_0 (E8) and Den (from E36's denominator) are re-typed from the
+#    module docstring's formulas, not imported.
+# --------------------------------------------------------------------------------------
+
+print("\n=== bounds_c ===")
+
+
+def att_manual(pi: float, c: float, rel_H: float, kappa: float, delta: float) -> float:
+    den = (1 - pi) + pi * kappa + pi * (1 - pi) * delta**2
+    att_0 = (1 - pi) / np.sqrt(den)
+    return att_0 + c * pi * np.sqrt(kappa / rel_H) / np.sqrt(den)
+
+
+cell_bc = Cell(pi=0.10, c=0.4, n=20000, detector="oracle", kappa=0.5, rel_H=0.7, delta=0.0)
+rng_bc = np.random.default_rng(2026091001)
+sample_bc = simulate(cell_bc, rng_bc)
+rho_obs_hat_bc = _pearson(sample_bc.x, sample_bc.w)
+
+fit_bc = fit_bounds_c(sample_bc, c_lo=0.0, c_hi=1.0)
+assert_fit_wellformed(fit_bc, "bounds_c")
+check("bounds_c: ci_H is set", fit_bc.ci_H is not None)
+check("bounds_c: converged", fit_bc.converged)
+
+att_lo_manual = att_manual(cell_bc.pi, 0.0, cell_bc.rel_H, cell_bc.kappa, cell_bc.delta)
+att_hi_manual = att_manual(cell_bc.pi, 1.0, cell_bc.rel_H, cell_bc.kappa, cell_bc.delta)
+expected_lo = rho_obs_hat_bc / att_hi_manual
+expected_hi = rho_obs_hat_bc / att_lo_manual
+check(
+    "bounds_c matches a from-scratch (E36) re-derivation, not just population.att",
+    abs(fit_bc.ci_H[0] - expected_lo) < 1e-9 and abs(fit_bc.ci_H[1] - expected_hi) < 1e-9,
+    f"got [{fit_bc.ci_H[0]:.6f}, {fit_bc.ci_H[1]:.6f}], expected [{expected_lo:.6f}, {expected_hi:.6f}]",
+)
+
+fit_bc_point = fit_bounds_c(sample_bc, c_lo=cell_bc.c, c_hi=cell_bc.c)
+check(
+    "bounds_c collapses to the point estimate when c_lo == c_hi == true c",
+    abs(fit_bc_point.ci_H[1] - fit_bc_point.ci_H[0]) < 1e-9,
+    f"width={fit_bc_point.ci_H[1] - fit_bc_point.ci_H[0]:.2e}",
+)
+check(
+    "bounds_c's point-c estimate matches naive's rho_obs_hat divided by the true Att(pi,c)",
+    abs(fit_bc_point.rho_H_hat - rho_obs_hat_bc / att_manual(cell_bc.pi, cell_bc.c, cell_bc.rel_H, cell_bc.kappa, cell_bc.delta)) < 1e-9,
+)
+
+fit_bc_narrow = fit_bounds_c(sample_bc, c_lo=0.3, c_hi=0.5)
+w_wide = fit_bc.ci_H[1] - fit_bc.ci_H[0]
+w_narrow = fit_bc_narrow.ci_H[1] - fit_bc_narrow.ci_H[0]
+check(
+    "bounds_c width shrinks as the c interval narrows",
+    w_narrow < w_wide,
+    f"width(c in [0,1])={w_wide:.4f} vs width(c in [0.3,0.5])={w_narrow:.4f}",
+)
+
+# Coverage of the true (population) rho_H by the c in [0,1] bound, over independent reps,
+# at a realistic n. The bound covers the truth whenever noise in rho_obs_hat does not push
+# past the endpoint set by the true c -- not a guarantee at any n, so this checks a high
+# rate, not 100%.
+truth_bc = population_moments(cell_bc)
+n_cov_reps = 200
+n_covered = 0
+for rep in range(n_cov_reps):
+    s = simulate(cell_bc, np.random.default_rng([2026091002, rep]))
+    f = fit_bounds_c(s, c_lo=0.0, c_hi=1.0)
+    if f.ci_H is not None and f.ci_H[0] <= truth_bc["rho_H"] <= f.ci_H[1]:
+        n_covered += 1
+check(
+    "bounds_c's c in [0,1] bound covers the true rho_H in most replications at n=20000",
+    n_covered / n_cov_reps > 0.85,
+    f"{n_covered}/{n_cov_reps} covered, true rho_H={truth_bc['rho_H']:.4f}",
 )
 
 n_fail = sum(1 for _, ok, _ in RESULTS if not ok)
