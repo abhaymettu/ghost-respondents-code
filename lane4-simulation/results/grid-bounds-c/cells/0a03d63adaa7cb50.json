@@ -41,25 +41,25 @@
      "n_reps": 500,
      "n_converged": 500,
      "failure_rate": 0.0,
-     "bias": -0.0009819743262622915,
-     "rel_bias": -0.0023473676167611135,
-     "rmse": 0.012030676886457474,
-     "mcse": 0.0005367700342578393,
-     "coverage": 0.102,
-     "coverage_se": 0.013534843922262273,
-     "ci_width": 0.003547720055189736
+     "bias": -0.0011493180931316793,
+     "rel_bias": -0.002747395732273268,
+     "rmse": 0.012039929842044828,
+     "mcse": 0.0005365199571060427,
+     "coverage": 0.956,
+     "coverage_se": 0.009172131704244116,
+     "ci_width": 0.049542052954085335
     },
     "rho_T": {
      "n_reps": 500,
      "n_converged": 500,
      "failure_rate": 0.0,
-     "bias": -0.0011736838083805101,
-     "rel_bias": -0.0023473676167610202,
-     "rmse": 0.014379409204352,
-     "mcse": 0.0006415629015783722,
-     "coverage": 0.102,
-     "coverage_se": 0.013534843922262273,
-     "ci_width": 0.004240336507872166
+     "bias": -0.0013736978661365584,
+     "rel_bias": -0.002747395732273117,
+     "rmse": 0.014390468601590907,
+     "mcse": 0.000641264002212004,
+     "coverage": 0.956,
+     "coverage_se": 0.009172131704244116,
+     "ci_width": 0.059214079055882295
     },
     "pi_abs_err": null,
     "loading_bias": 2.220446049250313e-16,
@@ -97,8 +97,8 @@
   },
   "coverage_ok": {
    "bounds_c": {
-    "rho_H": false,
-    "rho_T": false
+    "rho_H": true,
+    "rho_T": true
    }
   },
   "pi_err_ok": {
@@ -113,8 +113,8 @@
  },
  "timing": {
   "bounds_c": {
-   "mean_seconds": 9.351243288256228e-05,
-   "total_seconds": 0.04675621644128114,
+   "mean_seconds": 0.0003717213935451582,
+   "total_seconds": 0.1858606967725791,
    "n": 500,
    "mean_seconds_resample": null,
    "resample_share": null
@@ -124,5 +124,5 @@
   "estimator": "bounds_c",
   "extra_opts": {}
  },
- "wall_seconds": 0.4011561870574951
+ "wall_seconds": 1.3662331104278564
 }

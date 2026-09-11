@@ -801,35 +801,43 @@ def fit_bounds_c(sample: Sample, c_lo: float = 0.0, c_hi: float = 1.0, **opts) -
     rho_obs = rho_H * Att(pi, c) (E7), and Att is affine and strictly increasing in c at
     fixed pi (E36: Att(pi, c) = Att_0(pi) + c * pi * sqrt(kappa/rel_H) / sqrt(Den(pi))).
     fit_naive's point estimate IS a direct estimate of rho_obs (Cor(x, w) on the full,
-    undeleted sample -- no detector-dependent filtering), so inverting (E7) at the two
-    endpoints of the c interval brackets rho_H:
+    undeleted sample -- no detector-dependent filtering). pi, rel_H, kappa, delta are read
+    off `sample.cell` as known structural parameters -- this is a bound on c alone, not a
+    joint bound on (pi, c); see CONVENTIONS.md and h5_bounds.py for the same convention on
+    Layer B. Default c_lo/c_hi = [0, 1] is the full structural range (E15/E16's c1/c2 do not
+    shrink it: A1 permits any c in [0, 1]); callers with an external bound on c (e.g. a
+    calibration pool's realized c_pool, as h5_bounds.py uses for Layer B) can pass a narrower
+    interval.
 
-        rho_H in [rho_obs_hat / Att(pi, c_hi), rho_obs_hat / Att(pi, c_lo)]   (rho_obs_hat >= 0)
-
-    with the endpoints swapped when rho_obs_hat < 0. pi, rel_H, kappa, delta are read off
-    `sample.cell` as known structural parameters -- this is a bound on c alone, not a joint
-    bound on (pi, c); see CONVENTIONS.md and h5_bounds.py for the same convention on Layer B.
-    Default c_lo/c_hi = [0, 1] is the full structural range (E15/E16's c1/c2 do not shrink
-    it: A1 permits any c in [0, 1]); callers with an external bound on c (e.g. a calibration
-    pool's realized c_pool, as h5_bounds.py uses for Layer B) can pass a narrower interval.
-
-    ci_H / ci_T carry the bound itself, not a sampling-uncertainty interval -- metrics.py's
-    coverage check ("does ci_H contain the truth") is exactly the partial-identification
-    question H5 asks, so no separate machinery is needed to score it.
+    A bound built by inverting (E36) at the point estimate rho_obs_hat alone -- rho_H in
+    [rho_obs_hat / Att(pi, c_hi), rho_obs_hat / Att(pi, c_lo)] -- states only the
+    identification uncertainty from unknown c and ignores sampling uncertainty in
+    rho_obs_hat itself. At n=1000 that sampling noise (~1/sqrt(n) ~ 0.03 in correlation
+    units) is comparable to or larger than a typical c-identification width, so a
+    point-estimate-only bound has poor empirical coverage even though it easily meets
+    SPEC's width-under-0.2 criterion -- confirmed on this grid: 98%+ of cells meet the width
+    bar but median coverage was ~0.35 before this fix. The standard fix (Imbens & Manski
+    2004) unions the two sources: propagate a 95% Fisher-z CI on rho_obs_hat (not just its
+    point value) through both Att endpoints, so the reported interval covers c-uncertainty
+    AND sampling uncertainty at once.
     """
     from population import att
 
     t0 = time.perf_counter()
     try:
         cell = sample.cell
+        n = sample.x.size
         rho_obs_hat = _pearson(sample.x, sample.w)
         if not np.isfinite(rho_obs_hat):
             return _nan_fit("bounds_c", time.perf_counter() - t0, "non-finite rho_obs_hat")
+        rho_obs_ci = _fisher_ci(rho_obs_hat, n) or (rho_obs_hat, rho_obs_hat)
         att_lo = att(cell.pi, c_lo, cell.rel_H, cell.kappa, cell.delta)
         att_hi = att(cell.pi, c_hi, cell.rel_H, cell.kappa, cell.delta)
         if not (np.isfinite(att_lo) and np.isfinite(att_hi) and att_lo > 0 and att_hi > 0):
             return _nan_fit("bounds_c", time.perf_counter() - t0, "non-finite or non-positive Att endpoint")
-        endpoints = (rho_obs_hat / att_lo, rho_obs_hat / att_hi)
+        # att_lo <= att_hi (Att increasing in c), so dividing the sampling CI's low/high
+        # endpoints by att_hi/att_lo respectively gives the widest (correct) combined bound.
+        endpoints = (rho_obs_ci[0] / att_hi, rho_obs_ci[1] / att_lo)
         lo, hi = (min(endpoints), max(endpoints))
         width = hi - lo
         rho_H_hat = 0.5 * (lo + hi)

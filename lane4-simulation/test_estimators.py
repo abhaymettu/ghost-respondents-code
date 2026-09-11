@@ -317,35 +317,45 @@ def att_manual(pi: float, c: float, rel_H: float, kappa: float, delta: float) ->
     return att_0 + c * pi * np.sqrt(kappa / rel_H) / np.sqrt(den)
 
 
+def fisher_ci_manual(r: float, n: int) -> tuple[float, float]:
+    z = np.arctanh(np.clip(r, -0.999999, 0.999999))
+    se = 1.0 / np.sqrt(n - 3)
+    return float(np.tanh(z - 1.96 * se)), float(np.tanh(z + 1.96 * se))
+
+
 cell_bc = Cell(pi=0.10, c=0.4, n=20000, detector="oracle", kappa=0.5, rel_H=0.7, delta=0.0)
 rng_bc = np.random.default_rng(2026091001)
 sample_bc = simulate(cell_bc, rng_bc)
 rho_obs_hat_bc = _pearson(sample_bc.x, sample_bc.w)
+rho_obs_ci_bc = fisher_ci_manual(rho_obs_hat_bc, sample_bc.x.size)
 
 fit_bc = fit_bounds_c(sample_bc, c_lo=0.0, c_hi=1.0)
 assert_fit_wellformed(fit_bc, "bounds_c")
 check("bounds_c: ci_H is set", fit_bc.ci_H is not None)
 check("bounds_c: converged", fit_bc.converged)
 
+# The reported bound unions two sources of uncertainty (Imbens & Manski 2004): the
+# c-identification region and the sampling CI on rho_obs_hat. This check re-derives both
+# (E36) and the Fisher-z CI from scratch, independent of population.att / estimators._fisher_ci.
 att_lo_manual = att_manual(cell_bc.pi, 0.0, cell_bc.rel_H, cell_bc.kappa, cell_bc.delta)
 att_hi_manual = att_manual(cell_bc.pi, 1.0, cell_bc.rel_H, cell_bc.kappa, cell_bc.delta)
-expected_lo = rho_obs_hat_bc / att_hi_manual
-expected_hi = rho_obs_hat_bc / att_lo_manual
+expected_lo = rho_obs_ci_bc[0] / att_hi_manual
+expected_hi = rho_obs_ci_bc[1] / att_lo_manual
 check(
-    "bounds_c matches a from-scratch (E36) re-derivation, not just population.att",
+    "bounds_c matches a from-scratch (E36 + Fisher-z) re-derivation, not just population.att",
     abs(fit_bc.ci_H[0] - expected_lo) < 1e-9 and abs(fit_bc.ci_H[1] - expected_hi) < 1e-9,
     f"got [{fit_bc.ci_H[0]:.6f}, {fit_bc.ci_H[1]:.6f}], expected [{expected_lo:.6f}, {expected_hi:.6f}]",
 )
 
 fit_bc_point = fit_bounds_c(sample_bc, c_lo=cell_bc.c, c_hi=cell_bc.c)
 check(
-    "bounds_c collapses to the point estimate when c_lo == c_hi == true c",
-    abs(fit_bc_point.ci_H[1] - fit_bc_point.ci_H[0]) < 1e-9,
-    f"width={fit_bc_point.ci_H[1] - fit_bc_point.ci_H[0]:.2e}",
+    "bounds_c at c_lo==c_hi==true c still carries sampling width, not a degenerate point",
+    abs(fit_bc_point.ci_H[1] - fit_bc_point.ci_H[0]) > 1e-6,
+    f"width={fit_bc_point.ci_H[1] - fit_bc_point.ci_H[0]:.4f}",
 )
 check(
-    "bounds_c's point-c estimate matches naive's rho_obs_hat divided by the true Att(pi,c)",
-    abs(fit_bc_point.rho_H_hat - rho_obs_hat_bc / att_manual(cell_bc.pi, cell_bc.c, cell_bc.rel_H, cell_bc.kappa, cell_bc.delta)) < 1e-9,
+    "bounds_c's point-c midpoint is close to naive's rho_obs_hat divided by the true Att(pi,c)",
+    abs(fit_bc_point.rho_H_hat - rho_obs_hat_bc / att_manual(cell_bc.pi, cell_bc.c, cell_bc.rel_H, cell_bc.kappa, cell_bc.delta)) < 0.01,
 )
 
 fit_bc_narrow = fit_bounds_c(sample_bc, c_lo=0.3, c_hi=0.5)
@@ -357,22 +367,23 @@ check(
     f"width(c in [0,1])={w_wide:.4f} vs width(c in [0.3,0.5])={w_narrow:.4f}",
 )
 
-# Coverage of the true (population) rho_H by the c in [0,1] bound, over independent reps,
-# at a realistic n. The bound covers the truth whenever noise in rho_obs_hat does not push
-# past the endpoint set by the true c -- not a guarantee at any n, so this checks a high
-# rate, not 100%.
-truth_bc = population_moments(cell_bc)
-n_cov_reps = 200
+# Coverage at n=1000 (SPEC's H5 operating point), c in [0,1]. A point-estimate-only bound
+# (no sampling CI folded in) has poor coverage at this n -- see ESTIMATOR-FIX-REPORT.md --
+# because rho_obs_hat's own sampling noise at n=1000 is comparable to a typical
+# c-identification width. This checks that folding in the Fisher-z CI fixes it.
+cell_bc_1000 = Cell(pi=0.10, c=0.4, n=1000, detector="oracle", kappa=0.5, rel_H=0.7, delta=0.0)
+truth_bc_1000 = population_moments(cell_bc_1000)
+n_cov_reps = 300
 n_covered = 0
 for rep in range(n_cov_reps):
-    s = simulate(cell_bc, np.random.default_rng([2026091002, rep]))
+    s = simulate(cell_bc_1000, np.random.default_rng([2026091002, rep]))
     f = fit_bounds_c(s, c_lo=0.0, c_hi=1.0)
-    if f.ci_H is not None and f.ci_H[0] <= truth_bc["rho_H"] <= f.ci_H[1]:
+    if f.ci_H is not None and f.ci_H[0] <= truth_bc_1000["rho_H"] <= f.ci_H[1]:
         n_covered += 1
 check(
-    "bounds_c's c in [0,1] bound covers the true rho_H in most replications at n=20000",
+    "bounds_c's combined (c + sampling) bound covers the true rho_H at nominal-ish rate, n=1000",
     n_covered / n_cov_reps > 0.85,
-    f"{n_covered}/{n_cov_reps} covered, true rho_H={truth_bc['rho_H']:.4f}",
+    f"{n_covered}/{n_cov_reps} covered, true rho_H={truth_bc_1000['rho_H']:.4f}",
 )
 
 n_fail = sum(1 for _, ok, _ in RESULTS if not ok)
