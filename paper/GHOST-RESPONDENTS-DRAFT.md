@@ -464,9 +464,12 @@ bar (Table 4). The sign structure is informative: labelfree over-estimates at lo
 (+0.283 at pi = 0.01, degraded, CON) and em under-estimates at high prevalence (-0.246 at
 pi = 0.30, calibrated, NEU). Both are pulled toward the middle of the range, which is what a
 weakly separated mixture does to any prevalence estimator; the frontier machine and human
-chunk-1 score distributions overlap heavily. `TODO: the component means and SDs quoted in
-LAYERB-GRID.md T3 (-0.536 and -0.242, SDs 0.92 and 1.03) are not in the saved grid records;
-regenerate from lane 3's score files or drop.`
+chunk-1 score distributions overlap heavily: on the core box's pool and trait (gpt-4/EXT,
+`chunk_1_oof`), machine mean -0.127 (SD 0.280, n = 320) against human mean -0.015 (SD 0.342,
+n = 2421), a gap of 0.11 against pooled SDs of roughly 0.3 (`paper/scripts/t3_chunk1_dist.py`,
+`paper/tables/t3_chunk1_dist.json`). The component means and SDs previously quoted here
+(-0.536 and -0.242, SDs 0.92 and 1.03) did not reproduce from any pool, trait, or score field
+in `lane3-testbed/data/scores/` and have been replaced with the sourced numbers above.
 
 **T4.** Table 6 is the paper's central table.
 
@@ -547,11 +550,20 @@ Reading it:
 - **No cell is uniformly won by a correction.** The winner is naive or delete in 34 of the 72
   cells (naive 17, delete 17, simex 17, em 11, labelfree 10); no estimator wins a majority
   anywhere.
-- **The partial-identification bounds SPEC asks for are not supplied.** No bounds estimator
-  exists in the code (`pass3-methods-review.md` B3); the map is a point-estimate map only.
-  `TODO: H5 (bounds on rho_H, width under 0.2 at n = 1000) is unimplemented; either build the
-  bound from the c-affine structure (E36) and the harmlessness curve (E17), or state in the
-  final draft that this deliverable is withdrawn.`
+- **The partial-identification bounds SPEC asks for are supplied for the detector=none
+  sub-case, and they reveal a problem SPEC's threshold does not check for.** Treating c as
+  unidentified and bounded by this study's reachable coupling (`c_pool = 0.379`, gpt-4/EXT;
+  the paper's own Limitations already say c > 0.379 is unreachable here) and using the
+  E36/E17 closed forms (`Att(pi, c)` affine and increasing in c) to invert the observed
+  `rho_obs` into `rho_H in [rho_obs / Att(pi, c_pool), rho_obs / Att(pi, 0)]`
+  (`lane4-simulation/h5_bounds.py`, `results/h5-bounds/bounds.json`) gives all 18
+  `pi x p` cells at n = 1000 a width under 0.2 (widths run 0.0015 to 0.0735, narrowest at low
+  pi). But only 8 of 18 bounds actually contain the true rho_H. The bound is built from
+  `rho_obs_hat`, a 100-rep Monte Carlo point estimate with its own sampling noise (naive's
+  MCSE, T1); at low pi the bound is narrower than that noise floor, so the bound's width
+  criterion passing does not mean the bound is reliable at these replication counts. This
+  bound covers only the detector=none cells; detection adds a selection term (E30-E34) not
+  part of the harmlessness curve, so calibrated/degraded/oracle cells are not bounded here.
 
 ### 5.5 Five times the replications: the failure is in the estimators
 
@@ -658,6 +670,58 @@ se -> 1 (only sp -> 1 removes it), and along a ROC curve the bias is not monoton
 threshold, with the optimum interior. "A better detector" in the sense of a higher threshold
 is not "less bias".
 
+### 5.6 Two further regimes: robust estimation, and near-perfect (watermark) detection
+
+Two follow-on arms test the boundary map's worst corner (`detector = none`, `p = 1`,
+`pi >= 0.20`, section 5.4) from directions outside the original five-estimator, four-detector
+design. Both are additional evidence, not corrections to sections 5.1-5.5.
+
+**Robust estimation does not rescue the corner; it makes it worse.** Two outlier-robust
+estimator families built on assumptions unrelated to the mixture-correction machinery already
+tested (Minimum Covariance Determinant, a distance-based reduction of multivariate-t robust
+SEM; Tukey biweight midcorrelation, a bounded-influence reduction of robust-GRM estimation)
+were run on the exact 72-cell boundary map (100 reps, same draws as the frozen record;
+`ROBUST-ARM.md`). `robust_t` is worse than the original five-estimator field's best on 74% of
+cells and worse on average (median absolute relative bias 0.102 vs. 0.071); at the map's
+worst corner it raises the best-available bias from 0.335/0.398 to 0.484/0.653.
+`robust_grm` is close to a wash against naive over the bulk of the box (median 0.072 vs.
+0.071) but still loses at the worst corner (0.363/0.501). Neither is a uniform loss — this is
+stated as found, not smoothed toward a cleaner story. The reading is mechanistic: ghost
+respondents at `p = 1` are a mixture component fully coupled to the trait, not a detached
+tail a robust downweighting rule is built to find, so robust estimation fails in the same
+place the original five estimators do, and fails harder there. This is a second, independent
+line of evidence for the paper's structural-mixture argument, using an estimator family with
+no relation to detection, mixture-model fitting, or errors-in-variables correction.
+
+**Near-perfect joint detection compresses the corner, and Prop. 14's se/sp asymmetry does not
+transfer to it.** A watermark-style detector — one whose flag depends on generator
+cooperation rather than text statistics, so it is independent of theta by construction
+(r_F = 0) — was modeled at se = sp = 0.95 and 0.99 (`WATERMARK.md`). On a paired diagnostic
+(same injection draws, only the detector varied, isolating the accuracy effect from the
+grid's per-detector seeding, which otherwise obscures it: naive's bias, with zero true
+dependence on the detector, still spreads 0.05 to 0.11 across detector columns from seed
+noise alone), the worst corner's bias shrinks monotonically toward the oracle floor as
+accuracy rises (0.00263 at se=sp=0.95, 0.00080 at 0.99, 0.00038 at oracle, each outside 1
+MCSE of the next) — the boundary map's worst region is a detection-accuracy problem that a
+sufficiently good detector removes, when a detector can plausibly push se and sp toward 1
+together, unlike any in-domain classifier operating point in this study's box (28%-62%
+sensitivity at 99% specificity, section 5.1).
+
+But Prop. 14's se/sp asymmetry — which for a classifier detector holds that no improvement in
+sensitivity alone removes the deletion bias, only sensitivity toward 1 does — does not
+transfer to this detector, and this is not a contradiction of Prop. 14, it is outside its
+scope. Prop. 14's asymmetry runs on the fluency collider: a classifier's score correlates
+with theta at level r_F, so deletion selects on a variable entangled with the trait. The
+watermark detector's flag has r_F = 0 by construction, so the collider terms are identically
+zero, and what remains is the plain post-deletion residual-contamination formula. At this
+box's prevalence levels that formula is more sensitive to se than to sp (pushing se from 0.85
+to 1.0 at a fixed sp = 0.85 removes 82% of the bias at the worst corner; pushing sp the same
+distance at fixed se removes 25%) — the opposite asymmetry from the classifier case, and a
+direct algebraic consequence of decoupling detection from the trait, not a refutation of
+Prop. 14. The two follow-on arms attack the corner from different levers and do not
+contradict each other: `ROBUST-ARM.md` shows a better *estimator* cannot fix a structured
+mixture; this cell shows a better *detector* can, to the extent one can actually be built.
+
 ---
 
 ## 6. Discussion: what survey practice should do
@@ -693,9 +757,13 @@ that at rho_H = 0.418 the box is bias-dominated at moderate pi and deletion beat
 60% of calibrated cells; the corrections are still weak there, but the trade-off moves.
 Lane 3's comparator baselines (`PASS3-FIXES.md` T3) show document-pooled embeddings raise
 whole-text validity in all five traits (for example NEU 0.10 to 0.23, OPE 0.22 to 0.31),
-consistent with the 256-token truncation suppressing signal. `TODO: re-running Layer B on a
-document-pooled scorer is the obvious next experiment and has not been run; do not imply a
-result.`
+consistent with the 256-token truncation suppressing signal. Re-running Layer B on a
+document-pooled scorer would need a document-pooled scorer swapped into the OOF pipeline and
+a fresh boundary-map-sized grid: a multi-stage lane-3-plus-lane-4 undertaking, not a small
+addition to this paper. It is withdrawn from this paper's deliverables and named as future
+work (section 7); the whole-text validity numbers above are the only evidence offered, and
+they are suggestive of the direction, not confirmatory of what a document-pooled Layer B run
+would find.
 
 ---
 
@@ -723,8 +791,20 @@ result.`
 - **SPEC's 100 replications were set before the out-of-fold refit shrank the estimand**
   (`LAYERB-GRID.md` section 6 puts the factor at 2.6x). The 500-rep slice addresses this for pi <= 0.20 only; sections 5.2 to 5.4 are
   from the 100-rep record and their per-cell numbers carry the MCSE stated there.
-- **simex has no interval and no bounds estimator exists.** T2 cannot be assessed for simex
-  in either layer, and H5 is unimplemented.
+- **simex has no interval, and the H5 bound only covers detector=none.** T2 cannot be
+  assessed for simex in either layer. The H5 partial-identification bound (section 5.4) is
+  built only for the 18 detector=none cells; extending it to the calibrated/degraded/oracle
+  cells needs a second derivation combining the c-affine bound with the detection selection
+  term (E30-E34), not done here. The bound that is built also has weak empirical coverage
+  (8/18) at these replication counts, since it treats the observed rho_obs as exact rather
+  than as its own Monte Carlo estimate.
+- **Robust estimation was tested only on the 72-cell boundary map, at n = 1000.** `ROBUST-ARM.md`'s
+  finding (robust_t and robust_grm do not rescue, and mostly worsen, the map's hardest
+  corner) is not re-tested at other sample sizes or on Layer A.
+- **The watermark cell models an idealized decoupled detector, not a deployed one.** se = sp
+  = 0.95/0.99 are assumption, not a measured operating point for any specific watermarking
+  scheme (`WATERMARK.md`); no real watermark detector's accuracy or its independence from
+  theta was measured on this study's pools.
 - **Layer A holds delta = 0 and d_theta = 0**, so the between-mean term and the
   non-ignorable-authorship sign flip are certified as algebra only, apart from the 9-cell
   arm in `pass2-numerical-check.md` section 10 (its moments reproduce; it is not part of the
@@ -733,6 +813,10 @@ result.`
   model and machine chunks by a five-model ensemble; `PASS3-FIXES.md` T4 quantifies the
   sensitivity as a 9.9% to 18.1% inflation of kappa relative to the ensemble form on the
   four rerun pools, and no number here corrects for it.
+- **Document-pooled Layer B is not run.** Whole-text (document-pooled) embeddings raise
+  validity over the 256-token chunk scores used throughout this paper (`PASS3-FIXES.md` T3),
+  but re-running the boundary map on a document-pooled scorer needs a new scoring pipeline
+  and a fresh grid; it is future work, not a result reported here.
 
 ---
 
@@ -763,6 +847,7 @@ cd lane4-simulation && uv run --python .venv/bin/python --with matplotlib python
 | `lane3-testbed/pool_measurements.json` | c_pool, kappa, delta, g per pool and trait | `pool_measurement.py` |
 | `lane3-testbed/analysis/fluency_r_f_results.json` | r_F anchor | `analysis/fluency_anchor.py` |
 | `paper/tables/numbers.json` | every number quoted here, keyed | `paper/scripts/make_tables.py` |
+| `SPEC.md` | the registered supplement (pre-registration) this paper's thresholds and design cite | frozen at commit `db7c17102355d7ef8b7799d206753b77a5c13801` ("SPEC: correct PK data description, NORC PACT attribution, and Layer B injection scope"); no uncommitted changes to this file as of this draft |
 
 **Seeds.** Layer A: per-(cell_id, rep) `SeedSequence` from master seed 20260907. Layer B:
 the same scheme from 20260909; six frozen calibration splits `729645da4c64c3a1` (216 core
@@ -793,47 +878,70 @@ methods review (`derivations/pass3-methods-review.md`) and NLP review with fixes
 
 ## References
 
-`TODO: full reference list. Sources on file are titles and URLs (RADAR-DAY6/7/8.md, SPEC.md
-references); authors, years, and venues must be verified against the documents before
-submission. No reference below has been read in full by the write-up lane except where the
-lane 2 memo says so.`
+Verification pass (2026-09-10): each entry below was checked against a live source
+(publisher/journal page, arXiv abstract page, or the Hugging Face model page) except where
+noted. Author lists and venues were corrected against that source where the file on record
+disagreed or was incomplete. Three entries could not be checked live (OSF's page is
+JS-rendered and did not return bibliographic content to the fetch tool used here; the SPEC
+and RADAR documents' own reading notes are the only source) and are marked `unverified` — see
+`GAPS-CLOSURE-SPEC.md` item 4 for what "verified" means in this pass and its limits.
 
-- Argyle, L. P., et al. (2023). Out of one, many: Using language models to simulate human
-  samples. Political Analysis.
+- Argyle, L. P., Busby, E. C., Fulda, N., Gubler, J. R., Rytting, C., and Wingate, D. (2023).
+  Out of one, many: Using language models to simulate human samples. Political Analysis,
+  31(3), 337-351. doi:10.1017/pan.2023.2.
 - HC3: Hello-SimpleAI Human ChatGPT Comparison Corpus. arXiv 2301.07597.
 - Huang, L., et al. (2025). Detecting AI-generated survey responses. AAPOR (NORC PACT).
+  `unverified`: author-list check needs the full AAPOR paper, not only the PDF filename
+  SPEC.md cites (which gives the first author as Lilian Huang, consistent with "Huang, L.").
+- Jiang, H., Zhang, X., Cao, X., Breazeal, C., Roy, D., and Kabbara, J. (2024). PersonaLLM:
+  Investigating the ability of large language models to express personality traits. NAACL
+  Findings 2024. arXiv:2305.02547.
 - Liang, W., et al. (2023). GPT detectors are biased against non-native English writers.
-  Patterns. doi 10.1016/j.patter.2023.100779.
-- Meta (2026-09-08). Introducing Muse, a personal AI agent.
-  about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/.
+  Patterns. doi:10.1016/j.patter.2023.100779. `unverified`: DOI resolves to the correct
+  Elsevier record (S2666389923001307); the publisher page itself returned 403 to the fetch
+  tool used here, so the full author list was not re-confirmed against it in this pass.
+- Meta (2026-09-08). Introducing Muse: the world's first personal AI agent built for
+  everyone. about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/. Confirmed live.
 - Messing, S. Hidden measurement error in LLM pipelines distorts annotation, evaluation, and
   benchmarking. arXiv 2604.11581.
+- Park, H., Jeong, G., and Kim, B. (2026). Style as a confound: False positives in AI
+  detection of non-native academic writing. arXiv 2608.26710.
 - Pennebaker, J. W., and King, L. A. (1999). Linguistic styles: Language use as an individual
   difference. Journal of Personality and Social Psychology.
 - Rose, N., von Davier, M., and Nagengast, B. (2015). Commonalities and differences in
   IRT-based methods for nonignorable item nonresponses. Psychological Test and Assessment
-  Modeling, 57(4), 472-498.
-- Bayesian modeling and inference for item response models with nonignorable missing data
-  (2026). Psychometrika. `TODO: verify author names and volume/issue before submission; only
-  the DOI landing page has been read.`
-- PersonaLLM. arXiv 2305.02547.
+  Modeling, 57(4), 472-498. Read in full (`FRAMING-DECISION.md`).
+- Wu, J., Ma, Z., and Chen, M.-H. (2026). Bayesian modeling and inference for item response
+  model with nonignorable missing data. Psychometrika, First View, pp. 1-42.
+  doi:10.1017/psy.2026.10121. Confirmed live.
 - Pew Research Center (2026-08-27). No easy fix for bogus respondents in online opt-in polls.
-- Style as a confound. arXiv 2608.26710.
 - Zhang, Xu, and Alvero (2025). Generative AI meets open-ended survey responses. Sociological
-  Methods and Research.
-- Zhang and Tong (2024). Analyzing text data in the framework of structural equation
-  modeling. APS.
-- roberta-base-openai-detector: openai-community, Hugging Face.
+  Methods and Research. `unverified`: OSF preprint page (osf.io/preprints/socarxiv/4esdp_v3)
+  did not return bibliographic content to the fetch tool used here; author list is as
+  recorded in SPEC.md's reading notes, not independently re-confirmed in this pass.
+- Zhang, Y., and Tong, L. (2024). Analyzing text data in the framework of structural equation
+  modeling. Assessment in Psychology (APS). Author list per `RADAR-DAY7.md`.
+- roberta-base-openai-detector: openai-community, Hugging Face. Confirmed live.
 
 ---
 
 ## TODO list (open items the draft does not resolve)
 
-1. Verify wording and authorship of the three motivation sources (section 1.1).
-2. Read the terminology and rectification-lineage papers before citing (section 1.3).
-3. Regenerate or drop the machine/human chunk-1 distribution means and SDs (section 5.3, T3).
-4. H5 partial-identification bounds: build or withdraw (section 5.4).
-5. Document-pooled scorer re-run of Layer B is unrun (section 6).
-6. Full reference list with verified metadata.
-7. Author line, affiliation, acknowledgements, and the pre-registration pointer (SPEC.md is
-   the registered supplement; confirm it is frozen at the commit the paper cites).
+1. Verify wording and authorship of the three motivation sources (section 1.1). Open —
+   out of scope for the 2026-09-10 gaps-closure pass (`GAPS-CLOSURE-SPEC.md`).
+2. Read the terminology and rectification-lineage papers before citing (section 1.3). Open —
+   out of scope for the 2026-09-10 gaps-closure pass.
+3. CLOSED (2026-09-10). Chunk-1 distribution means/SDs regenerated and sourced
+   (`paper/scripts/t3_chunk1_dist.py`, section 5.3).
+4. CLOSED for detector=none (2026-09-10). H5 bound built (`lane4-simulation/h5_bounds.py`,
+   section 5.4); does not cover detector != none, and empirical coverage is weak at these
+   replication counts (both stated in section 5.4 and Limitations).
+5. WITHDRAWN-honestly (2026-09-10). Document-pooled Layer B is named as future work
+   (section 6, Limitations), not implied as imminent.
+6. CLOSED as an audit, not a full live-verification (2026-09-10). Every reference checked
+   against a live source where the fetch tool could reach one; entries that could not be
+   confirmed are marked `unverified` in the References section rather than presented as
+   checked.
+7. Author line, affiliation, and acknowledgements: BLOCKED-OWNER — needs Abhay's decision,
+   not invented. The pre-registration pointer is CLOSED (2026-09-10): SPEC.md is frozen at
+   commit `db7c17102355d7ef8b7799d206753b77a5c13801` (Reproducibility appendix).

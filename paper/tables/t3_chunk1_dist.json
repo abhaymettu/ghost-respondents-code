@@ -1,0 +1,12 @@
+{
+  "trait": "cEXT",
+  "field": "chunk_1_oof",
+  "machine_pool": "personallm_gpt-4-0613",
+  "machine_n": 320,
+  "machine_mean": -0.12715604036629885,
+  "machine_sd": 0.28005111917016423,
+  "human_pool": "pk_human",
+  "human_n": 2421,
+  "human_mean": -0.015023321270302571,
+  "human_sd": 0.341598114791805
+}
