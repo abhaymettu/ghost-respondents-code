@@ -1,0 +1,167 @@
+{
+ "cell_id": "b7b85b7d98fe0cdc",
+ "cell": {
+  "pi": 0.01,
+  "p": 0.0,
+  "detector": "wm99",
+  "se": 0.99,
+  "sp": 0.99,
+  "arm": "jointA",
+  "n": 1000,
+  "pool": "personallm_gpt-4-0613",
+  "trait": "EXT"
+ },
+ "reps": 100,
+ "truth": {
+  "rho_H": 0.06755632679849685,
+  "rho_T": 0.5,
+  "pi": 0.01,
+  "loading": 0.1351126535969937
+ },
+ "detector": {
+  "se_set": 0.99,
+  "sp_set": 0.99,
+  "realized_sp": 0.9897777777777776,
+  "realized_se": 0.9940000000000001,
+  "flag_rate": 0.020059999999999995
+ },
+ "estimators": {
+  "delete": {
+   "rho_H": {
+    "n_reps": 100,
+    "n_converged": 100,
+    "failure_rate": 0.0,
+    "bias": -0.002891287818817409,
+    "rel_bias": -0.04279817976843793,
+    "rmse": 0.035298966649611616,
+    "mcse": 0.003535758889122903,
+    "coverage": 0.93,
+    "coverage_se": 0.02551470164434614,
+    "ci_width": 0.12457598603268419
+   },
+   "rho_T": {
+    "n_reps": 100,
+    "n_converged": 100,
+    "failure_rate": 0.0,
+    "bias": -0.35925089972209784,
+    "rel_bias": -0.7185017994441957,
+    "rmse": 0.36711794371246365,
+    "mcse": 0.007597431546672336,
+    "coverage": 0.0,
+    "coverage_se": 0.0,
+    "ci_width": 0.27261946378114604
+   },
+   "n_converged": 100
+  },
+  "em": {
+   "rho_H": {
+    "n_reps": 100,
+    "n_converged": 100,
+    "failure_rate": 0.0,
+    "bias": -7.139887949461632e-05,
+    "rel_bias": -0.0010568792425257342,
+    "rmse": 0.040256157344481146,
+    "mcse": 0.004045889679217701,
+    "coverage": 0.88,
+    "coverage_se": 0.03249615361854384,
+    "ci_width": 0.1323772867804956
+   },
+   "rho_T": {
+    "n_reps": 100,
+    "n_converged": 100,
+    "failure_rate": 0.0,
+    "bias": -0.3521981330199151,
+    "rel_bias": -0.7043962660398302,
+    "rmse": 0.3630658176483719,
+    "mcse": 0.008861027508405422,
+    "coverage": 0.03,
+    "coverage_se": 0.01705872210923198,
+    "ci_width": 0.29298034385187516
+   },
+   "n_converged": 100
+  },
+  "labelfree": {
+   "rho_H": {
+    "n_reps": 100,
+    "n_converged": 100,
+    "failure_rate": 0.0,
+    "bias": -0.001794280457688438,
+    "rel_bias": -0.026559769346849112,
+    "rmse": 0.03496990229721289,
+    "mcse": 0.0035099780198968927,
+    "coverage": 0.93,
+    "coverage_se": 0.02551470164434614,
+    "ci_width": 0.12829696818541347
+   },
+   "rho_T": {
+    "n_reps": 100,
+    "n_converged": 100,
+    "failure_rate": 0.0,
+    "bias": -0.358518171642797,
+    "rel_bias": -0.717036343285594,
+    "rmse": 0.3661425899235213,
+    "mcse": 0.007470559562703245,
+    "coverage": 0.0,
+    "coverage_se": 0.0,
+    "ci_width": 0.27634588404772287
+   },
+   "n_converged": 100
+  },
+  "naive": {
+   "rho_H": {
+    "n_reps": 100,
+    "n_converged": 100,
+    "failure_rate": 0.0,
+    "bias": -0.00350080818109641,
+    "rel_bias": -0.05182058212753959,
+    "rmse": 0.034646458652667134,
+    "mcse": 0.0034642786636026176,
+    "coverage": 0.93,
+    "coverage_se": 0.02551470164434614,
+    "ci_width": 0.12333488285706014
+   },
+   "rho_T": {
+    "n_reps": 100,
+    "n_converged": 100,
+    "failure_rate": 0.0,
+    "bias": -0.3616309408873595,
+    "rel_bias": -0.723261881774719,
+    "rmse": 0.36901092502070787,
+    "mcse": 0.007380102499604102,
+    "coverage": 0.0,
+    "coverage_se": 0.0,
+    "ci_width": 0.26788680777038926
+   },
+   "n_converged": 100
+  },
+  "simex": {
+   "rho_H": {
+    "n_reps": 100,
+    "n_converged": 100,
+    "failure_rate": 0.0,
+    "bias": -0.00298430270261113,
+    "rel_bias": -0.04417502910589763,
+    "rmse": 0.03542585887830611,
+    "mcse": 0.0035477769603018973,
+    "coverage": NaN,
+    "coverage_se": NaN,
+    "ci_width": NaN
+   },
+   "rho_T": {
+    "n_reps": 100,
+    "n_converged": 100,
+    "failure_rate": 0.0,
+    "bias": -0.35950061537587547,
+    "rel_bias": -0.7190012307517509,
+    "rmse": 0.3674083171877269,
+    "mcse": 0.00761986974827313,
+    "coverage": NaN,
+    "coverage_se": NaN,
+    "ci_width": NaN
+   },
+   "n_converged": 100
+  }
+ },
+ "wall_seconds": 295.1797261238098,
+ "host": "Abhays-MacBook-Pro"
+}

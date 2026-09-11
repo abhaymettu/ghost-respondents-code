@@ -1,0 +1,167 @@
+{
+ "cell_id": "fffc33404229a3ca",
+ "cell": {
+  "pi": 0.1,
+  "p": 1.0,
+  "detector": "wm99",
+  "se": 0.99,
+  "sp": 0.99,
+  "arm": "jointA",
+  "n": 1000,
+  "pool": "personallm_gpt-4-0613",
+  "trait": "EXT"
+ },
+ "reps": 100,
+ "truth": {
+  "rho_H": 0.06755632679849685,
+  "rho_T": 0.5,
+  "pi": 0.1,
+  "loading": 0.1351126535969937
+ },
+ "detector": {
+  "se_set": 0.99,
+  "sp_set": 0.99,
+  "realized_sp": 0.9900444444444443,
+  "realized_se": 0.9897,
+  "flag_rate": 0.10793000000000001
+ },
+ "estimators": {
+  "delete": {
+   "rho_H": {
+    "n_reps": 100,
+    "n_converged": 100,
+    "failure_rate": 0.0,
+    "bias": 0.0018482461899605035,
+    "rel_bias": 0.027358595079826447,
+    "rmse": 0.03653504817396438,
+    "mcse": 0.003667208955897399,
+    "coverage": 0.92,
+    "coverage_se": 0.027129319932501065,
+    "ci_width": 0.13047520221378184
+   },
+   "rho_T": {
+    "n_reps": 100,
+    "n_converged": 100,
+    "failure_rate": 0.0,
+    "bias": -0.3480503114741278,
+    "rel_bias": -0.6961006229482556,
+    "rmse": 0.3570229732259667,
+    "mcse": 0.007993927047144652,
+    "coverage": 0.0,
+    "coverage_se": 0.0,
+    "ci_width": 0.2868902587313158
+   },
+   "n_converged": 100
+  },
+  "em": {
+   "rho_H": {
+    "n_reps": 100,
+    "n_converged": 100,
+    "failure_rate": 0.0,
+    "bias": 0.013202405114504462,
+    "rel_bias": 0.19542810777566164,
+    "rmse": 0.041975459285357015,
+    "mcse": 0.00400458787575427,
+    "coverage": 0.89,
+    "coverage_se": 0.031288975694324025,
+    "ci_width": 0.13345478903526384
+   },
+   "rho_T": {
+    "n_reps": 100,
+    "n_converged": 100,
+    "failure_rate": 0.0,
+    "bias": -0.3319712566256682,
+    "rel_bias": -0.6639425132513364,
+    "rmse": 0.34239856402385693,
+    "mcse": 0.008427864689947301,
+    "coverage": 0.07,
+    "coverage_se": 0.02551470164434615,
+    "ci_width": 0.2814247972197617
+   },
+   "n_converged": 100
+  },
+  "labelfree": {
+   "rho_H": {
+    "n_reps": 100,
+    "n_converged": 100,
+    "failure_rate": 0.0,
+    "bias": 0.020393849012562762,
+    "rel_bias": 0.3018791870285128,
+    "rmse": 0.043842722371778664,
+    "mcse": 0.003900628319525895,
+    "coverage": 0.85,
+    "coverage_se": 0.035707142142714254,
+    "ci_width": 0.13777334155036913
+   },
+   "rho_T": {
+    "n_reps": 100,
+    "n_converged": 100,
+    "failure_rate": 0.0,
+    "bias": -0.3222086712914558,
+    "rel_bias": -0.6444173425829116,
+    "rmse": 0.3311360969480998,
+    "mcse": 0.0076756777390466725,
+    "coverage": 0.01,
+    "coverage_se": 0.0099498743710662,
+    "ci_width": 0.2767325472939396
+   },
+   "n_converged": 100
+  },
+  "naive": {
+   "rho_H": {
+    "n_reps": 100,
+    "n_converged": 100,
+    "failure_rate": 0.0,
+    "bias": 0.012026764221627614,
+    "rel_bias": 0.17802572744223288,
+    "rmse": 0.03520046111223115,
+    "mcse": 0.0033248823247515403,
+    "coverage": 0.88,
+    "coverage_se": 0.03249615361854384,
+    "ci_width": 0.12307096403988306
+   },
+   "rho_T": {
+    "n_reps": 100,
+    "n_converged": 100,
+    "failure_rate": 0.0,
+    "bias": -0.33573319134283564,
+    "rel_bias": -0.6714663826856713,
+    "rmse": 0.34251126249998665,
+    "mcse": 0.0068144151798470816,
+    "coverage": 0.0,
+    "coverage_se": 0.0,
+    "ci_width": 0.2547545854942223
+   },
+   "n_converged": 100
+  },
+  "simex": {
+   "rho_H": {
+    "n_reps": 100,
+    "n_converged": 100,
+    "failure_rate": 0.0,
+    "bias": 0.001617715821522897,
+    "rel_bias": 0.023946177925690475,
+    "rmse": 0.03668155803900954,
+    "mcse": 0.0036830483856460936,
+    "coverage": NaN,
+    "coverage_se": NaN,
+    "ci_width": NaN
+   },
+   "rho_T": {
+    "n_reps": 100,
+    "n_converged": 100,
+    "failure_rate": 0.0,
+    "bias": -0.3483275331815868,
+    "rel_bias": -0.6966550663631736,
+    "rmse": 0.35737982357307635,
+    "mcse": 0.00803292965460895,
+    "coverage": NaN,
+    "coverage_se": NaN,
+    "ci_width": NaN
+   },
+   "n_converged": 100
+  }
+ },
+ "wall_seconds": 220.18943572044373,
+ "host": "Abhays-MacBook-Pro"
+}

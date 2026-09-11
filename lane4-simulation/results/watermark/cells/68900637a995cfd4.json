@@ -1,0 +1,167 @@
+{
+ "cell_id": "68900637a995cfd4",
+ "cell": {
+  "pi": 0.3,
+  "p": 1.0,
+  "detector": "wm99",
+  "se": 0.99,
+  "sp": 0.99,
+  "arm": "jointA",
+  "n": 1000,
+  "pool": "personallm_gpt-4-0613",
+  "trait": "EXT"
+ },
+ "reps": 100,
+ "truth": {
+  "rho_H": 0.06755632679849685,
+  "rho_T": 0.5,
+  "pi": 0.3,
+  "loading": 0.1351126535969937
+ },
+ "detector": {
+  "se_set": 0.99,
+  "sp_set": 0.99,
+  "realized_sp": 0.9898857142857145,
+  "realized_se": 0.9897333333333335,
+  "flag_rate": 0.30400000000000005
+ },
+ "estimators": {
+  "delete": {
+   "rho_H": {
+    "n_reps": 100,
+    "n_converged": 100,
+    "failure_rate": 0.0,
+    "bias": 0.013342072783693967,
+    "rel_bias": 0.19749553322355637,
+    "rmse": 0.04217814694811618,
+    "mcse": 0.0040213887417454835,
+    "coverage": 0.93,
+    "coverage_se": 0.02551470164434614,
+    "ci_width": 0.14743073817991476
+   },
+   "rho_T": {
+    "n_reps": 100,
+    "n_converged": 100,
+    "failure_rate": 0.0,
+    "bias": -0.3243935631530529,
+    "rel_bias": -0.6487871263061058,
+    "rmse": 0.3361219706264522,
+    "mcse": 0.008845928883096807,
+    "coverage": 0.03,
+    "coverage_se": 0.01705872210923198,
+    "ci_width": 0.3207728015668569
+   },
+   "n_converged": 100
+  },
+  "em": {
+   "rho_H": {
+    "n_reps": 100,
+    "n_converged": 100,
+    "failure_rate": 0.0,
+    "bias": 0.038283252766378534,
+    "rel_bias": 0.5666864168113762,
+    "rmse": 0.06130588420994573,
+    "mcse": 0.0048124459817394365,
+    "coverage": 0.81,
+    "coverage_se": 0.03923009049186606,
+    "ci_width": 0.14980068248376002
+   },
+   "rho_T": {
+    "n_reps": 100,
+    "n_converged": 100,
+    "failure_rate": 0.0,
+    "bias": -0.2898315253351654,
+    "rel_bias": -0.5796630506703307,
+    "rmse": 0.30515389417132177,
+    "mcse": 0.009596182979492194,
+    "coverage": 0.15,
+    "coverage_se": 0.035707142142714254,
+    "ci_width": 0.30325721656314447
+   },
+   "n_converged": 100
+  },
+  "labelfree": {
+   "rho_H": {
+    "n_reps": 100,
+    "n_converged": 100,
+    "failure_rate": 0.0,
+    "bias": 0.07705675550493857,
+    "rel_bias": 1.1406297404946106,
+    "rmse": 0.08720714059929574,
+    "mcse": 0.004103880650003023,
+    "coverage": 0.51,
+    "coverage_se": 0.04998999899979995,
+    "ci_width": 0.17101731582312205
+   },
+   "rho_T": {
+    "n_reps": 100,
+    "n_converged": 100,
+    "failure_rate": 0.0,
+    "bias": -0.2501997715647519,
+    "rel_bias": -0.5003995431295039,
+    "rmse": 0.25944421404705387,
+    "mcse": 0.006898524590786932,
+    "coverage": 0.07,
+    "coverage_se": 0.02551470164434615,
+    "ci_width": 0.2833994105088694
+   },
+   "n_converged": 100
+  },
+  "naive": {
+   "rho_H": {
+    "n_reps": 100,
+    "n_converged": 100,
+    "failure_rate": 0.0,
+    "bias": 0.040838601807023006,
+    "rel_bias": 0.6045118753841376,
+    "rmse": 0.050754217630062604,
+    "mcse": 0.0030288165000177105,
+    "coverage": 0.76,
+    "coverage_se": 0.04270831300812525,
+    "ci_width": 0.12242496775701583
+   },
+   "rho_T": {
+    "n_reps": 100,
+    "n_converged": 100,
+    "failure_rate": 0.0,
+    "bias": -0.29590340296730566,
+    "rel_bias": -0.5918068059346113,
+    "rmse": 0.30121563290977604,
+    "mcse": 0.005660454368032567,
+    "coverage": 0.0,
+    "coverage_se": 0.0,
+    "ci_width": 0.23077203039437713
+   },
+   "n_converged": 100
+  },
+  "simex": {
+   "rho_H": {
+    "n_reps": 100,
+    "n_converged": 100,
+    "failure_rate": 0.0,
+    "bias": 0.01358482704080631,
+    "rel_bias": 0.20108889403247687,
+    "rmse": 0.042593551555398665,
+    "mcse": 0.004057245804597877,
+    "coverage": NaN,
+    "coverage_se": NaN,
+    "ci_width": NaN
+   },
+   "rho_T": {
+    "n_reps": 100,
+    "n_converged": 100,
+    "failure_rate": 0.0,
+    "bias": -0.3234198617378248,
+    "rel_bias": -0.6468397234756496,
+    "rmse": 0.33548186579241007,
+    "mcse": 0.008959885522493622,
+    "coverage": NaN,
+    "coverage_se": NaN,
+    "ci_width": NaN
+   },
+   "n_converged": 100
+  }
+ },
+ "wall_seconds": 330.6311480998993,
+ "host": "Abhays-MacBook-Pro"
+}

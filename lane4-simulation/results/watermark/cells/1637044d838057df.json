@@ -1,0 +1,86 @@
+{
+ "cell_id": "1637044d838057df",
+ "cell": {
+  "pi": 0.3,
+  "p": 1.0,
+  "detector": "wm_se90",
+  "se": 0.9,
+  "sp": 1.0,
+  "arm": "asymB",
+  "n": 1000,
+  "pool": "personallm_gpt-4-0613",
+  "trait": "EXT"
+ },
+ "reps": 100,
+ "truth": {
+  "rho_H": 0.06755632679849685,
+  "rho_T": 0.5,
+  "pi": 0.3,
+  "loading": 0.1351126535969937
+ },
+ "detector": {
+  "se_set": 0.9,
+  "sp_set": 1.0,
+  "realized_sp": 1.0,
+  "realized_se": 0.9007333333333334,
+  "flag_rate": 0.27021999999999996
+ },
+ "estimators": {
+  "delete": {
+   "rho_H": {
+    "n_reps": 100,
+    "n_converged": 100,
+    "failure_rate": 0.0,
+    "bias": 0.0019347100333893807,
+    "rel_bias": 0.028638472887374755,
+    "rmse": 0.03400744345444232,
+    "mcse": 0.0034123411013344653,
+    "coverage": 0.95,
+    "coverage_se": 0.021794494717703377,
+    "ci_width": 0.1442900357723974
+   },
+   "rho_T": {
+    "n_reps": 100,
+    "n_converged": 100,
+    "failure_rate": 0.0,
+    "bias": -0.35225312796513764,
+    "rel_bias": -0.7045062559302753,
+    "rmse": 0.3596118193114649,
+    "mcse": 0.007274137407487601,
+    "coverage": 0.01,
+    "coverage_se": 0.0099498743710662,
+    "ci_width": 0.3075808236451178
+   },
+   "n_converged": 100
+  },
+  "naive": {
+   "rho_H": {
+    "n_reps": 100,
+    "n_converged": 100,
+    "failure_rate": 0.0,
+    "bias": 0.03025608689278539,
+    "rel_bias": 0.447864594281917,
+    "rmse": 0.040878256667695255,
+    "mcse": 0.0027626679283045837,
+    "coverage": 0.88,
+    "coverage_se": 0.03249615361854384,
+    "ci_width": 0.12271337565817389
+   },
+   "rho_T": {
+    "n_reps": 100,
+    "n_converged": 100,
+    "failure_rate": 0.0,
+    "bias": -0.3160930921577094,
+    "rel_bias": -0.6321861843154188,
+    "rmse": 0.32019521843735904,
+    "mcse": 0.0051346859692965995,
+    "coverage": 0.0,
+    "coverage_se": 0.0,
+    "ci_width": 0.23104118959868505
+   },
+   "n_converged": 100
+  }
+ },
+ "wall_seconds": 0.5232152938842773,
+ "host": "Abhays-MacBook-Pro"
+}
