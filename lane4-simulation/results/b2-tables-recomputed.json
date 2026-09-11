@@ -1,0 +1,131 @@
+{
+ "h4_coverage": {
+  "delete": {
+   "n_pass": 309,
+   "n_total": 372
+  },
+  "naive": {
+   "n_pass": 224,
+   "n_total": 372
+  },
+  "em": {
+   "n_pass": 52,
+   "n_total": 372
+  },
+  "labelfree": {
+   "n_pass": 59,
+   "n_total": 372
+  },
+  "simex": {
+   "n_pass": 0,
+   "n_total": 372
+  }
+ },
+ "h3_rmse_beats_delete": {
+  "simex": {
+   "calibrated": [
+    22,
+    102
+   ],
+   "degraded": [
+    12,
+    90
+   ]
+  },
+  "em": {
+   "calibrated": [
+    0,
+    102
+   ],
+   "degraded": [
+    10,
+    90
+   ]
+  },
+  "labelfree": {
+   "calibrated": [
+    0,
+    102
+   ],
+   "degraded": [
+    13,
+    90
+   ]
+  },
+  "bounds_c": {
+   "calibrated": [
+    44,
+    102
+   ],
+   "degraded": [
+    65,
+    90
+   ]
+  }
+ },
+ "corrected_bias": {
+  "simex": {
+   "n_cells": 210,
+   "frac_le_020": 0.38571428571428573,
+   "median_ratio": 0.33632555674525444,
+   "max_ratio": 59.227026334770194
+  },
+  "delete": {
+   "n_cells": 210,
+   "frac_le_020": 0.34285714285714286,
+   "median_ratio": 0.42561763187339596,
+   "max_ratio": 47.41859562357498
+  },
+  "em": {
+   "n_cells": 210,
+   "frac_le_020": 0.11904761904761904,
+   "median_ratio": 1.2544456898140606,
+   "max_ratio": 50.351416623270566
+  },
+  "labelfree": {
+   "n_cells": 210,
+   "frac_le_020": 0.09523809523809523,
+   "median_ratio": 1.916193847719291,
+   "max_ratio": 2098.7946513844545
+  },
+  "bounds_c": {
+   "n_cells": 210,
+   "frac_le_020": 0.2523809523809524,
+   "median_ratio": 0.5164942670727488,
+   "max_ratio": 2.0653325131100035
+  }
+ },
+ "pi_hat_err": {
+  "em": {
+   "n_cells": 228,
+   "median": 0.06790547154837184,
+   "max": 0.22288468264523492,
+   "frac_le_002": 0.03070175438596491
+  },
+  "labelfree": {
+   "n_cells": 228,
+   "median": 0.070742,
+   "max": 0.4161306915887851,
+   "frac_le_002": 0.0
+  }
+ },
+ "h5_bound_width": {
+  "all": {
+   "n_cells": 372,
+   "median_width": 0.14048614571362775,
+   "max_width": 0.32732714184319434,
+   "frac_width_lt_0.2": 0.8010752688172043,
+   "median_coverage": 0.974,
+   "frac_coverage_ge_0.90": 1.0
+  },
+  "n=1000": {
+   "n_cells": 228,
+   "median_width": 0.13123740158098973,
+   "max_width": 0.32732714184319434,
+   "frac_width_lt_0.2": 0.7807017543859649,
+   "median_coverage": 0.974,
+   "frac_coverage_ge_0.90": 1.0
+  }
+ },
+ "simex_b_boot_available": true
+}
