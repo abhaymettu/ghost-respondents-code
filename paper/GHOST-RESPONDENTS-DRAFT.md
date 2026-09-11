@@ -40,11 +40,25 @@ nothing beats doing nothing, at the operating points survey researchers actually
 
 ### 1.1 The problem
 
-Open-ended survey items are increasingly answered by a language model rather than by the
-respondent. The field's current response is detection followed by deletion: score every
-response with an AI-text classifier, drop what the classifier flags, analyze what remains.
-Recent reports from Pew Research Center on bogus respondents in opt-in panels, work in
-Communications Psychology on identifying generative-AI use among otherwise genuine
+On September 8, 2026, Meta introduced Muse, a personal AI agent that runs on a dedicated
+"Muse Secure VM" holding both the agent and the person's own data, and that acts on the
+person's behalf across third-party services: turning a saved Instagram reel into a grocery
+list, checking out with Stripe's Link, and logging into existing accounts via 1Password
+(Meta, 2026-09-08). Muse is one instance of a broader shift already underway: a persistent,
+cross-service agent that a person (or a company, for a person) owns, sitting between that
+person and every service they touch, survey platforms included.
+
+This changes where the stewardship problem for survey measurement lives. If a respondent's
+open-ended answer is drafted, edited, or dictated by an agent like this before it reaches a
+survey platform, the record of who authored the response - and the fidelity of what was
+measured - lives one layer inside the respondent's own device and vendor of choice, not the
+survey administrator's system. Detection then contends with something structurally different
+from spam or a bot farm: a general-purpose assistant already mediating a person's outward
+communication for legitimate, disclosed reasons, of which answering a survey is one small and
+undifferentiated case. The field's current response is detection followed by deletion: score
+every response with an AI-text classifier, drop what the classifier flags, analyze what
+remains. Recent reports from Pew Research Center on bogus respondents in opt-in panels, work
+in Communications Psychology on identifying generative-AI use among otherwise genuine
 responders, and the arXiv literature on agentic AI against survey quality control all treat
 the problem as detection. `TODO: verify the exact framing of each of the three motivation
 sources in RADAR-DAY6.md item 1 before quoting them; only titles and URLs are on file.`
@@ -100,7 +114,18 @@ different object (machine scoring of human-written answers, not machine authorsh
 persona-conditioning literature (PersonaLLM, arXiv 2305.02547; Argyle et al., 2023) asks
 whether trait conditioning shows up in generated text; we take that answer as a measured
 input, the pool coupling, and propagate it through a correction the persona literature does
-not attempt (lane 2 pivot positioning). `TODO: the terminology footnote distinguishing
+not attempt (lane 2 pivot positioning). Detect-and-delete is complete-case analysis, and
+section 2.3 shows the missingness mechanism is the classifier itself, nonignorable whenever
+detection errors correlate with a covariate of the trait (r_F != 0). The IRT literature on
+nonignorable item nonresponse formalizes exactly this class of mechanism through selection
+models (Heckman) and pattern-mixture models (Little), and through the multidimensional-IRT,
+latent-regression, and multiple-group alternatives Rose, von Davier, and Nagengast (2015)
+derive from them; a 2026 Psychometrika paper extends the same lineage to a joint Bayesian
+model of not-reached and omitted item nonresponse. That is adjacent machinery for a
+structurally similar but substantively different problem (unanswered test items, not
+discarded complete responses); we borrow its vocabulary for the selection channel in section
+2.3 rather than its estimators, and note it is a different Psychometrika paper from the
+joint-scoring model cited above. `TODO: the terminology footnote distinguishing
 "contamination" here from training-data contamination (arXiv 2510.07175) and the
 rectification lineage (ACL 2026, aclanthology 2026.acl-long.498; arXiv 2511.21140) are on
 the radar list but have not been read in full; cite only after a read.`
@@ -169,7 +194,13 @@ mean, and
 
 whenever r_F != 0, sp < 1, and the human measurement is not both perfectly reliable and
 perfectly valid (Prop. 11). This is indirect range restriction induced by the detector; it
-does not depend on pi or se and is present in a clean sample run through a detector.
+does not depend on pi or se and is present in a clean sample run through a detector. The
+threshold rule on F is, formally, a univariate normal selection model in the sense of Heckman
+(1976, 1979): pass status is a latent propensity correlated with the trait, thresholded to
+produce a binary indicator, which is the same construction the IRT nonignorable-nonresponse
+literature (Rose, von Davier, and Nagengast, 2015) uses to model omitted and not-reached test
+items. Under that literature's terms, detect-and-delete is complete-case analysis and the
+range restriction above is what happens when the mechanism is NMAR by construction.
 
 Combining residual contamination, range restriction, and the mean gap the detector
 manufactures between surviving humans and machines gives the survivor validity
@@ -773,10 +804,18 @@ lane 2 memo says so.`
 - Huang, L., et al. (2025). Detecting AI-generated survey responses. AAPOR (NORC PACT).
 - Liang, W., et al. (2023). GPT detectors are biased against non-native English writers.
   Patterns. doi 10.1016/j.patter.2023.100779.
+- Meta (2026-09-08). Introducing Muse, a personal AI agent.
+  about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/.
 - Messing, S. Hidden measurement error in LLM pipelines distorts annotation, evaluation, and
   benchmarking. arXiv 2604.11581.
 - Pennebaker, J. W., and King, L. A. (1999). Linguistic styles: Language use as an individual
   difference. Journal of Personality and Social Psychology.
+- Rose, N., von Davier, M., and Nagengast, B. (2015). Commonalities and differences in
+  IRT-based methods for nonignorable item nonresponses. Psychological Test and Assessment
+  Modeling, 57(4), 472-498.
+- Bayesian modeling and inference for item response models with nonignorable missing data
+  (2026). Psychometrika. `TODO: verify author names and volume/issue before submission; only
+  the DOI landing page has been read.`
 - PersonaLLM. arXiv 2305.02547.
 - Pew Research Center (2026-08-27). No easy fix for bogus respondents in online opt-in polls.
 - Style as a confound. arXiv 2608.26710.
