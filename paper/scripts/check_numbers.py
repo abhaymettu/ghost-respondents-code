@@ -39,7 +39,7 @@ DOC_SOURCED = {
     "0.458": "sqrt(0.2096), computed in prose", "0.073": "CALIBRATION-REPORT sec 2 max proxy r", "2.24": "sqrt(5), theory MCSE ratio",
     "3.12.13": "python", "2.5.3": "numpy", "1.18.1": "scipy", "1.9.0": "sklearn",
     "2301.07597": "arXiv", "2604.11581": "arXiv", "2305.02547": "arXiv", "2608.26710": "arXiv", "2510.07175": "arXiv", "2511.21140": "arXiv",
-    "2026": "year", "2025": "year", "2024": "year", "2023": "year", "1999": "year", "2.2": "SPEC section", "1.5": "SPEC section",
+    "2026": "year", "2025": "year", "2024": "year", "2023": "year", "1999": "year", "2.2": "SPEC section", "1.5": "SPEC section", "171": "SPEC.md frozen commit db7c171",
     "0.7": "rel_H", "0.5": "rho_T / p / kappa level", "0.95": "Layer A calibrated se", "0.99": "sp", "0.85": "sp", "0.3": "r_F Layer A", "0.2": "kappa", "1.0": "kappa/p",
     "0.4": "c level", "0.9": "c level", "0.20": "pi level", "0.30": "pi level", "0.01": "pi level", "0.02": "pi level", "0.05": "pi level",
     "500": "n / reps", "1000": "n", "2400": "n", "5000": "n", "100": "reps", "60": "n_bins", "8": "n_bins", "4": "k", "20": "simex B", "10": "em n_init", "2": "T3 bar pts",

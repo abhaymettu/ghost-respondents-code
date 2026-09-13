@@ -1,0 +1,45 @@
+{
+  "source": "lane3-testbed/data/scores/pk_human.json::detector_p_machine",
+  "detector": "roberta-base-openai-detector",
+  "n_essays": 2467,
+  "correlations": {
+    "cEXT": {
+      "r": -0.0139,
+      "p": 0.49112,
+      "spearman": 0.0149,
+      "spearman_p": 0.45902
+    },
+    "cNEU": {
+      "r": 0.0199,
+      "p": 0.32415,
+      "spearman": 0.0039,
+      "spearman_p": 0.84641
+    },
+    "cAGR": {
+      "r": 0.0271,
+      "p": 0.17899,
+      "spearman": 0.0241,
+      "spearman_p": 0.23115
+    },
+    "cCON": {
+      "r": 0.045,
+      "p": 0.02544,
+      "spearman": 0.0702,
+      "spearman_p": 0.00048
+    },
+    "cOPN": {
+      "r": -0.0127,
+      "p": 0.52712,
+      "spearman": -0.0272,
+      "spearman_p": 0.17712
+    }
+  },
+  "headline_r_F": {
+    "definition": "|point-biserial r| between the detector score P(machine) and the binary trait label, largest magnitude over the five traits",
+    "max_abs_trait": "cCON",
+    "r": 0.045,
+    "max_abs_spearman_trait": "cCON",
+    "spearman": 0.0702,
+    "caveat": "lower bound: median-split labels attenuate against continuous BFI scores"
+  }
+}

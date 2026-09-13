@@ -1,0 +1,25 @@
+# Public release = `git archive`. Everything marked export-ignore below is development
+# material that the paper does not cite and a reader does not need: lane prompts, run logs,
+# working boards, the day-by-day review notes, and the halted in-sample grid. It stays in the
+# repository and in history; it is excluded from the released tree.
+#
+# Build the release tree with:
+#   git archive --format=tar --prefix=ghost-respondents/ HEAD | tar -x -C /tmp
+# and check it against README.md before publishing anything.
+
+prompts/**        export-ignore
+notes/**          export-ignore
+board/**          export-ignore
+board.md          export-ignore
+.claude/**        export-ignore
+.remember/**      export-ignore
+.gitattributes    export-ignore
+
+*.log           export-ignore
+*.pid           export-ignore
+
+lane4-simulation/board.md                             export-ignore
+lane4-simulation/RADAR-DAY*.md                        export-ignore
+lane4-simulation/ASTRA-REREVIEW-*.md                  export-ignore
+lane4-simulation/ZHANG-OCT1-DRAFT.md                  export-ignore
+lane4-simulation/results/layerb-grid-insample-partial/** export-ignore

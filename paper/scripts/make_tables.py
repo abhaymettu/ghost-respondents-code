@@ -38,7 +38,6 @@ PIS = (0.01, 0.02, 0.05, 0.10, 0.20, 0.30)
 DETS = ("none", "calibrated", "degraded", "oracle")
 PS = (0.0, 0.5, 1.0)
 TIE_TOL = 1e-9
-ABBR = {"naive": "nv", "delete": "dl", "simex": "sx", "labelfree": "lf", "em": "em"}
 
 NUM: dict[str, object] = {}
 TABLES: dict[str, str] = {}
@@ -317,32 +316,46 @@ NUM["lb_none_cells"] = len(none_cells)
 se_, sp_ = NUM["lb_se_gpt4_calibrated"], NUM["lb_sp_gpt4_calibrated"]
 NUM["lb_deleted_machine_share_pi020_cal"] = (se_ * 0.20) / (se_ * 0.20 + (1 - sp_) * 0.80)
 
-# ---- boundary map (core, n = 1000) ----
+# ---- resolvability map (core, n = 1000) ----
+# Where is there a contamination bias large enough to see? A per-cell minimum over five
+# noisy estimators is biased toward zero and its argmin is not identified at this MCSE, so
+# the map reports the naive bias against its own Monte Carlo standard error instead.
 bm_rows = []
-winner_counts = Counter()
 bm = {}
 for d in DETS:
     for p in PS:
         row = [d, f(p, 1)]
         for pi in PIS:
             r = next(r for r in core if r["cell"]["n"] == 1000 and r["cell"]["detector"] == d and r["cell"]["p"] == p and r["cell"]["pi"] == pi)
-            vals = {e: abs(est(r, e)["rel_bias"]) for e in ALL_EST}
-            e_best = min(vals, key=vals.get)
-            bm[(d, p, pi)] = (vals[e_best], e_best)
-            winner_counts[e_best] += 1
-            row.append(f"{vals[e_best]:.3f} ({ABBR[e_best]})")
+            nv = est(r, "naive")
+            rel, rel_mcse = nv["rel_bias"], nv["mcse"] / r["truth"]["rho_H"]
+            res = abs(nv["bias"]) > 2.0 * nv["mcse"]
+            bm[(d, p, pi)] = (rel, rel_mcse, res)
+            row.append(f"{'**' if res else ''}{rel:+.3f}{'**' if res else ''} ({rel_mcse:.3f})")
         bm_rows.append(row)
-NUM["lb_bm_winner_counts"] = dict(winner_counts)
 NUM["lb_bm_cells"] = len(bm)
+NUM["lb_bm_resolvable"] = sum(v[2] for v in bm.values())
+NUM["lb_bm_unresolvable"] = sum(not v[2] for v in bm.values())
+NUM["lb_bm_over_0.30"] = sum(abs(v[0]) > 0.30 for v in bm.values())
+NUM["lb_bm_worst"] = max(abs(v[0]) for v in bm.values())
+# the draft says every cell over 0.30 relative bias sits at p = 1 with pi >= 0.20, one per
+# detector level; check it here rather than asserting it in prose
+_big = [k for k, v in bm.items() if abs(v[0]) > 0.30]
+assert sorted(_big) == sorted((d, 1.0, pi) for d in DETS for pi in (0.20, 0.30)), _big
 for key in [("none", 1.0, 0.20), ("none", 1.0, 0.30), ("calibrated", 1.0, 0.30), ("calibrated", 1.0, 0.20)]:
-    NUM[f"lb_bm_{key[0]}_p{key[1]}_pi{key[2]}"] = bm[key][0]
-    NUM[f"lb_bm_{key[0]}_p{key[1]}_pi{key[2]}_winner"] = bm[key][1]
-NUM["lb_bm_worst"] = max(bm.values(), key=lambda t: t[0])[0]
-NUM["lb_bm_cells_over_0.30"] = sum(v[0] > 0.30 for v in bm.values())
-NUM["lb_bm_cells_under_0.10"] = sum(v[0] < 0.10 for v in bm.values())
-save("tab_boundary_map", "Boundary map: smallest |relative bias| over the five estimators (core box, n = 1000, 100 reps)",
+    NUM[f"lb_bm_{key[0]}_p{key[1]}_pi{key[2]}"] = abs(bm[key][0])
+# resolvability and residual bias of the delete column, by detector
+for d in DETS:
+    cells = [r for r in core if r["cell"]["n"] == 1000 and r["cell"]["detector"] == d]
+    dl = [est(r, "delete") for r in cells]
+    NUM[f"lb_bm_delete_resolvable_{d}"] = sum(abs(e["bias"]) > 2.0 * e["mcse"] for e in dl)
+    NUM[f"lb_bm_delete_max_rel_{d}"] = max(abs(e["rel_bias"]) for e in dl)
+save("tab_boundary_map", "Resolvability map: naive relative bias and its Monte Carlo standard error (core box, n = 1000, 100 reps)",
      md_table(["detector", "p"] + [f"pi = {pi}" for pi in PIS], bm_rows),
-     "Winner abbreviations: nv naive, dl delete, sx simex, lf labelfree, em EM. Point-estimate map only; no partial-identification bounds were computed.")
+     "Each cell is the naive relative bias with its relative MCSE in parentheses. **Bold** marks the cells where "
+     "|bias| > 2 MCSE, i.e. where contamination bias is resolvable at 100 replications; an unbolded cell bounds the "
+     "bias by about 2 MCSE rather than showing it is zero. No estimator is named per cell: the per-cell minimum over "
+     "five estimators is biased toward zero at this MCSE and its argmin is not identified.")
 
 # ---- 500-rep slice ----
 by_id100 = {r["cell_id"]: r for r in LB}
@@ -562,6 +575,30 @@ save("tab_layerA_thresholds", "Layer A (parametric, rho_H = 0.418, 500 reps): th
      "labelfree at n_bins = 60 is the frozen grid's column; n_bins = 8 is the M1 re-run (pass2-numerical-check.md section 10.10), the shipped default.")
 
 # --------------------------------------------------------------------------------------
+# bounds_c: the conditional sensitivity band (Layer A, all 372 cells)
+# --------------------------------------------------------------------------------------
+BC = {r["cell_id"]: r for r in load(L4 / "results" / "grid-bounds-c" / "grid.jsonl")}
+assert len(BC) == 372 and set(BC) == {r["cell_id"] for r in LA}
+bc_cov = [BC[r["cell_id"]]["summary"]["estimators"]["bounds_c"]["rho_H"]["coverage"] for r in LA]
+bc_w = [BC[r["cell_id"]]["summary"]["estimators"]["bounds_c"]["rho_H"]["ci_width"] for r in LA]
+nv_w = [r["summary"]["estimators"]["naive"]["rho_H"]["ci_width"] for r in LA]
+NUM["bc_cells"] = len(BC)
+NUM["bc_coverage_min"] = float(np.min(bc_cov))
+NUM["bc_coverage_median"] = float(np.median(bc_cov))
+NUM["bc_width_median"] = float(np.median(bc_w))
+# The band is the naive Fisher interval widened by the identification range of c, so it is
+# never narrower than that interval; this records by how much.
+ratios = [b / n for b, n in zip(bc_w, nv_w)]
+NUM["bc_width_ratio_median"] = float(np.median(ratios))
+NUM["bc_wider_than_naive"] = sum(r > 1.0 for r in ratios)
+assert NUM["bc_wider_than_naive"] == len(ratios), "band is never narrower than the naive interval"
+for n_ in (1000, 5000):
+    idx = [i for i, r in enumerate(LA) if r["cell"]["n"] == n_]
+    NUM[f"bc_n{n_}_cells"] = len(idx)
+    NUM[f"bc_n{n_}_width_under_0.2"] = sum(bc_w[i] < 0.2 for i in idx)
+    NUM[f"bc_n{n_}_width_median"] = float(np.median([bc_w[i] for i in idx]))
+
+# --------------------------------------------------------------------------------------
 # r_F sensitivity (closed forms E7, E30, E33, E48 to E51)
 # --------------------------------------------------------------------------------------
 RF_JSON = json.loads((ROOT / "lane3-testbed" / "analysis" / "fluency_r_f_results.json").read_text())
@@ -569,6 +606,18 @@ r_F_meas = abs(float(RF_JSON["headline_r_F"]["r"]))
 NUM["rF_measured"] = r_F_meas
 NUM["rF_measured_signed"] = float(RF_JSON["headline_r_F"]["r"])
 NUM["rF_measured_meta"] = {k: v for k, v in RF_JSON["headline_r_F"].items() if k != "r"}
+# individual surface proxies: the largest is avg_word_len vs cOPN, three times the composite
+rf_proxy = {(feat, tr): v["r"] for feat, d in RF_JSON["correlations"].items() for tr, v in d.items()}
+NUM["rF_proxy_max"] = max(abs(v) for v in rf_proxy.values())
+assert max(rf_proxy, key=lambda k: abs(rf_proxy[k])) == ("avg_word_len", "cOPN")
+
+# Direct anchor: the detector's own score against the labels (analysis/detector_r_f.py).
+DET_RF = json.loads((ROOT / "lane3-testbed" / "analysis" / "detector_r_f_results.json").read_text())
+NUM["rF_detector_n"] = DET_RF["n_essays"]
+NUM["rF_detector_by_trait"] = {t: v["r"] for t, v in DET_RF["correlations"].items()}
+NUM["rF_detector_max"] = abs(float(DET_RF["headline_r_F"]["r"]))
+NUM["rF_detector_max_trait"] = DET_RF["headline_r_F"]["max_abs_trait"]
+NUM["rF_detector_spearman_max"] = abs(float(DET_RF["headline_r_F"]["spearman"]))
 
 
 def att_pass(pi, c, kappa, delta, rel_H, rho_T, r_F, se, sp):
@@ -619,9 +668,9 @@ NUM["rF_pure_ratio_degraded_measured"] = pop.rho_H_pass(0.7, 0.5, r_F_meas, 0.85
 NUM["rF_attpass_k0.2_c0.0_calibrated_rF0.5"] = att_pass(0.10, 0.0, 0.2, 0.0, 0.7, 0.5, 0.5, 0.99, 0.99)
 NUM["rF_attpass_k0.2_c0.0_calibrated_measured"] = att_pass(0.10, 0.0, 0.2, 0.0, 0.7, 0.5, r_F_meas, 0.99, 0.99)
 save("tab_rF_sensitivity", "r_F sensitivity of detect-and-delete: survivor-sample Att_pass at pi = 0.10, degraded detector (se = sp = 0.85)",
-     md_table(["kappa", "c", "no detector"] + [f"r_F = {rf}" for rf in RFS] + [f"r_F = {r_F_meas:.3f} (measured)"], rf_rows)
+     md_table(["kappa", "c", "no detector"] + [f"r_F = {rf}" for rf in RFS] + [f"r_F = {r_F_meas:.3f} (surface proxy)"], rf_rows)
      + "\nThe selection channel alone at sp = 0.85:\n\n" + md_table([""] + [f"r_F = {rf}" for rf in RFS], [q_row, var_row]),
-     f"rel_H = 0.7, rho_T = 0.5, delta = 0. Closed forms (E7), (E30), (E33), (E48) to (E51). The measured r_F is the composite-fluency point-biserial on cNEU from lane3-testbed/analysis/fluency_r_f_results.json, stated there as a lower bound. At r_F = {r_F_meas:.3f} the detector destroys {100 * (1 - NUM['rF_q_measured']):.2f}% of trait variance.")
+     f"rel_H = 0.7, rho_T = 0.5, delta = 0. Closed forms (E7), (E30), (E33), (E48) to (E51). Two measured values of r_F sit inside the r_F = 0.05 column. The anchor is the direct one: the point-biserial between the detector's own score and the trait label, largest magnitude {NUM['rF_detector_max']:.3f} on {NUM['rF_detector_max_trait']} over {NUM['rF_detector_n']} essays (lane3-testbed/analysis/detector_r_f.py). The surface-proxy composite is {r_F_meas:.3f} on cNEU (analysis/fluency_r_f_results.json), the larger of the two and the one the last column prints. Both are stated in their source as lower bounds. At r_F = {r_F_meas:.3f} the detector destroys {100 * (1 - NUM['rF_q_measured']):.2f}% of trait variance.")
 
 # --------------------------------------------------------------------------------------
 # write numbers

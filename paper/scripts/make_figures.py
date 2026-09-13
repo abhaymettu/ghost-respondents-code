@@ -77,31 +77,35 @@ cb = fig.colorbar(im, ax=ax, fraction=0.03, pad=0.02)
 cb.set_label("relative bias (%)")
 savefig(fig, "fig1_contamination_bias_map")
 
-# ---------------------------------------------------------------- fig 2: boundary map
-fig, axes = plt.subplots(1, 4, figsize=(11, 2.9), sharey=True)
-abbr = {"naive": "nv", "delete": "dl", "simex": "sx", "labelfree": "lf", "em": "em"}
-vmax = 0.40
+# ---------------------------------------------------------------- fig 2: resolvability map
+# Shaded by |naive bias| / MCSE: is there a contamination bias here large enough to see at
+# 100 replications? Cells at or under 2 are unresolved, not shown to be zero.
+fig, axes = plt.subplots(1, 4, figsize=(13.5, 3.2), sharey=True)
+vmax = 14.0
 for ax, d in zip(axes, DETS):
     G = np.zeros((3, 6))
-    W = [["" for _ in PIS] for _ in PS]
+    T = [["" for _ in PIS] for _ in PS]
     for i, p in enumerate(PS):
         for j, pi in enumerate(PIS):
             r = next(r for r in core if r["cell"]["n"] == 1000 and r["cell"]["detector"] == d and r["cell"]["p"] == p and r["cell"]["pi"] == pi)
-            vals = {e: abs(r["estimators"][e]["rho_H"]["rel_bias"]) for e in EST_STYLE}
-            e = min(vals, key=vals.get)
-            G[i, j], W[i][j] = vals[e], abbr[e]
+            nv = r["estimators"]["naive"]["rho_H"]
+            G[i, j] = abs(nv["bias"]) / nv["mcse"]
+            rb = nv["rel_bias"]
+            T[i][j] = f"{rb if abs(rb) >= 5e-3 else 0.0:+.2f}\n({nv['mcse'] / r['truth']['rho_H']:.3f})"
     im = ax.imshow(G, cmap="viridis_r", vmin=0, vmax=vmax, aspect="auto")
     for i in range(3):
         for j in range(6):
-            ax.text(j, i, f"{G[i, j]:.2f}\n{W[i][j]}", ha="center", va="center", fontsize=7,
-                    color="white" if G[i, j] > 0.5 * vmax else "black")
+            ax.text(j, i, T[i][j], ha="center", va="center", fontsize=5.5, linespacing=1.4,
+                    color="white" if G[i, j] > 0.5 * vmax else "black",
+                    fontweight="bold" if G[i, j] > 2.0 else "normal")
     ax.set_xticks(range(6), [f"{pi:.2f}" for pi in PIS], fontsize=7)
     ax.set_title(f"detector: {d}", fontsize=9)
     ax.set_xlabel("pi")
 axes[0].set_yticks(range(3), [f"p = {p:.1f}" for p in PS])
 cb = fig.colorbar(im, ax=axes, fraction=0.015, pad=0.01)
-cb.set_label("best |relative bias| over 5 estimators")
-fig.suptitle("Boundary map: the smallest relative bias any estimator reaches (core box, n = 1000, 100 reps)", fontsize=9, y=1.02)
+cb.set_label("|naive bias| / MCSE")
+fig.suptitle("Resolvability map: naive relative bias (relative MCSE); bold where |bias| > 2 MCSE "
+             "(core box, n = 1000, 100 reps)", fontsize=9, y=1.02)
 savefig(fig, "fig2_boundary_map")
 
 # ---------------------------------------------------------------- fig 3: RMSE by estimator and detector (Layer B vs Layer A)

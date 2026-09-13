@@ -24,7 +24,8 @@ output, the analytic sample stops being one measurement process and becomes a mi
 with an unknown mixing fraction. I model that mixture, derive in closed form the bias it puts
 in a validity coefficient, and test four corrections - detect-and-delete, misclassification
 SIMEX, label-free prevalence estimation with an errors-in-variables correction, and a
-two-class EM mixture - against four pre-registered thresholds in two simulation layers: a
+two-class EM mixture - against four thresholds fixed in the analysis plan before the grid ran
+(SPEC.md, commit db7c171; not externally registered), in two simulation layers: a
 parametric layer that checks the algebra, and a semi-synthetic layer that injects real
 machine-written personality essays into real human essays scored by an out-of-fold text model.
 
@@ -40,17 +41,23 @@ bias in most cells, every correction adds more variance than bias it removes, an
 estimator has the lowest RMSE in 274 of 336 cells. At five times the
 replications the best corrector meets the bias bar in 28.5% of resolvable cells against a
 requirement of 100%, and EM is slightly harmful. The deletion-selection bias scales with the
-square of the fluency-trait correlation r_F, and at the measured r_F of 0.053 the detector
-destroys 0.1% of trait variance.
+square of the correlation r_F between the trait and the variable the detector thresholds on.
+That variable is the detector's own score, and its largest point-biserial correlation with the
+five labels is 0.045, so the detector destroys about a tenth of a percent of trait variance.
 
-The partial-identification bound meets its target. Given the
-prevalence, treating the coupling as unidentified and bounded, inverting the closed form at
-both ends of its range, and unioning in the sampling uncertainty of the observed correlation
-brackets the human validity coefficient with coverage no lower than 93.6% in any of the 372
-parametric cells (median 97.4%) and a width inside the pre-registered 0.2 in 78% of cells at
-n = 1000 and all of them at n = 5000. The prevalence is itself not estimable here, so a field
-application has to sweep it and report a wider union than this. That is the deliverable: a boundary map of where deletion helps, where correction
-helps, and where nothing beats doing nothing, plus the bound to report when nothing does.
+What is left is a conditional sensitivity band. Taking the prevalence, the homogenization,
+the mean gap and the human reliability as known, treating only the coupling as unidentified
+inside [0, 1], inverting the closed form at both ends of that range, and unioning in the
+sampling uncertainty of the observed correlation gives an interval that contains the human
+validity coefficient in at least 93.6% of replications in every one of the 372 parametric
+cells (median 97.4%). Coverage at that level is what the construction guarantees: the true
+coupling lies inside the assumed range by definition and the other four inputs are supplied,
+so the band is the naive Fisher interval widened by the identification range of c. It is
+wider than that interval in all 372 cells, by a median factor of 1.28. The band is what a
+sensitivity analysis reports, not a field-usable bound: the prevalence it conditions on is
+itself not estimable here. The deliverable is the map of where deletion helps, where
+correction helps, and where nothing beats doing nothing, with that band as the sensitivity
+statement to attach when nothing does.
 
 ---
 
@@ -58,13 +65,9 @@ helps, and where nothing beats doing nothing, plus the bound to report when noth
 
 ### 1.1 The problem
 
-On September 8, 2026, Meta introduced Muse, a personal AI agent that runs on a dedicated
-"Muse Secure VM" holding both the agent and the person's own data, and that acts on the
-person's behalf across third-party services: turning a saved Instagram reel into a grocery
-list, checking out with Stripe's Link, and logging into existing accounts via 1Password
-(Meta, 2026-09-08). Muse is one instance of a broader shift already underway: a persistent,
-cross-service agent that a person (or a company, for a person) owns, sitting between that
-person and every service they touch, survey platforms included.
+Persistent cross-service AI agents that act on a person's behalf are now a consumer product,
+sitting between that person and every service they touch, survey platforms included (Meta,
+2026-09-08).
 
 This changes where the stewardship problem for survey measurement lives. If a respondent's
 open-ended answer is drafted, edited, or dictated by an agent like this before it reaches a
@@ -88,15 +91,16 @@ voter-file match made quality worse by dropping valid respondents who would not 
 details. Gerber and Cash (2026) assemble bot checks, timing and logic checks, cross-response
 similarity, and ten linguistic markers into a pipeline for identifying generative-AI use among
 otherwise genuine responders. Panda et al. (2026) show LLM agents completing web surveys and
-passing embedded attention checks by reading the exposed DOM. All three treat the problem as
-detection, and none of them carries a correction step.
+passing embedded attention checks by reading the exposed DOM. NORC has presented detection
+tooling and bias mitigation for the same problem at AAPOR (Huang et al., 2025). All of them
+treat the problem as detection, and none carries a correction step.
 
 Detect-and-delete has two known weaknesses. Detectors miss, so contamination survives
 deletion. And detectors err non-randomly: they flag non-native and low-fluency human writing
 at higher rates (Liang et al., 2023; Park et al., 2026), and fluency correlates with the
 traits open-ended items are used to measure, so deleting flagged text selects on the trait.
 Zhang, Xu, and Alvero (2025) name the second concern in one sentence, as a risk analogous to
-attention-check filtering, without formalizing it (lane 2 positioning memo, claim (c)).
+attention-check filtering, without formalizing it.
 
 This paper treats contamination as a measurement problem rather than a detection problem.
 The analytic sample is a two-component mixture: a human measurement process with its own
@@ -110,7 +114,7 @@ human validity coefficient without gold-standard authorship labels.
 
 ### 1.2 What the paper finds
 
-Three of the four pre-registered thresholds (SPEC 4.4) fail outright and the fourth fails at
+Three of the four analysis-plan thresholds (SPEC 4.4) fail outright and the fourth fails at
 both realistic detector operating points (section 5.3). On real
 text at realistic detector operating points the regime is variance-dominated: contamination
 bias is smaller than the sampling noise of the coefficient in most cells, and every correction
@@ -123,46 +127,40 @@ Four results follow.
 1. The contamination algebra is exact and reproduces on real text, including the sign flip
    from attenuation to inflation that the assignment rule alone produces (section 5.2).
 2. The detector's realized sensitivity on frontier-model text at a 99% specificity operating
-   point is 27%. That single number does more to explain the correction results than any
-   property of any estimator (Table 1).
-3. The deletion-selection bias is O(r_F^2), and at the measured r_F = 0.053 it is
-   negligible; section 5.6 gives it as a sensitivity table over r_F.
-4. The partial-identification bound meets its pre-registered target. Given pi, treating the coupling c as unidentified and bounded, then
-   unioning the identification width with the sampling uncertainty in the observed
-   correlation, brackets rho_H with coverage no lower than 93.6% in any of the 372 parametric
-   cells and a width inside the registered 0.2 bar in 78% of n = 1000 cells and every
-   n = 5000 cell (section 5.4). Given pi is a real condition and section 5.4 says what it
-   costs.
-
-The fourth is the constructive half of the paper. At this validity level the appropriate
-output for a contaminated open-ended item is a bracket, not a coefficient.
+   point is 27% (Table 1).
+3. The deletion-selection bias is O(r_F^2), and at the measured r_F it is negligible;
+   section 5.6 gives it as a sensitivity table over r_F.
+4. Conditioning on pi, kappa, delta and rel_H and treating only the coupling c as
+   unidentified inside [0, 1] gives a sensitivity band on rho_H whose coverage is at least
+   93.6% in every one of the 372 parametric cells (section 5.4). Coverage at that level
+   follows from the construction rather than from the data: the true c is inside the assumed
+   range by definition, and the band is the naive Fisher interval widened by the
+   identification range of c, so it is never narrower than that interval and is wider in all
+   372 cells. Its four conditioning inputs are what a field application would have to supply,
+   and pi is not estimable here.
 
 ### 1.3 Relation to prior work
 
-The novelty gate (lane 2 positioning memo) checked three claims against the two closest
-papers by full-text read. Messing's "Hidden Measurement Error in LLM Pipelines" (arXiv
+Three claims of novelty were checked against the two closest papers by full-text read. Messing's "Hidden Measurement Error in LLM Pipelines" (arXiv
 2604.11581) decomposes variance inside an LLM-as-annotator pipeline and contains no
 respondent, no authorship variable, and no sample-level mixture. The SMR 2025 paper
 documents homogenization and self-reported prevalence (34%) and frames correction as future
 work. Neither builds the respondent-side mixture with a coupling parameter, a label-free
 prevalence estimator tied to a validity correction, or the deletion-selection result. The
-Psychometrika joint-IRT model for manual and automatic scores is adjacent machinery for a
-different object (machine scoring of human-written answers, not machine authorship). The
 persona-conditioning literature (PersonaLLM, arXiv 2305.02547; Argyle et al., 2023) asks
 whether trait conditioning shows up in generated text; I take that answer as a measured
 input - the pool coupling - and propagate it through a correction the persona literature does
-not attempt (lane 2 pivot positioning). Detect-and-delete is complete-case analysis, and
+not attempt. Detect-and-delete is complete-case analysis, and
 section 2.3 shows the missingness mechanism is the classifier itself, nonignorable whenever
 detection errors correlate with a covariate of the trait (r_F != 0). The IRT literature on
 nonignorable item nonresponse formalizes exactly this class of mechanism through selection
 models (Heckman) and pattern-mixture models (Little), and through the multidimensional-IRT,
 latent-regression, and multiple-group alternatives Rose, von Davier, and Nagengast (2015)
-derive from them; a 2026 Psychometrika paper extends the same lineage to a joint Bayesian
-model of not-reached and omitted item nonresponse. That is adjacent machinery for a
-structurally similar but substantively different problem (unanswered test items, not
-discarded complete responses); I borrow its vocabulary for the selection channel in section
-2.3 rather than its estimators, and note it is a different Psychometrika paper from the
-joint-scoring model cited above.
+derive from them; Wu, Ma, and Chen (2026) extend the same lineage to a joint Bayesian model
+of not-reached and omitted item nonresponse. That is adjacent machinery for a structurally
+similar but substantively different problem (unanswered test items, not discarded complete
+responses); I borrow its vocabulary for the selection channel in section 2.3 rather than its
+estimators.
 
 Two neighboring literatures need naming so they are not mistaken for this one. The first is
 terminological. Contamination in this paper means machine-authored responses sitting inside an
@@ -281,8 +279,8 @@ subsets: `bounds_c` below, and the `robust_t` / `robust_grm` pair of section 5.7
   point estimate is untouched by B_boot, so every simex bias and RMSE number in this paper is
   the same in both runs. SPEC 3.1. What is tested here is the 2006 method as implemented; no
   newer misclassification-SIMEX variant was verified in the scan (`docs/LIT-SCAN.md` C3).
-- **labelfree** (label-free prevalence plus errors-in-variables, SPEC 3.2, the
-  pre-registered primary): estimates pi by matching the observed score distribution to a
+- **labelfree** (label-free prevalence plus errors-in-variables, SPEC 3.2, the analysis
+  plan's primary): estimates pi by matching the observed score distribution to a
   mixture of machine-reference and human-reference distributions on a Hellinger criterion
   with n_bins = 8 (the default changed from 60 to 8 after the Layer A grid completed;
   section 5.1 reports both), then inverts the moment equations of section 2.2 for mu_H, V_H,
@@ -296,7 +294,7 @@ subsets: `bounds_c` below, and the `robust_t` / `robust_grm` pair of section 5.7
   and unions the resulting identification interval with a 95% Fisher-z sampling interval on
   rho_obs_hat, in the sense of Imbens and Manski (2004). It treats pi, rel_H, kappa and delta
   as known structural inputs and brackets c alone; section 5.4 says what conditioning on a
-  known pi costs in practice. Registered after the frozen grid, unit-tested against
+  known pi costs in practice. Added after the frozen grid, unit-tested against
   from-scratch closed forms (7 checks, 39/39 in `test_estimators.py`), and run on all 372
   Layer A cells (`results/grid-bounds-c/`). Section 5.4 reports it.
 
@@ -400,7 +398,7 @@ true single-chunk reliability r_H^2 = 0.0183, an overstatement of 11.5x, which i
 "weak-H2" failure: between-chunk consistency does not identify rel_H on this corpus within
 the tested scoring setup (`WEAK-H2-DIAGNOSIS.md`, as narrowed in `PASS3-FIXES.md`).
 
-### 4.3 Pre-registered thresholds (SPEC 4.4)
+### 4.3 The analysis-plan thresholds (SPEC 4.4)
 
 - T1: corrected bias at most 20% of naive bias in every cell with pi <= 0.20 and c <= partial.
 - T2: 95% CI coverage inside [92, 98].
@@ -408,8 +406,11 @@ the tested scoring setup (`WEAK-H2-DIAGNOSIS.md`, as narrowed in `PASS3-FIXES.md
 - T4: correction beats detect-and-delete on RMSE at the calibrated and degraded operating
   points; concede oracle.
 
-The thresholds were fixed before any grid run and are evaluated as written on the cell set
-of 4.2.
+The thresholds were fixed in the analysis plan before any grid run and are evaluated as
+written on the cell set of 4.2. SPEC.md is a file in this repository, frozen at commit
+db7c171; it was not registered with OSF, AsPredicted, or any other external registry, and it
+was amended after the grids ran to add the `bounds_c` estimator of section 5.4. "Fixed in the
+analysis plan" below means exactly that and not pre-registration.
 
 ---
 
@@ -419,7 +420,7 @@ of 4.2.
 
 Every closed-form moment reproduces. Over the 372 cells, the naive rho_H bias against the
 closed-form rho_obs - rho_H has a maximum |z| of 3.16 and zero exceedances of the
-pre-registered z* = 4.081 (mean z = -0.18); pass 2 (`pass2-numerical-check.md`) reports 1116
+analysis plan's z* = 4.081 (mean z = -0.18); pass 2 (`pass2-numerical-check.md`) reports 1116
 per-cell comparisons over three moments with zero failures, 4092 exactness checks against
 `population.py` to 4.4e-16, and 142 hand-computed numbers reproduced. Table 2 shows the
 three regimes at n = 1000.
@@ -613,89 +614,104 @@ identical to naive in 31 of 72 none cells). At this signal level, doing nothing 
 
 ### 5.4 The boundary map
 
-SPEC 4.4 asks for the cells where nothing works, as a deliverable. Table 7 and Figure 2
-give the smallest absolute relative bias any of the five estimators reaches, core box, n =
-1000, with the winning estimator.
+SPEC 4.4 asks for the cells where nothing works, as a deliverable. The first question a map
+of that kind has to answer is where there is a contamination bias large enough to see at all.
+Table 7 and Figure 2 give the naive relative bias in the core box at n = 1000 against its own
+Monte Carlo standard error, and mark the cells where it exceeds two MCSE.
 
-**Table 7. Best |relative bias| over five estimators (core box, n = 1000, 100 reps).
-nv naive, dl delete, sx simex, lf labelfree, em EM.**
+An earlier version of this table reported the smallest absolute relative bias any of the five
+estimators reached in each cell, with the estimator that reached it. That statistic does not
+survive its own noise. The relative MCSE is about 4.6% per estimator per cell, so a minimum
+taken over five near-zero quantities is biased toward zero and its argmin is a draw rather
+than a finding. The map below reports the quantity the MCSE does support.
+
+**Table 7. Naive relative bias and its relative MCSE (core box, n = 1000, 100 reps).
+Bold marks |bias| > 2 MCSE.**
 
 | detector | p | pi = 0.01 | 0.02 | 0.05 | 0.10 | 0.20 | 0.30 |
 |---|---|---|---|---|---|---|---|
-| none | 0.0 | 0.082 (lf) | 0.006 (nv) | 0.046 (lf) | 0.036 (lf) | 0.099 (lf) | 0.046 (lf) |
-| none | 0.5 | 0.025 (nv) | 0.002 (sx) | 0.042 (nv) | 0.010 (nv) | 0.123 (em) | 0.153 (nv) |
-| none | 1.0 | 0.010 (nv) | 0.074 (nv) | 0.076 (em) | 0.159 (nv) | 0.335 (em) | 0.398 (em) |
-| calibrated | 0.0 | 0.015 (sx) | 0.005 (sx) | 0.016 (nv) | 0.006 (em) | 0.013 (sx) | 0.010 (sx) |
-| calibrated | 0.5 | 0.006 (sx) | 0.051 (em) | 0.115 (nv) | 0.004 (dl) | 0.004 (dl) | 0.101 (sx) |
-| calibrated | 1.0 | 0.068 (nv) | 0.042 (em) | 0.138 (nv) | 0.113 (sx) | 0.080 (sx) | 0.316 (sx) |
-| degraded | 0.0 | 0.006 (sx) | 0.004 (lf) | 0.028 (nv) | 0.037 (lf) | 0.016 (dl) | 0.003 (lf) |
-| degraded | 0.5 | 0.005 (nv) | 0.003 (dl) | 0.002 (nv) | 0.002 (nv) | 0.024 (dl) | 0.022 (em) |
-| degraded | 1.0 | 0.028 (sx) | 0.004 (dl) | 0.029 (sx) | 0.051 (sx) | 0.054 (sx) | 0.053 (sx) |
-| oracle | 0.0 | 0.006 (em) | 0.003 (dl) | 0.085 (lf) | 0.007 (sx) | 0.058 (dl) | 0.025 (dl) |
-| oracle | 0.5 | 0.001 (dl) | 0.035 (lf) | 0.055 (dl) | 0.009 (dl) | 0.025 (dl) | 0.059 (dl) |
-| oracle | 1.0 | 0.052 (dl) | 0.011 (em) | 0.048 (nv) | 0.053 (em) | 0.101 (dl) | 0.001 (dl) |
+| none | 0.0 | **-0.114** (0.044) | -0.006 (0.047) | **-0.099** (0.046) | **-0.121** (0.046) | **-0.266** (0.047) | **-0.287** (0.045) |
+| none | 0.5 | +0.025 (0.044) | -0.002 (0.046) | +0.042 (0.047) | +0.010 (0.042) | **+0.145** (0.047) | **+0.153** (0.046) |
+| none | 1.0 | -0.010 (0.041) | +0.074 (0.045) | +0.085 (0.044) | **+0.159** (0.045) | **+0.352** (0.046) | **+0.472** (0.044) |
+| calibrated | 0.0 | -0.051 (0.053) | -0.048 (0.052) | -0.016 (0.047) | -0.022 (0.044) | **-0.102** (0.046) | **-0.168** (0.045) |
+| calibrated | 0.5 | -0.047 (0.050) | +0.054 (0.045) | **+0.115** (0.048) | +0.016 (0.049) | +0.019 (0.050) | **+0.145** (0.049) |
+| calibrated | 1.0 | +0.068 (0.042) | +0.044 (0.040) | **+0.138** (0.044) | **+0.204** (0.044) | **+0.318** (0.045) | **+0.597** (0.045) |
+| degraded | 0.0 | -0.056 (0.045) | -0.037 (0.045) | -0.028 (0.049) | **-0.124** (0.047) | **-0.121** (0.044) | **-0.271** (0.048) |
+| degraded | 0.5 | -0.005 (0.046) | +0.023 (0.048) | +0.002 (0.049) | +0.002 (0.041) | +0.069 (0.043) | +0.071 (0.049) |
+| degraded | 1.0 | +0.060 (0.042) | +0.067 (0.045) | **+0.108** (0.046) | **+0.228** (0.053) | **+0.385** (0.041) | **+0.530** (0.042) |
+| oracle | 0.0 | +0.069 (0.046) | -0.026 (0.046) | **-0.133** (0.046) | **-0.104** (0.047) | **-0.240** (0.044) | **-0.226** (0.045) |
+| oracle | 0.5 | -0.001 (0.039) | -0.071 (0.048) | +0.062 (0.044) | +0.040 (0.043) | **+0.099** (0.046) | +0.071 (0.045) |
+| oracle | 1.0 | +0.069 (0.051) | +0.014 (0.045) | +0.048 (0.053) | **+0.085** (0.042) | **+0.401** (0.049) | **+0.515** (0.050) |
 
 Reading it:
 
-- **The method's limit in this box is the top-right corner of the undetected rows.** At p =
-  1 with no detector and pi >= 0.20 the best available estimator still carries 34% to 40%
-  relative bias (0.335, 0.398), and p = 1, pi = 0.30 with the calibrated detector is at
-  0.316. Only these three of 72 cells exceed 0.30; 61 of 72 are under 0.10. At p = 1, pi =
-  0.20 the calibrated detector's best is 8.0% (simex), so that cell is not part of the
-  boundary. This is the reachable boundary; the true high-c corner SPEC imagines lies past
-  c_pool and cannot be built from these pools.
-- **The degraded detector is the best-behaved column.** At sp = 0.85 it catches 69% of
-  frontier machine text, so deletion removes most of the contamination; at sp = 0.99 it
-  catches 27% and leaves most of it in. What it does delete is still mostly machine: at pi =
-  0.20 the realized rates put about 86% of the deleted observations in the machine component.
-  The cost of the calibrated detector is the contamination it misses and the sample it
-  discards, not a flood of removed humans. A detector tuned for a low false-positive rate is
-  the one that fails.
-- **No cell is uniformly won by a correction.** The winner is naive or delete in 34 of the 72
-  cells (naive 17, delete 17, simex 17, em 11, labelfree 10); no estimator wins a majority
-  anywhere.
-- **The partial-identification bound SPEC asks for meets its target once sampling
-  uncertainty is included.**
-  The construction: treat c as unidentified inside a stated interval, and use the E36/E17
-  closed forms (`Att(pi, c)` affine and increasing in c) to invert the observed `rho_obs` into
+- **More than half the box has no visible contamination bias, and the boundary is the p = 1,
+  high-pi corner.** The naive bias clears 2 MCSE in 33 of the 72 cells; in the other 39 it is
+  inside about 2 MCSE of zero, which bounds it at roughly a tenth of the estimand rather than
+  showing it is zero. Where the bias is resolvable it behaves as (E39) says it should: it grows with
+  pi, it is negative at p = 0 and positive at p = 1, and the eight cells above 0.30 relative
+  bias are exactly the eight at p = 1 with pi >= 0.20, one per detector level at each of the
+  two prevalences. The worst is p = 1, pi = 0.30 under the calibrated detector at +0.597.
+  This is the reachable boundary; the high-c corner SPEC imagines lies past c_pool and cannot
+  be built from these pools.
+- **The degraded detector leaves the least residual bias after deletion.** The naive rows
+  are not what separates the detector levels: naive ignores the detector by construction, and
+  what varies down its column is per-detector seed noise (section 5.7 measures that spread).
+  The comparison that matters is what survives deletion. At sp = 0.85 the
+  detector catches 69% of frontier machine text, and the delete estimator's bias is resolvable
+  in 2 of its 18 cells, worst case 0.172 relative. At sp = 0.99 it catches 27%, and delete's
+  bias is resolvable in 6 of 18 cells, worst case 0.472, essentially the undeleted value. What
+  the degraded detector does delete is still mostly machine: at pi = 0.20 the realized rates
+  put about 86% of the deleted observations in the machine component. The cost of the
+  calibrated detector is the contamination it misses and the sample it discards, not a flood
+  of removed humans. A detector tuned for a low false-positive rate is the one that fails.
+- **What the partial-identification construction gives is a conditional sensitivity band,
+  and its coverage is a property of the construction rather than a result.**
+  The construction: hold pi, kappa, delta and rel_H at their known values, treat c as
+  unidentified inside a stated interval, and use the E36/E17 closed forms (`Att(pi, c)` affine
+  and increasing in c) to invert the observed `rho_obs` into
   `rho_H in [rho_obs / Att(pi, c_hi), rho_obs / Att(pi, c_lo)]`. Built first on Layer B for
   the 18 detector=none cells, with c bounded by this study's reachable coupling (`c_pool =
   0.379`, gpt-4/EXT), it gives every cell a width under 0.2 - widths run 0.0015 to 0.0735,
   narrowest at low pi - and covers the true rho_H in only 8 of 18 (`h5_bounds.py`,
-  `results/h5-bounds/bounds.json`). That width is understated: the bound
-  carries the identification uncertainty from unknown c and treats `rho_obs_hat`, a Monte
-  Carlo point estimate carrying naive's own MCSE, as exact. At n = 1000 the sampling
-  noise in a Pearson correlation is around 0.03 in correlation units, comparable to or larger
-  than the whole identification width, so the width criterion passes and the bound misses.
+  `results/h5-bounds/bounds.json`), because it treats `rho_obs_hat`, a Monte Carlo point
+  estimate carrying naive's own MCSE, as exact. At n = 1000 the sampling noise in a Pearson
+  correlation is around 0.03 in correlation units, comparable to or larger than the whole
+  identification width.
 
-  The fix is Imbens and Manski (2004): propagate a 95% Fisher-z interval on `rho_obs_hat`
-  through both `Att` endpoints and union the two sources of uncertainty. Registered as
-  `bounds_c` and run across all 372 Layer A cells at every detector level
-  (`results/grid-bounds-c/`, `ESTIMATOR-FIX-REPORT.md` section 3), over the widest
-  interval available - the full structural range c in [0, 1], not Layer B's pool-specific
-  0.379 - the corrected bound covers
-  the truth in at least 93.6% of replications in every one of the 372 cells, median 97.4%,
-  against a median 34.9% for the point-estimate version. Width is what it costs: median 0.1405
-  overall, and SPEC's "under 0.2 at n = 1000" bar is met in 178/228 (78.1%) of n = 1000 cells,
-  not universally. The structure of that width is the useful part. It splits into an
-  identification component, a function of pi, kappa, rel_H, delta and not of n, and a sampling
-  component that shrinks with n. At n = 5000 the sampling part has mostly gone and the
-  remaining median width is 0.0749, under the bar in 72 of 72 cells. So the identification
-  width alone is never the binding constraint in this design; what fails the bar at n <= 1000
-  is finite-sample noise, which a larger sample or a tighter external bound on c removes.
+  `bounds_c` adds the missing piece in the manner of Imbens and Manski (2004): propagate a
+  95% Fisher-z interval on `rho_obs_hat` through both `Att` endpoints and union the two
+  sources of uncertainty. Run across all 372 Layer A cells at every detector level
+  (`results/grid-bounds-c/`, `ESTIMATOR-FIX-REPORT.md` section 3), over the full structural
+  range c in [0, 1] rather than Layer B's pool-specific 0.379, it contains rho_H in at least
+  93.6% of replications in every one of the 372 cells, median 97.4%, against a median 34.9%
+  for the version without the sampling union.
 
-  Two scope statements. First, the Layer B bound above is still the point-estimate version and
-  still covers only detector=none; detection adds a selection term (E30-E34) that is not part
-  of the harmlessness curve, so calibrated, degraded and oracle cells are not bounded on real
-  text. Second, the sharpness argument for a contaminated-sampling bound (Horowitz and Manski,
-  1995) has two cases, and this paper's mixture is the corrupted one rather than the
+  Coverage at that level is not evidence that the construction works, and the grid is not a
+  test of it. The true c lies inside [0, 1] by definition, the other four inputs are read from
+  the cell's own parameters, and `Att` is monotone in c, so the interval contains
+  `rho_obs / Att(pi, c_true)` whenever the Fisher interval contains `rho_obs`. The band is
+  therefore the naive Fisher interval widened by the identification range of c: it is wider
+  than that interval in all 372 cells, by a median factor of 1.28, and narrower in none. What
+  the grid does establish is where the extra width comes from. It splits into an
+  identification component, a function of pi, kappa, rel_H and delta but not of n, and a
+  sampling component that shrinks with n. Median width is 0.1405 overall; SPEC's "under 0.2 at
+  n = 1000" bar is met in 178/228 (78.1%) of n = 1000 cells. At n = 5000 the sampling part has
+  mostly gone: the median width is 0.0749 and every one of 72 cells is under the bar. The identification width alone is never the binding constraint in this design.
+
+  Three scope statements. The first is the conditioning, and it is the one that decides how
+  the band can be used. A field application has no pi, kappa, delta or rel_H to supply.
+  Section 5.3 shows pi in particular is not recoverable from score distributions at this
+  separation, so a practitioner would have to sweep the four inputs over plausible ranges and
+  report the union of the resulting bands, which is wider than anything here by an amount this
+  study does not compute. Second, the Layer B version is still the one without the sampling
+  union and still covers only detector=none; detection adds a selection term (E30-E34) that is
+  not part of the harmlessness curve, so calibrated, degraded and oracle cells are not bounded
+  on real text. Third, the sharpness argument for a contaminated-sampling bound (Horowitz and
+  Manski, 1995) has two cases, and this paper's mixture is the corrupted one rather than the
   contaminated one whenever c > 0, because the machine text depends on the true trait. The
-  bound reported here brackets rho_H under the stated interval for c; it is not claimed sharp
-  in the Horowitz-Manski sense. Third, and most limiting for practice, the bound conditions on
-  a known pi. Every cell supplies its own pi, and section 5.3 shows pi is not recoverable from
-  score distributions at this separation, so a field application would have to sweep pi and
-  report the union of brackets. That sweep is not run here, and the widths above are therefore
-  a lower bound on what a practitioner without a prevalence estimate would report.
+  band brackets rho_H under the stated interval for c; it is not claimed sharp in the
+  Horowitz-Manski sense.
 
 ### 5.5 Five times the replications: the failure is in the estimators
 
@@ -764,16 +780,38 @@ the calibrated and degraded cells, not fewer.
 
 The deletion-selection result of section 2.3 was the paper's original argument against
 detect-and-delete: a bias present even at zero residual contamination. It is real, and it is
-O(r_F^2). Lane 3 measured r_F on the essays as a point-biserial correlation between a
-composite fluency proxy (type-token ratio, sentence length, and negative filler-word rate)
-and the binary trait label: the largest magnitude is |r| = 0.053 on NEU, with individual
-proxies up to 0.073 on OPE and CON, stated explicitly as a lower bound because median-split
-labels and surface proxies both attenuate it (`CALIBRATION-REPORT.md` section 2).
+O(r_F^2). Everything then turns on the size of r_F, so it matters which correlation is
+measured.
+
+The quantity the derivation needs is the correlation between the variable the detector
+thresholds on and the trait, and in this study that variable is on disk: the
+roberta-base-openai-detector score for each of the 2467 Pennebaker-King essays, in
+`lane3-testbed/data/scores/pk_human.json`. Its point-biserial correlations with the five
+binary labels are -0.014 (EXT), +0.020 (NEU), +0.027 (AGR), +0.045 (CON) and -0.013 (OPE),
+only the CON value reaching p < 0.05 on 2467 essays, with Spearman rho no larger than 0.070
+(also CON; `lane3-testbed/analysis/detector_r_f.py`). That is the anchor: on this corpus and
+with this detector, |r_F| <= 0.045.
+
+A surface-proxy estimate is the secondary reading and runs slightly larger. Lane 3 measured
+r_F as the point-biserial between a composite fluency proxy (type-token ratio, sentence
+length, and negative filler-word rate) and the trait label, giving a largest magnitude of
+0.053 on NEU (`CALIBRATION-REPORT.md` section 2). Among the individual proxies one is much
+larger than either anchor: average word length against OPE at 0.161, three times the
+composite and outside the range Table 11 treats as measured. It is in the composite's inputs
+only through type-token ratio, and it is a lexical-complexity signal rather than a fluency
+one, which is the reason the composite does not carry it. Read on its own it says the surface
+of this text is not entirely trait-neutral even where the detector's own score nearly is, and
+the r_F = 0.30 column of Table 11 covers it with room to spare.
+
+Both measurements are lower bounds on a continuous-trait correlation: the labels are median
+splits, and dichotomizing a continuous trait attenuates its correlations.
 
 **Table 11. Survivor-sample Att_pass at pi = 0.10, degraded detector (se = sp = 0.85),
-rel_H = 0.7, rho_T = 0.5, delta = 0, from (E48) to (E51).**
+rel_H = 0.7, rho_T = 0.5, delta = 0, from (E48) to (E51). The last column is the
+surface-proxy composite, 0.053; the direct detector-score anchor is 0.045 and sits inside the
+r_F = 0.05 column.**
 
-| kappa | c | no detector | r_F = 0.05 | 0.07 | 0.10 | 0.30 | 0.50 | r_F = 0.053 (measured) |
+| kappa | c | no detector | r_F = 0.05 | 0.07 | 0.10 | 0.30 | 0.50 | r_F = 0.053 (surface proxy) |
 |---|---|---|---|---|---|---|---|---|
 | 0.2 | 0.0 | 0.9383 | 0.9879 | 0.9875 | 0.9865 | 0.9713 | 0.9398 | 0.9879 |
 | 0.2 | 0.9 | 0.9885 | 0.9973 | 0.9968 | 0.9959 | 0.9808 | 0.9495 | 0.9972 |
@@ -786,16 +824,18 @@ The selection channel alone at sp = 0.85:
 | q = 1 - r_F^2 psi | 0.99910 | 0.99824 | 0.99640 | 0.96764 | 0.91011 |
 | trait variance destroyed | 0.09% | 0.18% | 0.36% | 3.24% | 8.99% |
 
-At the measured r_F the degraded detector destroys 0.10% of trait variance. Deletion moves
+At either measured value the degraded detector destroys about a tenth of a percent of trait
+variance: 0.10% at the surface-proxy 0.053, less at the detector-score anchor. Deletion moves
 the first row from 0.938 to 0.988: it removes five points of contamination attenuation, and
-the selection channel alone costs 0.05% of the coefficient. For the selection channel to cancel the contamination it
-removes (row 2 at r_F = 0.5, 0.938 to 0.940) r_F would have to be roughly ten times what I
-measure; nothing on disk suggests the dichotomization attenuation is a factor of ten. At the
+the selection channel alone costs 0.05% of the coefficient. For the selection channel to
+cancel the contamination it removes (row 2 at r_F = 0.5, 0.938 to 0.940) r_F would have to be
+roughly ten times either measurement; nothing on disk suggests the dichotomization
+attenuation is a factor of ten. At the
 calibrated point (sp = 0.99) the selection channel is under 1% even at r_F = 0.5 (Att_pass
 0.991 for row 1). The claim the derivation supports (`lane1-partial-coupling.md` 3.5) is that
 deletion-selection is a bias whose size is governed by the out-of-domain false-positive rate
 and r_F; Figure 6 gives the r_F at which it would matter. SPEC 1.5's unconditional "kills
-detect-and-delete" does not hold at the measured r_F.
+detect-and-delete" does not hold at either measured r_F.
 
 Two things Prop. 14 adds that do not depend on r_F's size: the bias does not vanish as
 se -> 1 (only sp -> 1 removes it), and along a ROC curve the bias is not monotone in the
@@ -811,8 +851,9 @@ Liang et al. (2023) used to establish detector bias in the first place (Glickenh
 sufficient scale reaches r_F near zero on its own, and the selection channel closes for
 reasons unrelated to the detector's mechanism. Table 11 is therefore a sensitivity table over
 r_F, not a claim about where any particular detector sits on it. Nothing in this study
-measures r_F for a 2026 commercial detector. What it measures is the surface-proxy r_F of this
-corpus, 0.053, and what the coefficient costs at each level.
+measures r_F for a 2026 commercial detector. What it measures is r_F for one GPT-2-era
+classifier on one corpus - 0.045 from the detector's own score, 0.053 from surface proxies - and what the
+coefficient costs at each level.
 
 ### 5.7 Two further regimes: robust estimation, and near-perfect trait-independent detection
 
@@ -873,8 +914,16 @@ mixture; this cell shows a better *detector* can, to the extent one can actually
 
 ## 6. Discussion: what survey practice should do
 
-The results license a set of recommendations at the operating points the field faces, which
-are the low-validity, low-sensitivity ones.
+The recommendations below hold on this testbed, and elsewhere only where the operating point
+matches it: a validity coefficient near rho_H = 0.068, a detector whose sensitivity on
+frontier text is under a third at 99% specificity, and prevalence at or under 0.30. That is
+one corner of the space, and it is not the corner the field will be in for long. The testbed
+is a GPT-2-era detector reading 2023-era generated essays, while the operating points the
+field actually faces are 2026 detectors reading questionnaire-length answers. Section 7 says
+what is known about the gap; recommendation 3 in particular is a statement about a
+GPT-2-era classifier and should not be read as one about current commercial detection. Where the
+operating point does not match, what carries over is the algebra of section 2 and the method
+of section 5.4, not these numbers.
 
 1. **Report the naive coefficient with the contamination map, not a corrected coefficient.**
    In the reachable box the naive estimator has the lowest RMSE in 274 of 336 cells. A
@@ -882,17 +931,20 @@ are the low-validity, low-sensitivity ones.
    add variance without removing measurable bias. What the map supplies instead is a
    sensitivity statement: at contamination pi and pool coupling in the measured range, the
    naive coefficient is within the bracket of Table 3.
-2. **Where a point estimate has to carry weight, report a bound instead.** The partial-identification
-   bound of section 5.4 meets its pre-registered target: coverage no lower than
-   93.6% in any of the 372 parametric cells, width inside the registered 0.2 bar in 78% of
-   them at n = 1000 and in all of them at n = 5000. It does not need labels, a detector, or a
-   correctly specified mixture. It does need pi, and pi is the one quantity recommendation 4
-   says not to estimate from score distributions, so in practice the bound has to be swept
-   over a plausible range for pi and reported as the union. That union is wider than anything
-   reported here, and this study does not compute it: the 372 cells condition on the cell's
-   known pi. What the numbers establish is that the coupling being unidentified is not what
-   makes the bracket wide - sampling noise is - so a larger sample buys a tighter bracket in a
-   way that no amount of extra sample buys a working correction.
+2. **Where a point estimate has to carry weight, report a sensitivity band around it.** The
+   construction of section 5.4 needs no labels, no detector, and no correctly specified
+   mixture, but it does need four numbers the analyst has to assume: pi, kappa, delta and
+   rel_H. Given those, it says how far rho_H can sit from rho_obs across the full range of the
+   coupling. Its coverage in the grid follows from that conditioning, so the 93.6% figure is a
+   property of the construction and not evidence that the band will cover in the field. The
+   use it supports is a sensitivity analysis: sweep the four inputs over ranges the analyst can
+   defend, report the union of the resulting bands, and state the ranges. That union is wider
+   than any width reported here, and this study does not compute it - the 372 cells each
+   supply their own true parameters. Prevalence is the binding one, since recommendation 4
+   says not to estimate it from score distributions. What the grid does establish is where the
+   width comes from: at n <= 1000 it is sampling noise rather than the unidentified coupling,
+   so a larger sample tightens the band in a way that no amount of extra sample makes a
+   correction work.
 3. **If a detector is used, prefer the higher-sensitivity operating point and report what
    was deleted.** The degraded (sp = 0.85) column is the best-behaved in Table 7 because it
    catches 69% of frontier text; the calibrated (sp = 0.99) column leaves 73% of machine text
@@ -1055,9 +1107,10 @@ cd lane4-simulation && uv run --python .venv/bin/python --with matplotlib python
 | `lane4-simulation/results/b2-tables-recomputed.json` | H3/H4/SPEC-4.4 tables at the shipped estimator configuration | `recompute_b2_tables.py`, merging the frozen grid with the three column re-runs |
 | `lane4-simulation/population.py` | closed forms (E7), (E30), (E33), (E34) as functions | 4092 exactness checks vs the derivations to 4.4e-16 |
 | `lane3-testbed/pool_measurements.json` | c_pool, kappa, delta, g per pool and trait | `pool_measurement.py` |
-| `lane3-testbed/analysis/fluency_r_f_results.json` | r_F anchor | `analysis/fluency_anchor.py` |
+| `lane3-testbed/analysis/detector_r_f_results.json` | r_F anchor: the detector's own score against the five labels | `analysis/detector_r_f.py` |
+| `lane3-testbed/analysis/fluency_r_f_results.json` | r_F from surface fluency proxies (secondary) | `analysis/fluency_anchor.py` |
 | `paper/tables/numbers.json` | every number quoted here, keyed | `paper/scripts/make_tables.py` |
-| `SPEC.md` | the registered supplement (pre-registration) this paper's thresholds and design cite | frozen at commit `db7c17102355d7ef8b7799d206753b77a5c13801` ("SPEC: correct PK data description, NORC PACT attribution, and Layer B injection scope"); no uncommitted changes to this file as of this draft |
+| `SPEC.md` | the analysis plan this paper's thresholds and design cite; a repository file, not an external registration | frozen at commit `db7c17102355d7ef8b7799d206753b77a5c13801` ("SPEC: correct PK data description, NORC PACT attribution, and Layer B injection scope"); no uncommitted changes to this file as of this draft |
 
 **Seeds.** Layer A: per-(cell_id, rep) `SeedSequence` from master seed 20260907. Layer B:
 the same scheme from 20260909; six frozen calibration splits `729645da4c64c3a1` (216 core
@@ -1069,15 +1122,26 @@ excluded its parent text (true OOF). Machine chunks: mean decision function acro
 fold models, none of which saw the pool. Whole-text human scores: 5-fold OOF. Recorded in
 every Layer B cell's `era` block.
 
-**Excluded runs.** `results/layerb-grid-insample-partial/` (176 of 336 cells on in-sample
-chunk scores, halted by orchestrator decision D1) is preserved and unused; no number here
-comes from it. The Layer A `labelfree` column at n_bins = 60 is reported only where labelled.
+**Excluded runs.** The in-sample chunk-score run (176 of 336 cells, halted by orchestrator
+decision D1) contributes no number here. It is kept in the development repository and
+excluded from the released tree (`.gitattributes`; see README.md). The Layer A `labelfree` column at n_bins = 60 is reported only where labelled.
 
 The three single-column re-runs (`grid-labelfree-nbins8`, `grid-simex-boot50`,
 `grid-bounds-c`) use `run_grid_column.py`, which narrows the estimator map without touching
 the per-replication RNG construction, so every other estimator's draws are bit-identical to
 the frozen grid. `lane4-simulation/ESTIMATOR-FIX-REPORT.md` records the runs, their costs, and
 the merge.
+
+**Generative AI use.** This study was built and written with large language models, under
+the execution plan in SPEC sections 6 and 7. Models derived the closed forms of section 2,
+wrote the simulation and analysis code in `lane3-testbed/` and `lane4-simulation/`, ran the
+grids, and drafted this manuscript. The three verification passes below are themselves
+model-run, and pass 1 is deliberately a different model family from the one that produced the
+derivations, because correlated reasoning error is the failure mode that pass exists to
+catch. Every number in the paper is generated from the saved grid outputs by
+`paper/scripts/make_tables.py` and checked against the draft by
+`paper/scripts/check_numbers.py`. The author is responsible for the content, including the
+parts a model wrote.
 
 **Verification record.** Pass 1, blind re-derivation by a second model family and
 line-by-line diff (`derivations/pass1-diff-report.md`); pass 2, every closed-form moment
@@ -1191,8 +1255,6 @@ Anything still unconfirmed is marked `unverified`.
   Research, 54(3), 1197-1242. Verified live 2026-09-10 via the published SAGE record
   (ideas.repec.org/a/sae/somere/v54y2025i3p1197-1242.html); full author names, subtitle,
   volume, issue and pages all confirmed there.
-- Zhang, Y., and Tong, L. (2024). Analyzing text data in the framework of structural equation
-  modeling. Assessment in Psychology (APS). Author list per `RADAR-DAY7.md`. `unverified`.
 - Zrnic, T., and Candes, E. J. (2024). Cross-prediction-powered inference. PNAS, 121(15).
   V-mirror (PMC11009639).
 - roberta-base-openai-detector: openai-community, Hugging Face. Confirmed live.
@@ -1218,7 +1280,7 @@ state:
 3. **CLOSED 2026-09-10.** Chunk-1 distribution means/SDs regenerated and sourced
    (`paper/scripts/t3_chunk1_dist.py`, section 5.3), with the failing quantification
    assumptions named in the same place as of 2026-09-13.
-4. **CLOSED 2026-09-13 for Layer A; partially open on real text.** The registered `bounds_c`
+4. **CLOSED 2026-09-13 for Layer A; partially open on real text.** The `bounds_c`
    estimator covers all 372 Layer A cells at all four detector levels, with the Imbens-Manski
    union that fixes the point-estimate bound's coverage (section 5.4). The Layer B bound is
    still the point-estimate version over 18 detector=none cells; extending a bound to detected
@@ -1228,7 +1290,7 @@ state:
    References header states, per-entry. Entries that could not be confirmed stay marked
    `unverified`.
 7. **Affiliation and acknowledgements: BLOCKED-OWNER.** Needs Abhay's decision; the front
-   matter carries a placeholder. The pre-registration
+   matter carries a placeholder. The analysis-plan
    pointer is CLOSED (2026-09-10): SPEC.md is frozen at commit
    `db7c17102355d7ef8b7799d206753b77a5c13801` (Reproducibility appendix).
 
