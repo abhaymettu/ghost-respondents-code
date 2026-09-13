@@ -1,6 +1,6 @@
 # Ghost respondents: a boundary map for covert AI authorship in open-ended survey data
 
-Working paper, draft 2 (2026-09-13). Target shape: Psychological Methods.
+Working paper, draft 2 (2026-09-13).
 
 Author: Abhay Mettu. **Affiliation, corresponding address, and acknowledgements: PLACEHOLDER
 - owner decision, deliberately not filled in.**
@@ -143,8 +143,8 @@ Four results follow.
 
 Three claims of novelty were checked against the two closest papers by full-text read. Messing's "Hidden Measurement Error in LLM Pipelines" (arXiv
 2604.11581) decomposes variance inside an LLM-as-annotator pipeline and contains no
-respondent, no authorship variable, and no sample-level mixture. The SMR 2025 paper
-documents homogenization and self-reported prevalence (34%) and frames correction as future
+respondent, no authorship variable, and no sample-level mixture. Zhang, Xu, and Alvero (2025)
+document homogenization and self-reported prevalence (34%) and frame correction as future
 work. Neither builds the respondent-side mixture with a coupling parameter, a label-free
 prevalence estimator tied to a validity correction, or the deletion-selection result. The
 persona-conditioning literature (PersonaLLM, arXiv 2305.02547; Argyle et al., 2023) asks
@@ -932,8 +932,8 @@ of section 5.4, not these numbers.
    sensitivity statement: at contamination pi and pool coupling in the measured range, the
    naive coefficient is within the bracket of Table 3.
 2. **Where a point estimate has to carry weight, report a sensitivity band around it.** The
-   construction of section 5.4 needs no labels, no detector, and no correctly specified
-   mixture, but it does need four numbers the analyst has to assume: pi, kappa, delta and
+   construction of section 5.4 needs no labels, no detector, and no fitted mixture, but it
+   does need four numbers the analyst has to assume: pi, kappa, delta and
    rel_H. Given those, it says how far rho_H can sit from rho_obs across the full range of the
    coupling. Its coverage in the grid follows from that conditioning, so the 93.6% figure is a
    property of the construction and not evidence that the band will cover in the field. The
@@ -946,10 +946,12 @@ of section 5.4, not these numbers.
    so a larger sample tightens the band in a way that no amount of extra sample makes a
    correction work.
 3. **If a detector is used, prefer the higher-sensitivity operating point and report what
-   was deleted.** The degraded (sp = 0.85) column is the best-behaved in Table 7 because it
-   catches 69% of frontier text; the calibrated (sp = 0.99) column leaves 73% of machine text
-   in and discards sample. The deleted set at pi = 0.20 is 86% machine, so the cost is missed
-   contamination, not removed humans.
+   was deleted.** The degraded (sp = 0.85) detector catches 69% of frontier text, and after
+   deletion the delete estimator's bias is resolvable in 2 of its 18 cells, worst case 0.172
+   relative; the calibrated (sp = 0.99) detector leaves 73% of machine text in, discards
+   sample, and leaves delete's bias resolvable in 6 of 18 cells, worst case 0.472 (section
+   5.4). The deleted set at pi = 0.20 is 86% machine, so the cost is missed contamination,
+   not removed humans.
 4. **Do not report a prevalence estimate from score distributions at this separation.**
    Both prevalence estimators miss by five to six points and are pulled toward the middle of
    the range, and the error is bias, not noise (Table 10). Three quantification assumptions
@@ -1123,7 +1125,7 @@ fold models, none of which saw the pool. Whole-text human scores: 5-fold OOF. Re
 every Layer B cell's `era` block.
 
 **Excluded runs.** The in-sample chunk-score run (176 of 336 cells, halted by orchestrator
-decision D1) contributes no number here. It is kept in the development repository and
+decision D1) contributes no number here. It is kept on the development machine and
 excluded from the released tree (`.gitattributes`; see README.md). The Layer A `labelfree` column at n_bins = 60 is reported only where labelled.
 
 The three single-column re-runs (`grid-labelfree-nbins8`, `grid-simex-boot50`,
@@ -1147,9 +1149,9 @@ parts a model wrote.
 line-by-line diff (`derivations/pass1-diff-report.md`); pass 2, every closed-form moment
 against Layer A (`lane4-simulation/pass2-numerical-check.md`, PASS); pass 3, adversarial
 methods review (`derivations/pass3-methods-review.md`) and NLP review with fixes
-(`lane3-testbed/PASS3-FIXES.md`), followed by an independent re-review of the reporting
-(`lane4-simulation/ASTRA-REREVIEW-20260909.md`) whose required fixes are applied in
-`LAYERB-GRID.md` and the 10.10 addendum.
+(`lane3-testbed/PASS3-FIXES.md`), followed by an independent re-review of the reporting whose
+required fixes are recorded in `lane4-simulation/LAYERB-GRID.md` and section 10.10 of
+`lane4-simulation/pass2-numerical-check.md`.
 
 **Table A1. Layer A thresholds** is `paper/tables/tab_layerA_thresholds.md`; **Table A2**
 (detector transfer rates at the fixed HC3 threshold) is `PASS3-FIXES.md` T7d.
