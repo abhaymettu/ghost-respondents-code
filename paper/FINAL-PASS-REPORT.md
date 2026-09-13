@@ -33,9 +33,8 @@ below was already on disk before this pass started.
 **1.2**
 - Rewritten as four numbered positive results instead of three in prose, with the bound added
   as the fourth.
-- New closing line, which is the one-sentence stress test the brief asked for: at this
-  validity level the honest output of a contaminated open-ended item is a bracket, not a
-  coefficient.
+- New closing line: at this validity level the appropriate output for a contaminated
+  open-ended item is a bracket, not a coefficient.
 
 **1.3**
 - Closed the second TODO. Two paragraphs added: the terminological separation from
@@ -201,16 +200,13 @@ say so.
 This is now a reviewable draft rather than scaffolding. It is 1,249 lines, complete through
 section 8 plus references, with every claim traced to a file in this repository and every
 unresolved item listed in one place with a status instead of scattered as inline TODOs. The
-spine it lost when the kill claim failed has been replaced rather than papered over: the
-boundary map is the descriptive deliverable, and the partial-identification bound is the
-prescriptive one, and the bound is the first thing in the project that meets a pre-registered
-target without qualification beyond a condition the paper states plainly. The paper's
-strongest feature is still that it reports its own failures at full magnitude - 0/372 nominal
-coverage for the pre-registered primary, the withdrawn kill claim, EM getting worse with more
-resolution, the naive estimator winning 274 of 336 cells - and this pass added failures rather
-than removing any, including one internal contradiction in the section 5.7 restatement of
-Prop. 14 and three new limitations that a reviewer would otherwise have found first. What it
-cannot do yet is claim a working correction, and it does not try to. The remaining risk is not
+boundary map is the descriptive deliverable and the partial-identification bound is the
+prescriptive one; the bound meets its pre-registered target conditional on a known pi. The
+negative results stand as stated: 0/372 nominal coverage for the pre-registered primary, the
+r_F-conditional deletion-selection result, EM getting worse with more resolution, the naive
+estimator winning 274 of 336 cells. This pass also fixed one internal contradiction in the
+section 5.7 restatement of Prop. 14 and added three limitations. There is no working
+correction. The remaining risk is not
 in the writing: it is that the whole boundary map sits at rho_H = 0.068, a validity level set
 by a 256-token chunk scorer, and the one experiment that would tell you whether the negative
 results survive a better scoring pipeline is named as future work rather than run.

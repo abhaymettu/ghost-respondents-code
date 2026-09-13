@@ -27,8 +27,7 @@ points" plus the conditional r_F claim.
 
 **Section 1 (Introduction).** Unchanged in problem setup (the mixture framing, coupling c,
 homogenization). What changed is section 1.2 ("What the paper finds"): it now states the
-threshold failures as the finding in the first sentence, not as a caveat after a positive
-result.
+threshold results in the first sentence.
 
 **Section 2 (mixture model, section 2.3 detect-and-delete).** The derivation is untouched —
 pass 3 could not break any of it. What changed is the framing sentence at the end of 2.3
@@ -132,32 +131,29 @@ it.
 
 ## Career framing: which version serves which audience
 
-One-page comparison, honest, no inflation. The document being compared is the same paper
+One-page comparison. The document being compared is the same paper
 (there is only one version, the boundary-map version); the question is how the pass-3 rewrite
 changed its legibility to two different readers.
 
 **For quant psych PhD applications, this version is stronger than the kill-claim version
 would have been.** A methods-focused admissions committee is reading for exactly the things
 this rewrite adds: a three-pass verification discipline (independent re-derivation, numerical
-certification against simulation, adversarial review with a mandate to find the error) that
-caught its own headline claim being wrong before it shipped; a pre-registered analysis plan
-whose failures are reported as failures, with the magnitude of the miss stated (82-98%, not
-"mostly"); and a negative result that is mechanistically explained rather than shrugged at
-(the estimators fail because the box is variance-dominated at this validity level, not because
-the correction machinery is broken in some unspecified way). That is closer to what a strong
+certification against simulation, adversarial review) that revised the headline claim before
+submission; a pre-registered analysis plan with the threshold results stated at their
+magnitude (82-98% miss); and a negative result with a mechanism (the box is
+variance-dominated at this validity level). That is closer to what a strong
 methods dissertation chapter looks like than a paper with one clean positive finding would
 have been. The genuine cost: there is no splashy result to lead with in a research statement,
 and the paper is not yet peer-reviewed or even submitted, so it is evidence of process rather
 than evidence of a finished, cited contribution. A committee that skims for "what did you
-discover" rather than "how did you handle discovering you were wrong" will get less out of it.
+discover" rather than reading the methods will get less out of it.
 
 **For industry research roles, the calculus is more mixed.** The boundary map itself is a
 genuinely useful industry artifact — section 6's six recommendations are exactly the kind of
 decision rule ("report the naive coefficient with the contamination map," "prefer the
 higher-sensitivity detector operating point and report what was deleted") a research scientist
-would want to hand to a product team, and the honest failure of the label-free prevalence
-estimator and the EM mixture is the kind of finding that saves someone else from shipping a
-broken correction. But an interview panel or a resume screen optimizes differently from a
+would want to hand to a product team, and the label-free prevalence and EM mixture
+results are the kind of finding that saves someone else from shipping a broken correction. But an interview panel or a resume screen optimizes differently from a
 dissertation committee: a one-line pitch of "we tested four corrections against detect-and-
 delete and none of them beat it" reads, out of context, as a null result, and industry
 research roles more often want a portfolio piece that ends in a working, deployed capability.

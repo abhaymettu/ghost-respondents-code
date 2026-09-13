@@ -1,6 +1,6 @@
-# Honest-gaps closure spec (paper/GHOST-RESPONDENTS-DRAFT.md TODO list, 7 items)
+# Gaps closure spec (paper/GHOST-RESPONDENTS-DRAFT.md TODO list, 7 items)
 
-Written before any code or draft edit, per the spec-first rule. Scope: close or honestly
+Written before any code or draft edit, per the spec-first rule. Scope: close or
 withdraw the 7 items the write-up pass flagged, plus reconcile ROBUST-ARM.md and
 WATERMARK.md into the draft. No new simulation grids. Foreground only.
 
@@ -16,7 +16,7 @@ sourced and must be replaced, not patched.
 Closed as: a small script (`paper/scripts/t3_chunk1_dist.py`) computes machine vs. human
 chunk-1-OOF mean/SD on the core pool/trait, writes `paper/tables/t3_chunk1_dist.json`, and
 the draft quotes those numbers with the script cited. CLOSED if the script runs and the
-draft's TODO sentence is replaced with the sourced numbers; WITHDRAWN-honestly (drop the
+draft's TODO sentence is replaced with the sourced numbers; WITHDRAWN (drop the
 specific numbers, keep the qualitative overlap claim only) if the script's numbers turn out
 not to support "overlap heavily."
 
@@ -24,14 +24,14 @@ not to support "overlap heavily."
 Ingredients already proven, per pass3-methods-review.md B3: `Att(pi, c)` is affine and
 increasing in c at fixed pi (E36, `population.py::att`), and the realized coupling in this
 study is bounded at `c_pool = 0.379` (gpt-4/EXT; LAYERB-GRID.md section 1.2) — the paper's
-own Limitations section already says c > 0.379 is not reachable here, so it is the honest
+own Limitations section already says c > 0.379 is not reachable here, so it is the
 upper bound to use, not the structural c=1.
 Construction: for the detector = none cells (18 of the 72-cell boundary map: `pi` in 6
 values x `p` in {0, 0.5, 1}, n=1000, gpt-4/EXT), `rho_obs_hat` = naive's point estimate
 (closed form, `rho_obs = rho_H * Att(pi,c)` exactly when there is no detection/selection
 step). Given `pi` and `rho_obs_hat`, but c unknown, the bound is
 `[rho_obs_hat / Att(pi, c_pool), rho_obs_hat / Att(pi, 0)]` since Att increases in c.
-Scope limit, stated honestly rather than smoothed: this construction only applies where
+Scope limit: this construction only applies where
 `rho_obs = rho_H * Att(pi,c)` holds exactly, i.e. detector = none. For calibrated/degraded/
 oracle cells, detection adds a selection term (E30-E34, r_F) that is not part of E36/E17's
 harmlessness curve, so extending the bound there needs a second derivation not in scope here.
@@ -49,7 +49,7 @@ chunk-level runs). Running the actual document-pooled Layer B grid is a new simu
 out of the "no new code changes without a spec, no new grids" scope of a gaps-closure pass —
 building it properly (a document-pooled scorer swapped into the OOF pipeline, then a fresh
 72+ cell grid) is a multi-hour lane-3+lane-4 undertaking, not a doc fix.
-Closed as: WITHDRAWN-honestly. The draft's TODO sentence is rewritten from "the obvious next
+Closed as: WITHDRAWN. The draft's TODO sentence is rewritten from "the obvious next
 experiment, not run" (implying imminence) to an explicit statement that it is out of scope
 for this paper and named as future work in Limitations, with the existing whole-text
 comparator numbers (`PASS3-FIXES.md` T3) kept as the only evidence, clearly labeled as
@@ -63,7 +63,7 @@ that cannot be checked against my training knowledge and would need a live sourc
 Closed as: audit what's checkable now (internal consistency: does the DOI/arXiv ID resolve
 in format, is the same source cited consistently across RADAR-DAY6/7/8.md, SPEC.md, and the
 draft) and flag every entry that still needs a live look-up, rather than claiming full
-verification without one. Reported as CLOSED for the audit-and-flag step; WITHDRAWN-honestly
+verification without one. Reported as CLOSED for the audit-and-flag step; WITHDRAWN
 on the specific "verified against a real source" claim — that requires network/library
 access not exercised here, and the TODO is rewritten to say precisely what was and was not
 checked.
@@ -103,8 +103,8 @@ bullet each.
 
 - CLOSED: a sourced artifact or a verified fact backs the sentence, and the draft's TODO
   text is replaced.
-- WITHDRAWN-honestly: the claim is removed or downgraded to what the evidence actually
-  supports, with the reason stated in place of the removed claim.
+- WITHDRAWN: the claim is removed or downgraded to what the evidence supports, with the
+  reason stated in place of the removed claim.
 - BLOCKED-OWNER: needs a fact only Abhay has; left untouched, flagged.
 
 ## Non-goals
