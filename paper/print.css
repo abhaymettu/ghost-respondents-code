@@ -1,0 +1,32 @@
+@page { size: letter; margin: 0.85in 0.8in; }
+html { font-size: 10.5pt; }
+body {
+  font-family: "Charter", "Georgia", "Times New Roman", serif;
+  line-height: 1.42; color: #111; margin: 0;
+  -webkit-print-color-adjust: exact; print-color-adjust: exact;
+}
+h1 { font-size: 1.7em; line-height: 1.25; margin: 0 0 .5em; }
+h2 { font-size: 1.28em; margin: 1.6em 0 .5em; border-bottom: 1px solid #bbb; padding-bottom: .12em;
+     break-after: avoid; page-break-after: avoid; }
+h3 { font-size: 1.08em; margin: 1.25em 0 .4em; break-after: avoid; page-break-after: avoid; }
+p { margin: 0 0 .62em; }
+code, pre { font-family: "SF Mono", Menlo, monospace; font-size: .85em; }
+pre { background: #f6f6f6; padding: .55em .7em; border-radius: 3px;
+      white-space: pre-wrap; word-wrap: break-word; break-inside: avoid; }
+code { background: #f2f2f2; padding: .05em .2em; border-radius: 2px; }
+pre code { background: none; padding: 0; }
+hr { border: 0; border-top: 1px solid #ccc; margin: 1.4em 0; }
+
+table { border-collapse: collapse; width: 100%; font-size: 8.1pt; margin: .5em 0 .9em;
+        break-inside: avoid; page-break-inside: avoid; }
+th, td { border: 1px solid #bbb; padding: 2.5px 4px; text-align: left; vertical-align: top; }
+th { background: #eee; font-weight: 600; }
+
+img { display: block; margin: .35em auto .3em; max-width: 100%; height: auto; }
+/* an image and the bold caption paragraph after it stay on one page */
+p:has(> img) { break-inside: avoid; page-break-inside: avoid; break-after: avoid;
+               page-break-after: avoid; margin-bottom: .15em; text-align: center; }
+p:has(> img) + p { break-before: avoid; page-break-before: avoid; font-size: .9em;
+                   text-align: center; margin: 0 auto .9em; max-width: 92%; color: #222; }
+ul, ol { margin: 0 0 .62em; padding-left: 1.3em; }
+li { margin-bottom: .2em; }
