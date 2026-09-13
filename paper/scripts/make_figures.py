@@ -127,10 +127,12 @@ for ax, (title, rows, get, truth) in zip(axes, [
     ax.set_ylabel("rho_H RMSE")
     ax.set_title(title, fontsize=9)
     ax.axhline(truth, color="grey", lw=0.8, ls=":")
-    ax.text(23.5, truth, " truth rho_H", va="bottom", fontsize=7, color="grey")
     ymax = 0.11 if truth < 0.1 else 0.16
     n_clip = sum(get(r, e) > ymax for r in rows for e in EST_STYLE)
     ax.set_ylim(0, ymax)
+    if truth < ymax:
+        ax.text(0.99, truth, "truth rho_H ", transform=ax.get_yaxis_transform(),
+                ha="right", va="bottom", fontsize=7, color="grey")
     if n_clip:
         ax.text(0.99, 0.98, f"{n_clip} points above {ymax} not shown\n(labelfree, n_bins = 60 column)", transform=ax.transAxes,
                 ha="right", va="top", fontsize=7, color="grey")
