@@ -1,0 +1,1411 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Owning (E7), (E39), and Prop. 11</title>
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #fbfaf7;
+  --panel: #ffffff;
+  --ink: #1b1a17;
+  --ink-2: #4a463f;
+  --muted: #797369;
+  --rule: #e4ded3;
+  --rule-soft: #efeae1;
+  --accent: #2e4a5a;
+  --accent-soft: #e8eef1;
+  --flag: #8a5a12;
+  --flag-soft: #fbf3e4;
+  --flag-rule: #e0c48d;
+  --code-bg: #f4f1ea;
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Charter, Georgia, "Times New Roman", serif;
+  --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  --measure: 35.5rem;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #15161a;
+    --panel: #1b1d22;
+    --ink: #e7e3dc;
+    --ink-2: #bdb8ae;
+    --muted: #8e8a81;
+    --rule: #2c2f36;
+    --rule-soft: #24272d;
+    --accent: #8fb8cc;
+    --accent-soft: #1e2830;
+    --flag: #d8a75a;
+    --flag-soft: #2a2318;
+    --flag-rule: #5e4b28;
+    --code-bg: #1f2228;
+  }
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 1.0625rem;
+  line-height: 1.62;
+  font-optical-sizing: auto;
+}
+.wrap { max-width: var(--measure); margin: 0 auto; padding: 4rem 1.5rem 7rem; }
+
+/* ---------- type ---------- */
+h1, h2, h3 { font-family: var(--serif); font-weight: 600; line-height: 1.15; letter-spacing: -0.018em; margin: 0; }
+h1 { font-size: 2.1rem; letter-spacing: -0.028em; }
+h2 { font-size: 1.45rem; margin: 4.25rem 0 0.35rem; letter-spacing: -0.022em; }
+h3 { font-size: 1.075rem; margin: 2.5rem 0 0.6rem; }
+p { margin: 0 0 1.05em; }
+a { color: var(--accent); text-underline-offset: 2px; text-decoration-thickness: 1px; }
+strong { font-weight: 650; }
+em { font-style: italic; }
+ul, ol { padding-left: 1.25rem; margin: 0 0 1.05em; }
+li { margin-bottom: 0.35em; }
+hr { border: 0; border-top: 1px solid var(--rule); margin: 3.5rem 0; }
+
+.eyebrow {
+  font-family: var(--sans); font-size: 0.6875rem; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
+  margin: 0 0 0.9rem;
+}
+.lede { font-size: 1.1875rem; line-height: 1.5; color: var(--ink); margin: 0.9rem 0 1.4rem; }
+.meta { font-family: var(--sans); font-size: 0.8125rem; line-height: 1.65; color: var(--muted); }
+.meta code { font-size: 0.95em; }
+
+/* ---------- header ---------- */
+header.doc { border-bottom: 1px solid var(--rule); padding-bottom: 2rem; margin-bottom: 1rem; }
+header.doc h1 { margin-bottom: 0.65rem; }
+.sources { margin-top: 1.4rem; }
+.sources ul { list-style: none; padding: 0; margin: 0.45rem 0 0; }
+.sources li { font-family: var(--sans); font-size: 0.8125rem; color: var(--muted); margin-bottom: 0.28em; }
+
+/* ---------- toc ---------- */
+nav.toc { margin: 2.25rem 0 1rem; }
+nav.toc ol { list-style: none; padding: 0; margin: 0.5rem 0 0; counter-reset: toc; }
+nav.toc li { counter-increment: toc; margin: 0; border-top: 1px solid var(--rule-soft); }
+nav.toc li:last-child { border-bottom: 1px solid var(--rule-soft); }
+nav.toc a {
+  display: flex; gap: 0.85rem; align-items: baseline;
+  padding: 0.5rem 0.25rem; text-decoration: none; color: var(--ink);
+  font-family: var(--sans); font-size: 0.875rem;
+  transition: background-color 140ms var(--ease-out), padding-left 140ms var(--ease-out);
+}
+nav.toc a::before {
+  content: counter(toc, decimal-leading-zero);
+  font-variant-numeric: tabular-nums; color: var(--muted); font-size: 0.75rem;
+}
+@media (hover: hover) and (pointer: fine) {
+  nav.toc a:hover { background: var(--rule-soft); padding-left: 0.55rem; }
+}
+
+/* ---------- equations ---------- */
+/* Equations, wide tables and the card break out of the prose measure so long
+   ASCII-math lines are never clipped. --bleed-w never exceeds the viewport. */
+.eq, .tbl, .card {
+  --bleed-w: min(calc(100vw - 2.5rem), 50rem);
+  width: var(--bleed-w);
+  margin-left: calc((var(--bleed-w) - 100%) / -2);
+}
+.card .eq, .card .tbl { width: auto; margin-left: 0; }
+.eq {
+  font-family: var(--mono); font-size: 0.78125rem; line-height: 1.7;
+  background: var(--code-bg); border-left: 2px solid var(--accent);
+  padding: 0.9rem 1rem; margin-top: 1.3rem; margin-bottom: 1.3rem; overflow-x: auto;
+  white-space: pre; color: var(--ink);
+  border-radius: 0 3px 3px 0;
+  scrollbar-width: thin;
+}
+.eq .tag { color: var(--muted); }
+code {
+  font-family: var(--mono); font-size: 0.855em;
+  background: var(--code-bg); padding: 0.1em 0.32em; border-radius: 3px;
+}
+.eq code { background: none; padding: 0; }
+
+/* ---------- step blocks ---------- */
+.step { margin: 1.9rem 0; }
+.step > .step-head {
+  font-family: var(--sans); font-size: 0.8125rem; font-weight: 650;
+  letter-spacing: 0.005em; color: var(--ink); margin: 0 0 0.5em;
+}
+.why {
+  border-left: 2px solid var(--rule); padding: 0.15rem 0 0.15rem 0.95rem;
+  margin: 1.1rem 0; color: var(--ink-2); font-size: 0.96875rem;
+}
+.why .why-label {
+  font-family: var(--sans); font-size: 0.6875rem; font-weight: 650;
+  letter-spacing: 0.09em; text-transform: uppercase; color: var(--muted);
+  display: block; margin-bottom: 0.25em;
+}
+
+/* ---------- flags ---------- */
+.flag {
+  background: var(--flag-soft); border: 1px solid var(--flag-rule);
+  border-radius: 4px; padding: 1rem 1.1rem; margin: 1.7rem 0;
+  font-size: 0.96875rem; color: var(--ink);
+}
+.flag .flag-label {
+  font-family: var(--sans); font-size: 0.6875rem; font-weight: 700;
+  letter-spacing: 0.09em; text-transform: uppercase; color: var(--flag);
+  display: block; margin-bottom: 0.4em;
+}
+.flag p:last-child { margin-bottom: 0; }
+
+/* ---------- tables ---------- */
+.tbl { margin-top: 1.4rem; margin-bottom: 1.4rem; overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-family: var(--sans); font-size: 0.8125rem; line-height: 1.55; }
+th, td { text-align: left; vertical-align: top; padding: 0.55rem 0.75rem 0.55rem 0; border-bottom: 1px solid var(--rule-soft); }
+th { font-weight: 650; color: var(--muted); font-size: 0.6875rem; letter-spacing: 0.07em; text-transform: uppercase; border-bottom: 1px solid var(--rule); padding-bottom: 0.45rem; }
+td:last-child, th:last-child { padding-right: 0; }
+tbody tr:last-child td { border-bottom: 1px solid var(--rule); }
+td code { font-size: 0.9em; }
+table.cols3 th:nth-child(1) { width: 21%; }
+table.cols3 th:nth-child(2) { width: 25%; }
+.num { font-variant-numeric: tabular-nums; }
+
+/* ---------- spoken block ---------- */
+.spoken {
+  background: var(--panel); border: 1px solid var(--rule); border-radius: 4px;
+  padding: 1.15rem 1.25rem; margin: 1.9rem 0;
+}
+.spoken .spoken-label {
+  font-family: var(--sans); font-size: 0.6875rem; font-weight: 650;
+  letter-spacing: 0.09em; text-transform: uppercase; color: var(--muted);
+  display: block; margin-bottom: 0.55em;
+}
+.spoken p { font-size: 1.03125rem; line-height: 1.58; margin-bottom: 0; }
+.spoken p + p { margin-top: 0.7em; }
+
+/* ---------- Q&A ---------- */
+.qa { margin: 1.5rem 0; }
+.qa .q { font-weight: 650; margin-bottom: 0.35em; }
+.qa + .qa { margin-top: 1.6rem; }
+
+/* ---------- flash checks ---------- */
+.check { border-top: 1px solid var(--rule-soft); padding: 1.15rem 0 0.4rem; }
+.check:last-of-type { border-bottom: 1px solid var(--rule-soft); margin-bottom: 1.5rem; }
+.check .qn { font-weight: 650; margin-bottom: 0.7em; }
+details > summary {
+  list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 0.4rem;
+  font-family: var(--sans); font-size: 0.75rem; font-weight: 650;
+  letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent);
+  padding: 0.3rem 0.6rem; margin-left: -0.6rem; border-radius: 4px;
+  transition: background-color 140ms var(--ease-out), transform 120ms var(--ease-out);
+  -webkit-tap-highlight-color: transparent;
+}
+details > summary::-webkit-details-marker { display: none; }
+details > summary::after {
+  content: ""; width: 0.4rem; height: 0.4rem; margin-top: -0.18rem;
+  border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg); transition: transform 160ms var(--ease-out);
+}
+details[open] > summary::after { transform: rotate(-135deg) translate(-0.1rem, -0.1rem); }
+@media (hover: hover) and (pointer: fine) {
+  details > summary:hover { background: var(--accent-soft); }
+}
+details > summary:active { transform: scale(0.97); }
+details > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.answer {
+  margin-top: 0.75rem; padding-left: 0.95rem; border-left: 2px solid var(--accent);
+  color: var(--ink-2); font-size: 0.96875rem;
+  transition: opacity 160ms var(--ease-out), transform 160ms var(--ease-out);
+}
+details[open] .answer { opacity: 1; transform: translateY(0); }
+@starting-style { details[open] .answer { opacity: 0; transform: translateY(-3px); } }
+.answer p:last-child { margin-bottom: 0; }
+
+/* ---------- refresh card ---------- */
+.card {
+  background: var(--panel); border: 1px solid var(--rule); border-radius: 6px;
+  padding: 1.75rem 1.6rem; margin-top: 1.75rem; margin-bottom: 1.75rem;
+}
+.card h3 { margin-top: 1.6rem; }
+.card h3:first-of-type { margin-top: 0; }
+.card .eq { margin: 0.8rem 0; }
+.card > *:last-child { margin-bottom: 0; }
+
+footer.doc {
+  margin-top: 5rem; padding-top: 1.75rem; border-top: 1px solid var(--rule);
+  font-family: var(--sans); font-size: 0.78125rem; color: var(--muted); line-height: 1.7;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition-duration: 1ms !important; }
+  .answer, details[open] .answer { transform: none !important; }
+  details > summary:active { transform: none; }
+}
+
+@media (max-width: 640px) {
+  .wrap { padding: 2.5rem 1.15rem 4rem; }
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.3rem; }
+  body { font-size: 1.03125rem; }
+  /* Long ASCII-math lines cannot fit a phone; they scroll in place, so shrink
+     the mono a notch to cut how far. */
+  .eq { font-size: 0.71875rem; }
+}
+
+@media print {
+  :root { --bg: #fff; --panel: #fff; --ink: #000; --ink-2: #222; --muted: #555; --rule: #ccc; --rule-soft: #e5e5e5; --code-bg: #f5f5f5; --flag-soft: #fff; --flag-rule: #999; }
+  .wrap { max-width: none; padding: 0; }
+  .eq, .tbl, .card { width: auto; margin-left: 0; }
+  nav.toc { display: none; }
+  details > .answer { border-left-color: #999; }
+  h2 { break-after: avoid; page-break-after: avoid; }
+  .card, .flag, .spoken, .eq { break-inside: avoid; page-break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="doc">
+  <p class="eyebrow">Ghost respondents &middot; derivation walkthrough</p>
+  <h1>Owning (E7), (E39), and Prop.&nbsp;11</h1>
+  <p class="lede">The three results you will be asked about first: what each one claims, every
+  algebraic move behind it, the assumptions doing real work, and the six places where the
+  paper&rsquo;s prose runs ahead of the derivation.</p>
+  <p class="meta">Read time about 20 minutes. Every equation is copied from the derivation
+  files, not restated from a summary note.</p>
+  <div class="sources">
+    <p class="eyebrow" style="margin-bottom:0">Sources</p>
+    <ul>
+      <li>(E7), (E30) to (E34), Prop.&nbsp;11 &mdash; <code>derivations/lane1-zero-coupling.md</code> &sect;3.1, &sect;6</li>
+      <li>(E36) to (E39), Prop.&nbsp;12 &mdash; <code>derivations/lane1-partial-coupling.md</code> &sect;1</li>
+      <li>Paper statements &mdash; <code>paper/GHOST-RESPONDENTS-DRAFT.md</code> &sect;2.1 to &sect;2.3</li>
+      <li>Pointers and verification receipts &mdash; <code>notes/OWNERSHIP-CHECK.md</code></li>
+    </ul>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Contents">
+  <p class="eyebrow" style="margin-bottom:0">Contents</p>
+  <ol>
+    <li><a href="#setup">The shared setup, once</a></li>
+    <li><a href="#e7">(E7) &mdash; the attenuation factor</a></li>
+    <li><a href="#e39">(E39) &mdash; the first-order bias</a></li>
+    <li><a href="#p11">Prop. 11 &mdash; the deletion-selection bias</a></li>
+    <li><a href="#together">The three together</a></li>
+    <li><a href="#flash">Five flash checks</a></li>
+    <li><a href="#card">Three-minute refresh card</a></li>
+    <li><a href="#flags">Flags, collected</a></li>
+  </ol>
+</nav>
+
+<hr>
+
+<!-- ============ 0 ============ -->
+<section id="setup">
+<p class="eyebrow">Section 0</p>
+<h2>The shared setup, once</h2>
+<p>All three results live in the same model, so learn the symbols once.</p>
+
+<div class="tbl">
+<table>
+<thead><tr><th>Symbol</th><th>Is</th></tr></thead>
+<tbody>
+<tr><td><code>theta</code></td><td>latent trait, mean 0, variance <code>s2_T</code></td></tr>
+<tr><td><code>w = b theta + u</code></td><td>the outcome you validate against; <code>u</code> independent of everything</td></tr>
+<tr><td><code>x</code></td><td>the scored open-ended response</td></tr>
+<tr><td><code>A in {H, M}</code></td><td>authorship, unobserved</td></tr>
+<tr><td><code>pi = P(A = M)</code></td><td>contamination fraction</td></tr>
+<tr><td><code>rho_T = Cor(theta, w)</code></td><td>trait-level validity</td></tr>
+<tr><td><code>rel_H = s2_T / V_H</code></td><td>human single-indicator reliability, <code>V_H = Var(x | H)</code></td></tr>
+<tr><td><code>rho_H = sqrt(rel_H) rho_T</code></td><td><code>Cor(x, w | H)</code>, clean-sample observed validity. <strong>This is the estimand</strong> (decision N2)</td></tr>
+<tr><td><code>c = Cor(x, theta | M)</code></td><td>coupling: how much trait signal the machine text carries</td></tr>
+<tr><td><code>kappa = s2_M / V_H</code></td><td>machine-to-human observed variance ratio; <code>kappa &lt; 1</code> is homogenization</td></tr>
+<tr><td><code>delta</code></td><td><code>(mu_H - mu_M) / sqrt(V_H)</code>, the authorship mean gap in human-SD units</td></tr>
+<tr><td><code>g = c sqrt(kappa / rel_H)</code></td><td>the machine slope on theta. <code>g = lambda_M</code>, same number</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>Two shorthand polynomials that recur everywhere:</p>
+<div class="eq">N(pi, c) := (1 - pi) + pi * g                          <span class="tag">(E0a)</span>
+Den(pi)  := (1 - pi) + pi * kappa + pi (1 - pi) delta^2   <span class="tag">(E0b)</span></div>
+<p><code>N</code> is the covariance multiplier, <code>Den</code> the variance multiplier.
+<code>Den</code> does not depend on <code>c</code>.</p>
+
+<p>Two assumptions carried throughout:</p>
+<ul>
+<li><strong>A1 (ignorable authorship).</strong> <code>A</code> is independent of
+<code>(theta, u, e, v)</code>. Who gets ghosted does not depend on their trait.</li>
+<li><strong>A2.</strong> The machine residual <code>v</code> is independent of the outcome
+noise <code>u</code>. The LLM does not see the outcome.</li>
+</ul>
+
+<p>One notation decision you should be able to state on demand (N1): SPEC&rsquo;s prose says
+the machine covariance is &ldquo;c times the human-scale covariance&rdquo;. It is not. The exact
+factor is <code>g = c sqrt(kappa / rel_H)</code>. They coincide only at
+<code>kappa = rel_H</code>. The files keep <code>c</code> as the correlation and carry the
+scale factor explicitly in <code>g</code>.</p>
+</section>
+
+<hr>
+
+<!-- ============ E7 ============ -->
+<section id="e7">
+<p class="eyebrow">Result 1</p>
+<h2>(E7) &mdash; the attenuation factor</h2>
+
+<p class="lede">Contaminating a sample with machine-written responses multiplies the validity
+coefficient you compute by a known factor <code>Att(pi, c)</code> that depends on only five
+numbers, and that factor can sit below or above 1.</p>
+
+<p class="meta"><strong>Decoder for this result:</strong> <code>pi, c, rel_H, kappa, delta</code>
+and the two polynomials <code>N</code> and <code>Den</code>. Nothing else.</p>
+
+<h3>The derivation, every move</h3>
+
+<p>Start from the mixture. The observed score is one of two processes depending on the
+unobserved <code>A</code>:</p>
+<div class="eq">x = (1 - 1{A = M}) (mu_H + theta + e) + 1{A = M} (mu_M + lambda_M theta + v)   <span class="tag">(E1)</span></div>
+<p>with <code>theta, e, v, u</code> mutually independent and independent of <code>A</code>
+under A1 and A2.</p>
+
+<div class="why"><span class="why-label">Intuition</span>
+Nothing clever yet. This is just &ldquo;some respondents wrote it, some had an LLM write
+it&rdquo;, with the machine side written in a second-moment representation
+<code>m = lambda_M theta + v</code> so that <code>Cor(x, theta | M) = c</code> and
+<code>Var(x | M) = s2_M</code> both hold by construction. That representation is exact for
+correlations and needs no distributional assumption.</div>
+
+<div class="step">
+<p class="step-head">Step 1 &mdash; the pooled variance.</p>
+<p>Law of total variance over <code>A ~ Bernoulli(pi)</code>. The within-class piece is
+<code>E[Var(x | A)] = (1 - pi) V_H + pi s2_M</code>. The between-class piece
+<code>Var(E[x | A])</code> is the variance of a two-point variable taking <code>mu_H</code>
+with probability <code>1 - pi</code> and <code>mu_M</code> with probability <code>pi</code>,
+which is <code>pi (1 - pi) Delta^2</code> with <code>Delta = mu_H - mu_M</code>. So</p>
+<div class="eq">Var(x) = (1 - pi) V_H + pi s2_M + pi (1 - pi) Delta^2 = V_H * Den(pi)   <span class="tag">(E3)</span></div>
+<div class="why"><span class="why-label">Intuition</span>
+Three sources of spread: within-human, within-machine, and the gap between the two group
+means. The third is the one people forget. Two tight clusters with different centers look like
+one wide distribution. Dividing through by <code>V_H</code> turns <code>s2_M</code> into
+<code>kappa</code> and <code>Delta^2</code> into <code>delta^2</code>, which is where
+<code>Den</code> comes from.</div>
+</div>
+
+<div class="step">
+<p class="step-head">Step 2 &mdash; the pooled covariance with the outcome.</p>
+<p>Within-class first:</p>
+<div class="eq">Cov(x, w | H) = Cov(theta + e, b theta + u)          = b s2_T
+Cov(x, w | M) = Cov(lambda_M theta + v, b theta + u) = lambda_M b s2_T</div>
+<p>The second line uses A2 to kill <code>Cov(v, u)</code>. Between-class,
+<code>Cov(E[x | A], E[w | A]) = 0</code>, because <code>E[w | A] = b E[theta | A] = 0</code>
+under A1. Adding the two contributions with weights <code>1 - pi</code> and <code>pi</code>:</p>
+<div class="eq">Cov(x, w) = b s2_T [ (1 - pi) + pi g ] = b s2_T * N(pi, c)   <span class="tag">(E4)</span></div>
+<div class="why"><span class="why-label">Intuition</span>
+Each machine response replaces a unit of signal covariance with <code>g</code> units. If the
+machine text carries no trait (<code>c = 0</code>, so <code>g = 0</code>), that respondent
+contributes nothing to the covariance and <code>N</code> falls to <code>1 - pi</code>. The
+between-class term is zero precisely because A1 says the two authorship groups have the same
+average trait, so their average outcomes match too.</div>
+</div>
+
+<div class="step">
+<p class="step-head">Step 3 &mdash; the outcome variance is untouched.</p>
+<p><code>Var(w) = V_w</code>. Contamination is on the <code>x</code> side only. If the outcome
+is also machine-written, that is Q4 and Prop.&nbsp;15, not this result.</p>
+</div>
+
+<div class="step">
+<p class="step-head">Step 4 &mdash; assemble the correlation.</p>
+<div class="eq">rho_obs := Cor(x, w) = b s2_T N / sqrt(V_H Den V_w) = rho_H * N(pi, c) / sqrt(Den(pi))   <span class="tag">(E5)</span></div>
+<p>The middle expression is <code>Cov / sqrt(Var Var)</code> with (E3) and (E4) substituted in.
+The right expression uses <code>rho_H = b s2_T / sqrt(V_H V_w)</code>, so <code>b s2_T</code>
+and <code>sqrt(V_H V_w)</code> cancel out of the ratio and leave <code>rho_H</code> times a
+pure function of the standardized parameters. Define
+<code>Att(pi, c) := rho_obs / rho_H = N / sqrt(Den)</code> and write it out in the five
+parameters:</p>
+<div class="eq">Att(pi, c) = [ (1 - pi) + pi c sqrt(kappa / rel_H) ]
+             / sqrt[ (1 - pi) + pi kappa + pi (1 - pi) delta^2 ]   <span class="tag">(E7)</span></div>
+<div class="why"><span class="why-label">Intuition</span>
+The whole result is a race between a numerator that falls (each machine response donates
+<code>g &lt; 1</code> units of covariance instead of 1) and a denominator that can fall faster
+(homogenized machine text shrinks the pooled variance) or rise (a mean gap inflates it). The
+correlation is the ratio, so whichever term moves more decides the sign of the bias. That is
+why contamination is not automatically attenuation.</div>
+</div>
+
+<h3>Boundary checks you should be able to run live</h3>
+<ul>
+<li><code>pi = 0</code> gives <code>Att = 1</code>. No contamination, no bias.</li>
+<li><code>pi = 1</code> gives <code>Att = g / sqrt(kappa) = c / sqrt(rel_H)</code>. Check it
+against the direct computation: an all-machine sample has
+<code>Cor(x, w) = c rho_T = (c / sqrt(rel_H)) rho_H</code>. Match.</li>
+<li><code>kappa = 1, delta = 0, c = 0</code> gives <code>Att = 1 - pi</code>. Pure dilution:
+machine noise at exactly human variance, carrying no signal.</li>
+<li>Against <code>rho_T</code> instead of <code>rho_H</code>:
+<code>rho_obs / rho_T = sqrt(rel_H) Att</code>. Classical attenuation and contamination
+multiply and are separable.</li>
+</ul>
+
+<div class="flag">
+<span class="flag-label">Flag 1 &middot; small</span>
+<p>Paper &sect;2.2 says &ldquo;At <code>c = 0</code>, <code>Att_0 = (1 - pi) / sqrt(Den)</code>
+is strictly between 0 and <code>sqrt(1 - pi)</code>&rdquo;. The derivation writes (E10) as
+<code>0 &lt; Att_0(pi) &lt;= sqrt(1 - pi) &lt; 1</code> and then names the attainment condition
+outright on the next line: &ldquo;with equality &hellip; iff <code>kappa = 0</code> and
+<code>delta = 0</code>&rdquo;. At that corner <code>Den = 1 - pi</code> and
+<code>Att_0 = sqrt(1 - pi)</code> exactly. The corner is degenerate, a machine that returns
+the same score every time, but admissible: Prop.&nbsp;3 is stated &ldquo;for every
+<code>kappa &gt;= 0</code>&rdquo;. &ldquo;Strictly between&rdquo; overstates by one endpoint,
+against the paper&rsquo;s own source. Say <em>at most</em> <code>sqrt(1 - pi)</code>.</p>
+</div>
+
+<h3>Assumptions doing real work, and what breaks</h3>
+<div class="tbl">
+<table class="cols3">
+<thead><tr><th>Assumption</th><th>What it buys</th><th>What breaks without it</th></tr></thead>
+<tbody>
+<tr>
+  <td><strong>A1</strong>, <code>A</code> independent of <code>theta</code></td>
+  <td>The between-class covariance term in step 2 is exactly zero</td>
+  <td>You get (E19) to (E21) instead: <code>Att'</code> picks up
+  <code>- pi (1 - pi) delta d_theta / sqrt(rel_H)</code> in the numerator and
+  <code>Var(w)</code> gains <code>pi (1 - pi) b^2 Delta_theta^2</code>. The sign can now flip
+  (Prop.&nbsp;7). Not hypothetical: the survivor sample after deletion is exactly this case.</td>
+</tr>
+<tr>
+  <td><strong>A2</strong>, <code>v</code> independent of <code>u</code></td>
+  <td><code>Cov(x, w | M) = lambda_M b s2_T</code>, no extra term</td>
+  <td><code>Cov(x, w)</code> gains <code>pi Cov(v, u)</code>. The machine can manufacture
+  validity from nothing. Defensible here because the generator is conditioned on the prompt,
+  not on the outcome, but it is an assumption about the pipeline, not about statistics.</td>
+</tr>
+<tr>
+  <td>Outcome not machine-written</td>
+  <td><code>Var(w) = V_w</code> in step 3</td>
+  <td><code>Var(y) = V_w Den_w(pi)</code> and you need Prop.&nbsp;15 (both endpoints).</td>
+</tr>
+<tr>
+  <td>One machine process, constant <code>(c, kappa, delta)</code></td>
+  <td><code>g</code> is a single number</td>
+  <td>A mixture of generators makes <code>g</code> a distribution; only its mean enters
+  <code>N</code>, but <code>Den</code> picks up the between-generator variance.</td>
+</tr>
+<tr>
+  <td>Second moments only</td>
+  <td>No normality needed for (E7)</td>
+  <td>Nothing. This is the result&rsquo;s strongest point: (E7) is a second-moment identity, so
+  the committee cannot attack it with a distributional objection. Say that out loud.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h3>A tiny numeric example</h3>
+<p>Take <code>pi = 1/2</code>, <code>c = 0</code> (machine text carries no trait),
+<code>delta = 0</code> (no mean gap). Then <code>N = 1/2</code> and
+<code>Den = 1/2 + kappa/2</code>.</p>
+<div class="eq">kappa = 1  ->  Den = 1     ->  Att = 0.5             <span class="tag">pure dilution, exactly 1 - pi</span>
+kappa = 0  ->  Den = 1/2   ->  Att = 0.5 / sqrt(0.5) = 0.707</div>
+<p>Same amount of contamination, same zero signal, and the bias is 30 points different. The
+only thing that changed is how much variance the machine responses add back. That is
+<code>Den</code> earning its keep, and it is the fastest way to show a committee that
+<code>1 - pi</code> is the wrong default.</p>
+
+<h3>Three committee questions</h3>
+
+<div class="qa">
+<p class="q">&ldquo;Isn&rsquo;t this just classical attenuation? Why not <code>1 - pi</code>?&rdquo;</p>
+<p><code>1 - pi</code> is one corner of (E7): <code>c = 0</code>, <code>kappa = 1</code>,
+<code>delta = 0</code>. Move off that corner in any direction and the answer changes, because
+contamination perturbs the variance of <code>x</code> as well as its covariance with
+<code>w</code>. Prop.&nbsp;2 gives the exact crossover: <code>Att_0(pi) &gt; 1 - pi</code> if
+and only if <code>kappa + (1 - pi) delta^2 &lt; 1</code>. Homogenization makes contamination
+less harmful than pure dilution, a mean gap makes it more harmful, and the line between them is
+that inequality.</p>
+</div>
+
+<div class="qa">
+<p class="q">&ldquo;<code>Att &gt; 1</code> looks like an error. Correlations should attenuate.&rdquo;</p>
+<p>They should not, and the boundary check proves it. At <code>pi = 1</code> the formula
+returns <code>c / sqrt(rel_H)</code>, which exceeds 1 whenever <code>c &gt; sqrt(rel_H)</code>:
+a machine that copies the trait more faithfully than your noisy human measurement does is a
+<em>better</em> indicator of <code>theta</code>, so pooling it in raises the observed
+correlation. The exact boundary where <code>Att = 1</code> is</p>
+<div class="eq">c*(pi) = sqrt(rel_H / kappa) [ sqrt(Den(pi)) - (1 - pi) ] / pi   <span class="tag">(E17)</span></div>
+<p>Below it contamination hides validity, above it contamination manufactures validity, and the
+second is the more dangerous failure because the naive researcher sees a stronger result.</p>
+</div>
+
+<div class="qa">
+<p class="q">&ldquo;A2 says the LLM does not see the outcome. What if it does?&rdquo;</p>
+<p>Then <code>Cov(x, w)</code> gains <code>pi Cov(v, u)</code> and every regime statement below
+is void. In this design the outcome is a separate administered measure and the generator is
+prompted from the item text alone, so A2 holds by construction of the pipeline. In a field
+application where the same LLM drafts both the open-ended response and something correlated
+with the outcome, it does not, and that is a design warning worth giving, not a limitation of
+the algebra.</p>
+</div>
+
+<div class="spoken">
+<span class="spoken-label">Thirty seconds, out loud</span>
+<p>&ldquo;Take a survey where some share of the open-ended answers were written by an LLM. You
+correlate the scored answer with an outcome. What you get is the clean correlation times one
+factor. The numerator of that factor is how much trait covariance survives, which falls as
+contamination rises. The denominator is how much the pooled variance moved, which can go either
+way: machine text is usually less dispersed, which shrinks the denominator, but if the machine
+scores sit at a different average than the human ones, that gap inflates it. So the correlation
+is a race between those two. Most people assume you just lose a fraction <code>1 - pi</code> of
+your signal. That is one corner of the formula, and off that corner you can get less bias than
+that, or you can get bias in the other direction.&rdquo;</p>
+</div>
+</section>
+
+<hr>
+
+<!-- ============ E39 ============ -->
+<section id="e39">
+<p class="eyebrow">Result 2</p>
+<h2>(E39) &mdash; the first-order bias</h2>
+
+<p class="lede">For small contamination, the bias in the naive validity coefficient is linear in
+<code>pi</code> with a sign given by <code>c - c_2(delta)</code>, so one threshold on the
+coupling tells you whether contamination hides your effect or manufactures it.</p>
+
+<p class="meta"><strong>Decoder for this result:</strong> everything from (E7), plus
+<code>S := 1 + kappa + delta^2</code>, the slope threshold
+<code>g_2(delta) := S / 2</code>, and the same threshold in <code>c</code> units,
+<code>c_2(delta) := S sqrt(rel_H) / (2 sqrt(kappa))</code>. There is a companion
+<code>c_1(delta) = 2 sqrt(kappa rel_H) / S</code>, and <code>c_1 &lt;= c_2</code> always, by
+AM-GM (<code>S^2 &gt;= (1 + kappa)^2 &gt;= 4 kappa</code>).</p>
+
+<h3>The derivation, every move</h3>
+
+<div class="step">
+<p class="step-head">Step 1 &mdash; expand the numerator.</p>
+<p><code>N(pi, c) = (1 - pi) + pi g = 1 + pi (g - 1)</code>. Exact, not an approximation.
+<code>N</code> is affine in <code>pi</code> to begin with.</p>
+</div>
+
+<div class="step">
+<p class="step-head">Step 2 &mdash; expand the denominator.</p>
+<div class="eq">Den(pi) = (1 - pi) + pi kappa + pi (1 - pi) delta^2
+        = 1 + pi (kappa - 1 + delta^2) - pi^2 delta^2</div>
+<p>Take the square root with <code>sqrt(1 + z) = 1 + z/2 + O(z^2)</code>. Here
+<code>z = pi (kappa - 1 + delta^2) - pi^2 delta^2</code>, which is <code>O(pi)</code>, so
+<code>z^2 = O(pi^2)</code> and the <code>pi^2 delta^2</code> term is <code>O(pi^2)</code> too.
+Both go into the remainder:</p>
+<div class="eq">sqrt(Den(pi)) = 1 + (pi / 2)(kappa - 1 + delta^2) + O(pi^2)</div>
+<div class="why"><span class="why-label">Intuition</span>
+Near <code>pi = 0</code> the pooled variance moves linearly, and a square root halves a small
+relative change. The <code>pi (1 - pi) delta^2</code> term contributes <code>pi delta^2</code>
+at first order because <code>(1 - pi) -&gt; 1</code>; the mean gap&rsquo;s second-order
+correction is not visible yet.</div>
+</div>
+
+<div class="step">
+<p class="step-head">Step 3 &mdash; divide.</p>
+<p><code>1 / (1 + a pi + O(pi^2)) = 1 - a pi + O(pi^2)</code>, so</p>
+<div class="eq">Att(pi, c) = [1 + pi (g - 1)] [1 - (pi / 2)(kappa - 1 + delta^2)] + O(pi^2)
+           = 1 + pi [ (g - 1) - (kappa - 1 + delta^2) / 2 ] + O(pi^2)</div>
+</div>
+
+<div class="step">
+<p class="step-head">Step 4 &mdash; collect the bracket.</p>
+<p>This is the only step where anything cancels, so do it slowly:</p>
+<div class="eq">(g - 1) - (kappa - 1 + delta^2) / 2
+  = g - 1 - kappa/2 + 1/2 - delta^2/2
+  = g - 1/2 - kappa/2 - delta^2/2
+  = g - (1 + kappa + delta^2) / 2
+  = g - S / 2
+  = g - g_2(delta)</div>
+<p>Hence</p>
+<div class="eq">Att(pi, c)    = 1 + pi [ g - g_2(delta) ] + O(pi^2)
+bias(rho_obs) = pi rho_H sqrt(kappa / rel_H) [ c - c_2(delta) ] + O(pi^2)   <span class="tag">(E39)</span></div>
+<p>The second form follows from the first by <code>bias = rho_H (Att - 1)</code> and
+substituting <code>g = c sqrt(kappa / rel_H)</code>, then factoring
+<code>sqrt(kappa / rel_H)</code> out of the bracket:</p>
+<div class="eq">g - S/2 = c sqrt(kappa/rel_H) - S/2
+        = sqrt(kappa/rel_H) [ c - (S/2) sqrt(rel_H/kappa) ]
+        = sqrt(kappa/rel_H) [ c - c_2(delta) ]</div>
+<div class="why"><span class="why-label">Intuition</span>
+One sentence covers the whole <code>(pi, c)</code> map: the naive validity moves in the
+direction of <code>c - c_2(delta)</code>, at a rate <code>pi sqrt(kappa / rel_H)</code>.
+Everything the map does qualitatively is in the sign of one subtraction.</div>
+</div>
+
+<div class="flag">
+<span class="flag-label">Flag 2 &middot; real, and the most likely place a committee catches you</span>
+<p>The paper&rsquo;s &sect;2.2 says, after printing the bias half of (E39): &ldquo;so the sign
+of the contamination bias is the sign of <code>c - c_2</code>.&rdquo; That sentence is true to
+first order only, and the prose drops the hedge the display carries. Globally the zero of the
+bias is <code>c*(pi)</code> from (E17), and <code>c*(0+) = c_2(delta)</code> is a limit, not an
+identity. On the derivation&rsquo;s own numbers
+(<code>kappa = 0.2, rel_H = 0.7, delta = 0</code>, so <code>c_2 = 1.122</code>): at
+<code>c = 1 &lt; c_2</code>, <code>Att</code> is 0.994 at <code>pi = 0.1</code> and 0.987 at
+<code>pi = 0.3</code>, as the sign rule predicts, but 1.016 at <code>pi = 0.7</code> and 1.098
+at <code>pi = 0.9</code>. The bias changed sign while <code>c - c_2</code> did not. The
+crossing is at <code>c*(0.6) = 1.0012</code>, just past <code>pi = 0.60</code>, which is what
+<code>lane1-zero-coupling.md</code> Prop.&nbsp;4 already states.</p>
+<p>Nothing in the result is wrong; the paper sentence is. If asked, say: the sign rule is the
+<code>pi -&gt; 0</code> statement, the global boundary is (E17), and the grid tops out at
+<code>pi = 0.30</code> where they agree. Do not defend the sentence as written.</p>
+</div>
+
+<div class="flag">
+<span class="flag-label">Flag 3 &middot; small, worth knowing before someone else finds it</span>
+<p>(E39) in <code>c</code> units divides by <code>sqrt(kappa)</code>, so
+<code>c_2(delta) -&gt; infinity</code> as <code>kappa -&gt; 0</code> and the product
+<code>sqrt(kappa/rel_H) [c - c_2]</code> is a <code>0 * infinity</code> form. The
+<code>g</code> form <code>Att = 1 + pi [g - g_2(delta)]</code> has no such problem: at
+<code>kappa = 0</code>, <code>g = 0</code> and the slope is just <code>-S/2</code>. Use the
+<code>g</code> form if anyone pushes on the constant-machine corner.</p>
+</div>
+
+<div class="flag">
+<span class="flag-label">Flag 4 &middot; bookkeeping</span>
+<p>The derivation&rsquo;s own check sentence in &sect;1.5 reads &ldquo;at <code>pi = 0.10</code>
+the exact table value below is 1.020 because <code>Den = 1</code> makes (E36) exactly linear
+there.&rdquo; (E36) is the statement that <code>Att</code> is affine in <code>c</code>. What
+<code>Den = 1</code> delivers is exact linearity in <code>pi</code>. Wrong pointer, right
+arithmetic. Do not repeat the citation.</p>
+</div>
+
+<h3>Assumptions doing real work, and what breaks</h3>
+<div class="tbl">
+<table class="cols3">
+<thead><tr><th>Assumption</th><th>What it buys</th><th>What breaks without it</th></tr></thead>
+<tbody>
+<tr><td>Everything (E7) needs</td><td>The object being expanded</td><td>See the (E7) table above.</td></tr>
+<tr>
+  <td><code>pi</code> small</td>
+  <td>The <code>O(pi^2)</code> remainder is negligible</td>
+  <td>The linear rule stops predicting the sign, as Flag&nbsp;2 shows. Measured error on the
+  derivation&rsquo;s own table: at <code>pi = 0.10, kappa = 0.5, c = 0.9</code> the exact
+  <code>Att</code> is <span class="num">1.0014</span> against a linear
+  <span class="num">1.0011</span> (gap 0.0004); at <code>pi = 0.30</code> the same cell is
+  <span class="num">1.0068</span> against <span class="num">1.0032</span> (gap 0.0036); at
+  <code>pi = 0.9, kappa = 0.2, c = 1</code> it is <span class="num">1.0981</span> against
+  <span class="num">0.9411</span> (gap 0.157). The grid&rsquo;s ceiling is
+  <code>pi = 0.30</code>, so the expansion is safe where the paper uses it, and only there.</td>
+</tr>
+<tr><td><code>kappa &gt; 0</code></td><td><code>c_2</code> is finite</td><td>See Flag&nbsp;3. Use the <code>g</code> form.</td></tr>
+<tr>
+  <td>A1</td>
+  <td><code>delta</code> enters only through <code>delta^2</code> in <code>S</code></td>
+  <td>Under A1' the mean gap gets a first-order sign effect through
+  <code>delta d_theta</code> in the numerator of (E21). Under A1 the gap is pure variance
+  inflation and cannot change the direction of the covariance.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h3>A tiny numeric example</h3>
+<p>The cleanest cell is <code>c = 1</code>, <code>kappa = 1</code>, <code>delta = 0</code>,
+<code>rel_H = 0.7</code>, a faithful amanuensis at human scale.</p>
+<div class="eq">g     = 1 * sqrt(1 / 0.7) = 1 / 0.8367 = 1.195
+g_2   = S / 2 = (1 + 1 + 0) / 2 = 1
+slope = g - g_2 = 0.195</div>
+<p>So <code>Att ~ 1 + 0.195 pi</code>. At <code>pi = 0.10</code> that is
+<span class="num">1.0195</span>. The exact table value in
+<code>lane1-partial-coupling.md</code> &sect;1.6 is <span class="num">1.020</span>, and here the
+expansion is not an approximation at all: <code>kappa = 1</code> and <code>delta = 0</code>
+make <code>Den = 1</code> exactly, so <code>Att = N</code> is exactly linear in
+<code>pi</code>.</p>
+<p>The reading to carry: a machine that reproduces the trait perfectly, at human scale, with no
+mean gap, still biases the coefficient, and biases it <em>upward</em> by about two percent at
+ten percent contamination. That is (E76) in the paper,
+<code>Att = 1 + pi (1 / sqrt(rel_H) - 1) &gt; 1</code>, and it is the fastest counterexample to
+&ldquo;a good ghostwriter is harmless&rdquo;.</p>
+
+<h3>Three committee questions</h3>
+
+<div class="qa">
+<p class="q">&ldquo;First order in <code>pi</code>. Over what range is that any good?&rdquo;</p>
+<p>Over the grid, which tops out at <code>pi = 0.30</code>. The measured gaps are in the
+assumption table above: four ten-thousandths at <code>pi = 0.10</code>, four thousandths at
+<code>pi = 0.30</code>, and it falls apart by <code>pi = 0.9</code>. (E39) is the
+sentence-length summary of the map; the exact statements are (E7) for values,
+Prop.&nbsp;12 for shape, and (E17) for the sign boundary. Never quote (E39) as the exact
+result.</p>
+</div>
+
+<div class="qa">
+<p class="q">&ldquo;Why is the sign threshold <code>c_2</code> and not <code>c_1</code>? You defined both.&rdquo;</p>
+<p>They answer different questions. <code>c_1</code> and <code>c_2</code> bracket the regimes
+of <em>monotonicity in <code>pi</code></em>, that is, the sign of <code>dAtt/dpi</code>:
+decreasing below <code>c_1</code>, increasing above <code>c_2</code>, U-shaped between
+(Prop.&nbsp;12). <code>c_2</code> shows up again in (E39) because it is also the
+<code>pi -&gt; 0</code> limit of the <em>level</em> boundary <code>c*(pi)</code> where
+<code>Att = 1</code> (Prop.&nbsp;5). Two different derivatives, one coincident boundary at the
+origin. <code>c_1</code> has no role in the sign of the bias.</p>
+</div>
+
+<div class="qa">
+<p class="q">&ldquo;The mean gap enters only as <code>delta^2</code>. So the direction of the gap does not matter?&rdquo;</p>
+<p>Correct, under A1, and that is a substantive claim rather than an algebraic accident. Under
+A1 the mean gap touches <code>Var(x)</code> only, through <code>pi (1 - pi) Delta^2</code> in
+(E3), and a variance cannot see a sign. It never reaches <code>Cov(x, w)</code>, because
+<code>E[w | A] = 0</code> for both classes when authorship is ignorable. The gap&rsquo;s
+direction becomes visible only once authorship is non-ignorable, where
+<code>delta d_theta</code> appears in the numerator of (E21) and can flip the sign of the whole
+coefficient. That is the bridge to Prop.&nbsp;11: the detector manufactures exactly that
+non-ignorability.</p>
+</div>
+
+<div class="spoken">
+<span class="spoken-label">Thirty seconds, out loud</span>
+<p>&ldquo;If contamination is light, you can skip the whole map. The bias is linear in the
+contamination rate, and its direction is one comparison: the coupling <code>c</code> against a
+threshold <code>c_2</code> built from the variance ratio, the mean gap and the reliability.
+Below the threshold, contamination hides your effect. Above it, contamination manufactures one.
+The rate is set by how much variance the machine adds. The one thing I will not let that
+sentence do is run to high contamination, since it is a small-<code>pi</code> expansion and the
+exact sign boundary moves with <code>pi</code>.&rdquo;</p>
+</div>
+</section>
+
+<hr>
+
+<!-- ============ P11 ============ -->
+<section id="p11">
+<p class="eyebrow">Result 3</p>
+<h2>Prop.&nbsp;11 &mdash; the deletion-selection bias</h2>
+
+<p class="lede">Running a clean human sample through an AI-text detector and deleting the
+flagged cases lowers the validity coefficient among the survivors, even with zero machine
+responses in the data and even with a perfect-sensitivity detector, because the detector throws
+away trait variance along with the fluency it was actually measuring.</p>
+
+<h3>Notation decoder for this result</h3>
+<div class="tbl">
+<table>
+<thead><tr><th>Symbol</th><th>Is</th></tr></thead>
+<tbody>
+<tr><td><code>se = P(flag | M)</code></td><td>sensitivity</td></tr>
+<tr><td><code>sp_bar = P(pass | H)</code></td><td>marginal specificity. The paper writes this as <code>sp</code></td></tr>
+<tr><td><code>pi'</code></td><td>residual contamination after deletion, (E30)</td></tr>
+<tr><td><code>F</code></td><td>the fluency score (or whatever text feature) the detector thresholds on</td></tr>
+<tr><td><code>r_F = Cor(theta, F)</code></td><td>the fluency-trait correlation. The whole result scales with <code>r_F^2</code></td></tr>
+<tr><td><code>tau = Phi^-1(1 - sp_bar)</code></td><td>the pass threshold on standardized <code>F</code></td></tr>
+<tr><td><code>lambda = phi(tau) / sp_bar</code></td><td>truncated-normal mean, the inverse Mills ratio at <code>tau</code></td></tr>
+<tr><td><code>psi = lambda (lambda - tau)</code></td><td>the fraction of <code>F</code>'s variance that truncation removes, in <code>(0, 1)</code></td></tr>
+<tr><td><code>q = 1 - r_F^2 psi</code></td><td>the survivors' trait-variance retention factor, (E33)</td></tr>
+<tr><td><code>rho_H,pass</code></td><td><code>Cor(x, w | H, pass)</code></td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>The derivation, every move</h3>
+
+<div class="step">
+<p class="step-head">Step 0 &mdash; why residual contamination is not the story.</p>
+<p>By Bayes,</p>
+<div class="eq">pi' := P(M | pass) = (1 - se) pi / [ (1 - se) pi + sp (1 - pi) ]   <span class="tag">(E30)</span></div>
+<p>At <code>se = sp = 0.85</code> and <code>pi = 0.10</code>:
+<code>pi' = 0.015 / (0.015 + 0.765) = 0.019</code>. That looks small, and if residual
+contamination were the only channel, deletion would work. The rest of the section is the
+argument that it is not the only channel.</p>
+</div>
+
+<div class="step">
+<p class="step-head">Step 1 &mdash; name the collider.</p>
+<p>The detector&rsquo;s human error rate depends on <code>F</code>, which correlates with
+<code>theta</code>. The graph is</p>
+<div class="eq">theta -> F -> D &lt;- A,     theta -> x,   theta -> w</div>
+<p><code>D</code> is a collider between <code>A</code> and <code>F</code>. Under A1,
+<code>A</code> and <code>theta</code> are independent. Conditioning on <code>D = pass</code>
+opens the path <code>A - D - F - theta</code>, so among survivors <code>A</code> and
+<code>theta</code> are dependent. The survivor population satisfies A1', not A1.</p>
+<div class="why"><span class="why-label">Intuition</span>
+You did not select on the trait, and you did not select on authorship. You selected on
+something downstream of both. That is enough. This is the formal content of &ldquo;deletion
+selects on theta&rdquo;, and it is the reason the result survives at <code>pi = 0</code>.</div>
+</div>
+
+<div class="step">
+<p class="step-head">Step 2 &mdash; the mean shift, distribution-free.</p>
+<p>Let <code>s(theta) := P(pass | H, theta) = E[sp(F) | theta, H]</code> and
+<code>sp_bar := E[sp(F) | H]</code>. Then</p>
+<div class="eq">E[theta | H, pass] - E[theta | H] = Cov(theta, sp(F) | H) / sp_bar   <span class="tag">(E31)</span></div>
+<p><em>Proof, each equality.</em>
+<code>E[theta | H, pass] = E[theta 1{pass} | H] / P(pass | H)</code> is the definition of
+conditional expectation. The numerator is <code>E[theta s(theta) | H]</code> by the tower
+property over <code>theta</code>. Write that as
+<code>E[theta | H] sp_bar + Cov(theta, s(theta) | H)</code>, which is the definition of
+covariance rearranged. Divide by <code>sp_bar</code>. Finally
+<code>Cov(theta, s(theta)) = Cov(theta, E[sp(F) | theta]) = Cov(theta, sp(F))</code>, again by
+the tower property.</p>
+<p>For <code>(theta, F)</code> bivariate normal with correlation <code>r_F</code>, and
+<code>sp</code> nondecreasing and nonconstant,
+<code>Cov(theta, sp(F)) = r_F sqrt(s2_T) Cov(F, sp(F))</code> and
+<code>Cov(F, sp(F)) &gt; 0</code> by Chebyshev&rsquo;s association inequality. So the shift has
+the sign of <code>r_F</code> and vanishes only when fluency carries no trait information. (E31)
+is Lemma&nbsp;1 and is worth knowing separately: it needs no normality and no threshold
+rule.</p>
+</div>
+
+<div class="step">
+<p class="step-head">Step 3 &mdash; the variance shrink, under a Gaussian threshold detector.</p>
+<div class="eq">F = r_F theta / sqrt(s2_T) + sqrt(1 - r_F^2) eta,   eta ~ N(0, 1) independent
+pass iff F > tau,    sp_bar = 1 - Phi(tau)</div>
+<p>Standard truncated-normal facts with
+<code>lambda := phi(tau) / (1 - Phi(tau)) = phi(tau) / sp_bar</code>:</p>
+<div class="eq">E[F | F > tau] = lambda,   Var(F | F > tau) = 1 - psi,   psi := lambda (lambda - tau)</div>
+<p>Now decompose <code>theta</code> on <code>F</code>. Because <code>(theta, F)</code> is
+bivariate normal and <code>F</code> is standardized,
+<code>theta = r_F sqrt(s2_T) F + sqrt(s2_T (1 - r_F^2)) eta'</code> with <code>eta'</code>
+independent of <code>F</code>. Selection touches <code>F</code> and nothing else, so take the
+variance of that decomposition conditionally on <code>F &gt; tau</code>:</p>
+<div class="eq">Var(theta | H, pass) = r_F^2 s2_T Var(F | F > tau) + s2_T (1 - r_F^2)
+                     = r_F^2 s2_T (1 - psi) + s2_T (1 - r_F^2)
+                     = s2_T [ r_F^2 - r_F^2 psi + 1 - r_F^2 ]
+                     = s2_T [ 1 - r_F^2 psi ] = s2_T q            <span class="tag">(E33)</span></div>
+<p>and likewise <code>E[theta | H, pass] = r_F sqrt(s2_T) lambda</code> (E32), which is
+Lemma&nbsp;1 specialized.</p>
+<div class="why"><span class="why-label">Intuition</span>
+Only the part of <code>theta</code> that runs through <code>F</code> is exposed to the
+truncation. That part is <code>r_F^2</code> of the variance, and truncation removes the
+fraction <code>psi</code> of it. So you lose <code>r_F^2 psi</code> of the trait variance and
+keep <code>q</code>. Everything downstream is <code>O(r_F^2)</code>, and that is the single
+most important fact about this result.</div>
+</div>
+
+<div class="step">
+<p class="step-head">Step 4 &mdash; what selection does <em>not</em> touch.</p>
+<p>The measurement error <code>e</code> and the outcome noise <code>u</code> are independent of
+<code>(theta, F)</code>, so truncating on <code>F</code> leaves their variances alone:</p>
+<div class="eq">Cov(x, w | H, pass) = b s2_T q
+Var(x | H, pass)    = s2_T q + s2_H
+Var(w | H, pass)    = b^2 s2_T q + s2_u</div>
+<div class="why"><span class="why-label">Intuition</span>
+This asymmetry is the entire result. The numerator of the correlation is all true score, so it
+loses the full factor <code>q</code>. Each denominator is part true score and part noise, so it
+loses only the true-score share. A ratio whose top shrinks more than its bottom falls.</div>
+</div>
+
+<div class="step">
+<p class="step-head">Step 5 &mdash; divide by the unrestricted quantities.</p>
+<div class="eq">Var(x | H, pass) / V_H = (s2_T q + s2_H) / V_H   = q rel_H + (1 - rel_H) = 1 - rel_H (1 - q)
+Var(w | H, pass) / V_w = (b^2 s2_T q + s2_u) / V_w = 1 - rho_T^2 (1 - q)</div>
+<p>using <code>rel_H = s2_T / V_H</code> and <code>rho_T^2 = b^2 s2_T / V_w</code>. So</p>
+<div class="eq">rho_H,pass := Cor(x, w | H, pass)
+            = rho_H * q / sqrt[ (1 - rel_H (1 - q)) (1 - rho_T^2 (1 - q)) ]   <span class="tag">(E34)</span></div>
+</div>
+
+<div class="step">
+<p class="step-head">Step 6 &mdash; Prop.&nbsp;11, the sign.</p>
+<p><strong>Prop.&nbsp;11 (deletion bias at <code>pi' = 0</code>).</strong>
+<code>rho_H,pass &lt; rho_H</code> whenever <code>r_F != 0</code>,
+<code>sp_bar &lt; 1</code>, and (<code>rel_H &lt; 1</code> or
+<code>rho_T^2 &lt; 1</code>).</p>
+<p><em>Proof, every move.</em> Each denominator factor is a convex combination of
+<code>q</code> and 1:</p>
+<div class="eq">1 - rel_H (1 - q) = rel_H * q + (1 - rel_H) * 1</div>
+<p>Since <code>q &lt;= 1</code> and <code>0 &lt;= rel_H &lt;= 1</code>, that combination is
+<code>&gt;= q</code>, with equality exactly when <code>rel_H = 1</code> or
+<code>q = 1</code>. The same argument applies verbatim to
+<code>1 - rho_T^2 (1 - q)</code>. So the product of the two factors is <code>&gt;= q^2</code>
+and its square root is <code>&gt;= q</code>, which makes the whole ratio
+<code>q / sqrt(...) &lt;= 1</code>. It is strict as soon as <code>q &lt; 1</code> and at least
+one of the two factors is strictly above <code>q</code>, which is one of
+<code>rel_H &lt; 1</code> or <code>rho_T^2 &lt; 1</code>. Finally, <code>q &lt; 1</code> needs
+<code>r_F != 0</code> and <code>psi &gt; 0</code>; and
+<code>psi = lambda (lambda - tau) &gt; 0</code> for every finite <code>tau</code>, because
+<code>lambda &gt; max(tau, 0)</code>, and <code>tau</code> is finite exactly when
+<code>sp_bar &lt; 1</code>. QED.</p>
+<div class="why"><span class="why-label">Intuition for the degenerate case</span>
+If <code>rel_H = 1</code> and <code>rho_T^2 = 1</code> then <code>rho_H = 1</code> already, and
+a correlation of 1 survives any range restriction: both variances shrink by the same factor and
+the ratio is unchanged. That is why the third condition exists, and it was added on 2026-09-07
+as pass-1 item D17. Before that the proposition said &ldquo;<code>q &lt; 1</code> and
+<code>rel_H &lt; 1</code>&rdquo;, which misses strictness through the <code>rho_T^2</code>
+factor. Know that history; it is the kind of thing a careful reader will reconstruct.</div>
+<p>This is indirect range restriction, Thorndike case&nbsp;III. The detector is the third
+variable and fluency-correlated trait variance is what gets discarded.</p>
+</div>
+
+<div class="flag">
+<span class="flag-label">Flag 5 &middot; real, an assumption doing work that neither file discusses</span>
+<p>Step&nbsp;4 needs <code>e</code> independent of <code>(theta, F)</code>. In the model that is
+stipulated. In an application it is a claim about the world, and a doubtful one: the detector
+scores the same text a human rater scores, so surface polish plausibly drives both the
+detector&rsquo;s <code>F</code> and the rater&rsquo;s error <code>e</code>. If
+<code>Cov(F, e | H) != 0</code>, then <code>Var(x | H, pass) != s2_T q + s2_H</code>,
+step&nbsp;5&rsquo;s first line fails, and the clean <code>q / sqrt(...)</code> form of (E34) is
+not the right object. The sign of the bias is then no longer guaranteed by the convexity
+argument.</p>
+<p>Neither <code>lane1-zero-coupling.md</code> &sect;6.3 nor paper &sect;2.3 raises this. If a
+committee member raises it, concede it as a scope condition on the measurement model, not on
+the algebra, and note that <code>Var(w | H, pass)</code> is safe under the weaker and much more
+defensible claim that the outcome noise <code>u</code> is independent of the text.</p>
+</div>
+
+<div class="flag">
+<span class="flag-label">Flag 6 &middot; notation, not an error</span>
+<p>The derivation writes <code>sp_bar</code> for marginal specificity and explicitly says it is
+&ldquo;the same number as <code>sp</code> in 6.1; the bar marks it as the average of
+<code>sp(f)</code>&rdquo;. Paper &sect;2.3 drops the bar. Consistent, but if you write
+<code>sp</code> on a board and then say &ldquo;average specificity&rdquo;, say which one you
+mean.</p>
+</div>
+
+<h3>Assumptions doing real work, and what breaks</h3>
+<div class="tbl">
+<table class="cols3">
+<thead><tr><th>Assumption</th><th>What it buys</th><th>What breaks without it</th></tr></thead>
+<tbody>
+<tr>
+  <td><code>(theta, F)</code> bivariate normal</td>
+  <td>The closed form <code>q = 1 - r_F^2 psi</code></td>
+  <td>The <em>direction</em> survives (Lemma&nbsp;1 and Chebyshev need no normality), but the
+  magnitude does not. Non-Gaussian detectors are logged as Q9 in
+  <code>lane1-open-questions.md</code>, still open.</td>
+</tr>
+<tr>
+  <td>Pass rule is a monotone threshold on <code>F</code></td>
+  <td><code>Cov(F, sp(F)) &gt; 0</code>, so the mean shift is signed</td>
+  <td>A non-monotone rule (flag both the most fluent and the least fluent text) can zero the
+  covariance or reverse it. Real detectors are monotone in their own score, so this is safe,
+  but it is an assumption.</td>
+</tr>
+<tr>
+  <td><code>e</code>, <code>u</code> independent of <code>(theta, F)</code></td>
+  <td>Step 4</td>
+  <td>See Flag&nbsp;5.</td>
+</tr>
+<tr>
+  <td>Detection depends on the text only through <code>F</code></td>
+  <td>The whole one-dimensional treatment</td>
+  <td>Multidimensional detection makes <code>q</code> a matrix contraction; the sign argument
+  still runs if selection is on any scalar monotone index.</td>
+</tr>
+<tr>
+  <td><code>r_F != 0</code></td>
+  <td>Nonzero effect</td>
+  <td>At <code>r_F = 0</code> the result is exactly nil. Not hypothetical: paper &sect;5.7's
+  watermark case builds <code>r_F = 0</code> by construction, and the collider terms vanish
+  identically.</td>
+</tr>
+<tr>
+  <td><code>sp_bar &lt; 1</code></td>
+  <td><code>tau</code> finite, so <code>psi &gt; 0</code></td>
+  <td>A detector that never flags a human deletes nobody and induces nothing. This is why
+  sensitivity is irrelevant and specificity is everything.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h3>A tiny numeric example</h3>
+<p>At the degraded operating point <code>sp_bar = 0.85</code>:</p>
+<div class="eq">tau    = Phi^-1(0.15) = -1.036
+lambda = phi(-1.036) / 0.85 = 0.2333 / 0.85 = 0.274
+psi    = 0.274 * (0.274 + 1.036) = 0.274 * 1.310 = 0.360</div>
+<p>Take <code>r_F = 0.5</code>, <code>rel_H = 0.7</code>, <code>rho_T = 0.5</code>:</p>
+<div class="eq">q                    = 1 - 0.25 * 0.360 = 0.910
+1 - rel_H (1 - q)    = 1 - 0.7  * 0.09  = 0.937
+1 - rho_T^2 (1 - q)  = 1 - 0.25 * 0.09  = 0.9775
+rho_H,pass / rho_H   = 0.910 / sqrt(0.937 * 0.9775) = 0.910 / 0.957 = 0.951</div>
+<p>A 5% relative hit with zero machine responses in the sample. Now put in the number actually
+measured on the essays testbed, <code>r_F = 0.053</code>:
+<code>q = 1 - 0.0028 * 0.36 = 0.99899</code>, and the ratio is
+<span class="num">0.9995</span>. Five hundredths of a percent.</p>
+<p>Carry both. The first says the mechanism is real and non-trivial at a plausible-sounding
+<code>r_F</code>. The second says the paper does not claim it bites at the <code>r_F</code>
+this project measured. Volunteer the second before anyone asks for it.</p>
+
+<h3>Three committee questions</h3>
+
+<div class="qa">
+<p class="q">&ldquo;Surely a better detector fixes this.&rdquo;</p>
+<p>Only along one axis. Note that neither <code>pi</code> nor <code>se</code> appears anywhere
+in (E32) to (E34). Prop.&nbsp;14(i) makes it formal: as <code>se -&gt; 1</code>,
+<code>pi' -&gt; 0</code> and <code>Att_pass</code> converges to the (E34) ratio, which is
+strictly below 1 by Prop.&nbsp;11 and does not depend on <code>pi</code> or <code>c</code>. The
+only route to zero is <code>sp_bar -&gt; 1</code>, which sends
+<code>tau -&gt; -infinity</code>, <code>psi -&gt; 0</code>, <code>q -&gt; 1</code>. Perfect
+sensitivity does not help because the bias lives entirely on the human side of the sample. The
+oracle (<code>se = sp = 1</code>) is the only point where <code>Att_pass = 1</code>.</p>
+</div>
+
+<div class="qa">
+<p class="q">&ldquo;How big is it really?&rdquo;</p>
+<p><code>O(r_F^2)</code>, which is the whole answer. The measured <code>r_F</code> on this
+project&rsquo;s testbed is 0.045 from the detector&rsquo;s own score and 0.053 from surface
+proxies, both reported as lower bounds. At those values the detector destroys about 0.1% of
+trait variance, and deletion still nets roughly five points of recovered contamination
+attenuation. The paper ships this as a sensitivity table over <code>r_F</code> (&sect;5.6,
+Table&nbsp;11), not as a kill claim. SPEC 1.5&rsquo;s original unconditional
+&ldquo;detect-and-delete is dead&rdquo; was retracted on 2026-09-10 for exactly this reason.
+Saying that first is stronger than being walked to it.</p>
+</div>
+
+<div class="qa">
+<p class="q">&ldquo;Where does the inequality actually come from? Range restriction usually shrinks everything.&rdquo;</p>
+<p>It does, but not by the same factor. The numerator of the correlation is pure true-score
+covariance, so it takes the full factor <code>q</code>. Each denominator is a mix of true score
+and noise, and only the true-score share is exposed to the selection, so each denominator falls
+by less: <code>1 - rel_H (1 - q)</code> is <code>rel_H q + (1 - rel_H)</code>, a convex
+combination of <code>q</code> and 1. Top shrinks more than bottom, ratio falls. And that is
+also why the degenerate case exists: when <code>rel_H = rho_T = 1</code> there is no noise to
+protect the denominator, everything shrinks by <code>q</code>, and the correlation is unchanged
+at 1.</p>
+</div>
+
+<div class="spoken">
+<span class="spoken-label">Thirty seconds, out loud</span>
+<p>&ldquo;The obvious fix for ghostwritten survey responses is to run a detector and delete what
+it flags. The problem is what the detector is actually thresholding on. It is fluency, or
+something like it, and fluency correlates with the trait you are measuring. So when you delete
+flagged cases, you are not removing a random slice of your humans, you are shaving off the
+low-fluency tail, and that tail carries trait variance. The correlation you compute afterward is
+lower than the clean one, and it stays lower no matter how good your sensitivity gets, because
+the whole problem is on the human side. Only specificity helps. The size scales with the square
+of the fluency-trait correlation, and on my testbed that correlation is about 0.05, so the cost
+is about a tenth of a percent of trait variance. The mechanism is real. At my measured numbers
+it is small, and I report it as a sensitivity band rather than a headline.&rdquo;</p>
+</div>
+</section>
+
+<hr>
+
+<!-- ============ TOGETHER ============ -->
+<section id="together">
+<p class="eyebrow">Synthesis</p>
+<h2>The three together</h2>
+<p>Read this page last, and read it again before you walk in.</p>
+
+<h3>They are one chain, and the chain is the paper&rsquo;s argument</h3>
+
+<p><strong>(E7) is the diagnosis.</strong> Contamination is not dilution. It moves the numerator
+of a correlation (less trait covariance per contaminated response) and the denominator (machine
+text is usually less dispersed, but a mean gap between the groups inflates the pooled variance).
+Which term moves more decides everything, so the bias has no fixed sign. That is the claim you
+have to land first, because every intuition in the room will be &ldquo;you lose a fraction of
+your signal&rdquo;.</p>
+
+<p><strong>(E39) is the diagnosis compressed to a sentence you can use.</strong> Expand (E7) at
+small <code>pi</code> and the whole two-dimensional map collapses to a single comparison:
+<code>c</code> against <code>c_2(delta)</code>, at a rate
+<code>pi sqrt(kappa / rel_H)</code>. That is how you say the result without a blackboard. The
+cost of the compression is that the sign rule is a <code>pi -&gt; 0</code> statement and the
+true boundary <code>c*(pi)</code> drifts away from <code>c_2</code> as <code>pi</code> grows
+(Flag&nbsp;2). On this paper&rsquo;s grid, which stops at <code>pi = 0.30</code>, they agree;
+say so with the number rather than leaving it implicit.</p>
+
+<p><strong>Prop.&nbsp;11 is why the obvious fix fails</strong>, and it is the piece that is
+structurally different from the other two. (E7) and (E39) describe what contamination does to
+you. Prop.&nbsp;11 describes what your <em>response</em> to contamination does to you. It runs
+on a mechanism the first two do not have: a collider. Under A1, authorship and trait are
+independent. Deletion conditions on the detector, the detector is a common effect of authorship
+and of fluency, and fluency is downstream of the trait. Conditioning on a collider manufactures
+the dependence A1 ruled out. Formally the survivor sample is an A1' mixture with an induced
+trait gap <code>d_theta = -r_F lambda</code> and unequal within-class trait variances, which is
+exactly the structure &sect;4b built for a different reason, and which the day-2 file then
+evaluates as (E48) to (E51).</p>
+
+<h3>The joint through-line, one sentence each</h3>
+<ol>
+<li>Contamination biases validity by a known factor with no fixed sign (E7).</li>
+<li>To first order the sign is one comparison, <code>c</code> against <code>c_2(delta)</code> (E39).</li>
+<li>Deleting the contamination introduces a second, independent bias that no amount of
+sensitivity removes (Prop.&nbsp;11).</li>
+<li>So the honest output is not a correction, it is a sensitivity band: fix
+<code>pi, kappa, delta, rel_H</code>, treat <code>c</code> as unidentified in
+<code>[0, 1]</code>, and invert (E7) at both endpoints. That is the <code>bounds_c</code>
+estimator, and (E36) (<code>Att</code> affine and increasing in <code>c</code>) is what makes
+&ldquo;invert at both endpoints&rdquo; valid rather than a guess.</li>
+</ol>
+
+<h3>How the pieces reuse each other</h3>
+<p><code>bounds_c</code> inverts (E7), and needs (E36) for monotonicity. Prop.&nbsp;14
+evaluates the survivor sample using (E40) to (E43), whose special case (c) at
+<code>pi' = 0</code> is exactly (E34), which is Prop.&nbsp;11. So Prop.&nbsp;11 is not a side
+result; it is the <code>pi' = 0</code> boundary condition of the survivor formula, which is why
+Prop.&nbsp;14(i) can say the bias does not vanish as <code>se -&gt; 1</code> just by taking a
+limit into Prop.&nbsp;11.</p>
+
+<h3>The three magnitudes to have memorized</h3>
+<div class="tbl">
+<table>
+<tbody>
+<tr><td>Contamination at <code>pi = 0.10, c = 0, kappa = 0.2, rel_H = 0.7</code></td><td class="num">Att = 0.938</td><td>six points</td></tr>
+<tr><td>The same cell after deletion, degraded detector</td><td class="num">0.988</td><td>deletion recovers five of them</td></tr>
+<tr><td>The selection channel&rsquo;s own cost at the measured <code>r_F = 0.053</code></td><td class="num">0.05%</td><td>of the coefficient</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>That ordering is the paper&rsquo;s honest headline. Deletion mostly works at the
+<code>r_F</code> this project measured. What survives the measurement is the conditional claim:
+deletion-selection is a real bias governed by <code>r_F</code> and by the out-of-domain
+false-positive rate, reported as a sensitivity table, plus two things from Prop.&nbsp;14 that do
+not depend on <code>r_F</code>&rsquo;s size at all (the bias does not vanish as
+<code>se -&gt; 1</code>, and it is not monotone along a ROC curve).</p>
+</section>
+
+<hr>
+
+<!-- ============ FLASH ============ -->
+<section id="flash">
+<p class="eyebrow">Self-test</p>
+<h2>Five flash checks</h2>
+<p>Say your answer out loud, then open the reveal.</p>
+
+<div class="check">
+<p class="qn">1. In (E7), which of the five parameters does <code>Den(pi)</code> not depend on,
+and why does that matter?</p>
+<details><summary>Answer</summary>
+<div class="answer">
+<p><code>c</code>. <code>Den</code> is the variance multiplier, and the coupling only affects
+how much <em>trait</em> signal the machine text carries, not how dispersed it is.
+<code>Var(x | M) = s2_M = kappa V_H</code> holds for every <code>c</code>, by construction of
+the second-moment representation. It matters because it is what makes <code>Att</code> affine in
+<code>c</code> at fixed <code>pi</code> (E36), which is what lets <code>bounds_c</code> invert
+(E7) at the two endpoints of a range for <code>c</code> and be certain it has bracketed the
+interior.</p>
+</div>
+</details>
+</div>
+
+<div class="check">
+<p class="qn">2. A colleague says: &ldquo;<code>Att &gt; 1</code> must be a coding error,
+correlations attenuate under contamination.&rdquo; Give the one-line refutation and the
+one-line boundary.</p>
+<details><summary>Answer</summary>
+<div class="answer">
+<p><em>Refutation:</em> at <code>pi = 1</code> the formula gives
+<code>Att = c / sqrt(rel_H)</code>, which exceeds 1 whenever <code>c &gt; sqrt(rel_H)</code>,
+and that matches the direct computation <code>Cor(x, w | M) = c rho_T</code>. A machine that
+tracks the trait more faithfully than a noisy human measurement is a better indicator of
+<code>theta</code>, so pooling it in raises the observed correlation.</p>
+<p><em>Boundary:</em> <code>Att = 1</code> exactly on
+<code>c*(pi) = sqrt(rel_H / kappa) [sqrt(Den(pi)) - (1 - pi)] / pi</code> (E17), with
+<code>Att &gt; 1</code> above it.</p>
+</div>
+</details>
+</div>
+
+<div class="check">
+<p class="qn">3. State the sign rule of (E39), then state the one qualification you must attach
+to it.</p>
+<details><summary>Answer</summary>
+<div class="answer">
+<p><em>Rule:</em>
+<code>bias(rho_obs) = pi rho_H sqrt(kappa / rel_H) [c - c_2(delta)] + O(pi^2)</code>, so to
+first order the bias has the sign of <code>c - c_2(delta)</code> with
+<code>c_2(delta) = S sqrt(rel_H) / (2 sqrt(kappa))</code>,
+<code>S = 1 + kappa + delta^2</code>.</p>
+<p><em>Qualification:</em> it is a <code>pi -&gt; 0</code> statement. The exact zero of the bias
+is <code>c*(pi)</code> from (E17), and <code>c*(0+) = c_2</code> is a limit. At
+<code>kappa = 0.2, rel_H = 0.7, delta = 0, c = 1</code> the rule says attenuation
+(<code>c &lt; c_2 = 1.122</code>) and it is right at <code>pi = 0.1</code> and
+<code>pi = 0.3</code> (0.994, 0.987) and wrong at <code>pi = 0.9</code> (1.098). The grid stops
+at <code>pi = 0.30</code>, where the rule holds.</p>
+</div>
+</details>
+</div>
+
+<div class="check">
+<p class="qn">4. Prop.&nbsp;11 says the deletion bias does not depend on <code>se</code>. Why
+not, in one sentence, and what does that imply about which detector metric you should care
+about?</p>
+<details><summary>Answer</summary>
+<div class="answer">
+<p>Because the bias lives entirely on the human side of the sample: (E32) to (E34) describe
+<code>Cor(x, w | H, pass)</code>, and <code>se</code> only governs how many <em>machine</em>
+cases survive.</p>
+<p><em>Implication:</em> specificity is the metric, not sensitivity or AUC.
+<code>sp_bar -&gt; 1</code> sends <code>tau -&gt; -infinity</code>, <code>psi -&gt; 0</code>,
+<code>q -&gt; 1</code>, and the bias to zero; <code>se -&gt; 1</code> sends
+<code>pi' -&gt; 0</code> and leaves the (E34) ratio exactly where it was
+(Prop.&nbsp;14(i)).</p>
+</div>
+</details>
+</div>
+
+<div class="check">
+<p class="qn">5. In (E34) the numerator carries the factor <code>q</code> and the denominator
+does not. Say precisely why, and name the case where the argument gives equality.</p>
+<details><summary>Answer</summary>
+<div class="answer">
+<p>Selection on <code>F</code> shrinks only the trait variance, by the factor
+<code>q = 1 - r_F^2 psi</code>. The covariance
+<code>Cov(x, w | H, pass) = b s2_T q</code> is pure true score, so it takes the full factor.
+Each variance is part true score and part noise that selection never touched, so
+<code>Var(x | H, pass) / V_H = rel_H q + (1 - rel_H)</code>, a convex combination of
+<code>q</code> and 1, which is at least <code>q</code>. Same for the outcome with
+<code>rho_T^2</code>. Top falls more than bottom.</p>
+<p><em>Equality case:</em> <code>rel_H = 1</code> and <code>rho_T^2 = 1</code>, where there is
+no noise to protect the denominators, every term scales by <code>q</code>, and
+<code>rho_H,pass = rho_H = 1</code>. That is the third condition of Prop.&nbsp;11, added as
+pass-1 item D17.</p>
+</div>
+</details>
+</div>
+</section>
+
+<hr>
+
+<!-- ============ CARD ============ -->
+<section id="card">
+<p class="eyebrow">Corridor reading</p>
+<h2>Three-minute refresh card</h2>
+
+<div class="card">
+<h3>The estimand</h3>
+<p><code>rho_H = Cor(x, w | H) = sqrt(rel_H) rho_T</code>. Observed-score validity in a clean
+sample, decision N2. &ldquo;Bias&rdquo; means contamination bias and excludes classical
+attenuation.</p>
+
+<h3>The five parameters</h3>
+<p><code>pi</code> prevalence, <code>c</code> coupling, <code>rel_H</code> reliability,
+<code>kappa</code> variance ratio, <code>delta</code> mean gap. Plus <code>rho_T</code> wherever
+<code>Var(w)</code> matters.</p>
+
+<h3>(E7)</h3>
+<div class="eq">Att = [ (1 - pi) + pi c sqrt(kappa/rel_H) ] / sqrt[ (1 - pi) + pi kappa + pi(1-pi) delta^2 ]</div>
+<p>Numerator is signal covariance, denominator is pooled variance, bias is the race between
+them, sign is not fixed. Checks: <code>pi = 0</code> gives 1; <code>pi = 1</code> gives
+<code>c / sqrt(rel_H)</code>; <code>kappa = 1, delta = 0, c = 0</code> gives
+<code>1 - pi</code>.</p>
+
+<h3>(E39)</h3>
+<div class="eq">bias = pi rho_H sqrt(kappa/rel_H) [ c - c_2(delta) ] + O(pi^2)
+c_2(delta) = S sqrt(rel_H) / (2 sqrt(kappa)),   S = 1 + kappa + delta^2</div>
+<p>Below <code>c_2</code> contamination hides validity, above it manufactures it.
+Small-<code>pi</code> statement only; the exact boundary is <code>c*(pi)</code> (E17).
+Amanuensis cell <code>c = kappa = 1, delta = 0</code>: slope
+<code>1/sqrt(rel_H) - 1 = 0.195</code>, so <code>Att = 1.020</code> at <code>pi = 0.10</code>.
+A perfect ghostwriter is not harmless.</p>
+
+<h3>Prop.&nbsp;11</h3>
+<div class="eq">rho_H,pass / rho_H = q / sqrt[ (1 - rel_H(1-q)) (1 - rho_T^2(1-q)) ] &lt; 1
+q = 1 - r_F^2 psi,   psi = lambda(lambda - tau),   tau = Phi^-1(1 - sp_bar)</div>
+<p>Conditions: <code>r_F != 0</code>, <code>sp_bar &lt; 1</code>, not
+(<code>rel_H = 1</code> and <code>rho_T^2 = 1</code>). Collider: deletion conditions on
+<code>D</code>, a common effect of <code>A</code> and <code>F</code>, and <code>F</code> is
+downstream of <code>theta</code>. Does not involve <code>pi</code> or <code>se</code>. Only
+specificity removes it.</p>
+
+<h3>Four numbers</h3>
+<div class="tbl">
+<table>
+<tbody>
+<tr><td><code>Att</code> at <code>pi = 0.10, c = 0, kappa = 0.2, rel_H = 0.7</code></td><td class="num">0.938</td></tr>
+<tr><td>the same cell after deletion, degraded detector</td><td class="num">0.988</td></tr>
+<tr><td><code>rho_H,pass / rho_H</code> at <code>sp_bar = 0.85, r_F = 0.5</code></td><td class="num">0.951</td></tr>
+<tr><td>the same at the measured <code>r_F = 0.053</code></td><td class="num">0.9995</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>The honest headline, in the order to say it</h3>
+<p>The algebra is exact and reproduces on real text. The deletion-selection bias is
+<code>O(r_F^2)</code> and at the measured <code>r_F</code> (0.045 detector score, 0.053 surface
+proxy, both lower bounds) it is negligible, so detect-and-delete is not killed; SPEC 1.5&rsquo;s
+unconditional version was retracted on 2026-09-10. What survives measurement: the mechanism is
+real and reported as a sensitivity table over <code>r_F</code>, plus two <code>r_F</code>-free
+facts from Prop.&nbsp;14 (the bias does not vanish as <code>se -&gt; 1</code>, and it is not
+monotone along a ROC curve). The shipped output is a sensitivity band from
+<code>bounds_c</code>, not a correction.</p>
+
+<h3>Three sentences you should not say</h3>
+<ul>
+<li>&ldquo;Contamination attenuates.&rdquo; Not always; (E17).</li>
+<li>&ldquo;The sign of the bias is the sign of <code>c - c_2</code>&rdquo; without &ldquo;to
+first order&rdquo;. Flag&nbsp;2.</li>
+<li>&ldquo;A better detector fixes it.&rdquo; Only specificity; Prop.&nbsp;14(i).</li>
+</ul>
+</div>
+</section>
+
+<hr>
+
+<!-- ============ FLAGS ============ -->
+<section id="flags">
+<p class="eyebrow">Corrections</p>
+<h2>Flags, collected</h2>
+<p>Six items. Four are in the paper or the derivation and you should raise them before a reader
+does; two are notation.</p>
+
+<div class="tbl">
+<table>
+<thead><tr><th>#</th><th>Where</th><th>What</th><th>Severity</th></tr></thead>
+<tbody>
+<tr>
+  <td class="num">1</td>
+  <td><code>GHOST-RESPONDENTS-DRAFT.md</code> &sect;2.2</td>
+  <td>&ldquo;At <code>c = 0</code>, <code>Att_0</code> is strictly between 0 and
+  <code>sqrt(1 - pi)</code>&rdquo;. (E10) writes
+  <code>0 &lt; Att_0(pi) &lt;= sqrt(1 - pi) &lt; 1</code> and states the equality case
+  (&ldquo;iff <code>kappa = 0</code> and <code>delta = 0</code>&rdquo;) on the next line, a
+  degenerate but admissible corner (Prop.&nbsp;3 is stated &ldquo;for every
+  <code>kappa &gt;= 0</code>&rdquo;). &ldquo;Strictly between&rdquo; overstates by one
+  endpoint.</td>
+  <td>small</td>
+</tr>
+<tr>
+  <td class="num">2</td>
+  <td><code>GHOST-RESPONDENTS-DRAFT.md</code> &sect;2.2, the sentence after (E39)</td>
+  <td>&ldquo;so the sign of the contamination bias is the sign of <code>c - c_2</code>&rdquo;
+  drops the first-order hedge the display carries. The global boundary is <code>c*(pi)</code>
+  (E17); <code>c_2</code> is its <code>pi -&gt; 0</code> limit. Counterexample on the
+  project&rsquo;s own numbers: <code>kappa = 0.2, rel_H = 0.7, delta = 0, c = 1 &lt; c_2 =
+  1.122</code>, yet <code>Att(0.9) = 1.098 &gt; 1</code>. Harmless on a grid that stops at
+  <code>pi = 0.30</code>, wrong as stated.</td>
+  <td><strong>real, prose</strong></td>
+</tr>
+<tr>
+  <td class="num">3</td>
+  <td>(E39), <code>c</code> form</td>
+  <td>Undefined at <code>kappa = 0</code>: <code>c_2 -&gt; infinity</code> and the product is
+  <code>0 * infinity</code>. The <code>g</code> form
+  <code>Att = 1 + pi[g - g_2(delta)]</code> is fine there.</td>
+  <td>small, defensive</td>
+</tr>
+<tr>
+  <td class="num">4</td>
+  <td><code>lane1-partial-coupling.md</code> &sect;1.5, the check sentence</td>
+  <td>Cites (E36) (&ldquo;<code>Att</code> is affine in <code>c</code>&rdquo;) for exact
+  linearity in <code>pi</code> at <code>Den = 1</code>. Wrong pointer, arithmetic correct.</td>
+  <td>bookkeeping</td>
+</tr>
+<tr>
+  <td class="num">5</td>
+  <td>(E34) step 4, neither file</td>
+  <td>Needs <code>e</code> independent of <code>(theta, F)</code>. In an application the
+  detector scores the same text a human rater scores, so <code>Cov(F, e | H) != 0</code> is
+  plausible and would break <code>Var(x | H, pass) = s2_T q + s2_H</code>, hence (E34)&rsquo;s
+  clean form and the convexity argument for the sign. Stipulated in the model, undiscussed
+  anywhere.</td>
+  <td><strong>real, unflagged assumption</strong></td>
+</tr>
+<tr>
+  <td class="num">6</td>
+  <td><code>sp</code> vs <code>sp_bar</code></td>
+  <td>The derivation writes <code>sp_bar</code> for marginal specificity and states it is the
+  same number as <code>sp</code>; the paper drops the bar. Consistent, but be explicit if you
+  write it on a board.</td>
+  <td>notation</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p>Nothing here blocks the three results. Items 2 and 5 are the two a careful reader will find,
+so volunteer both.</p>
+</section>
+
+<footer class="doc">
+  <p>Canonical text: <code>notes/OWNERSHIP-E7-E39-P11.md</code>. Equation-by-equation source
+  pointers and verification receipts: <code>notes/OWNERSHIP-CHECK.md</code>. This page teaches
+  the derivations as they stand; it changes nothing in the paper.</p>
+</footer>
+
+</div>
+</body>
+</html>
