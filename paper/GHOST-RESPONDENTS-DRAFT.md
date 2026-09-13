@@ -378,6 +378,11 @@ At the in-domain operating point the detector catches about 27% of frontier-mode
 62% of the open model's text. Detectability is a generator property, not a constant
 (Figure 7).
 
+![](figures/fig7_detector_sensitivity.png){width=58%}
+
+**Figure 7. Realized detector sensitivity by generator pool and operating point (Table 1).** At the in-domain operating point the detector catches about 27% of frontier-model text and 62% of the open model's text.
+
+
 **The box.** 336 cells at k = 4, rho_T = 0.5, machine draws with replacement, n_bins = 8:
 a core box of 216 cells (pi(6) x detector(4) x n in {500, 1000, 2400} x p in {0, 0.5, 1},
 gpt-4, EXT); a generator arm of 72 cells (llama-2, n = 1000, full pi x detector x p); and a
@@ -441,6 +446,11 @@ At kappa = 0.5 the thresholds are c_1 = 0.789 and c_2 = 0.887, so c = 0.9 sits i
 inflation regime and c in {0, 0.4} in the attenuation regime, exactly as the table reads
 (Figure 5).
 
+![](figures/fig5_layerA_regimes.png){width=66%}
+
+**Figure 5. Layer A: three coupling regimes (kappa = 0.5, rel_H = 0.7, delta = 0).** Closed form (E7) against Monte Carlo, attenuation at c = 0 and c = 0.4 and inflation at c = 0.9.
+
+
 Layer A is the regime in which the corrections were designed to work: rho_H = 0.418, and
 the naive RMSE with no detector is 0.0285, 6.8% of the estimand, so the box is
 bias-dominated at moderate pi. Even here the thresholds fail (Table A1 in the appendix, and
@@ -472,6 +482,11 @@ bootstrap size removes.
 ### 5.2 The contamination map on real text
 
 Figure 1 and Table 3 give the naive bias in the core box at n = 1000 with no detector.
+
+![](figures/fig1_contamination_bias_map.png){width=92%}
+
+**Figure 1. Naive bias in rho_H, relative to the truth 0.068 (real text, n = 1000, no detector).** The cells of Table 3: rows are the assignment coupling p with its c, columns the contamination fraction pi.
+
 
 **Table 3. Naive rho_H bias on real text (core box, EXT, n = 1000, detector none, truth
 0.0676, 100 reps; MCSE 0.0028 to 0.0032 in every cell).**
@@ -521,6 +536,11 @@ structure is informative: the pass rate rises with prevalence because prevalence
 creates a bias worth removing. Best of the three correctors on the resolvable cells by pi:
 0/6, 0/6, 2/13, 8/29, 20/41 at pi = 0.01, 0.02, 0.05, 0.10, 0.20 (Figure 4). Section 5.5
 re-runs this slice at 500 replications.
+
+![](figures/fig4_t1_by_prevalence.png){width=66%}
+
+**Figure 4. T1 on the resolvable cells by prevalence, at 100 and 500 replications.** Share of resolvable cells where the best corrector meets the 20% bar, with the passing count over the resolvable count at each pi. SPEC T1 requires every cell.
+
 
 **T2.** SPEC's coverage threshold is assessed on rho_H; the rho_T rows are an additional
 diagnosis. On rho_H the median cell is at nominal coverage for naive and delete (0.950) and
@@ -606,6 +626,11 @@ box is variance-dominated, deletion throws away sample and adds variance, and th
 add more. Deletion beats naive on RMSE in only 26/96 calibrated and 8/96 degraded cells on
 real text, against 61/102 and 30/90 in Layer A.
 
+![](figures/fig3_rmse_by_estimator.png){width=100%}
+
+**Figure 3. Per-cell rho_H RMSE by estimator and detector; bars are medians.** Layer B real text (rho_H = 0.068, 336 cells) beside Layer A parametric (rho_H = 0.418, 372 cells). On real text naive is lowest in 274 of 336 cells.
+
+
 The oracle column is the SPEC-anticipated concession: deletion beats labelfree in 67/72
 cells and em in 72/72, and against simex the record is 32 wins, 18 losses and 22 exact ties.
 With a perfect detector there is no misclassification for simex to extrapolate away and it
@@ -642,6 +667,11 @@ Bold marks |bias| > 2 MCSE.**
 | oracle | 0.0 | +0.069 (0.046) | -0.026 (0.046) | **-0.133** (0.046) | **-0.104** (0.047) | **-0.240** (0.044) | **-0.226** (0.045) |
 | oracle | 0.5 | -0.001 (0.039) | -0.071 (0.048) | +0.062 (0.044) | +0.040 (0.043) | **+0.099** (0.046) | +0.071 (0.045) |
 | oracle | 1.0 | +0.069 (0.051) | +0.014 (0.045) | +0.048 (0.053) | **+0.085** (0.042) | **+0.401** (0.049) | **+0.515** (0.050) |
+
+![](figures/fig2_boundary_map.png){width=100%}
+
+**Figure 2. Resolvability map: naive relative bias (relative MCSE); bold where |bias| > 2 MCSE (core box, n = 1000, 100 reps).** The cells of Table 7, shaded by |naive bias| / MCSE. No estimator is named per cell.
+
 
 Reading it:
 
@@ -763,6 +793,11 @@ like a weak corrector; at 500 it is visibly a slightly harmful one on this text.
 mechanism is not mysterious: EM fits a two-component Gaussian mixture and the chunk-score
 mixture on real essays is not one.
 
+![](figures/fig8_em_vs_naive_500rep.png){width=52%}
+
+**Figure 8. |EM bias| against |naive bias| over the 280 cells at 500 replications (pi <= 0.20).** Points above the diagonal are cells where EM is worse than naive: 157 of 280.
+
+
 **Table 10. The other thresholds on the same 280 cells.**
 
 | threshold | 100 reps | 500 reps |
@@ -836,6 +871,11 @@ calibrated point (sp = 0.99) the selection channel is under 1% even at r_F = 0.5
 deletion-selection is a bias whose size is governed by the out-of-domain false-positive rate
 and r_F; Figure 6 gives the r_F at which it would matter. SPEC 1.5's unconditional "kills
 detect-and-delete" does not hold at either measured r_F.
+
+![](figures/fig6_rF_sensitivity.png){width=68%}
+
+**Figure 6. Detect-and-delete at the degraded point (se = sp = 0.85), pi = 0.10.** Att_pass after deletion against the fluency-trait correlation r_F for three (kappa, c) settings; the dotted lines are the corresponding no-detector values and the vertical line marks r_F = 0.053.
+
 
 Two things Prop. 14 adds that do not depend on r_F's size: the bias does not vanish as
 se -> 1 (only sp -> 1 removes it), and along a ROC curve the bias is not monotone in the
