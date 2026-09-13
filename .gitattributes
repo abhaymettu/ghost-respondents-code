@@ -22,4 +22,5 @@ lane4-simulation/board.md                             export-ignore
 lane4-simulation/RADAR-DAY*.md                        export-ignore
 lane4-simulation/ASTRA-REREVIEW-*.md                  export-ignore
 lane4-simulation/ZHANG-OCT1-DRAFT.md                  export-ignore
+lane4-simulation/results/layerb-grid-insample-partial    export-ignore
 lane4-simulation/results/layerb-grid-insample-partial/** export-ignore
