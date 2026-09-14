@@ -102,6 +102,12 @@ traits open-ended items are used to measure, so deleting flagged text selects on
 Zhang, Xu, and Alvero (2025) name the second concern in one sentence, as a risk analogous to
 attention-check filtering, without formalizing it.
 
+Teeny, Luttrell, and Lee (2026) name the general form of the worry - synthetic validity,
+whether AI-generated content embodies the construct it is meant to represent rather than
+resembling it - for materials the researcher generates on purpose, survey questions and the
+coding of open-ended responses among them; the respondent-side case here is the same failure
+arriving unlabeled.
+
 This paper treats contamination as a measurement problem rather than a detection problem.
 The analytic sample is a two-component mixture: a human measurement process with its own
 reliability and validity, and a machine process whose output carries some fraction of the
@@ -178,6 +184,13 @@ prediction-powered family (Angelopoulos et al., 2023; Egami et al., 2023) is the
 machinery. All of them need gold labels on some subsample. This paper assumes there are none.
 Section 3 states that assumption and section 7 discusses it; the label-free results here
 apply to the no-label regime and say nothing about correction when labels exist.
+
+Teeny et al. (2026) set the agenda rather than the machinery: their three safeguards - specify
+the construct before generating, verify outputs before deploying, validate against an external
+standard - all presume the analyst knows which content the machine wrote, and what this paper
+adds is the estimator-level apparatus for the case where that is exactly what is unknown, in
+the coupling parameter, the deletion-selection bias, and the correction of the validity
+coefficient.
 
 ---
 
@@ -1284,6 +1297,11 @@ Anything still unconfirmed is marked `unverified`.
 - Rose, N., von Davier, M., and Nagengast, B. (2015). Commonalities and differences in
   IRT-based methods for nonignorable item nonresponses. Psychological Test and Assessment
   Modeling, 57(4), 472-498. Read in full (`FRAMING-DECISION.md`).
+- Teeny, J. D., Luttrell, A., and Lee, D. (2026). The "synthetic validity" problem in
+  AI-generated science. PNAS, 123(37), e2603289123. doi:10.1073/pnas.2603289123. PNAS Opinion,
+  published online 2026-09-09, in print 2026-09-15. Read in full 2026-09-13; the publisher page
+  returned 403 to a direct fetch, so title, authors, venue, volume, issue, and article number
+  were confirmed against Crossref and PubMed 42715086.
 - Wu, J., Ma, Z., and Chen, M.-H. (2026). Bayesian modeling and inference for item response
   model with nonignorable missing data. Psychometrika, First View, pp. 1-42.
   doi:10.1017/psy.2026.10121. Confirmed live.

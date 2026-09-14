@@ -128,6 +128,18 @@ extension with `--from=markdown-yaml_metadata_block` leaves that `---` as the ho
 rule it was meant to be and needs no edit to the source. `--embed-resources` inlines the
 eight PNGs as base64, so Chrome does not depend on the HTML's location to find them.
 
+**Correction, 2026-09-13 (see `paper/CITATION-UPDATE.md`).** Disabling `yaml_metadata_block`
+alone was not enough. That same bare `---` was then read by `multiline_tables` as a table
+dashline, and the whole References section - heading included - was swallowed into a
+one-column table 6% of the text width, which is how it renders in the 32-page PDF above. The
+build now also disables that extension:
+
+    --from=markdown-yaml_metadata_block-multiline_tables
+
+The paper's own 15 tables are pipe tables and are unaffected; the only `<table>` the flag
+removes is the bogus one. With it the references set as a normal full-width list and the
+document is 31 pages.
+
 `paper/print.css` is committed so the PDF is rebuildable from the repo. It is print CSS only:
 letter at 0.85 x 0.8 in margins, a serif body at 10.5 pt, 8.1 pt bordered tables set to avoid
 breaking across pages, and figures centred with their caption paragraph pinned to the image.
