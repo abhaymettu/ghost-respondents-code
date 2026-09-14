@@ -1299,9 +1299,7 @@ Anything still unconfirmed is marked `unverified`.
   Modeling, 57(4), 472-498. Read in full (`FRAMING-DECISION.md`).
 - Teeny, J. D., Luttrell, A., and Lee, D. (2026). The "synthetic validity" problem in
   AI-generated science. PNAS, 123(37), e2603289123. doi:10.1073/pnas.2603289123. PNAS Opinion,
-  published online 2026-09-09, in print 2026-09-15. Read in full 2026-09-13; the publisher page
-  returned 403 to a direct fetch, so title, authors, venue, volume, issue, and article number
-  were confirmed against Crossref and PubMed 42715086.
+  published online 2026-09-09, in print 2026-09-15.
 - Wu, J., Ma, Z., and Chen, M.-H. (2026). Bayesian modeling and inference for item response
   model with nonignorable missing data. Psychometrika, First View, pp. 1-42.
   doi:10.1017/psy.2026.10121. Confirmed live.
