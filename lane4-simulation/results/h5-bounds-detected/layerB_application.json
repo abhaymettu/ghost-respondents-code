@@ -1,0 +1,1480 @@
+{
+  "kappa": 0.798,
+  "delta": 0.534,
+  "rel_H": 0.018255429162021216,
+  "rho_H_true": 0.06755632679849685,
+  "c_bound": [
+    0.0,
+    0.379
+  ],
+  "rho_T": 0.5,
+  "r_F_hat_used": 0.013868830309480055,
+  "n": 1000,
+  "reps": 100,
+  "elapsed_seconds": 10.027231931686401,
+  "cells": [
+    {
+      "pi": 0.01,
+      "p": 0.0,
+      "detector": "calibrated",
+      "se_realized": 0.2625,
+      "sp_realized": 0.9892384105960265,
+      "mean_n_pass": 987.23,
+      "mean_rho_obs_hat": 0.0640997763463211,
+      "mean_rho_pass_hat": 0.06521172701129534,
+      "naive_bound": {
+        "median_width": 0.12484944096708205,
+        "coverage": 0.93
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.12517989915955957,
+        "coverage": 0.92
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.12517994999152843,
+        "coverage": 0.92
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.07,
+      "reps": 100
+    },
+    {
+      "pi": 0.01,
+      "p": 0.5,
+      "detector": "calibrated",
+      "se_realized": 0.2625,
+      "sp_realized": 0.9892384105960265,
+      "mean_n_pass": 986.57,
+      "mean_rho_obs_hat": 0.06436228020808707,
+      "mean_rho_pass_hat": 0.0656731373332525,
+      "naive_bound": {
+        "median_width": 0.12485098538326508,
+        "coverage": 0.92
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.12517895349009758,
+        "coverage": 0.93
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.12517900444517227,
+        "coverage": 0.93
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.03,
+      "reps": 100
+    },
+    {
+      "pi": 0.01,
+      "p": 1.0,
+      "detector": "calibrated",
+      "se_realized": 0.2625,
+      "sp_realized": 0.9892384105960265,
+      "mean_n_pass": 986.96,
+      "mean_rho_obs_hat": 0.072129217910549,
+      "mean_rho_pass_hat": 0.07293584417455215,
+      "naive_bound": {
+        "median_width": 0.12488938889050552,
+        "coverage": 0.96
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.12522120594156053,
+        "coverage": 0.95
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.1252212570894785,
+        "coverage": 0.95
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.09,
+      "reps": 100
+    },
+    {
+      "pi": 0.02,
+      "p": 0.0,
+      "detector": "calibrated",
+      "se_realized": 0.2625,
+      "sp_realized": 0.9892384105960265,
+      "mean_n_pass": 984.06,
+      "mean_rho_obs_hat": 0.06428736049369055,
+      "mean_rho_pass_hat": 0.065576441741766,
+      "naive_bound": {
+        "median_width": 0.12626685300625612,
+        "coverage": 0.93
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.12658515442599227,
+        "coverage": 0.93
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.12658667910088195,
+        "coverage": 0.93
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.27,
+      "reps": 100
+    },
+    {
+      "pi": 0.02,
+      "p": 0.5,
+      "detector": "calibrated",
+      "se_realized": 0.2625,
+      "sp_realized": 0.9892384105960265,
+      "mean_n_pass": 984.45,
+      "mean_rho_obs_hat": 0.07119773068841037,
+      "mean_rho_pass_hat": 0.07213204175715926,
+      "naive_bound": {
+        "median_width": 0.12637022469212933,
+        "coverage": 0.97
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.12661580330436287,
+        "coverage": 0.96
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.12661732358534442,
+        "coverage": 0.96
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.35,
+      "reps": 100
+    },
+    {
+      "pi": 0.02,
+      "p": 1.0,
+      "detector": "calibrated",
+      "se_realized": 0.2625,
+      "sp_realized": 0.9892384105960265,
+      "mean_n_pass": 984.41,
+      "mean_rho_obs_hat": 0.07055058097622374,
+      "mean_rho_pass_hat": 0.0706421371458569,
+      "naive_bound": {
+        "median_width": 0.12633444383872405,
+        "coverage": 0.98
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.12658280589348614,
+        "coverage": 0.98
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.12658433054093055,
+        "coverage": 0.98
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.3,
+      "reps": 100
+    },
+    {
+      "pi": 0.05,
+      "p": 0.0,
+      "detector": "calibrated",
+      "se_realized": 0.2625,
+      "sp_realized": 0.9892384105960265,
+      "mean_n_pass": 976.46,
+      "mean_rho_obs_hat": 0.06650442357735857,
+      "mean_rho_pass_hat": 0.06875420202719415,
+      "naive_bound": {
+        "median_width": 0.13087587288487307,
+        "coverage": 0.97
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.1306831601624286,
+        "coverage": 0.96
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.13068936385903962,
+        "coverage": 0.96
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.56,
+      "reps": 100
+    },
+    {
+      "pi": 0.05,
+      "p": 0.5,
+      "detector": "calibrated",
+      "se_realized": 0.2625,
+      "sp_realized": 0.9892384105960265,
+      "mean_n_pass": 976.21,
+      "mean_rho_obs_hat": 0.07531895021704962,
+      "mean_rho_pass_hat": 0.07603523229144195,
+      "naive_bound": {
+        "median_width": 0.1313933332912175,
+        "coverage": 0.94
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.13084764770595722,
+        "coverage": 0.94
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.13085386617788558,
+        "coverage": 0.94
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.73,
+      "reps": 100
+    },
+    {
+      "pi": 0.05,
+      "p": 1.0,
+      "detector": "calibrated",
+      "se_realized": 0.2625,
+      "sp_realized": 0.9892384105960265,
+      "mean_n_pass": 975.99,
+      "mean_rho_obs_hat": 0.07685051985040157,
+      "mean_rho_pass_hat": 0.0770263870823892,
+      "naive_bound": {
+        "median_width": 0.1316865434392389,
+        "coverage": 0.97
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.13111250132358002,
+        "coverage": 0.97
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.1311187429105017,
+        "coverage": 0.97
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.77,
+      "reps": 100
+    },
+    {
+      "pi": 0.1,
+      "p": 0.0,
+      "detector": "calibrated",
+      "se_realized": 0.2625,
+      "sp_realized": 0.9892384105960265,
+      "mean_n_pass": 963.52,
+      "mean_rho_obs_hat": 0.06605821658843496,
+      "mean_rho_pass_hat": 0.06908318928215741,
+      "naive_bound": {
+        "median_width": 0.13838489646395452,
+        "coverage": 0.98
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.13734690648759385,
+        "coverage": 0.98
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.1373616902150862,
+        "coverage": 0.98
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.7,
+      "reps": 100
+    },
+    {
+      "pi": 0.1,
+      "p": 0.5,
+      "detector": "calibrated",
+      "se_realized": 0.2625,
+      "sp_realized": 0.9892384105960265,
+      "mean_n_pass": 963.64,
+      "mean_rho_obs_hat": 0.0686080035873879,
+      "mean_rho_pass_hat": 0.06783087579857995,
+      "naive_bound": {
+        "median_width": 0.1378832678424315,
+        "coverage": 0.95
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.13666160743938444,
+        "coverage": 0.96
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.13667625363620692,
+        "coverage": 0.96
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.82,
+      "reps": 100
+    },
+    {
+      "pi": 0.1,
+      "p": 1.0,
+      "detector": "calibrated",
+      "se_realized": 0.2625,
+      "sp_realized": 0.9892384105960265,
+      "mean_n_pass": 963.87,
+      "mean_rho_obs_hat": 0.08131262393045696,
+      "mean_rho_pass_hat": 0.078366082956819,
+      "naive_bound": {
+        "median_width": 0.1425385083101155,
+        "coverage": 0.96
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.13946626229771594,
+        "coverage": 0.97
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.13948152698735022,
+        "coverage": 0.97
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.89,
+      "reps": 100
+    },
+    {
+      "pi": 0.2,
+      "p": 0.0,
+      "detector": "calibrated",
+      "se_realized": 0.2625,
+      "sp_realized": 0.9892384105960265,
+      "mean_n_pass": 937.45,
+      "mean_rho_obs_hat": 0.06066313148960518,
+      "mean_rho_pass_hat": 0.06416931452660819,
+      "naive_bound": {
+        "median_width": 0.15492461205095515,
+        "coverage": 0.98
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.15301246413440184,
+        "coverage": 0.98
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.15304827291562523,
+        "coverage": 0.98
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.73,
+      "reps": 100
+    },
+    {
+      "pi": 0.2,
+      "p": 0.5,
+      "detector": "calibrated",
+      "se_realized": 0.2625,
+      "sp_realized": 0.9892384105960265,
+      "mean_n_pass": 937.71,
+      "mean_rho_obs_hat": 0.06883795010793838,
+      "mean_rho_pass_hat": 0.06780346216077802,
+      "naive_bound": {
+        "median_width": 0.15945560159587657,
+        "coverage": 0.99
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.15481508648959758,
+        "coverage": 0.98
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.15485164666559126,
+        "coverage": 0.98
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.84,
+      "reps": 100
+    },
+    {
+      "pi": 0.2,
+      "p": 1.0,
+      "detector": "calibrated",
+      "se_realized": 0.2625,
+      "sp_realized": 0.9892384105960265,
+      "mean_n_pass": 938.61,
+      "mean_rho_obs_hat": 0.08901930610516598,
+      "mean_rho_pass_hat": 0.08192934048473705,
+      "naive_bound": {
+        "median_width": 0.16772140703538357,
+        "coverage": 0.96
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.1567334402105658,
+        "coverage": 0.96
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.15677069101871532,
+        "coverage": 0.96
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.99,
+      "reps": 100
+    },
+    {
+      "pi": 0.3,
+      "p": 0.0,
+      "detector": "calibrated",
+      "se_realized": 0.2625,
+      "sp_realized": 0.9892384105960265,
+      "mean_n_pass": 913.28,
+      "mean_rho_obs_hat": 0.05621033263150681,
+      "mean_rho_pass_hat": 0.061724749511865705,
+      "naive_bound": {
+        "median_width": 0.17063434919837858,
+        "coverage": 0.99
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.16832742173661952,
+        "coverage": 1.0
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.16838815674772423,
+        "coverage": 1.0
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.74,
+      "reps": 100
+    },
+    {
+      "pi": 0.3,
+      "p": 0.5,
+      "detector": "calibrated",
+      "se_realized": 0.2625,
+      "sp_realized": 0.9892384105960265,
+      "mean_n_pass": 913.75,
+      "mean_rho_obs_hat": 0.07736042663615499,
+      "mean_rho_pass_hat": 0.07593782310186806,
+      "naive_bound": {
+        "median_width": 0.18865839752272606,
+        "coverage": 0.96
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.17545231623485866,
+        "coverage": 0.97
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.17551715496512507,
+        "coverage": 0.97
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.92,
+      "reps": 100
+    },
+    {
+      "pi": 0.3,
+      "p": 1.0,
+      "detector": "calibrated",
+      "se_realized": 0.2625,
+      "sp_realized": 0.9892384105960265,
+      "mean_n_pass": 912.25,
+      "mean_rho_obs_hat": 0.10788486583521059,
+      "mean_rho_pass_hat": 0.0994565939598522,
+      "naive_bound": {
+        "median_width": 0.21122238193877574,
+        "coverage": 0.97
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.19115089144592107,
+        "coverage": 0.96
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.1912248843201803,
+        "coverage": 0.96
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 1.0,
+      "reps": 100
+    },
+    {
+      "pi": 0.01,
+      "p": 0.0,
+      "detector": "degraded",
+      "se_realized": 0.6875,
+      "sp_realized": 0.8493377483443708,
+      "mean_n_pass": 844.35,
+      "mean_rho_obs_hat": 0.06375874187216098,
+      "mean_rho_pass_hat": 0.06607070125517447,
+      "naive_bound": {
+        "median_width": 0.12481030502044657,
+        "coverage": 0.97
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.13471365197796278,
+        "coverage": 0.97
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.13471295806737188,
+        "coverage": 0.97
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.0,
+      "reps": 100
+    },
+    {
+      "pi": 0.01,
+      "p": 0.5,
+      "detector": "degraded",
+      "se_realized": 0.6875,
+      "sp_realized": 0.8493377483443708,
+      "mean_n_pass": 843.98,
+      "mean_rho_obs_hat": 0.06724066096478146,
+      "mean_rho_pass_hat": 0.06489179316884687,
+      "naive_bound": {
+        "median_width": 0.1248313795253976,
+        "coverage": 0.95
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.1346970954632951,
+        "coverage": 0.97
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.134696402137924,
+        "coverage": 0.97
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.0,
+      "reps": 100
+    },
+    {
+      "pi": 0.01,
+      "p": 1.0,
+      "detector": "degraded",
+      "se_realized": 0.6875,
+      "sp_realized": 0.8493377483443708,
+      "mean_n_pass": 844.37,
+      "mean_rho_obs_hat": 0.07159487094445398,
+      "mean_rho_pass_hat": 0.07015037894283792,
+      "naive_bound": {
+        "median_width": 0.12490032776345834,
+        "coverage": 0.97
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.13467193040611997,
+        "coverage": 0.97
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.13467123639610218,
+        "coverage": 0.97
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.0,
+      "reps": 100
+    },
+    {
+      "pi": 0.02,
+      "p": 0.0,
+      "detector": "degraded",
+      "se_realized": 0.6875,
+      "sp_realized": 0.8493377483443708,
+      "mean_n_pass": 839.32,
+      "mean_rho_obs_hat": 0.06508671553073751,
+      "mean_rho_pass_hat": 0.06664204949656352,
+      "naive_bound": {
+        "median_width": 0.12636061295881204,
+        "coverage": 0.97
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.13565154714804883,
+        "coverage": 0.98
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.13565838354509546,
+        "coverage": 0.98
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.0,
+      "reps": 100
+    },
+    {
+      "pi": 0.02,
+      "p": 0.5,
+      "detector": "degraded",
+      "se_realized": 0.6875,
+      "sp_realized": 0.8493377483443708,
+      "mean_n_pass": 835.37,
+      "mean_rho_obs_hat": 0.06911717024063058,
+      "mean_rho_pass_hat": 0.06735651753683458,
+      "naive_bound": {
+        "median_width": 0.12644624607269883,
+        "coverage": 0.95
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.13581619206184978,
+        "coverage": 0.93
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.13582302263196844,
+        "coverage": 0.93
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.0,
+      "reps": 100
+    },
+    {
+      "pi": 0.02,
+      "p": 1.0,
+      "detector": "degraded",
+      "se_realized": 0.6875,
+      "sp_realized": 0.8493377483443708,
+      "mean_n_pass": 838.8,
+      "mean_rho_obs_hat": 0.07209946462604153,
+      "mean_rho_pass_hat": 0.06785646063219701,
+      "naive_bound": {
+        "median_width": 0.12635259349646977,
+        "coverage": 0.98
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.13561896185074254,
+        "coverage": 0.98
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.13562579158251992,
+        "coverage": 0.98
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.0,
+      "reps": 100
+    },
+    {
+      "pi": 0.05,
+      "p": 0.0,
+      "detector": "degraded",
+      "se_realized": 0.6875,
+      "sp_realized": 0.8493377483443708,
+      "mean_n_pass": 823.0,
+      "mean_rho_obs_hat": 0.06563127932363319,
+      "mean_rho_pass_hat": 0.06555812440426148,
+      "naive_bound": {
+        "median_width": 0.13048805034015076,
+        "coverage": 0.95
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.13860547342259383,
+        "coverage": 0.93
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.1386361140217285,
+        "coverage": 0.93
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.0,
+      "reps": 100
+    },
+    {
+      "pi": 0.05,
+      "p": 0.5,
+      "detector": "degraded",
+      "se_realized": 0.6875,
+      "sp_realized": 0.8493377483443708,
+      "mean_n_pass": 822.51,
+      "mean_rho_obs_hat": 0.06771454487763069,
+      "mean_rho_pass_hat": 0.06472923587113366,
+      "naive_bound": {
+        "median_width": 0.13101651902510153,
+        "coverage": 0.97
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.13853335670631206,
+        "coverage": 0.97
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.13856417688137973,
+        "coverage": 0.97
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.0,
+      "reps": 100
+    },
+    {
+      "pi": 0.05,
+      "p": 1.0,
+      "detector": "degraded",
+      "se_realized": 0.6875,
+      "sp_realized": 0.8493377483443708,
+      "mean_n_pass": 821.97,
+      "mean_rho_obs_hat": 0.07487311050269128,
+      "mean_rho_pass_hat": 0.0720690535882486,
+      "naive_bound": {
+        "median_width": 0.13167473788038636,
+        "coverage": 0.97
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.13887845584566894,
+        "coverage": 0.95
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.1389090701256973,
+        "coverage": 0.95
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.0,
+      "reps": 100
+    },
+    {
+      "pi": 0.1,
+      "p": 0.0,
+      "detector": "degraded",
+      "se_realized": 0.6875,
+      "sp_realized": 0.8493377483443708,
+      "mean_n_pass": 796.68,
+      "mean_rho_obs_hat": 0.059161177829185146,
+      "mean_rho_pass_hat": 0.062067742074950874,
+      "naive_bound": {
+        "median_width": 0.13748014167107125,
+        "coverage": 0.96
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.14355120035677413,
+        "coverage": 0.97
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.14362565046997144,
+        "coverage": 0.97
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.12,
+      "reps": 100
+    },
+    {
+      "pi": 0.1,
+      "p": 0.5,
+      "detector": "degraded",
+      "se_realized": 0.6875,
+      "sp_realized": 0.8493377483443708,
+      "mean_n_pass": 794.36,
+      "mean_rho_obs_hat": 0.06767933611493435,
+      "mean_rho_pass_hat": 0.06326000292836188,
+      "naive_bound": {
+        "median_width": 0.13847111751615526,
+        "coverage": 0.98
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.143566488105496,
+        "coverage": 0.98
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.143641003023637,
+        "coverage": 0.98
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.14,
+      "reps": 100
+    },
+    {
+      "pi": 0.1,
+      "p": 1.0,
+      "detector": "degraded",
+      "se_realized": 0.6875,
+      "sp_realized": 0.8493377483443708,
+      "mean_n_pass": 796.01,
+      "mean_rho_obs_hat": 0.08295378868900755,
+      "mean_rho_pass_hat": 0.07490238171127277,
+      "naive_bound": {
+        "median_width": 0.1428332476911247,
+        "coverage": 0.94
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.14476298316927055,
+        "coverage": 0.94
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.14483875468872365,
+        "coverage": 0.94
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.37,
+      "reps": 100
+    },
+    {
+      "pi": 0.2,
+      "p": 0.0,
+      "detector": "degraded",
+      "se_realized": 0.6875,
+      "sp_realized": 0.8493377483443708,
+      "mean_n_pass": 742.36,
+      "mean_rho_obs_hat": 0.05938456358619004,
+      "mean_rho_pass_hat": 0.06646236179536326,
+      "naive_bound": {
+        "median_width": 0.15303970642910747,
+        "coverage": 1.0
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.15523922798535073,
+        "coverage": 0.99
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.15542197495644394,
+        "coverage": 0.99
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.39,
+      "reps": 100
+    },
+    {
+      "pi": 0.2,
+      "p": 0.5,
+      "detector": "degraded",
+      "se_realized": 0.6875,
+      "sp_realized": 0.8493377483443708,
+      "mean_n_pass": 742.85,
+      "mean_rho_obs_hat": 0.07220472753250594,
+      "mean_rho_pass_hat": 0.06593784871200463,
+      "naive_bound": {
+        "median_width": 0.1592261608465161,
+        "coverage": 0.99
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.15535461173948695,
+        "coverage": 0.97
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.15553732848607177,
+        "coverage": 0.97
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.69,
+      "reps": 100
+    },
+    {
+      "pi": 0.2,
+      "p": 1.0,
+      "detector": "degraded",
+      "se_realized": 0.6875,
+      "sp_realized": 0.8493377483443708,
+      "mean_n_pass": 741.32,
+      "mean_rho_obs_hat": 0.09355017141346388,
+      "mean_rho_pass_hat": 0.07774326795636037,
+      "naive_bound": {
+        "median_width": 0.17012688950124155,
+        "coverage": 0.98
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.15808615456982794,
+        "coverage": 0.99
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.1582765128734891,
+        "coverage": 0.99
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.93,
+      "reps": 100
+    },
+    {
+      "pi": 0.3,
+      "p": 0.0,
+      "detector": "degraded",
+      "se_realized": 0.6875,
+      "sp_realized": 0.8493377483443708,
+      "mean_n_pass": 687.2,
+      "mean_rho_obs_hat": 0.04923423375222866,
+      "mean_rho_pass_hat": 0.060947827921171156,
+      "naive_bound": {
+        "median_width": 0.16910296055289378,
+        "coverage": 0.99
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.167061946862612,
+        "coverage": 0.99
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.16738246372426324,
+        "coverage": 0.99
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.54,
+      "reps": 100
+    },
+    {
+      "pi": 0.3,
+      "p": 0.5,
+      "detector": "degraded",
+      "se_realized": 0.6875,
+      "sp_realized": 0.8493377483443708,
+      "mean_n_pass": 687.11,
+      "mean_rho_obs_hat": 0.07232363059680513,
+      "mean_rho_pass_hat": 0.06456760436636609,
+      "naive_bound": {
+        "median_width": 0.18557611067331253,
+        "coverage": 1.0
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.16910245701852236,
+        "coverage": 0.99
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.1694301972262507,
+        "coverage": 0.99
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.82,
+      "reps": 100
+    },
+    {
+      "pi": 0.3,
+      "p": 1.0,
+      "detector": "degraded",
+      "se_realized": 0.6875,
+      "sp_realized": 0.8493377483443708,
+      "mean_n_pass": 687.28,
+      "mean_rho_obs_hat": 0.10333712105968598,
+      "mean_rho_pass_hat": 0.07918856538719268,
+      "naive_bound": {
+        "median_width": 0.20557014140777757,
+        "coverage": 0.98
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.17253968886271057,
+        "coverage": 0.98
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.17287822894630536,
+        "coverage": 0.98
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 1.0,
+      "reps": 100
+    },
+    {
+      "pi": 0.01,
+      "p": 0.0,
+      "detector": "oracle",
+      "se_realized": 1.0,
+      "sp_realized": 1.0,
+      "mean_n_pass": 990.0,
+      "mean_rho_obs_hat": 0.07224966697020503,
+      "mean_rho_pass_hat": 0.07273933334083968,
+      "naive_bound": {
+        "median_width": 0.12486843008714431,
+        "coverage": 0.95
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.12397557344052601,
+        "coverage": 0.95
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.12397557344052601,
+        "coverage": 0.95
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.87,
+      "reps": 100
+    },
+    {
+      "pi": 0.01,
+      "p": 0.5,
+      "detector": "oracle",
+      "se_realized": 1.0,
+      "sp_realized": 1.0,
+      "mean_n_pass": 990.0,
+      "mean_rho_obs_hat": 0.06746905846852132,
+      "mean_rho_pass_hat": 0.06761593100331949,
+      "naive_bound": {
+        "median_width": 0.12487097308231807,
+        "coverage": 0.98
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.12403422420520668,
+        "coverage": 0.98
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.12403422420520668,
+        "coverage": 0.98
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.88,
+      "reps": 100
+    },
+    {
+      "pi": 0.01,
+      "p": 1.0,
+      "detector": "oracle",
+      "se_realized": 1.0,
+      "sp_realized": 1.0,
+      "mean_n_pass": 990.0,
+      "mean_rho_obs_hat": 0.07221521459580317,
+      "mean_rho_pass_hat": 0.07105754218556362,
+      "naive_bound": {
+        "median_width": 0.12488085605013224,
+        "coverage": 0.93
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.12395131374874435,
+        "coverage": 0.93
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.12395131374874435,
+        "coverage": 0.93
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.83,
+      "reps": 100
+    },
+    {
+      "pi": 0.02,
+      "p": 0.0,
+      "detector": "oracle",
+      "se_realized": 1.0,
+      "sp_realized": 1.0,
+      "mean_n_pass": 980.0,
+      "mean_rho_obs_hat": 0.06579517888394884,
+      "mean_rho_pass_hat": 0.0673497664190219,
+      "naive_bound": {
+        "median_width": 0.12622566869574126,
+        "coverage": 0.94
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.12467174201791753,
+        "coverage": 0.91
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.12467174201791753,
+        "coverage": 0.91
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.86,
+      "reps": 100
+    },
+    {
+      "pi": 0.02,
+      "p": 0.5,
+      "detector": "oracle",
+      "se_realized": 1.0,
+      "sp_realized": 1.0,
+      "mean_n_pass": 980.0,
+      "mean_rho_obs_hat": 0.06273768447450526,
+      "mean_rho_pass_hat": 0.062059550640468336,
+      "naive_bound": {
+        "median_width": 0.12619571745887997,
+        "coverage": 0.95
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.12473917216992779,
+        "coverage": 0.95
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.12473917216992779,
+        "coverage": 0.95
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.8,
+      "reps": 100
+    },
+    {
+      "pi": 0.02,
+      "p": 1.0,
+      "detector": "oracle",
+      "se_realized": 1.0,
+      "sp_realized": 1.0,
+      "mean_n_pass": 980.0,
+      "mean_rho_obs_hat": 0.0685150489905423,
+      "mean_rho_pass_hat": 0.06580591907812466,
+      "naive_bound": {
+        "median_width": 0.12627390139497982,
+        "coverage": 0.98
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.12474874382624195,
+        "coverage": 0.98
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.12474874382624195,
+        "coverage": 0.98
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.84,
+      "reps": 100
+    },
+    {
+      "pi": 0.05,
+      "p": 0.0,
+      "detector": "oracle",
+      "se_realized": 1.0,
+      "sp_realized": 1.0,
+      "mean_n_pass": 950.0,
+      "mean_rho_obs_hat": 0.05858203196058458,
+      "mean_rho_pass_hat": 0.061820385323921576,
+      "naive_bound": {
+        "median_width": 0.12970626643644195,
+        "coverage": 0.96
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.12673631615424116,
+        "coverage": 0.95
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.12673631615424116,
+        "coverage": 0.95
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.79,
+      "reps": 100
+    },
+    {
+      "pi": 0.05,
+      "p": 0.5,
+      "detector": "oracle",
+      "se_realized": 1.0,
+      "sp_realized": 1.0,
+      "mean_n_pass": 950.0,
+      "mean_rho_obs_hat": 0.07172594598956819,
+      "mean_rho_pass_hat": 0.07129885979050904,
+      "naive_bound": {
+        "median_width": 0.1312999164821263,
+        "coverage": 0.95
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.12653314331979693,
+        "coverage": 0.96
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.12653314331979693,
+        "coverage": 0.96
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.91,
+      "reps": 100
+    },
+    {
+      "pi": 0.05,
+      "p": 1.0,
+      "detector": "oracle",
+      "se_realized": 1.0,
+      "sp_realized": 1.0,
+      "mean_n_pass": 950.0,
+      "mean_rho_obs_hat": 0.07076838227457513,
+      "mean_rho_pass_hat": 0.06430563489046198,
+      "naive_bound": {
+        "median_width": 0.13141690277553197,
+        "coverage": 0.94
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.12667642189247957,
+        "coverage": 0.93
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.12667642189247957,
+        "coverage": 0.93
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.87,
+      "reps": 100
+    },
+    {
+      "pi": 0.1,
+      "p": 0.0,
+      "detector": "oracle",
+      "se_realized": 1.0,
+      "sp_realized": 1.0,
+      "mean_n_pass": 900.0,
+      "mean_rho_obs_hat": 0.06053785268501838,
+      "mean_rho_pass_hat": 0.06711657608756746,
+      "naive_bound": {
+        "median_width": 0.13856434897024061,
+        "coverage": 0.98
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.130040655767651,
+        "coverage": 0.96
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.130040655767651,
+        "coverage": 0.96
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.78,
+      "reps": 100
+    },
+    {
+      "pi": 0.1,
+      "p": 0.5,
+      "detector": "oracle",
+      "se_realized": 1.0,
+      "sp_realized": 1.0,
+      "mean_n_pass": 900.0,
+      "mean_rho_obs_hat": 0.07022591771763494,
+      "mean_rho_pass_hat": 0.06816725150984099,
+      "naive_bound": {
+        "median_width": 0.13948727320084114,
+        "coverage": 0.97
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.13013562097400774,
+        "coverage": 0.97
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.13013562097400774,
+        "coverage": 0.97
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.93,
+      "reps": 100
+    },
+    {
+      "pi": 0.1,
+      "p": 1.0,
+      "detector": "oracle",
+      "se_realized": 1.0,
+      "sp_realized": 1.0,
+      "mean_n_pass": 900.0,
+      "mean_rho_obs_hat": 0.0732690178139908,
+      "mean_rho_pass_hat": 0.06284443270804194,
+      "naive_bound": {
+        "median_width": 0.14002158255744723,
+        "coverage": 0.99
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.13026726796010893,
+        "coverage": 0.98
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.13026726796010893,
+        "coverage": 0.98
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.94,
+      "reps": 100
+    },
+    {
+      "pi": 0.2,
+      "p": 0.0,
+      "detector": "oracle",
+      "se_realized": 1.0,
+      "sp_realized": 1.0,
+      "mean_n_pass": 800.0,
+      "mean_rho_obs_hat": 0.05137222689079609,
+      "mean_rho_pass_hat": 0.06362484450739304,
+      "naive_bound": {
+        "median_width": 0.1486630682710828,
+        "coverage": 0.98
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.13808821004298408,
+        "coverage": 0.97
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.13808821004298408,
+        "coverage": 0.97
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.85,
+      "reps": 100
+    },
+    {
+      "pi": 0.2,
+      "p": 0.5,
+      "detector": "oracle",
+      "se_realized": 1.0,
+      "sp_realized": 1.0,
+      "mean_n_pass": 800.0,
+      "mean_rho_obs_hat": 0.07427618649577986,
+      "mean_rho_pass_hat": 0.06922947612191557,
+      "naive_bound": {
+        "median_width": 0.1611565376071435,
+        "coverage": 0.99
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.13792124036869285,
+        "coverage": 0.97
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.13792124036869285,
+        "coverage": 0.97
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.95,
+      "reps": 100
+    },
+    {
+      "pi": 0.2,
+      "p": 1.0,
+      "detector": "oracle",
+      "se_realized": 1.0,
+      "sp_realized": 1.0,
+      "mean_n_pass": 800.0,
+      "mean_rho_obs_hat": 0.09464427146542356,
+      "mean_rho_pass_hat": 0.07440455590936566,
+      "naive_bound": {
+        "median_width": 0.1689105859682719,
+        "coverage": 0.94
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.13785068507697432,
+        "coverage": 0.92
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.13785068507697432,
+        "coverage": 0.92
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.98,
+      "reps": 100
+    },
+    {
+      "pi": 0.3,
+      "p": 0.0,
+      "detector": "oracle",
+      "se_realized": 1.0,
+      "sp_realized": 1.0,
+      "mean_n_pass": 700.0,
+      "mean_rho_obs_hat": 0.0523181337691174,
+      "mean_rho_pass_hat": 0.06927693436611752,
+      "naive_bound": {
+        "median_width": 0.16728781499583778,
+        "coverage": 0.99
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.14755702568411116,
+        "coverage": 0.94
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.14755702568411116,
+        "coverage": 0.94
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.82,
+      "reps": 100
+    },
+    {
+      "pi": 0.3,
+      "p": 0.5,
+      "detector": "oracle",
+      "se_realized": 1.0,
+      "sp_realized": 1.0,
+      "mean_n_pass": 700.0,
+      "mean_rho_obs_hat": 0.07237211399113978,
+      "mean_rho_pass_hat": 0.0635907428871516,
+      "naive_bound": {
+        "median_width": 0.1830004343029229,
+        "coverage": 1.0
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.14757488342807634,
+        "coverage": 0.96
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.14757488342807634,
+        "coverage": 0.96
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.97,
+      "reps": 100
+    },
+    {
+      "pi": 0.3,
+      "p": 1.0,
+      "detector": "oracle",
+      "se_realized": 1.0,
+      "sp_realized": 1.0,
+      "mean_n_pass": 700.0,
+      "mean_rho_obs_hat": 0.10237954063703335,
+      "mean_rho_pass_hat": 0.06762735777538217,
+      "naive_bound": {
+        "median_width": 0.20700653829705123,
+        "coverage": 0.96
+      },
+      "survivor_bound_rF_hat": {
+        "r_F_used": 0.013868830309480055,
+        "median_width": 0.14747496022365997,
+        "coverage": 0.98
+      },
+      "survivor_bound_rF_0": {
+        "r_F_used": 0.0,
+        "median_width": 0.14747496022365997,
+        "coverage": 0.98
+      },
+      "share_survivor_narrower_than_naive_rF_hat": 0.98,
+      "reps": 100
+    }
+  ],
+  "summary_by_detector": {
+    "calibrated": {
+      "n_cells": 18,
+      "naive": {
+        "median_of_median_widths": 0.1347849056408352,
+        "mean_coverage": 0.9616666666666666,
+        "n_cells_coverage_ge_95pct": 14
+      },
+      "survivor_rF_hat": {
+        "median_of_median_widths": 0.13388705438148224,
+        "mean_coverage": 0.9611111111111111,
+        "n_cells_coverage_ge_95pct": 14
+      },
+      "survivor_rF_0": {
+        "median_of_median_widths": 0.13389749827335432,
+        "mean_coverage": 0.9611111111111111,
+        "n_cells_coverage_ge_95pct": 14
+      },
+      "mean_share_cells_survivor_narrower": 0.6000000000000001
+    },
+    "degraded": {
+      "n_cells": 18,
+      "naive": {
+        "median_of_median_widths": 0.1345774397757288,
+        "mean_coverage": 0.9722222222222222,
+        "n_cells_coverage_ge_95pct": 17
+      },
+      "survivor_rF_hat": {
+        "median_of_median_widths": 0.14121482810122155,
+        "mean_coverage": 0.9694444444444444,
+        "n_cells_coverage_ge_95pct": 15
+      },
+      "survivor_rF_0": {
+        "median_of_median_widths": 0.14126736029783438,
+        "mean_coverage": 0.9694444444444444,
+        "n_cells_coverage_ge_95pct": 15
+      },
+      "mean_share_cells_survivor_narrower": 0.2777777777777778
+    },
+    "oracle": {
+      "n_cells": 18,
+      "naive": {
+        "median_of_median_widths": 0.1349906258728863,
+        "mean_coverage": 0.9655555555555557,
+        "n_cells_coverage_ge_95pct": 14
+      },
+      "survivor_rF_hat": {
+        "median_of_median_widths": 0.1283884859609461,
+        "mean_coverage": 0.9550000000000001,
+        "n_cells_coverage_ge_95pct": 13
+      },
+      "survivor_rF_0": {
+        "median_of_median_widths": 0.1283884859609461,
+        "mean_coverage": 0.9550000000000001,
+        "n_cells_coverage_ge_95pct": 13
+      },
+      "mean_share_cells_survivor_narrower": 0.8805555555555555
+    }
+  }
+}

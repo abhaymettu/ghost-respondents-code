@@ -1,0 +1,190 @@
+{
+  "claim": "naive rho_H bias identical across detector levels at each (pi,p), gpt-4/EXT/box/n=1000",
+  "n_pi_p_combos": 18,
+  "n_cells": 72,
+  "max_abs_diff_across_detectors": 0.012367321160690586,
+  "max_abs_diff_at": "pi=0.01_p=0.0",
+  "note": "Nonzero because each detector level is a SEPARATE cell_id (LBCell includes detector in its hash) and therefore draws an INDEPENDENT rep_rng stream; naive reads Cor(x,w) on the full undeleted sample, which detection never touches, so the residual spread across detector levels is Monte Carlo noise from 4 independent 100-rep draws, not a detector effect. At n=1000/100 reps the naive MCSE is ~0.0031 (LAYERB-GRID.md sec 1.2); the SE of a difference of two independent such means is ~0.0044, and the max over 6 pairwise comparisons across 4 groups inflates that further, so 0.0124 (~2.8x the pairwise SE) is consistent with pure sampling noise, not a violation of the claim.",
+  "table": [
+    {
+      "cell": "pi=0.01_p=0.0",
+      "bias_by_detector": {
+        "degraded": -0.0037975849263358757,
+        "oracle": 0.00469334017170818,
+        "none": -0.007673980988982407,
+        "calibrated": -0.003456550452175758
+      },
+      "max_diff": 0.012367321160690586
+    },
+    {
+      "cell": "pi=0.01_p=0.5",
+      "bias_by_detector": {
+        "calibrated": -0.0031940465904097826,
+        "oracle": -8.726832997553446e-05,
+        "none": 0.0016699695403946946,
+        "degraded": -0.00031566583371539503
+      },
+      "max_diff": 0.004864016130804477
+    },
+    {
+      "cell": "pi=0.01_p=1.0",
+      "bias_by_detector": {
+        "calibrated": 0.004572891112052155,
+        "none": -0.0006902036730281058,
+        "oracle": 0.004658887797306319,
+        "degraded": 0.004038544145957126
+      },
+      "max_diff": 0.0053490914703344244
+    },
+    {
+      "cell": "pi=0.02_p=0.0",
+      "bias_by_detector": {
+        "none": -0.00041874690848862917,
+        "oracle": -0.0017611479145480113,
+        "calibrated": -0.0032689663048063033,
+        "degraded": -0.002469611267759339
+      },
+      "max_diff": 0.002850219396317674
+    },
+    {
+      "cell": "pi=0.02_p=0.5",
+      "bias_by_detector": {
+        "degraded": 0.0015608434421337247,
+        "none": -0.00016372120933805245,
+        "calibrated": 0.0036414038899135193,
+        "oracle": -0.004818642323991595
+      },
+      "max_diff": 0.008460046213905115
+    },
+    {
+      "cell": "pi=0.02_p=1.0",
+      "bias_by_detector": {
+        "degraded": 0.004543137827544674,
+        "none": 0.004992624637014095,
+        "oracle": 0.0009587221920454442,
+        "calibrated": 0.0029942541777268905
+      },
+      "max_diff": 0.004033902444968651
+    },
+    {
+      "cell": "pi=0.05_p=0.0",
+      "bias_by_detector": {
+        "calibrated": -0.0010519032211382812,
+        "none": -0.006680653797018002,
+        "degraded": -0.0019250474748636615,
+        "oracle": -0.008974294837912275
+      },
+      "max_diff": 0.007922391616773994
+    },
+    {
+      "cell": "pi=0.05_p=0.5",
+      "bias_by_detector": {
+        "degraded": 0.00015821807913384,
+        "oracle": 0.004169619191071339,
+        "calibrated": 0.007762623418552772,
+        "none": 0.0028587429448948404
+      },
+      "max_diff": 0.007604405339418932
+    },
+    {
+      "cell": "pi=0.05_p=1.0",
+      "bias_by_detector": {
+        "calibrated": 0.009294193051904723,
+        "degraded": 0.007316783704194432,
+        "none": 0.005750602748313571,
+        "oracle": 0.0032120554760782793
+      },
+      "max_diff": 0.006082137575826443
+    },
+    {
+      "cell": "pi=0.1_p=0.0",
+      "bias_by_detector": {
+        "oracle": -0.007018474113478473,
+        "degraded": -0.008395148969311705,
+        "none": -0.008186928074118784,
+        "calibrated": -0.0014981102100618954
+      },
+      "max_diff": 0.00689703875924981
+    },
+    {
+      "cell": "pi=0.1_p=0.5",
+      "bias_by_detector": {
+        "degraded": 0.00012300931643749458,
+        "calibrated": 0.001051676788891051,
+        "oracle": 0.0026695909191380846,
+        "none": 0.0006766647851986635
+      },
+      "max_diff": 0.00254658160270059
+    },
+    {
+      "cell": "pi=0.1_p=1.0",
+      "bias_by_detector": {
+        "degraded": 0.015397461890510694,
+        "none": 0.010771693195874996,
+        "calibrated": 0.01375629713196011,
+        "oracle": 0.005712691015493945
+      },
+      "max_diff": 0.009684770875016749
+    },
+    {
+      "cell": "pi=0.2_p=0.0",
+      "bias_by_detector": {
+        "oracle": -0.016184099907700762,
+        "calibrated": -0.006893195308891674,
+        "degraded": -0.00817176321230681,
+        "none": -0.01799822487721006
+      },
+      "max_diff": 0.011105029568318388
+    },
+    {
+      "cell": "pi=0.2_p=0.5",
+      "bias_by_detector": {
+        "none": 0.00977487215169337,
+        "degraded": 0.004648400734009087,
+        "oracle": 0.006719859697283004,
+        "calibrated": 0.0012816233094415236
+      },
+      "max_diff": 0.008493248842251847
+    },
+    {
+      "cell": "pi=0.2_p=1.0",
+      "bias_by_detector": {
+        "degraded": 0.025993844614967024,
+        "oracle": 0.02708794466692671,
+        "none": 0.02375676854413679,
+        "calibrated": 0.021462979306669128
+      },
+      "max_diff": 0.005624965360257583
+    },
+    {
+      "cell": "pi=0.3_p=0.0",
+      "bias_by_detector": {
+        "none": -0.0193612992550614,
+        "degraded": -0.018322093046268195,
+        "oracle": -0.015238193029379454,
+        "calibrated": -0.011345994166990045
+      },
+      "max_diff": 0.008015305088071356
+    },
+    {
+      "cell": "pi=0.3_p=0.5",
+      "bias_by_detector": {
+        "degraded": 0.004767303798308281,
+        "oracle": 0.004815787192642931,
+        "calibrated": 0.009804099837658134,
+        "none": 0.010304995165378125
+      },
+      "max_diff": 0.005537691367069844
+    },
+    {
+      "cell": "pi=0.3_p=1.0",
+      "bias_by_detector": {
+        "calibrated": 0.04032853903671374,
+        "degraded": 0.03578079426118913,
+        "oracle": 0.034823213838536496,
+        "none": 0.03188550956340344
+      },
+      "max_diff": 0.008443029473310298
+    }
+  ]
+}

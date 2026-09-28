@@ -1,0 +1,90 @@
+{
+  "trait": "EXT",
+  "human_pool": "pk_human",
+  "score_version": "oof",
+  "n_boot": 2000,
+  "boot_seed": 20260927,
+  "sign_convention": "inject/pools.py detector: high=machine-like. population.py/E33: F high=fluent/human-like, pass iff F>tau. r_F_population_convention = -Cor(detector_pools, label).",
+  "human_pool_diagnostics": {
+    "n_texts": 2467,
+    "cor_detector_label_raw_pools_convention": {
+      "point": -0.013868830309480055,
+      "ci95": [
+        -0.05415101210260515,
+        0.0259850452642713
+      ],
+      "n": 2467,
+      "n_boot": 2000,
+      "n_boot_degenerate": 0
+    },
+    "cor_detector_trait_score_raw_pools_convention": {
+      "point": 0.02081965748772915,
+      "ci95": [
+        -0.017383216857808723,
+        0.05828725141881047
+      ],
+      "n": 2467,
+      "n_boot": 2000,
+      "n_boot_degenerate": 0
+    },
+    "r_F_hat_population_convention": {
+      "point": 0.013868830309480055,
+      "ci95": [
+        -0.0259850452642713,
+        0.05415101210260515
+      ],
+      "n": 2467
+    },
+    "note": "r_F_hat_population_convention is what h5_bounds_detected.att_pass's r_F parameter expects (sign-flipped from the raw pools-convention correlation)."
+  },
+  "machine_pool_diagnostics": {
+    "personallm_gpt-4-0613": {
+      "n_texts": 320,
+      "a3_diag_cor_detector_label": {
+        "point": 0.06950712810888143,
+        "ci95": [
+          -0.04258073942194565,
+          0.18326422665703834
+        ],
+        "n": 320,
+        "n_boot": 2000,
+        "n_boot_degenerate": 0
+      },
+      "cor_detector_trait_score": {
+        "point": 0.05627129450249949,
+        "ci95": [
+          -0.05133713211916974,
+          0.16421141497870673
+        ],
+        "n": 320,
+        "n_boot": 2000,
+        "n_boot_degenerate": 0
+      },
+      "a3_ci_covers_zero": true
+    },
+    "personallm_llama-2": {
+      "n_texts": 320,
+      "a3_diag_cor_detector_label": {
+        "point": -0.17605656263300018,
+        "ci95": [
+          -0.26868207638810193,
+          -0.07385968328346768
+        ],
+        "n": 320,
+        "n_boot": 2000,
+        "n_boot_degenerate": 0
+      },
+      "cor_detector_trait_score": {
+        "point": -0.07761111186269215,
+        "ci95": [
+          -0.19057774395013086,
+          0.030876363724852873
+        ],
+        "n": 320,
+        "n_boot": 2000,
+        "n_boot_degenerate": 0
+      },
+      "a3_ci_covers_zero": false
+    }
+  }
+}
