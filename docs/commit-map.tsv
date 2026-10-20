@@ -1,0 +1,63 @@
+old_commit	new_commit	subject
+232bc54314399d4be09efe9d0c719134657b563d	1396a32a39e35dafecd976f743be6f9ca91ddd69	Ignore generated and local-only files
+1d66bd60278776c247d444c54d92d9e3188eb3ec	bea9bd23794aae8c720b1b955a2f587c81c39af1	open item #4: detected-cell H5 bound
+432f9ff35ca6b2e8f86b84188d69a739bf5824e9	a9655393d85548daa928082c497549ba39501a24	zhang oct 1 draft: add the direction paragraph
+3b0959e51d5e26353c1ad22e364104d7da08360d	6bb2c8930aed19d5ad329da3be6596887ca43dd8	freeze detector plan provenance
+9eb4b7bb72c525b15ba181ab2d0458ab29de44a5	0fecb6b24897cc5b1f5ea4ad8e946098b89fd092	trim teeny provenance note; rebuild pdfs with references fix
+75f7b64dd5e0b3f01d392e33216bb3332559c4d0	da164af27deb02fb27abb63a0b6ed92a5f59e461	paper: cite the pnas synthetic validity piece and fix the references table bug
+6ef782e1796c370d02f682e39ff885136a0d40d1	93b915fca0e0ca748d79fb52db1be51fd4888815	notes: source pointers and receipts for the ownership walkthrough
+1d15e5b52ef2ae5118fe11d81e26b5b840c51aaf	d6dd9a1335893b89ff98fc049c5267bd21f981d9	paper: reader-facing html for the ownership walkthrough
+b89b459849fbda34c7dd0f2af32e623b8481dfde	80746257786843acc08f4a47cda3c88f42cad4bc	notes: ownership walkthrough for e7, e39, and prop 11
+cfb71152fb001bd7dfca7c49cd1069414e2c9538	7c5f035cac78708be324274d39ded6f8f6b709e5	notes: figure embed and pdf render receipts
+af4547ec97098e85e4c586cf36f15000e523f084	4758645193a323f4b9c8806a4e8393b57ddf3610	paper: print stylesheet and rendered preprint pdf
+f624dd9853785c6f612e118166dd67ad3190dc5f	184b0f46d9be026acd9ecf0060c9b891e9efa1df	paper: embed the eight figures at their first prose reference
+13adedd4ccc576103b520a58750d868dc7f10b8b	f5b15e83cebf11164bed966a4636e89a0628aaf3	figures: keep the truth label inside the axes in fig3
+47eaf6c1fba8b445cf83630f0e39c2546b63d07e	790438bb0c8bda3bf967c070d39a5a8b19a73f31	notes: receipts for the six sentence fixes
+2cba91d348c6417d1ff4aee9d4edf705df968a89	fa94b4dcc50be9d424e3e21ad5a48dd832294e9a	paper: six sentence fixes from the re-gate
+88e43c3a97a0ff2cde1f84290d8ceb72c0e24587	45d1420eb51e1d6da5e036daba5a1e650d121030	notes: re-gate verdict after iteration a-f
+a1b0334a4a9c81c402fa7eadf548cda306fc4d10	7e4763fbabdb236ee631e6b274c55adb8d27eb4d	repo: drop the empty in-sample grid directory from the release tree
+c05af7a7d898ab16976a4d5826883d941d536c6e	a469a98b4f28b468c5c40f7bce7cc48dc65ad1bf	paper: iteration a-f from the publish bar
+19402e5f06a97b9a70093f02cdcf893340ed79ad	5c8895c0b5a98217c19a5293d7aca2d305f3c31b	notes: research verdict on a unified self-report agent
+01321cd254bb6461dfade93662be62b21a297f36	eed5137b2027f950b27b37a6f91b576f64a0283b	notes: publish-bar verdict on draft 2
+9e90bc6958f1b6b4af4c7337998663ba7f306db3	None	paper: voice gate PASS on c5136ad
+c5136ad557e5269c788127d36396fa1f57a04153	6fd6c06fd876f0c066ba939e4850b4e19c6c4548	paper: state the estimates, drop the ceremony
+60cd9c8a988e62f6e9c7f47b2c399eb895888bfa	6b750e863e42885ccd09dfad5377f562abec3505	paper: draft 2
+5a689ed89118f3aeee5ff6f62e4d6e79b514e724	8986cc699039bab2ac2143da8a24bf25bcde40b1	lane4: commit grid-labelfree-nbins8 per-cell manifests (M1 re-run)
+e2e5864901e9f47fe0b279e22cdf7322b0ccf5f6	a978cddff7d744a35079080e5f8afc16d40f5b53	docs: add LIT-SCAN.md, 2023-2026 detection and survey-fraud literature mapped to the paper's claims
+69cd3b551685086d1d7560675de00e4ed7f8f2a9	451ed295eabe9a1a37f90e952f31e22cd787c61a	docs: add FOLLOWUP-EXPERIMENTS.md, five follow-up designs for the boundary-map paper
+6f87546cb7e122a17ce61ba0a42df5c346fdf576	8c8addb435677bbfa377e1e525c74bdfe91d3aa1	lane4: fill simex B_boot=50 results into ESTIMATOR-FIX-REPORT.md
+cc50d8617e10dd4b8f82355b47a49b78527af502	1e7e91be90f205023fe932284e0e183edcf43e53	lane4: draft ESTIMATOR-FIX-REPORT.md (M1 verified, B3/H5 built and run, B2 tables recomputed); simex section pending B_boot rerun
+edbd7d8d5ab81bb7d1780c351fc46da0960ea62b	a12425e2e6782cb9c47ba6bd7ce9fef355f3344f	lane4: recompute B2's H3/H4/SPEC-4.4 tables at shipped config (n_bins=8, bounds_c added); simex B_boot rerun still in flight
+92c078d02623d50635c852a33dd0d92b8cb708ff	a1cd16d5ddea53807db85e20f020fa95ebe7cf96	lane4: fix bounds_c coverage by unioning Fisher-z sampling CI with the c-identification bound (Imbens-Manski) #skip-review
+843397a4f600b69d758de28253da719b646a724e	b69bbb5a91164920da9e1fa2042f2fdc0cfac0b8	lane4: register fit_bounds_c (H5 partial-ID estimator, B3), unit tests, run across Layer A 372-cell grid #skip-review
+4fcceb24b7d67c5bdbde5062ff7d5e9ed3b3ebd3	9815c83da36851ce319d28bee13fb8e26f19c2e2	spec: amend 1.5/4.4/5 as contradicted-by-grid, dated and superseded not deleted
+35d008849b260b3aa24a6d0544c178c327d51f36	315ab3d553eeda2015645710b7dffcb20495d853	lane4: completed Layer B grid (336/336 cells)
+4899cf51c02ee98feb8450edbfd8b042c9e3ba2a	a16f7405292f1701e095e72737c7b782dc5c57e2	lane4: completed Layer A grid (372/372) + pass-3 methods review (BLOCK)
+58553153f8d355bfb887c8e2426848ecc0fbd36c	b18da9566a4f67423179ab91706e3b24b10386da	refs: verify Huang/Liang/Zhang-Xu-Alvero against live sources
+71d3f18a7721f42330899b26aebd64dd5fd381c1	618d38de6913bcfa1dc58bceab0ca131f4b269fa	paper: draft-finalization consistency pass
+0f994b71849129bcd51ce7d908171c82878ca5dc	0732b2ec6c7afa5d26c2870efb7ab0c6d17feb60	ghost-gaps: done marker with per-item closure status
+77dd6a9c4cd63646921be5a2987fc57dbf1f8349	6e7748ecf4215c21a54997d3bb8b7f3bd5c66de5	paper: close honest-gaps items 1-4, 6-7 (T3 SDs, H5 bounds, doc-pooled withdrawal, refs audit, SPEC freeze, robust-arm/watermark reconciliation)
+35d72c530d96d1af036c83da59a639e946dc15d0	fc5c6590b21f262d3b6725b07768cbc843169bb0	paper: gaps-closure spec for the 7 honest-gaps TODO items, before any code
+203e42a6de2f572137539fc4b289751b49af231b	c78cadc063f4d4f7f509f3961c63bdc20298e464	lane4: watermark near-perfect-detection cell (QUEUE item 4) - se/sp asymmetry does not transfer from classifier to watermark
+1fb86ea0ab2b71a7f29456c7b13cb489553a9430	49edd86150146883dad15445dc7d7406bd6eb16d	lane4: watermark near-perfect-detection cell spec (QUEUE item 4), before any code
+febf4dd91ce40a5ae3b2403788e0ee8badd432f3	c9412547fece8759d990b1241ba3bf5e1f1af761	lane4: robust-estimator arm (QUEUE item 3) - robust_t/robust_grm underperform on the boundary map
+cdff5533da0fb38e6e716a535ddde9d8f3f0467a	7a2b8ce0bc8d84c9288cc4f58c721b60c4dde930	lane4: robust-estimator arm spec (QUEUE item 3), before any code
+21337aca41c1cbffc33256ca70c705b2fac27adf	0c84a5c85ce093d1edbc80dbbbbe30f250c3df16	paper: intro grounded in Muse launch, IRT nonignorable-missingness lineage layer, day-8 grid queue
+e7ad6a05a0aa2aa0bc2ef6e3cd8545b95bbd181f	5e74f04d0e6e9f37ea9e3dc776c06c9c24a2724e	paper: working-paper draft 1 (boundary-map version) with number self-check
+3cc2975f4d8f18965c688559e038fe27bf118558	b0040a27fb761330ba2aa70eb22e91eeec85a03f	paper: tables and figures regenerated from the grid artifacts
+ea19a839943a0d2ca53c97e4e452bf444df71830	373be374a268277cd20eae63981cb8bd8f02d049	lane4: correct naive cellwise RMSE counts to 274/336 (none 71/72; delete==naive ties counted in none column)
+a5697fd30e8f7f5550e042167783af169da8c344	e045a9468691ceb6aa040b12c9f3277fbda090ea	lane4: astra re-review fixes to LAYERB-GRID.md and the 10.10 addendum (reporting accuracy only)
+9dad3271c5dc7dd9a757dc9a5c7daecea42a92eb	923d6faf44bdd1a64388ed41b5bac27ebc703a5c	lane3: astra re-review fixes to PASS3-FIXES.md (reporting accuracy only)
+03d83f4c71db25662a5b758860d0afa8b0a940a5	bdabfa645dfb38d62660074b4b32edcc4298317c	lane4: D7, the pi<=0.20 Layer B slice at 500 reps -- T1 still fails
+29f0e387301e3bd543f19ec4494129d8091b0591	7d5fabb02e4515912422eafce5bac5815b5a7c4a	lane4: Layer B full grid on OOF scores, and M1's labelfree re-run
+db7c17102355d7ef8b7799d206753b77a5c13801	13b7a21ac28e4201d6ec63fb6be4190ce2a6a3d2	SPEC: correct PK data description, NORC PACT attribution, and Layer B injection scope (orchestrator batch from pass-3 NLP fixes)
+1cb7d194f4e5e1d32c372b825f3877f7bdcbc530	a5abfe766a3c3e81ce47a228f0df1394a0ad4608	pass-3 NLP review fixes T1-T8: withdraw overclaims, correct provenance, add baselines
+687d74b2e5ce9fc41b198a7d8b0b493be4366398	c589101100c7f88a9ed43b1a20ab469ee2def19f	lane4: route lane-3 chunk scores through OOF columns, stage the Layer B grid
+0ce53434bbc5fdde0570217d5a0c73c7425f271f	e3fed502ff23a3b180d73822a91a27f33e7da511	lane4: close pass-2 flag P2-3 by running the between-mean arms
+121425e5bcd92b154b992770c468f55fec4686af	ed67e2cbe7cd69372aaf4e25840f5cf482a22087	lane4: pass 2 numerical check of both derivations vs the completed grid
+6bceab12377fe1665a302a02e6361b7edc2f6a15	78ee3a112548cdaeb9dba1f4907e96d159122057	lane3: weak-H2 mechanism diagnosis — not recoverable via label-free route
+e8d80217493d5ba508162f1365fc2bf9f702aa31	2101fc70ee19805eb79b14eb633b4ae312d5477a	lane4: apply staged n_bins default 60 -> 8 (grid complete)
+32f96cf18470e49583a490584401b8fd8f23111a	a0fa35c59823dc8040803b0bcfb2069872e07fab	lane4: freeze the calibration split, stage the n_bins default
+5cab0031419e7b62d073aabf34f00d85e4d0d1b0	ab9b27dbf34d81862abfeffb7ee15ff07db69c86	lane3 chunk refit (out-of-fold) + lane4 round 3 (EIV isolation, split spread, dm slope)
+ea019176fa840322643232cc889d8668c7753408	fb31a6c24824ff1be7b8d1f9a508d2a0f64ed69d	layer B round 3: EIV isolation, calibration-split spread, dm-slope diagnosis
+2acbecbbbb750a67ffa4e86a9c1574766705f289	5b73f9309debb667aae7971fa71249aa06309e82	initial commit: lanes 1-4 through sweep2

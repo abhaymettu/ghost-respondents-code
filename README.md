@@ -45,6 +45,11 @@ SPEC.md           the analysis plan the thresholds and design come from
 `SPEC.md` is a repository file frozen at commit `db7c171`. It is an analysis plan, not an
 external pre-registration; the paper says so wherever it cites it.
 
+The history was rewritten once, on 2026-10-20, to take the third-party corpora out of it, so
+every commit hash changed. The paper and notes cite the old hashes; `docs/commit-map.tsv` maps
+each old hash to its new one. `db7c171` is now `13b7a21` (tag `spec-frozen`), and `SPEC.md` is
+byte-identical at both.
+
 ## Reproducing
 
 The grids are saved, so nothing here needs to be re-run to check the paper. To regenerate the
