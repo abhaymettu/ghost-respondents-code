@@ -67,6 +67,17 @@ terms; `lane3-testbed/TESTBED-REPORT.md` records provenance and what is and is n
 redistributable here. The essay labels are binary median splits, which is the form the
 available mirror carries.
 
+The corpora are downloaded, not committed. `lane3-testbed/data/` is ignored by git; fetch the
+corpora into it with
+
+```
+python3 scripts/download_data.py
+```
+
+The script uses only the standard library and lists each source and its licence at the top.
+`data/scores/` and `data/models/` are derived outputs; `lane3-testbed/pool_measurement.py` and
+`lane3-testbed/pk_human_detector_scores.py` regenerate them from the downloaded corpora.
+
 ## Release tree
 
 The published tree is what `git archive` produces. Development material that the paper does

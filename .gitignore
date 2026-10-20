@@ -2,5 +2,5 @@ __pycache__/
 *.pyc
 .venv/
 *.pid
-lane3-testbed/data/hc3/
+lane3-testbed/data/
 .playwright-mcp/
